@@ -10,6 +10,6 @@
   - name: get vm infos
     register: vm_info
     vmware.vmware_rest.vcenter_vm_power:
-      state: start
+      state: "{{ state }}"
       vm: "{{ item.vm }}"
     loop: "{{ search_result.value }}"    
