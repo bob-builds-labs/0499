@@ -12,3 +12,9 @@
     vmware.vmware_rest.vcenter_vm_info:
       vm: "{{ item.vm }}"
     loop: "{{ search_result.value }}"
+  - name: get vm infos
+    register: vm_info
+    vmware.vmware_rest.vcenter_vm_power:
+      state: start
+      vm: "{{ item.vm }}"
+    loop: "{{ search_result.value }}"    
