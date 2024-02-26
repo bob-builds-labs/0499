@@ -1,4 +1,4 @@
-.- name: Start and stop VM´s
+- name: Start and stop VM´s
   hosts: localhost
   connection: local
   gather_facts: false
