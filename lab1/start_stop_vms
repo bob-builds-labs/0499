@@ -13,6 +13,6 @@
       vm: "{{ search_result | json_query(query) | json_query('[*].name') }}"
       state: "{{ state }}"
     vars:
-      query: ".[?contains(name,'{{ item }}')]"
+      query: "[?contains(name,'{{ item }}')]"
     
     with_items: "{{ vm_names.split(',') }}" 
