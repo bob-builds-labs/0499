@@ -16,7 +16,7 @@
     register: found_vms
 
  - debug:
-     msg: "{{ vm_list }}"#
+     msg: "{{ vm_list }}"
 
 
 #  - name: Search for VM´s
