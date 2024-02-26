@@ -11,8 +11,7 @@
 
   - set_fact: vmlist="{{ search_result.value  |  json_query(query) | json_query('[*].vm') }}"
     vars:
-      # query: "[?starts_with(name,'{{ item }}')]"      
-      query: "[?name is match('{{ item }}')]"
+      query: "[?starts_with(name,'{{ item }}')]"      
     with_items: "{{ vm_names.split(',') }}" 
 
   - debug:
