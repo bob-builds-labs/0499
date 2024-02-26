@@ -16,7 +16,7 @@
     with_items: "{{ vm_names.split(',') }}" 
 
  - debug:
-     msg: "{{ vm_list"
+     msg: "{{ vm_list }}"
 
 
 #  - name: Search for VM´s
