@@ -11,6 +11,6 @@
     register: vm_power
     vmware.vmware_rest.vcenter_vm_power:
     vars:
-      query: .[?contains(name,'{{ item }}')]"
+      query: ".[?contains(name,'{{ item }}')]"
     vm: "{{ search_result | json_query(query) | json_query('[*].name')"
     with_items: "{{ vm_names.split(',') }}" 
