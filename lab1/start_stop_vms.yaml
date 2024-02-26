@@ -13,7 +13,6 @@
     vars:
       query: "[?starts_with(name,'{{ item }}')]"
     with_items: "{{ vm_names.split(',') }}" 
-    register: found_vms
 
   - debug:
      msg: "{{ vmlist }}"
