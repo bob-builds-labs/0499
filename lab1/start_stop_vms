@@ -10,7 +10,7 @@
   - name: Search for VM´s
     register: vm_power
     vmware.vmware_rest.vcenter_vm_power:
-      vm: "{{ search_result | json_query(query) | json_query('[*].name') }}"
+      vm: "{{ search_result | json_query(query) }}"
       state: "{{ state }}"
     vars:
       query: "[?contains(name,'{{ item }}')]"
