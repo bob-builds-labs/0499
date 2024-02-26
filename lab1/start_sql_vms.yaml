@@ -1,5 +1,5 @@
----
-- hosts: localhost
+- name: STart and stop VM´s
+  hosts: localhost
   gather_facts: false
 - tasks:  
   - name: Look up the VM called test_vm1 in the inventory
