@@ -21,6 +21,6 @@
     debug:
      msg: "{{ search_result.value  | to_json | from_json |  json_query(query) }}"
     vars:
-      query: "value[?contains(name,'{{ item }}')]"
+      query: "[?contains(name,'{{ item }}')]"
     
     with_items: "{{ vm_names.split(',') }}" 
