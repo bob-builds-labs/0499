@@ -1,9 +1,9 @@
-- name: STart and stop VM´s
+- name: Start and stop VM´s
   hosts: localhost
   connection: local
   gather_facts: false
 - tasks:  
-  - name: Look up the VM called test_vm1 in the inventory
+  - name: Look up VM´s in the inventory
     register: search_result
     vmware.vmware_rest.vcenter_vm_info:
       filter_names:
