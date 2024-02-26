@@ -9,11 +9,11 @@
 
 
 
-  - set_fact: Search for VM´s
-      vmlist: "{{ search_result.value  |  json_query(query) | json_query('[*].vm') }}"
+  - set_fact: vmlist="{{ search_result.value  |  json_query(query) | json_query('[*].vm') }}"
     vars:
       query: "[?starts_with(name,'{{ item }}')]"
     with_items: "{{ vm_names.split(',') }}" 
+    register: found_vms
 
  #- debug:
  #    msg: "{{ vm_list }}"#
