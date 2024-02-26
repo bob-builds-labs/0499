@@ -7,7 +7,7 @@
     register: search_result
     vmware.vmware_rest.vcenter_vm_info:
       filter_names: 
-      - SQL01
+      - SQL03
 #  - name: get vm infos
 #    register: vm_info
 #    vmware.vmware_rest.vcenter_vm_info:
