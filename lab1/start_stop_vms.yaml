@@ -15,7 +15,7 @@
     with_items: "{{ vm_names.split(',') }}" 
     register: found_vms
 
- - debug:
+  - debug:
      msg: "{{ vm_list }}"
 
 
