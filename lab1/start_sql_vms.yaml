@@ -11,4 +11,4 @@
     register: vm_info
     vmware.vmware_rest.vcenter_vm_info:
       vm: "{{ item.vm }}"
-    with_items: "{{ search_result }}"
+    loop: "{{ search_result }}"
