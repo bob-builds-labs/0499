@@ -19,8 +19,7 @@
 
   - name: Search for VM´s
     debug:
-    msg:
-      "{{ search_result | json_query(query) }}"
+     msg: "{{ search_result | json_query(query) }}"
     vars:
       query: "[?contains(name,'{{ item }}')]"
     
