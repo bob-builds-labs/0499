@@ -36,3 +36,4 @@
     retries: 60
     delay: 5 
     with_items: "{{ vmlist }}"
+    when: state is defined and state == start
