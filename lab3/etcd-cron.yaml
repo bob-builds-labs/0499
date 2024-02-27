@@ -1,0 +1,135 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: ocp-etcd-backup
+  annotations:
+    openshift.io/description: Openshift DataDomain Backup Automation Tool
+    openshift.io/display-name: Backup ETCD to DataDomain Automation
+    openshift.io/node-selector: ''
+spec: {}
+---
+kind: ServiceAccount
+apiVersion: v1
+metadata:
+  name: openshift-backup
+  namespace: ocp-etcd-backup
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: cluster-etcd-backup
+rules:
+- apiGroups: [""]
+  resources:
+     - "nodes"
+  verbs: ["get", "list"]
+- apiGroups: [""]
+  resources:
+     - "pods"
+     - "pods/log"
+  verbs: ["get", "list", "create", "delete", "watch"]
+---
+kind: ClusterRoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: openshift-backup
+subjects:
+  - kind: ServiceAccount
+    name: openshift-backup
+    namespace: ocp-etcd-backup
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-etcd-backup
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: etcd-backup-scc-privileged
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: system:openshift:scc:privileged
+subjects:
+- kind: ServiceAccount
+  name: openshift-backup
+  namespace: ocp-etcd-backup
+---
+kind: CronJob
+apiVersion: batch/v1
+metadata:
+  name: cronjob-etcd-backup
+  namespace: ocp-etcd-backup
+  labels:
+    purpose: etcd-backup
+spec:
+  schedule: '*/5 * * * *' 
+  startingDeadlineSeconds: 200
+  concurrencyPolicy: Forbid
+  suspend: false
+  jobTemplate:
+    metadata:
+      creationTimestamp: null
+    spec:
+      backoffLimit: 0
+      template:
+        metadata:
+          creationTimestamp: null
+        spec:
+          nodeSelector:
+            node-role.kubernetes.io/master: '' 
+          restartPolicy: Never
+          activeDeadlineSeconds: 200
+          serviceAccountName: openshift-backup
+          schedulerName: default-scheduler
+          hostNetwork: true
+          terminationGracePeriodSeconds: 30
+          securityContext: {}
+          containers:
+            - resources:
+                requests:
+                  cpu: 300m
+                  memory: 250Mi
+              terminationMessagePath: /dev/termination-log
+              name: etcd-backup
+              command: 
+                - /bin/bash
+                - '-c'
+                - >-
+                  oc get no -l node-role.kubernetes.io/master --no-headers -o
+                  name | grep `hostname` | head -n 1 | xargs -I {} -- oc debug
+                  {} -- bash -c 'chroot /host sudo -E
+                  /usr/local/bin/cluster-backup.sh /home/core/backup' ; echo
+                  'Moving Local Master Backups to target directory (from
+                  /home/core/backup to DataDomain)'; mv /home/core/backup/*
+                  /etcd-backup/; echo 'Deleting files older than 30 days' ; find
+                  /etcd-backup/ -type f  -mtime +30 -exec rm {} \;
+              securityContext:
+                privileged: true
+                runAsUser: 0
+              imagePullPolicy: IfNotPresent
+              volumeMounts:
+                - name: temp-backup
+                  mountPath: /home/core/backup 
+                - name: etcd-backup
+                  mountPath: /etcd-backup 
+              terminationMessagePolicy: FallbackToLogsOnError
+              image: registry.redhat.io/openshift4/ose-cli
+          serviceAccount: openshift-backup
+          volumes:
+            - name: temp-backup
+              hostPath:
+                path: /home/core/backup
+                type: ''
+            - name: etcd-backup
+              nfs:
+                path: /data/col1/ocp_etcd
+                server: ddve-01.demo.local
+          dnsPolicy: ClusterFirst
+          tolerations:
+            - operator: Exists
+              effect: NoSchedule
+            - operator: Exists
+              effect: NoExecute
+  successfulJobsHistoryLimit: 20
+  failedJobsHistoryLimit: 5
