@@ -12,8 +12,6 @@
    - kubernetes.core     
   tasks:
   - name: create namespace
-  # we will run this at least 2 Times as the .data.token is not in the result output on 1st
-  # apply
     kubernetes.core.k8s:
       verify_ssl: no
       state: present      
@@ -26,22 +24,22 @@
             openshift.io/description: Openshift DataDomain Backup Automation Tool
             openshift.io/display-name: Backup ETCD to DataDomain Automation
             openshift.io/node-selector: ''
-        spec: {}     
-  - name: create ServiceAccount
+        spec: {}
+  - name: create SA
     kubernetes.core.k8s:
       verify_ssl: no
       state: present      
-      definition:          
+      definition:
         kind: ServiceAccount
         apiVersion: v1
         metadata:
           name: openshift-backup
           namespace: ocp-etcd-backup
-  - name: create Clusterrole
+  - name: create ClusterRole
     kubernetes.core.k8s:
       verify_ssl: no
       state: present      
-      definition:            
+      definition:
         apiVersion: rbac.authorization.k8s.io/v1
         kind: ClusterRole
         metadata:
@@ -57,11 +55,11 @@
              - "pods"
              - "pods/log"
           verbs: ["get", "list", "create", "delete", "watch"]
-  - name: create Rolebinding
+  - name: create ClusterRoleBinding
     kubernetes.core.k8s:
       verify_ssl: no
       state: present      
-      definition:              
+      definition:
         kind: ClusterRoleBinding
         apiVersion: rbac.authorization.k8s.io/v1
         metadata:
@@ -74,12 +72,12 @@
           apiGroup: rbac.authorization.k8s.io
           kind: ClusterRole
           name: cluster-etcd-backup
-        apiVersion: rbac.authorization.k8s.io/v1        
-  - name: create Rolebinding
+  - name: create ClusterRoleBinding
     kubernetes.core.k8s:
       verify_ssl: no
       state: present      
-      definition:            
+      definition:
+        apiVersion: rbac.authorization.k8s.io/v1
         kind: ClusterRoleBinding
         metadata:
           name: etcd-backup-scc-privileged
@@ -95,7 +93,7 @@
     kubernetes.core.k8s:
       verify_ssl: no
       state: present      
-      definition:              
+      definition:
         kind: CronJob
         apiVersion: batch/v1
         metadata:
@@ -175,4 +173,7 @@
           successfulJobsHistoryLimit: 20
           failedJobsHistoryLimit: 5
 
-        
+
+
+
+
