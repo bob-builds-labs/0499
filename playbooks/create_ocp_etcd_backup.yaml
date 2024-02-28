@@ -26,13 +26,10 @@
             openshift.io/description: Openshift DataDomain Backup Automation Tool
             openshift.io/display-name: Backup ETCD to DataDomain Automation
             openshift.io/node-selector: ''
-        ---
         kind: ServiceAccount
         apiVersion: v1
         metadata:
           name: openshift-backup
-          namespace: ocp-etcd-backup
-        ---
         apiVersion: rbac.authorization.k8s.io/v1
         kind: ClusterRole
         metadata:
@@ -48,7 +45,6 @@
              - "pods"
              - "pods/log"
           verbs: ["get", "list", "create", "delete", "watch"]
-        ---
         kind: ClusterRoleBinding
         apiVersion: rbac.authorization.k8s.io/v1
         metadata:
@@ -61,7 +57,6 @@
           apiGroup: rbac.authorization.k8s.io
           kind: ClusterRole
           name: cluster-etcd-backup
-        ---
         apiVersion: rbac.authorization.k8s.io/v1
         kind: ClusterRoleBinding
         metadata:
@@ -74,7 +69,6 @@
         - kind: ServiceAccount
           name: openshift-backup
           namespace: ocp-etcd-backup
-        ---
         kind: CronJob
         apiVersion: batch/v1
         metadata:
