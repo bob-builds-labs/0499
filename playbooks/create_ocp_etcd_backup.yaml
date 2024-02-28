@@ -7,7 +7,7 @@
   gather_facts: no
   connection: local
   vars_files: 
-    - ./vars/main.yml
+    - ~/workspace/ansible_ppdd/vars/main.yml
   collections:
    - kubernetes.core     
   tasks:
