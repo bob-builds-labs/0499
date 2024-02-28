@@ -11,7 +11,7 @@
   collections:
    - kubernetes.core     
   tasks:
-  - name: create namespace
+  - name: create Namespace
     kubernetes.core.k8s:
       verify_ssl: no
       state: present      
