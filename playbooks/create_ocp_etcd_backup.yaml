@@ -11,7 +11,7 @@
   collections:
    - kubernetes.core     
   tasks:
-  - name: apply ppdm-discovery-serviceaccount-token
+  - name: create namespace
   # we will run this at least 2 Times as the .data.token is not in the result output on 1st
   # apply
     kubernetes.core.k8s:
@@ -26,6 +26,11 @@
             openshift.io/description: Openshift DataDomain Backup Automation Tool
             openshift.io/display-name: Backup ETCD to DataDomain Automation
             openshift.io/node-selector: ''
+  - name: create sa
+    kubernetes.core.k8s:
+      verify_ssl: no
+      state: present      
+      definition:          
         kind: ServiceAccount
         apiVersion: v1
         metadata:
@@ -45,6 +50,11 @@
              - "pods"
              - "pods/log"
           verbs: ["get", "list", "create", "delete", "watch"]
+  - name: create Rolebinding
+    kubernetes.core.k8s:
+      verify_ssl: no
+      state: present      
+      definition:              
         kind: ClusterRoleBinding
         apiVersion: rbac.authorization.k8s.io/v1
         metadata:
