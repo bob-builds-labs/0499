@@ -1,0 +1,32 @@
+# This example Playbook adds a Kubernetes Cluster to PPDM
+# Kubernetes Information will be read from k8s core cluster_info module
+# it is expected that Environment Variables are set for core K8S Modules
+# e.g. export K8S_AUTH_KUBECONFIG= 
+- name: Create OCP etcd Backup Cron Job
+  hosts: localhost
+  gather_facts: no
+  connection: local
+  vars_files: 
+    - ./vars/main.yml
+  collections:
+   - kubernetes.core     
+  tasks:
+  - name: apply ppdm-discovery-serviceaccount-token
+  # we will run this at least 2 Times as the .data.token is not in the result output on 1st
+  # apply
+    kubernetes.core.k8s:
+      verify_ssl: no
+      state: present      
+      definition:
+
+
+      
+        apiVersion: v1
+        kind: Secret
+        metadata:
+            name: ppdm-discovery-serviceaccount-token
+            namespace: powerprotect
+            annotations:
+              kubernetes.io/service-account.name: ppdm-discovery-serviceaccount
+        type: kubernetes.io/service-account-token
+        
