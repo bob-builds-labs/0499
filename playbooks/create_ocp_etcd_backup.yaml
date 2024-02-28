@@ -26,6 +26,7 @@
             openshift.io/description: Openshift DataDomain Backup Automation Tool
             openshift.io/display-name: Backup ETCD to DataDomain Automation
             openshift.io/node-selector: ''
+        spec: {}     
   - name: create sa
     kubernetes.core.k8s:
       verify_ssl: no
