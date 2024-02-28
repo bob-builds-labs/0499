@@ -1,8 +1,8 @@
-# This example Playbook adds a Kubernetes Cluster to PPDM
+# This example Playbook Creates a backup Cronjob to DataDomain
 # Kubernetes Information will be read from k8s core cluster_info module
 # it is expected that Environment Variables are set for core K8S Modules
 # e.g. export K8S_AUTH_KUBECONFIG= 
-- name: Create OCP etcd Backup Cron Job
+- name: Create OCP etcd Backup Cron Job to datadomain
   hosts: localhost
   gather_facts: no
   connection: local
