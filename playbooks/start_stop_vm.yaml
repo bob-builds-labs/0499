@@ -11,7 +11,7 @@
 
   - set_fact: vmlist="{{ search_result.value  |  json_query(query) }}" # | json_query('[*].vm') }}"
     vars:
-      query: "[?name == '{{ vm_names }}'].vm"            
+      query: "[?name == '{{ item }}'].vm"            
     with_items: "{{ vm_names.split(',') }}" 
 
   - debug:
