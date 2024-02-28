@@ -9,9 +9,9 @@
 
 
 
-  - set_fact: vmlist="{{ search_result.value  |  json_query(query) | json_query('[*].vm') }}"
+  - set_fact: vmlist="{{ search_result.value  |  json_query(query) }}" # | json_query('[*].vm') }}"
     vars:
-      query: "[?match(name,'{{ vm_name }}')]"            
+      query: "[?name == '{{ vm_name }}'].vm"            
 
 
   - debug:
