@@ -15,7 +15,7 @@ windows:    # <- a group of Hosts addressed as windows
          vars:
            ansible_connection: winrm
            ansible_port: 5985
-           ansible_user: demo\administrator
+           ansible_user: administrator
            ansible_password: Password123!
       vars:
         app_agent: "{{ fs_agent_windows }}"
@@ -28,7 +28,7 @@ windows:    # <- a group of Hosts addressed as windows
         app_agent: "{{ exchange_agent_windows }}"
         app_agent_product_id: '{165F48F4-38C4-49DF-904E-4A23D39078BF}'
   vars: # -> vars for all Windows Hosts
-    ansible_user: administrator@demo.local
+    ansible_user: administrator
     ansible_password: Password123!
     ansible_winrm_scheme: https
     ansible_winrm_server_cert_validation: ignore
