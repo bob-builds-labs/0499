@@ -11,6 +11,7 @@ windows:    # <- a group of Hosts addressed as windows
     filehosts:
       hosts:
         file:
+        launchpad:
       vars:
         app_agent: "{{ fs_agent_windows }}"
         app_agent_product_id: '{49C974B3-BA72-485C-9A96-794B065339DF}'
