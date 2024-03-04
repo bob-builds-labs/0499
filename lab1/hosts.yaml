@@ -13,7 +13,7 @@ windows:    # <- a group of Hosts addressed as windows
         file:
         launchpad:
           vars:
-            ansible_user: LocalUsername
+            ansible_user: administrator@demo.local
             ansible_password: Password
             ansible_connection: winrm
             ansible_winrm_transport: ntlm
