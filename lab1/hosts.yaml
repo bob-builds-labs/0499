@@ -13,7 +13,7 @@ windows:    # <- a group of Hosts addressed as windows
         file:
         launchpad:
           vars:
-            ansible_winrm_scheme: http
+            ansible_winrm_scheme: https
       vars:
         app_agent: "{{ fs_agent_windows }}"
         app_agent_product_id: '{49C974B3-BA72-485C-9A96-794B065339DF}'
@@ -27,7 +27,7 @@ windows:    # <- a group of Hosts addressed as windows
   vars: # -> vars for all Windows Hosts
     ansible_user: administrator
     ansible_password: Password123!
-    ansible_winrm_scheme: http
+    ansible_winrm_scheme: https
     ansible_winrm_server_cert_validation: ignore
     ansible_shell_type: cmd
     ansible_connection: winrm
