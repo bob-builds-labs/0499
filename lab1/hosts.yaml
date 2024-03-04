@@ -12,8 +12,11 @@ windows:    # <- a group of Hosts addressed as windows
       hosts:
         file:
         launchpad:
-          vars:
-            ansible_connection: ssh
+         vars:
+           ansible_connection: winrm
+           ansible_port: 5985
+           ansible_user: demo\administrator
+           ansible_password: Password123!
       vars:
         app_agent: "{{ fs_agent_windows }}"
         app_agent_product_id: '{49C974B3-BA72-485C-9A96-794B065339DF}'
