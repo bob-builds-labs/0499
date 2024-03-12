@@ -10,6 +10,7 @@ spec:
     requests:
       storage: 1Gi
   storageClassName: powerstore
+---  
 apiVersion: v1
 kind: ConfigMap
 metadata:
