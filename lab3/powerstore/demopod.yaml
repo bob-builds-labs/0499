@@ -1,8 +1,15 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: powerstore-demo
+  labels:
+    name: powerstore-demo
+---
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
   name: dynamic-powerstore-pvc
-  namespace: powerstore
+  namespace: powerstore-demo
 spec:
   accessModes:
   - ReadWriteOnce
