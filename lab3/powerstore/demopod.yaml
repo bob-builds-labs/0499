@@ -9,8 +9,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: powerstore-topology
----
+  storageClassName: powerstore
 apiVersion: v1
 kind: ConfigMap
 metadata:
