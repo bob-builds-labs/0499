@@ -9,7 +9,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: powerstore-fc-iscsi
+  storageClassName: powerstore-topology
 ---
 apiVersion: v1
 kind: ConfigMap
