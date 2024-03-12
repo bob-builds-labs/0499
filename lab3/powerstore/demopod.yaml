@@ -4,6 +4,7 @@ metadata:
   name: powerstore-demo
   labels:
     name: powerstore-demo
+    ppdm_policy: PPDM_GOLD
 ---
 apiVersion: v1
 kind: PersistentVolumeClaim
@@ -16,13 +17,13 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: powerstore
+  storageClassName: powerstore-demo
 ---  
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: demo
-  namespace: powerstore
+  namespace: powerstore-demo
 data:
   sample: file data
 ---
@@ -30,7 +31,7 @@ apiVersion: v1
 kind: Pod
 metadata:
   name: powerstore-pod
-  namespace: powerstore
+  namespace: powerstore-demo
 spec:
   containers:
   - name: task-pv-container
