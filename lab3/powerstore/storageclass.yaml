@@ -52,7 +52,7 @@ volumeBindingMode: Immediate
 # replace "12.34.56.78" with PowerStore endpoint IP or abc.com
 # Optional: true
 #allowedTopologies:
-#  - matchLabelExpressions:
-#      - key: "csi-powerstore.dellemc.com/192.168.2.40-iscsi"
-#        values:
-#          - "true"
+  - matchLabelExpressions:
+      - key: "csi-powerstore.dellemc.com/192.168.2.40-iscsi"
+        values:
+          - "true"
