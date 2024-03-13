@@ -51,7 +51,7 @@ volumeBindingMode: Immediate
 # replace "-iscsi" with "-fc", "-nvmetcp", "-nvmefc" or "-nfs" at the end to use FC, NVMeTCP, NVMeFC, or NFS enabled hosts
 # replace "12.34.56.78" with PowerStore endpoint IP or abc.com
 # Optional: true
-#allowedTopologies:
+allowedTopologies:
   - matchLabelExpressions:
       - key: "csi-powerstore.dellemc.com/192.168.2.40-iscsi"
         values:
