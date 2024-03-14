@@ -34,8 +34,8 @@
       pci_slot_number: 224
       backing:
         type: DISTRIBUTED_PORTGROUP
-        network: '{{ my_portgroup.dvs_portgroup_info.dvswitch1[0].key }}'
-      start_connected: true
+        network: '{{ my_portgroup.value[0].network }}'
+      start_connected: false
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
     
