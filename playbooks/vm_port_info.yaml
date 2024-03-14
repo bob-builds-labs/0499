@@ -32,12 +32,9 @@
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item }}"
       pci_slot_number: 224
-      type: "VMXNET3"
-      label: "Network adapter 2"
-      mac_type: "GENERATED"
       backing:
         type: DISTRIBUTED_PORTGROUP
-        network: '{{ my_portgroup.value[0].network }}'
+        network: '{{ my_portgroup.dvs_portgroup_info.dvswitch1[0].key }}'
       start_connected: true
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
