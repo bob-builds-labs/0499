@@ -32,6 +32,7 @@
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item }}"
       nic: "4001"
+      type: "VMXNET3"
       backing:
         type: DISTRIBUTED_PORTGROUP
         network: '{{ my_portgroup.value[0].network }}'
