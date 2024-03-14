@@ -14,5 +14,6 @@ spec:
           source: data:text/plain;charset=utf-8;base64,ZGVmYXVsdHMgewp1c2VyX2ZyaWVuZGx5X25hbWVzIHllcwpmaW5kX211bHRpcGF0aHMgeWVzCn0KYmxhY2tsaXN0IHsKICAgICAgICAgICBkZXZpY2UgewogICAgICAgICAgICAgICB2ZW5kb3IgICJWTXdhcmUiCiAgICAgICAgICAgICAgIHByb2R1Y3QgIi4qIgogICAgICAgfQp9Cg==
           verification: {}
         filesystem: root
+        overwrite: true
         mode: 400
         path: /etc/multipath.conf
