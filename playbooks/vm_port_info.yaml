@@ -33,6 +33,7 @@
       vm: "{{ item }}"
       nic: "4001"
       type: "VMXNET3"
+      label: "Network adapter 2"
       backing:
         type: DISTRIBUTED_PORTGROUP
         network: '{{ my_portgroup.value[0].network }}'
