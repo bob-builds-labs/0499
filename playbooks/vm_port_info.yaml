@@ -31,7 +31,7 @@
   - name: Attach a VM to a dvswitch
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item }}"
-      nic: "4002"
+      pci_slot_number: 224
       type: "VMXNET3"
       label: "Network adapter 2"
       mac_type: "GENERATED"
