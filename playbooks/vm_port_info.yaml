@@ -34,6 +34,7 @@
       nic: "4001"
       type: "VMXNET3"
       label: "Network adapter 2"
+      mac_type: "GENERATED"
       backing:
         type: DISTRIBUTED_PORTGROUP
         network: '{{ my_portgroup.value[0].network }}'
