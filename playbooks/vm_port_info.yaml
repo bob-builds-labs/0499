@@ -10,6 +10,18 @@
       filter_names: storage + backup 
     register: my_portgroup
 
+  - name: Look up VM´s in the inventory
+    register: search_result
+    vmware.vmware_rest.vcenter_vm_info:
+
+  - set_fact: vmlist="{{ search_result.value  |  json_query(query) | json_query('[*].vm') }}"
+    vars:   
+      query: "[?contains(name,'{{ item }}')]"            
+    with_items: "{{ vm_names.split(',') }}" 
+
+  - debug:
+     msg: "{{ vmlist }}"
+
   - name: Collect a list of the NIC for a given VM
     vmware.vmware_rest.vcenter_vm_hardware_ethernet_info:
       vm: '{{ test_vm1_info.id }}'
