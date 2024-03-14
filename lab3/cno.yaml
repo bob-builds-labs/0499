@@ -1,0 +1,20 @@
+apiVersion: operator.openshift.io/v1
+kind: Network
+metadata:
+  name: cluster
+spec:
+  additionalNetworks: 
+  - name: backup-lan 
+    namespace: openshift-host-network 
+    rawCNIConfig: |- 
+      {
+        "cniVersion": "0.3.1",
+        "name": "backup-lan",
+        "type": "host-device",
+        "device": "ens224"
+      }
+    type: Raw
+
+
+oc patch --type=merge network.operator.openshift.io/cluster \
+--patch '{"spec":{"additionalNetworks":[{"name":"backup-lan","namespace":"openshift-host-network","rawCNIConfig":"{\n  \"cniVersion\": \"0.3.1\",\n  \"name\": \"backup-lan\",\n  \"type\": \"host-device\",\n  \"device\": \"ens224\"\n}","type":"Raw"}]}}'    
