@@ -1,5 +1,11 @@
-- name: Get the dvswitch called my-portgroup
-  vmware.vmware_rest.vcenter_network_info:
-    filter_types: DISTRIBUTED_PORTGROUP
-    filter_names: my portrgoup
-  register: my_portgroup
+
+- name: Portgroups
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:  
+  - name: Get the dvswitch 
+    vmware.vmware_rest.vcenter_network_info:
+      filter_types: DISTRIBUTED_PORTGROUP
+      filter_names: storage + backup 
+    register: my_portgroup
