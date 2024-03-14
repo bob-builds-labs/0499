@@ -1,18 +1,45 @@
+- name: Add Backup Lan nic to vms
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:  
+  - name: Look up VM´s in the inventory
+    register: search_result
+    vmware.vmware_rest.vcenter_vm_info:
 
 
-- name: add multiple nics to vm01.domain.fake
-  community.vmware.vmware_guest_network:
-    hostname: "{{ vcenter_hostname }}"
-    username: "{{ vcenter_username }}"
-    password: "{{ vcenter_password }}"
-    datacenter: "{{ datacenter_name }}"
-    name: vm01.domain.fake
-    state: present
-    vlan_id: "{{ item.vlan_id | default(omit) }}"
-    network_name: "{{ item.network_name | default(omit) }}"
-    connected: "{{ item.connected | default(omit) }}"
-  loop:
-    - vlan_id: 2000
-      connected: false
-    - network_name: guest-net
-      connected: true
+
+  - set_fact: vmlist="{{ search_result.value  |  json_query(query) | json_query('[*].vm') }}"
+    vars:
+    #  query: "[?starts_with(name,'{{ item }}')]"    
+      query: "[?contains(name,'{{ item }}')]"            
+    with_items: "{{ vm_names.split(',') }}" 
+
+  - debug:
+     msg: "{{ vmlist }}"
+
+
+  - name: Starting VM´s
+    register: vm_power
+    vmware.vmware_rest.vcenter_vm_power:
+      vm: "{{ item }}"
+      state: "{{ state }}"
+    with_items: "{{ vmlist }}" 
+
+  - name: add nics vms
+    community.vmware.vmware_guest_network:
+      hostname: "{{ vcenter_hostname }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "{{ datacenter_name }}"
+      name: vm01.domain.fake
+      state: present
+      vlan_id: "{{ item.vlan_id | default(omit) }}"
+      network_name: "{{ item.network_name | default(omit) }}"
+      connected: "{{ item.connected | default(omit) }}"
+   with_items: "{{ vmlist }}"      
+    loop:
+      - vlan_id: 2000
+        connected: false
+      - network_name: guest-net
+        connected: true
