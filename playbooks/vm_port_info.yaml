@@ -25,7 +25,14 @@
   - name: show vmlist
     debug:
      msg: "{{ vmlist }}"
-
+  - name: vm info    
+    vmware.vmware_rest.vcenter_vm_info:
+      vm: '{{ item }}'
+    register: vm_info
+    with_items: "{{ vmlist }}" 
+  - name: show vm info
+    debug:
+     msg: "{{ vm_info }}"    
   - name: Collect a list of the NIC for a given VM
     vmware.vmware_rest.vcenter_vm_hardware_ethernet_info:
       vm: "{{ item }}"
