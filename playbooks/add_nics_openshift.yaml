@@ -35,38 +35,13 @@
      msg: "{{ vm_info }}"    
 
   - name: Attach a VM to a dvswitch
-    vmware.vmware_rest.vcenter_vm_hardware_ethernet:
-
-
-
-    
-      vm: "{{ item }}"
-      backing:
-        type: DISTRIBUTED_PORTGROUP
-        network: '{{ my_portgroup.value[0].network }}'
-      start_connected: true
-      pci_slot_number: 224
-      nic: 4001
-      state: "{{ state }}"
-      type: "VMXNET3"
-      wake_on_lan_enabled: true
-      allow_guest_control: true
-      upt_compatibility_enabled: true
-    with_items: "{{ vmlist }}" 
-    register: vm_hardware_ethernet_1
-    when: state in ('absent', 'present', 'connect')
-
-  - name: nic_list
-    debug:
-      msg: "{{ vm_hardware_ethernet_1 }}" 
-      verbosity: 0  
-  - name: Connect the Nic
-    vmware.vmware_rest.vcenter_vm_hardware_ethernet:
-      vm: "{{ item.item }}"
-      nic: 4001
- #     backing: "{{ item.value.backing }}"
-      state: "connect"
-    with_items: "{{ vm_hardware_ethernet_1.results }}" 
-    register: vm_hardware_ethernet_1_connect
-    when: state == "present"
+    community.vmware.vmware_guest_network:
+      hostname: "{{ lookup(env. }}"
+      username: "{{ vcenter_username }}"
+      password: "{{ vcenter_password }}"
+      datacenter: "{{ datacenter_name }}"
+      name: "{{ results.value.name }}"
+      switch: storage + backup
+      label: Network adapter 2
+     with_items: "{{ vm_info }}
     
