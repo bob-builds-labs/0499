@@ -15,3 +15,4 @@ linux:    # <- a group of Hosts addressed as linux
         ansible_become: yes
         #ansible_become_user: root
         ansible_become_method: sudo
+        ansible_become_flags: 'su' 
