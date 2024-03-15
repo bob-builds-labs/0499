@@ -50,6 +50,7 @@
       nic: 4001
       state: "{{ state }}"
       type: "VMXNET3"
+      wake_on_lan_enabled: true
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
     when: state in ('absent', 'present', 'connect')
@@ -63,7 +64,7 @@
       vm: "{{ item.item }}"
       nic: 4001
       backing: "{{ item.value.backing }}"
-      state: "CONNECTED"
+      state: "connect"
     with_items: "{{ vm_hardware_ethernet_1.results }}" 
     register: vm_hardware_ethernet_1_connect
     when: state == "present"
