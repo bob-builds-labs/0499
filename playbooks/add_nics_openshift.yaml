@@ -39,5 +39,5 @@
       name: "{{ results.value.name }}"
       switch: storage + backup
       label: Network adapter 2
-     with_items: "{{ vm_info }}"
+    with_items: "{{ vm_info }}"
     
