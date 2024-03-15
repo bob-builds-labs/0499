@@ -64,7 +64,7 @@
       vm: "{{ item.item }}"
       nic: 4001
  #     backing: "{{ item.value.backing }}"
-      state: "connect"
+      state: "connected"
     with_items: "{{ vm_hardware_ethernet_1.results }}" 
     register: vm_hardware_ethernet_1_connect
     when: state == "present"
