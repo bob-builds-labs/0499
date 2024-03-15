@@ -1,0 +1,14 @@
+- name: Configure secondary network
+  hosts: openshifthosts
+  gather_facts: no
+  connection: local
+  collections:
+   - community.general.nmcli  
+  tasks:
+  - name: Add an Ethernet connection with static IP configuration
+    community.general.nmcli:
+      conn_name: backup-storage
+      ifname: ens224
+      type: ethernet
+      ip4: "{{ ip2 }}/24"
+      state: present  
