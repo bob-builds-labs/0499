@@ -54,6 +54,10 @@
     register: vm_hardware_ethernet_1
     when: state in ('absent', 'present', 'connect')
 
+  - name: nic_list
+    debug:
+      msg: "{{ vm_hardware_ethernet_1 }}" 
+      verbosity: 0  
   - name: Connect the Nic
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item.1 }}"
