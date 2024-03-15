@@ -22,7 +22,8 @@
       query: "[?contains(name,'{{ item }}')]"            
     with_items: "{{ vm_names.split(',') }}" 
 
-  - debug:
+  - name: sow portgroup
+    debug:
      msg: "{{ vmlist }}"
 
   - name: Collect a list of the NIC for a given VM
