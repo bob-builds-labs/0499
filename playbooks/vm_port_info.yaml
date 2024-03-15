@@ -63,7 +63,7 @@
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item.item }}"
       nic: 4001
-      backing: "{{ item.value.backing }}"
+ #     backing: "{{ item.value.backing }}"
       state: "connect"
     with_items: "{{ vm_hardware_ethernet_1.results }}" 
     register: vm_hardware_ethernet_1_connect
