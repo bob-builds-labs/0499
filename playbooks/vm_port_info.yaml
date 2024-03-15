@@ -59,6 +59,10 @@
       vm: "{{ item }}"
       start_connected: true
       nic: 4001
+      backing:
+        type: DISTRIBUTED_PORTGROUP
+        network: '{{ my_portgroup.value[0].network }}'
+      state: "connect"
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
     when: state == "present"
