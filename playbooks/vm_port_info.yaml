@@ -60,12 +60,11 @@
       verbosity: 0  
   - name: Connect the Nic
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
-      vm: "{{ item.1 }}"
+      vm: "{{ item.item }}"
       nic: 4001
-      backing: "{{ item.0.backing }}"
+      backing: "{{ item.value.backing }}"
     with_nested: 
       - "{{ vm_hardware_ethernet_1 }}" 
-      - "{{ vmlist }}"
     register: vm_hardware_ethernet_1_connect
     when: state == "present"
     
