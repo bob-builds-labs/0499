@@ -36,7 +36,7 @@
 
   - name: Attach a VM to a dvswitch
     community.vmware.vmware_guest_network:
-      name: "{{ results.value.name }}"
+      name: "{{ item.results.value.name }}"
       switch: storage + backup
       label: Network adapter 2
     with_items: "{{ vm_info }}"
