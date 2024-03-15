@@ -52,4 +52,22 @@
       type: "VMXNET3"
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
+    when: state in ('absent', 'present')
+
+  - name: Attach a VM to a dvswitch
+    vmware.vmware_rest.vcenter_vm_hardware_ethernet:
+      vm: "{{ item }}"
+      backing:
+        type: DISTRIBUTED_PORTGROUP
+        network: '{{ my_portgroup.value[0].network }}'
+      start_connected: true
+      pci_slot_number: 224
+      nic: 4001
+      state: "connected"
+      type: "VMXNET3"
+    with_items: "{{ vmlist }}" 
+    register: vm_hardware_ethernet_1
+    when: state == present
+    
+    
       
