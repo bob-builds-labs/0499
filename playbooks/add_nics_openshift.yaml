@@ -36,10 +36,6 @@
 
   - name: Attach a VM to a dvswitch
     community.vmware.vmware_guest_network:
-      hostname: "{{ lookup(env. }}"
-      username: "{{ vcenter_username }}"
-      password: "{{ vcenter_password }}"
-      datacenter: "{{ datacenter_name }}"
       name: "{{ results.value.name }}"
       switch: storage + backup
       label: Network adapter 2
