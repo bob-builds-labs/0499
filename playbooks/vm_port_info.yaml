@@ -45,7 +45,7 @@
       backing:
         type: DISTRIBUTED_PORTGROUP
         network: '{{ my_portgroup.value[0].network }}'
-      start_connected: true
+      start_connected: false
       pci_slot_number: 224
       nic: 4001
       state: "{{ state }}"
@@ -57,14 +57,9 @@
   - name: Connect the Nic
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item }}"
-      backing:
-        type: DISTRIBUTED_PORTGROUP
-        network: '{{ my_portgroup.value[0].network }}'
       start_connected: true
-      pci_slot_number: 224
       nic: 4001
       state: "connect"
-      type: "VMXNET3"
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
     when: state == "present"
