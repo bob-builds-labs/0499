@@ -63,7 +63,7 @@
       vm: "{{ item.item }}"
       nic: 4001
       backing: "{{ item.value.backing }}"
-    with_item: "{{ vm_hardware_ethernet_1 }}" 
+    with_items: "{{ vm_hardware_ethernet_1 }}" 
     register: vm_hardware_ethernet_1_connect
     when: state == "present"
     
