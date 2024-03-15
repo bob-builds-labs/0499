@@ -45,8 +45,6 @@
       backing:
         type: DISTRIBUTED_PORTGROUP
         network: '{{ my_portgroup.value[0].network }}'
-        name:
-      upt_compatibility_enabled: true  
       start_connected: true
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
