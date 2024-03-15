@@ -56,7 +56,7 @@
 
   - name: Connect the Nic
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
-      vm: "{{ item.1.vm }}"
+      vm: "{{ item.1 }}"
       nic: 4001
       backing: "{{ item.0.backing }}"
     with_nested: 
