@@ -59,7 +59,7 @@
       vm: "{{ item.1.vm }}"
       nic: 4001
       backing: "{{ item.0.backing }}"
-    with_items: 
+    with_nested: 
       - "{{ vm_hardware_ethernet_1 }}" 
       - "{{ vmlist }}"
     register: vm_hardware_ethernet_1_connect
