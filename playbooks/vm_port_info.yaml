@@ -53,7 +53,6 @@
       wake_on_lan_enabled: true
       allow_guest_control: true
       upt_compatibility_enabled: true
-      connected: true
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
     when: state in ('absent', 'present', 'connect')
