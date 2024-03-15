@@ -6,7 +6,7 @@
   tasks:
   - name: Add an Ethernet connection with static IP configuration
     community.general.nmcli:
-      conn_name: backup-storage
+      conn_name: Wired connection 2
       ifname: ens224
       type: ethernet
       ip4: "{{ ip2 }}/24"
