@@ -48,7 +48,8 @@
       start_connected: true
       pci_slot_number: 224
       nic: 4001
-      state: absent
+      state: "{{ state }}"
+      type: "VMXNET3"
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
       
