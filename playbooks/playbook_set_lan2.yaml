@@ -1,7 +1,6 @@
 - name: Configure secondary network
   hosts: openshifthosts
   gather_facts: no
-  connection: local
   collections:
    - community.general.nmcli  
   tasks:
