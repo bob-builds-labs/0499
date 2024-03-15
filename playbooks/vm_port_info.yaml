@@ -36,10 +36,10 @@
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item }}"
       pci_slot_number: 224
-      - backing:
-          type: DISTRIBUTED_PORTGROUP
-          network: '{{ my_portgroup.value[0].network }}'
-      start_connected: false
+      backing:
+        type: DISTRIBUTED_PORTGROUP
+        network: '{{ my_portgroup.value[0].network }}'
+      start_connected: true
     with_items: "{{ vmlist }}" 
     register: vm_hardware_ethernet_1
       
