@@ -56,13 +56,11 @@
 
   - name: Connect the Nic
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
-      vm: "{{ item }}"
+      vm: "{{ item.vm }}"
       nic: 4001
-      backing:
-        type: DISTRIBUTED_PORTGROUP
-        network: '{{ my_portgroup.value[0].network }}'
-    with_items: "{{ vmlist }}" 
-    register: vm_hardware_ethernet_1
+      backing: "{{ item.backing }}"
+    with_items: "{{ vm_hardware_ethernet_1 }}" 
+    register: vm_hardware_ethernet_1_connect
     when: state == "present"
     
     
