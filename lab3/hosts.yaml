@@ -3,8 +3,12 @@ linux:    # <- a group of Hosts addressed as linux
     openshifthosts:  # <- a group of Hosts addressed as databasehosts
       hosts:
         openshift-72g6c-master-0: # <- an indivisual Host adressed as sql01
+        vars:
+          ip2: 192.168.2.108
         openshift-72g6c-master-1: # <- an indivisual Host adressed as sql01
+          ip2: 192.168.2.111
         openshift-72g6c-master-2: # <- an indivisual Host adressed as sql01
+          ip2:: 192.168.2.104
       vars: # specific Vars for the Group Database Hosts
         ansible_user: core
         ansible_ssh_private_key_file: "~/.ssh/openshift"
