@@ -57,7 +57,6 @@
   - name: Connect the Nic
     vmware.vmware_rest.vcenter_vm_hardware_ethernet:
       vm: "{{ item }}"
-      start_connected: true
       nic: 4001
       backing:
         type: DISTRIBUTED_PORTGROUP
