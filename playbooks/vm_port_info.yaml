@@ -11,7 +11,7 @@
     register: my_portgroup
 
   - debug:
-      msg: my_portgroup
+      msg: "{{ my_portgroup }}"
       verbosity: 0
   - name: Look up VM´s in the inventory
     register: search_result
