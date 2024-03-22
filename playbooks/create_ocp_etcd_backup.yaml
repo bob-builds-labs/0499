@@ -163,7 +163,7 @@
                     - name: etcd-backup
                       nfs:
                         path: "/data/col1/{{ mtree_name | basename }}"
-                        server: "{{ ppdd_fqdn }}"
+                        server: "{{ ppdd_fqdn | regex_replace('^https://') }}"
                   dnsPolicy: ClusterFirst
                   tolerations:
                     - operator: Exists
