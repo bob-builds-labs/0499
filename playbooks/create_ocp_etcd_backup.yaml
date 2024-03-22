@@ -162,7 +162,7 @@
                         type: ''
                     - name: etcd-backup
                       nfs:
-                        path: "/dazta/col1/{{ mtree_name | basename }}"
+                        path: "/data/col1/{{ mtree_name | basename }}"
                         server: "{{ ppdd_fqdn }}"
                   dnsPolicy: ClusterFirst
                   tolerations:
