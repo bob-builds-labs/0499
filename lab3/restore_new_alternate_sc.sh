@@ -23,3 +23,4 @@ spec:
     - name: "*" #volumes to be recovered. By default all volumes backed up
       alternateStorageClass: ${ALTERNATE_SC}
 EOF
+kubectl get restorejob "${RESTORE_JOB}" -n powerprotect -o yaml -w
