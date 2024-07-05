@@ -39,8 +39,8 @@
       secret_key: "{{ secret_key }}"
   - name: Put {{ package }} to s3
     amazon.aws.aws_s3:
-      bucket: "{{ s3_bucket}}/{{ release }}"
-      object: "{{ s3_container }}/{{ release }}{{ package }}"
+      bucket: "{{ s3_bucket}}"
+      object: "{{ s3_container }}/{{ release }}/{{ package }}"
       src: "{{ local_directory }}/{{ package }}"
       mode: put
       endpoint_url: "{{ s3_host }}"
