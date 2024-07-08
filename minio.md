@@ -5,7 +5,7 @@ to add nminio to the ansible host, follow below instructions
 as root:
 ```bash   
 mkdir /home/minio
-https://dl.min.io/server/minio/release/linux-amd64/archive/minio_20240628090649.0.0_amd64.deb -O minio.deb
+wget https://dl.min.io/server/minio/release/linux-amd64/archive/minio_20240628090649.0.0_amd64.deb -O minio.deb
 dpkg -i minio.deb
 groupadd -r minio-user
 useradd -M -r -g minio-user minio-user
