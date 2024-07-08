@@ -1,4 +1,6 @@
-# minio 
+# add minio to ansible host 
+
+to add nminio to the ansible host, follow below instructions
 
 as root:
 ```bash   
