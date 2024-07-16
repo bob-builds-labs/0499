@@ -47,6 +47,7 @@
     until: download is succeeded
     retries: 5
     delay: 2
+    become: true
 
   - name: Install Minio
     apt:
