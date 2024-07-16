@@ -1,5 +1,5 @@
 ---
-- name: Configure secondary network
+- name: Deploy Minio for ansible in Bob Lab
   hosts: localhost
   connection: local
   gather_facts: no
