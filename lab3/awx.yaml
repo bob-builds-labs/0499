@@ -21,7 +21,7 @@ spec:
   metrics_utility_cronjob_report_schedule: '@monthly'
   create_preload_data: true
   route_tls_termination_mechanism: Edge
-  garbage_collect_secrets: false
+  garbage_collect_secrets: true
   ingress_type: Route
   loadbalancer_port: 80
   web_liveness_failure_threshold: 3
@@ -79,6 +79,6 @@ metadata:
     app.kubernetes.io/operator-version: 2.19.0
     app.kubernetes.io/part-of: awx-prod
 data:
-  # password: UGFzc3dvcmQxMjMhCg== 
-  password: ZVZjWHhUbWhpa0lyVk11enVGYUhYYkxzTzN4UUVCQW8=
+  password: UGFzc3dvcmQxMjMhCg== 
+  # password: ZVZjWHhUbWhpa0lyVk11enVGYUhYYkxzTzN4UUVCQW8=
 type: Opaque
