@@ -43,10 +43,10 @@
     retries: 5
     delay: 2
 
-- name: Install Minio
-  apt:
-    deb: /tmp/minio.deb
-  become: true
+  - name: Install Minio
+    apt:
+      deb: /tmp/minio.deb
+    become: true
 
 #  - name: Generate the Minio server envfile
 #    template:
