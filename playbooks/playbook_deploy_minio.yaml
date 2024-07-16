@@ -8,12 +8,13 @@
     minio_user: minio
     datapath: /home/minio
     ansible_become_password: Password123!
+    download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
   tasks:
   - name: "Get the Minio server checksum"
     set_fact:
       checksum: "{{ lookup('url', 'https://dl.minio.io/server/minio/release/linux-amd64/minio.sha256sum').split(' ')[0] }}"
 
-  - name: Create Minio group
+  - name: Create Minio group 
     group:
       name: "{{ minio_group }}"
       state: present
