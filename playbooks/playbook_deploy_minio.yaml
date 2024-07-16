@@ -58,7 +58,7 @@
         MINIO_VOLUMES=/home/minio
         MINIO_OPTS="--console-address :9090"
 
-      dest: "/etc/minio/default"
+      dest: "/etc/default/minio"
       owner: "root"
       group: "root"
   - name: Install Minio
