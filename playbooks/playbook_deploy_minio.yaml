@@ -7,6 +7,7 @@
     minio_group: minio
     minio_user: minio
     datapath: /home/minio
+    ansible_become_password: Password123!
   tasks:
   - name: "Get the Minio server checksum"
     set_fact:
