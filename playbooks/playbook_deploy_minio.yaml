@@ -9,7 +9,7 @@
     datapath: /home/minio
     ansible_become_password: Password123!
     download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
-    minio_user: minioadmin
+    minio_admin: minioadmin
     minio_password: Password123!
   tasks:
   - name: "Get the Minio server checksum"
@@ -53,9 +53,9 @@
   - name: Create the Minio Config File
     copy:
       content: |
-        MINIO_ROOT_USER="{{ minio_user }}"
+        MINIO_ROOT_USER=
         MINIO_ROOT_PASSWORD="{{ minio_password }}"
-        MINIO_VOLUMES=/home/minio
+        MINIO_VOLUMES=/home/"{{ minio_user }}""
         MINIO_OPTS="--console-address :9090"
 
       dest: "/etc/default/minio"
