@@ -11,4 +11,4 @@ spec:
   name: awx-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: x-operator.v2.19.1
+  startingCSV: awx-operator.v2.19.1
