@@ -88,5 +88,5 @@
   - name: Enable and start the Minio service
     service:
       name: minio
-      state: restart
+      state: restarted
       enabled: true
