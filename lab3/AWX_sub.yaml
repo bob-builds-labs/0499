@@ -8,7 +8,7 @@ metadata:
 spec:
   channel: alpha
   installPlanApproval: Manual
-  name: dell-csm-operator-certified
+  name: awx-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
   startingCSV: x-operator.v2.19.1
