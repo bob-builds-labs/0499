@@ -36,7 +36,7 @@
       state: directory
       owner: "{{ minio_user }}"
       group: "{{ minio_group }}"
-      mode: 07
+      mode: 0777
     become: true
 
   - name: Download the Minio server
