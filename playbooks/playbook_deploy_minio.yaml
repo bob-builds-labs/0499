@@ -4,8 +4,8 @@
   connection: local
   gather_facts: no
   vars:
-    minio_group: minio
-    minio_user: minio
+    minio_group: minio-user
+    minio_user: minio-user
     datapath: /home/minio
     ansible_become_password: Password123!
     download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
@@ -55,7 +55,7 @@
       content: |
         MINIO_ROOT_USER="{{ minio_admin }}"
         MINIO_ROOT_PASSWORD="{{ minio_password }}"
-        MINIO_VOLUMES=/home/{{ minio_user }}
+        MINIO_VOLUMES={{ datapath }}
         MINIO_OPTS="--console-address :9090"
 
       dest: "/etc/default/minio"
