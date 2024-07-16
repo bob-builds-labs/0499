@@ -9,6 +9,8 @@
     datapath: /home/minio
     ansible_become_password: Password123!
     download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
+    minio_user: minioadmnin
+    minio_passowrd: Password123!
   tasks:
   - name: "Get the Minio server checksum"
     set_fact:
@@ -48,7 +50,17 @@
     retries: 5
     delay: 2
     become: true
+  - name: Create the Minio Config File
+    template:
+      content: |
+        MINIO_ROOT_USER="{{ minio_user }}"
+        MINIO_ROOT_PASSWORD="{{ minio_password }}"
+        MINIO_VOLUMES=/home/minio
+        MINIO_OPTS="--console-address :9090"
 
+      dest: "/etc/minio/default"
+      owner: "root"
+      group: "root"
   - name: Install Minio
     apt:
       deb: /tmp/minio.deb
@@ -72,8 +84,8 @@
  #   when: ansible_service_mgr == "systemd"
 
 
-#  - name: Enable and start the Minio service
-#    service:
-#      name: minio
-#      state: started
-#      enabled: true
+  - name: Enable and start the Minio service
+    service:
+      name: minio
+      state: restart
+      enabled: true
