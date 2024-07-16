@@ -36,7 +36,7 @@
       state: directory
       owner: "{{ minio_user }}"
       group: "{{ minio_group }}"
-      mode: 0777
+      mode: 07
     become: true
 
   - name: Download the Minio server
@@ -51,15 +51,16 @@
     delay: 2
     become: true
   - name: Create the Minio Config File
-    content: |
-      MINIO_ROOT_USER="{{ minio_user }}"
-      MINIO_ROOT_PASSWORD="{{ minio_password }}"
-      MINIO_VOLUMES=/home/minio
-      MINIO_OPTS="--console-address :9090"
+    copy:
+      content: |
+        MINIO_ROOT_USER="{{ minio_user }}"
+        MINIO_ROOT_PASSWORD="{{ minio_password }}"
+        MINIO_VOLUMES=/home/minio
+        MINIO_OPTS="--console-address :9090"
 
-    dest: "/etc/default/minio"
-    owner: "root"
-    group: "root"
+      dest: "/etc/default/minio"
+      owner: "root"
+      group: "root"
   - name: Install Minio
     apt:
       deb: /tmp/minio.deb
