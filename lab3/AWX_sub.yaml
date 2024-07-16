@@ -7,7 +7,7 @@ metadata:
   namespace: awx-operator
 spec:
   channel: alpha
-  installPlanApproval: Manual
+  installPlanApproval: Automatic
   name: awx-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
