@@ -16,6 +16,7 @@
     group:
       name: "{{ minio_group }}"
       state: present
+    become: true
 
   - name: Create Minio user
     user:
@@ -23,6 +24,7 @@
       group: "{{ minio_group }}"
       system: "yes"
       shell: "/usr/sbin/nologin"
+    become: true
 
   - name: Create the Minio data storage directories
     file:
@@ -31,6 +33,7 @@
       owner: "{{ minio_user }}"
       group: "{{ minio_group }}"
       mode: 0750
+    become: true
 
   - name: Download the Minio server
     get_url:
