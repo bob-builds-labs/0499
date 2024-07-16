@@ -79,6 +79,6 @@ metadata:
     app.kubernetes.io/operator-version: 2.19.0
     app.kubernetes.io/part-of: awx-prod
 data:
-  password: UGFzc3dvcmQxMjMhCg== 
-  # ZVZjWHhUbWhpa0lyVk11enVGYUhYYkxzTzN4UUVCQW8=
+  # password: UGFzc3dvcmQxMjMhCg== 
+  password: ZVZjWHhUbWhpa0lyVk11enVGYUhYYkxzTzN4UUVCQW8=
 type: Opaque
