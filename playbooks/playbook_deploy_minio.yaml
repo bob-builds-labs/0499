@@ -42,7 +42,7 @@
       url: "{{ download_url }}"
       dest: "/tmp"
       mode: 0755
-      checksum: "sha256:{{ checksum }}"
+      # checksum: "sha256:{{ checksum }}"
     register: download
     until: download is succeeded
     retries: 5
