@@ -61,6 +61,7 @@
       dest: "/etc/default/minio"
       owner: "root"
       group: "root"
+    become: true  
   - name: Install Minio
     apt:
       deb: /tmp/minio.deb
