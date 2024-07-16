@@ -9,7 +9,7 @@
     datapath: /home/minio
     ansible_become_password: Password123!
     download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
-    minio_user: minioadmnin
+    minio_user: minioadmin
     minio_password: Password123!
   tasks:
   - name: "Get the Minio server checksum"
