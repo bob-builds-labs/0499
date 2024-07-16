@@ -1,0 +1,14 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  labels:
+    operators.coreos.com/awx-operator.awx-operator: ''  
+  name: awx-operator.v2.19.1
+  namespace: awx-operator
+spec:
+  channel: alpha
+  installPlanApproval: Manual
+  name: dell-csm-operator-certified
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: x-operator.v2.19.1
