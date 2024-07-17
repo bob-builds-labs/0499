@@ -1,0 +1,58 @@
+{
+     "inventory_sources": [
+          {
+               "name": "LAB1 Hosts",
+               "description": "",
+               "source": "scm",
+               "source_path": "lab1/hosts.yaml",
+               "source_vars": "---",
+               "scm_branch": "",
+               "credential": null,
+               "enabled_var": "",
+               "enabled_value": "",
+               "host_filter": "",
+               "overwrite": false,
+               "overwrite_vars": false,
+               "timeout": 0,
+               "verbosity": 1,
+               "limit": "",
+               "execution_environment": null,
+               "update_on_launch": false,
+               "update_cache_timeout": 0,
+               "inventory": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               },
+               "source_project": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "0499",
+                    "type": "project"
+               },
+               "related": {
+                    "schedules": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": []
+               },
+               "natural_key": {
+                    "name": "LAB1 Hosts",
+                    "inventory": {
+                         "organization": {
+                              "name": "Default",
+                              "type": "organization"
+                         },
+                         "name": "PPDM Inventory",
+                         "type": "inventory"
+                    },
+                    "type": "inventory_source"
+               }
+          }
+     ]
+}
