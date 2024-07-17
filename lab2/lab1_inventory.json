@@ -1,0 +1,601 @@
+{
+     "inventory": [
+          {
+               "name": "PPDM Inventory",
+               "description": "",
+               "kind": "",
+               "host_filter": null,
+               "variables": "---\nppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: Password123!",
+               "prevent_instance_group_fallback": false,
+               "organization": {
+                    "name": "Default",
+                    "type": "organization"
+               },
+               "related": {
+                    "hosts": [
+                         {
+                              "name": "ansible.demo.local",
+                              "description": "",
+                              "enabled": true,
+                              "instance_id": "",
+                              "variables": "---",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "groups": [
+                                        {
+                                             "name": "ansible_executor",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "ansible.demo.local",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "host"
+                              }
+                         },
+                         {
+                              "name": "exchange1",
+                              "description": "imported",
+                              "enabled": true,
+                              "instance_id": "",
+                              "variables": "{}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "groups": [
+                                        {
+                                             "name": "exchangehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "exchange1",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "host"
+                              }
+                         },
+                         {
+                              "name": "exchange2",
+                              "description": "imported",
+                              "enabled": true,
+                              "instance_id": "",
+                              "variables": "{}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "groups": [
+                                        {
+                                             "name": "exchangehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "exchange2",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "host"
+                              }
+                         },
+                         {
+                              "name": "file",
+                              "description": "imported",
+                              "enabled": true,
+                              "instance_id": "",
+                              "variables": "{}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "groups": [
+                                        {
+                                             "name": "filehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "file",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "host"
+                              }
+                         },
+                         {
+                              "name": "launchpad",
+                              "description": "imported",
+                              "enabled": true,
+                              "instance_id": "",
+                              "variables": "{\"vars\": {\"ansible_connection\": \"winrm\", \"ansible_password\": \"Password\", \"ansible_user\": \"administrator@demo.local\", \"ansible_winrm_transport\": \"ntlm\"}}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "groups": [
+                                        {
+                                             "name": "filehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "launchpad",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "host"
+                              }
+                         },
+                         {
+                              "name": "sql01",
+                              "description": "imported",
+                              "enabled": true,
+                              "instance_id": "",
+                              "variables": "{}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "groups": [
+                                        {
+                                             "name": "databasehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "sql01",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "host"
+                              }
+                         },
+                         {
+                              "name": "sql02",
+                              "description": "imported",
+                              "enabled": true,
+                              "instance_id": "",
+                              "variables": "{\"ansible_host\": \"sql02.demo.local\"}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "groups": [
+                                        {
+                                             "name": "databasehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "sql02",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "host"
+                              }
+                         }
+                    ],
+                    "groups": [
+                         {
+                              "name": "ansible_executor",
+                              "description": "",
+                              "variables": "---",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "hosts": [
+                                        {
+                                             "name": "ansible.demo.local",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "host"
+                                        }
+                                   ],
+                                   "children": []
+                              },
+                              "natural_key": {
+                                   "name": "ansible_executor",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "group"
+                              }
+                         },
+                         {
+                              "name": "databasehosts",
+                              "description": "imported",
+                              "variables": "{\"app_agent\": \"{{ msapp_agent_windows }}\", \"app_agent_product_id\": \"{165F48F4-38C4-49DF-904E-4A23D39078BF}\"}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "hosts": [
+                                        {
+                                             "name": "sql01",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "host"
+                                        },
+                                        {
+                                             "name": "sql02",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "host"
+                                        }
+                                   ],
+                                   "children": []
+                              },
+                              "natural_key": {
+                                   "name": "databasehosts",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "group"
+                              }
+                         },
+                         {
+                              "name": "exchangehosts",
+                              "description": "imported",
+                              "variables": "{\"app_agent\": \"{{ exchange_agent_windows }}\", \"app_agent_product_id\": \"{165F48F4-38C4-49DF-904E-4A23D39078BF}\"}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "hosts": [
+                                        {
+                                             "name": "exchange1",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "host"
+                                        },
+                                        {
+                                             "name": "exchange2",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "host"
+                                        }
+                                   ],
+                                   "children": []
+                              },
+                              "natural_key": {
+                                   "name": "exchangehosts",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "group"
+                              }
+                         },
+                         {
+                              "name": "filehosts",
+                              "description": "imported",
+                              "variables": "{\"app_agent\": \"{{ fs_agent_windows }}\", \"app_agent_product_id\": \"{49C974B3-BA72-485C-9A96-794B065339DF}\"}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "hosts": [
+                                        {
+                                             "name": "file",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "host"
+                                        },
+                                        {
+                                             "name": "launchpad",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "host"
+                                        }
+                                   ],
+                                   "children": []
+                              },
+                              "natural_key": {
+                                   "name": "filehosts",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "group"
+                              }
+                         },
+                         {
+                              "name": "windows",
+                              "description": "imported",
+                              "variables": "{\"ansible_connection\": \"winrm\", \"ansible_password\": \"Password123!\", \"ansible_python_interpreter\": \"C:\\\\\\\\Python39\\\\\\\\python.exe\", \"ansible_shell_type\": \"cmd\", \"ansible_user\": \"administrator@demo.local\", \"ansible_winrm_scheme\": \"https\", \"ansible_winrm_server_cert_validation\": \"ignore\", \"ansible_winrm_transport\": \"ntlm\"}",
+                              "inventory": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "PPDM Inventory",
+                                   "type": "inventory"
+                              },
+                              "related": {
+                                   "hosts": [],
+                                   "children": [
+                                        {
+                                             "name": "databasehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        },
+                                        {
+                                             "name": "exchangehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        },
+                                        {
+                                             "name": "filehosts",
+                                             "inventory": {
+                                                  "organization": {
+                                                       "name": "Default",
+                                                       "type": "organization"
+                                                  },
+                                                  "name": "PPDM Inventory",
+                                                  "type": "inventory"
+                                             },
+                                             "type": "group"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "name": "windows",
+                                   "inventory": {
+                                        "organization": {
+                                             "name": "Default",
+                                             "type": "organization"
+                                        },
+                                        "name": "PPDM Inventory",
+                                        "type": "inventory"
+                                   },
+                                   "type": "group"
+                              }
+                         }
+                    ]
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               }
+          }
+     ]
+}
