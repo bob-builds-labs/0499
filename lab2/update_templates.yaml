@@ -1,7 +1,7 @@
 {
      "job_templates": [
           {
-               "name": "9.1 - upload PPDM Update from S3",
+               "name": "_9.1 Upload PPDM Update from S3",
                "description": "",
                "job_type": "run",
                "playbook": "9.9-playbook_upload_update_ppdm_from_s3.yml",
@@ -72,12 +72,12 @@
                          "name": "Default",
                          "type": "organization"
                     },
-                    "name": "9.1 - upload PPDM Update from S3",
+                    "name": "_9.1 Upload PPDM Update from S3",
                     "type": "job_template"
                }
           },
           {
-               "name": "9.2 precheck Update",
+               "name": "_9.2 precheck Update",
                "description": "",
                "job_type": "run",
                "playbook": "9.9-playbook_precheck_update_ppdm.yml",
@@ -148,12 +148,12 @@
                          "name": "Default",
                          "type": "organization"
                     },
-                    "name": "9.2 precheck Update",
+                    "name": "_9.2 precheck Update",
                     "type": "job_template"
                }
           },
           {
-               "name": "9.3 Update PPDM",
+               "name": "_9.3 Update PPDM",
                "description": "",
                "job_type": "run",
                "playbook": "9.9-playbook_install_update_ppdm.yml",
@@ -224,12 +224,12 @@
                          "name": "Default",
                          "type": "organization"
                     },
-                    "name": "9.3 Update PPDM",
+                    "name": "_9.3 Update PPDM",
                     "type": "job_template"
                }
           },
           {
-               "name": "9.4 Update History",
+               "name": "_9.4 Update History",
                "description": "",
                "job_type": "run",
                "playbook": "9.9-playbook_get_ppdm_update_package_history.yml",
@@ -300,12 +300,12 @@
                          "name": "Default",
                          "type": "organization"
                     },
-                    "name": "9.4 Update History",
+                    "name": "_9.4 Update History",
                     "type": "job_template"
                }
           },
           {
-               "name": "9.9 - Delete PPDM Update",
+               "name": "_9.9 Delete PPDM Update",
                "description": "Delte PPDM Update upon Denial",
                "job_type": "run",
                "playbook": "9.9-playbook_delete_ppdm_update_package.yml",
@@ -376,7 +376,7 @@
                          "name": "Default",
                          "type": "organization"
                     },
-                    "name": "9.9 - Delete PPDM Update",
+                    "name": "_9.9 Delete PPDM Update",
                     "type": "job_template"
                }
           }
