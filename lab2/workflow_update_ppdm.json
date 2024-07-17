@@ -2,7 +2,7 @@
 {
      "workflow_job_templates": [
           {
-               "name": "0-9 Upgrade PPDM",
+               "name": "9 Upgrade PPDM",
                "description": "",
                "extra_vars": "---\nppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: Password123!\npackage: dellemc-ppdm-upgrade-sw-19.17.0-5.pkg\nrelease: 19.17",
                "organization": null,
@@ -50,7 +50,7 @@
                               "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
                               "workflow_job_template": {
                                    "organization": null,
-                                   "name": "0-9 Upgrade PPDM",
+                                   "name": "9 Upgrade PPDM",
                                    "type": "workflow_job_template"
                               },
                               "unified_job_template": {
@@ -58,7 +58,7 @@
                                         "name": "Default",
                                         "type": "organization"
                                    },
-                                   "name": "9.2 precheck Update",
+                                   "name": "_9.2 Precheck Update",
                                    "type": "job_template"
                               },
                               "related": {
@@ -67,7 +67,7 @@
                                         {
                                              "workflow_job_template": {
                                                   "organization": null,
-                                                  "name": "0-9 Upgrade PPDM",
+                                                  "name": "9 Upgrade PPDM",
                                                   "type": "workflow_job_template"
                                              },
                                              "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
@@ -78,7 +78,7 @@
                                         {
                                              "workflow_job_template": {
                                                   "organization": null,
-                                                  "name": "0-9 Upgrade PPDM",
+                                                  "name": "9 Upgrade PPDM",
                                                   "type": "workflow_job_template"
                                              },
                                              "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
@@ -90,7 +90,7 @@
                               "natural_key": {
                                    "workflow_job_template": {
                                         "organization": null,
-                                        "name": "0-9 Upgrade PPDM",
+                                        "name": "9 Upgrade PPDM",
                                         "type": "workflow_job_template"
                                    },
                                    "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
@@ -115,7 +115,7 @@
                               "identifier": "e78d519a-113f-46e8-bb7c-a02e52659961",
                               "workflow_job_template": {
                                    "organization": null,
-                                   "name": "0-9 Upgrade PPDM",
+                                   "name": "9 Upgrade PPDM",
                                    "type": "workflow_job_template"
                               },
                               "unified_job_template": {
@@ -123,7 +123,7 @@
                                         "name": "Default",
                                         "type": "organization"
                                    },
-                                   "name": "9.1 - upload PPDM Update from S3",
+                                   "name": "_9.1 Upload PPDM Update from S3",
                                    "type": "job_template"
                               },
                               "related": {
@@ -132,7 +132,7 @@
                                         {
                                              "workflow_job_template": {
                                                   "organization": null,
-                                                  "name": "0-9 Upgrade PPDM",
+                                                  "name": "9 Upgrade PPDM",
                                                   "type": "workflow_job_template"
                                              },
                                              "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
@@ -145,7 +145,7 @@
                               "natural_key": {
                                    "workflow_job_template": {
                                         "organization": null,
-                                        "name": "0-9 Upgrade PPDM",
+                                        "name": "9 Upgrade PPDM",
                                         "type": "workflow_job_template"
                                    },
                                    "identifier": "e78d519a-113f-46e8-bb7c-a02e52659961",
@@ -170,7 +170,7 @@
                               "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
                               "workflow_job_template": {
                                    "organization": null,
-                                   "name": "0-9 Upgrade PPDM",
+                                   "name": "9 Upgrade PPDM",
                                    "type": "workflow_job_template"
                               },
                               "unified_job_template": {
@@ -178,7 +178,7 @@
                                         "name": "Default",
                                         "type": "organization"
                                    },
-                                   "name": "9.3 Update PPDM",
+                                   "name": "_9.3 Update PPDM",
                                    "type": "job_template"
                               },
                               "related": {
@@ -190,7 +190,7 @@
                               "natural_key": {
                                    "workflow_job_template": {
                                         "organization": null,
-                                        "name": "0-9 Upgrade PPDM",
+                                        "name": "9 Upgrade PPDM",
                                         "type": "workflow_job_template"
                                    },
                                    "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
@@ -215,7 +215,7 @@
                               "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
                               "workflow_job_template": {
                                    "organization": null,
-                                   "name": "0-9 Upgrade PPDM",
+                                   "name": "9 Upgrade PPDM",
                                    "type": "workflow_job_template"
                               },
                               "unified_job_template": {
@@ -223,7 +223,7 @@
                                         "name": "Default",
                                         "type": "organization"
                                    },
-                                   "name": "9.4 Update History",
+                                   "name": "_9.4 Update History",
                                    "type": "job_template"
                               },
                               "related": {
@@ -234,7 +234,7 @@
                                         {
                                              "workflow_job_template": {
                                                   "organization": null,
-                                                  "name": "0-9 Upgrade PPDM",
+                                                  "name": "9 Upgrade PPDM",
                                                   "type": "workflow_job_template"
                                              },
                                              "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
@@ -245,7 +245,7 @@
                               "natural_key": {
                                    "workflow_job_template": {
                                         "organization": null,
-                                        "name": "0-9 Upgrade PPDM",
+                                        "name": "9 Upgrade PPDM",
                                         "type": "workflow_job_template"
                                    },
                                    "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
@@ -270,7 +270,7 @@
                               "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
                               "workflow_job_template": {
                                    "organization": null,
-                                   "name": "0-9 Upgrade PPDM",
+                                   "name": "9 Upgrade PPDM",
                                    "type": "workflow_job_template"
                               },
                               "related": {
@@ -279,7 +279,7 @@
                                         {
                                              "workflow_job_template": {
                                                   "organization": null,
-                                                  "name": "0-9 Upgrade PPDM",
+                                                  "name": "9 Upgrade PPDM",
                                                   "type": "workflow_job_template"
                                              },
                                              "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
@@ -290,7 +290,7 @@
                                         {
                                              "workflow_job_template": {
                                                   "organization": null,
-                                                  "name": "0-9 Upgrade PPDM",
+                                                  "name": "9 Upgrade PPDM",
                                                   "type": "workflow_job_template"
                                              },
                                              "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
@@ -307,7 +307,7 @@
                               "natural_key": {
                                    "workflow_job_template": {
                                         "organization": null,
-                                        "name": "0-9 Upgrade PPDM",
+                                        "name": "9 Upgrade PPDM",
                                         "type": "workflow_job_template"
                                    },
                                    "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
@@ -332,7 +332,7 @@
                               "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
                               "workflow_job_template": {
                                    "organization": null,
-                                   "name": "0-9 Upgrade PPDM",
+                                   "name": "9 Upgrade PPDM",
                                    "type": "workflow_job_template"
                               },
                               "unified_job_template": {
@@ -340,7 +340,7 @@
                                         "name": "Default",
                                         "type": "organization"
                                    },
-                                   "name": "9.9 - Delete PPDM Update",
+                                   "name": "_9.9 Delete PPDM Update",
                                    "type": "job_template"
                               },
                               "related": {
@@ -352,7 +352,7 @@
                               "natural_key": {
                                    "workflow_job_template": {
                                         "organization": null,
-                                        "name": "0-9 Upgrade PPDM",
+                                        "name": "9 Upgrade PPDM",
                                         "type": "workflow_job_template"
                                    },
                                    "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
@@ -369,7 +369,7 @@
                },
                "natural_key": {
                     "organization": null,
-                    "name": "0-9 Upgrade PPDM",
+                    "name": "9 Upgrade PPDM",
                     "type": "workflow_job_template"
                }
           }
