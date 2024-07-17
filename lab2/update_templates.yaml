@@ -77,7 +77,7 @@
                }
           },
           {
-               "name": "_9.2 precheck Update",
+               "name": "_9.2 Precheck Update",
                "description": "",
                "job_type": "run",
                "playbook": "9.9-playbook_precheck_update_ppdm.yml",
@@ -148,7 +148,7 @@
                          "name": "Default",
                          "type": "organization"
                     },
-                    "name": "_9.2 precheck Update",
+                    "name": "_9.2 Precheck Update",
                     "type": "job_template"
                }
           },
