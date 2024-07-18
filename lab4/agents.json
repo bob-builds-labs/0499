@@ -173,6 +173,180 @@
                     "name": "100.1 Download Agents",
                     "type": "job_template"
                }
+          },
+          {
+               "name": "100.2 Set DNS for Agents",
+               "description": "",
+               "job_type": "run",
+               "playbook": "100.2_set_dns_for_agents.yaml",
+               "scm_branch": "",
+               "forks": 0,
+               "limit": "",
+               "verbosity": 0,
+               "extra_vars": "---\nppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: \"{{ ansible_password }}\"",
+               "job_tags": "",
+               "force_handlers": false,
+               "skip_tags": "",
+               "start_at_task": "",
+               "timeout": 0,
+               "use_fact_cache": false,
+               "execution_environment": null,
+               "host_config_key": "",
+               "ask_scm_branch_on_launch": false,
+               "ask_diff_mode_on_launch": false,
+               "ask_variables_on_launch": false,
+               "ask_limit_on_launch": false,
+               "ask_tags_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_job_type_on_launch": false,
+               "ask_verbosity_on_launch": false,
+               "ask_inventory_on_launch": false,
+               "ask_credential_on_launch": false,
+               "ask_execution_environment_on_launch": false,
+               "ask_labels_on_launch": false,
+               "ask_forks_on_launch": false,
+               "ask_job_slice_count_on_launch": false,
+               "ask_timeout_on_launch": false,
+               "ask_instance_groups_on_launch": false,
+               "survey_enabled": false,
+               "become_enabled": false,
+               "diff_mode": false,
+               "allow_simultaneous": false,
+               "job_slice_count": 1,
+               "webhook_service": "",
+               "webhook_credential": null,
+               "prevent_instance_group_fallback": false,
+               "inventory": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               },
+               "project": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "ansible-ppdm",
+                    "type": "project"
+               },
+               "related": {
+                    "labels": [],
+                    "credentials": [
+                         {
+                              "organization": null,
+                              "name": "ppdmadmin",
+                              "credential_type": {
+                                   "name": "Machine",
+                                   "kind": "ssh",
+                                   "type": "credential_type"
+                              },
+                              "type": "credential"
+                         }
+                    ],
+                    "schedules": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": [],
+                    "survey_spec": {}
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "100.2 Set DNS for Agents",
+                    "type": "job_template"
+               }
+          },
+          {
+               "name": "100.3 Copy and Deploy Agents from S3",
+               "description": "",
+               "job_type": "run",
+               "playbook": "100.3_playbook_copy_and_deploy_windows_agent_s3.yaml",
+               "scm_branch": "",
+               "forks": 0,
+               "limit": "",
+               "verbosity": 0,
+               "extra_vars": "{\n  \"ppdm_fqdn\": \"ppdm-1.demo.local\",\n  \"ppdm_new_password\": \"{{ ansible_password }}\",\n  \"release\": 19.17\n}",
+               "job_tags": "",
+               "force_handlers": false,
+               "skip_tags": "",
+               "start_at_task": "",
+               "timeout": 0,
+               "use_fact_cache": false,
+               "execution_environment": null,
+               "host_config_key": "",
+               "ask_scm_branch_on_launch": false,
+               "ask_diff_mode_on_launch": false,
+               "ask_variables_on_launch": true,
+               "ask_limit_on_launch": true,
+               "ask_tags_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_job_type_on_launch": false,
+               "ask_verbosity_on_launch": true,
+               "ask_inventory_on_launch": true,
+               "ask_credential_on_launch": false,
+               "ask_execution_environment_on_launch": false,
+               "ask_labels_on_launch": false,
+               "ask_forks_on_launch": false,
+               "ask_job_slice_count_on_launch": false,
+               "ask_timeout_on_launch": false,
+               "ask_instance_groups_on_launch": false,
+               "survey_enabled": false,
+               "become_enabled": false,
+               "diff_mode": false,
+               "allow_simultaneous": false,
+               "job_slice_count": 1,
+               "webhook_service": "",
+               "webhook_credential": null,
+               "prevent_instance_group_fallback": false,
+               "inventory": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               },
+               "project": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "ansible-ppdm",
+                    "type": "project"
+               },
+               "related": {
+                    "labels": [],
+                    "credentials": [
+                         {
+                              "organization": null,
+                              "name": "ppdmadmin",
+                              "credential_type": {
+                                   "name": "Machine",
+                                   "kind": "ssh",
+                                   "type": "credential_type"
+                              },
+                              "type": "credential"
+                         }
+                    ],
+                    "schedules": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": [],
+                    "survey_spec": {}
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "100.3 Copy and Deploy Agents from S3",
+                    "type": "job_template"
+               }
           }
      ]
 }
