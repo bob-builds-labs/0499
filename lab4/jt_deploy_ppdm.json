@@ -63,7 +63,7 @@
                     "credentials": [
                          {
                               "organization": null,
-                              "name": "vcenter",
+                              "name": "vcenter01",
                               "credential_type": {
                                    "name": "VMware vCenter",
                                    "kind": "cloud",
