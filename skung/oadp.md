@@ -1,6 +1,4 @@
 ```bash
-
-```bash
 cat > credentials << EOF
 [default]
 aws_access_key_id=minioadmin
