@@ -23,6 +23,7 @@ oc create secret generic cloud-credentials --namespace openshift-dpa-test --from
 ```
 
 ```bash
+$ cat << EOF | oc apply -f -
 apiVersion: oadp.openshift.io/v1alpha1
 kind: DataProtectionApplication
 metadata:
