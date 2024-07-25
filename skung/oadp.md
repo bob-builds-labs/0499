@@ -3,11 +3,11 @@ $ cat << EOF | oc apply -f -
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: oadp-dpa-test
+  name: openshift-dpa-test
   annotations:
     workload.openshift.io/allowed: management
   labels:
-    name: openshift-adp
+    name: openshift-dpa-test
     openshift.io/cluster-monitoring: "true"
 EOF
 ```
@@ -26,7 +26,7 @@ oc create secret generic cloud-credentials --namespace openshift-dpa-test --from
 apiVersion: oadp.openshift.io/v1alpha1
 kind: DataProtectionApplication
 metadata:
-  name: oadp-dpa-test
+  name: openshift-dpa-test
   namespace: openshift-dpa-test
 spec:
   configuration:
