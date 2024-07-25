@@ -9,7 +9,7 @@ oc create secret generic cloud-credentials --namespace velero-ppdm --from-file c
 ```
 
 ```bash
-$ cat << EOF | oc apply -f -
+cat << EOF | oc apply -f -
 apiVersion: oadp.openshift.io/v1alpha1
 kind: DataProtectionApplication
 metadata:
