@@ -1,15 +1,15 @@
 {
      "job_templates": [
           {
-               "name": "1.0 Deploy PPDM",
+               "name": "1.01 Configure Initial PPDM",
                "description": "",
                "job_type": "run",
-               "playbook": "1.0-playbook_deploy_ppdm_S3.yaml",
+               "playbook": "1.0-playbook_configure_ppdm.yml",
                "scm_branch": "",
                "forks": 0,
                "limit": "",
                "verbosity": 0,
-               "extra_vars": "---\nfqdn: 'ppdm-2.demo.local'\nvm_name: 'ppdm-2'\novf: dellemc-ppdm-sw-19.16.0-15.ova\nip0: '192.168.1.53'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.16",
+               "extra_vars": "---\nppdm_setup_password: \"{{ lookup('env','PPDM_USERNAME') }}\"\nppdm_new_password: \"{{ lookup('env','PPDM_PASSWORD') }}\"\nppdm_timeZone: 'Europe/Berlin'\nppdm_ntp_server: \n    - 192.168.1.2",
                "job_tags": "",
                "force_handlers": false,
                "skip_tags": "",
@@ -25,9 +25,9 @@
                "ask_tags_on_launch": false,
                "ask_skip_tags_on_launch": false,
                "ask_job_type_on_launch": false,
-               "ask_verbosity_on_launch": false,
+               "ask_verbosity_on_launch": true,
                "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": false,
+               "ask_credential_on_launch": true,
                "ask_execution_environment_on_launch": false,
                "ask_labels_on_launch": false,
                "ask_forks_on_launch": false,
@@ -63,6 +63,103 @@
                     "credentials": [
                          {
                               "organization": null,
+                              "name": "ppdm-2",
+                              "credential_type": {
+                                   "name": "Dell PPDM Credentials",
+                                   "kind": "cloud",
+                                   "type": "credential_type"
+                              },
+                              "type": "credential"
+                         }
+                    ],
+                    "schedules": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": [],
+                    "survey_spec": {}
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "1.01 Configure Initial PPDM",
+                    "type": "job_template"
+               }
+          },
+          {
+               "name": "1.0 Deploy PPDM",
+               "description": "",
+               "job_type": "run",
+               "playbook": "1.0-playbook_deploy_ppdm_S3.yaml",
+               "scm_branch": "",
+               "forks": 0,
+               "limit": "",
+               "verbosity": 0,
+               "extra_vars": "---\nfqdn: \"{{ lookup('env','PPDM_FQDN') }}\"\nvm_name: \"{{ fqdn.split('.')[0] }}\"\novf: dellemc-ppdm-sw-19.16.0-15.ova\nip0: '192.168.1.53'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.16",
+               "job_tags": "",
+               "force_handlers": false,
+               "skip_tags": "",
+               "start_at_task": "",
+               "timeout": 0,
+               "use_fact_cache": false,
+               "execution_environment": null,
+               "host_config_key": "",
+               "ask_scm_branch_on_launch": false,
+               "ask_diff_mode_on_launch": false,
+               "ask_variables_on_launch": true,
+               "ask_limit_on_launch": false,
+               "ask_tags_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_job_type_on_launch": false,
+               "ask_verbosity_on_launch": false,
+               "ask_inventory_on_launch": false,
+               "ask_credential_on_launch": true,
+               "ask_execution_environment_on_launch": false,
+               "ask_labels_on_launch": false,
+               "ask_forks_on_launch": false,
+               "ask_job_slice_count_on_launch": false,
+               "ask_timeout_on_launch": false,
+               "ask_instance_groups_on_launch": false,
+               "survey_enabled": false,
+               "become_enabled": false,
+               "diff_mode": false,
+               "allow_simultaneous": false,
+               "job_slice_count": 1,
+               "webhook_service": "",
+               "webhook_credential": null,
+               "prevent_instance_group_fallback": false,
+               "inventory": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               },
+               "project": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "ansible-ppdm",
+                    "type": "project"
+               },
+               "related": {
+                    "labels": [],
+                    "credentials": [
+                         {
+                              "organization": null,
+                              "name": "ppdm-2",
+                              "credential_type": {
+                                   "name": "Dell PPDM Credentials",
+                                   "kind": "cloud",
+                                   "type": "credential_type"
+                              },
+                              "type": "credential"
+                         },
+                         {
+                              "organization": null,
                               "name": "vcenter01",
                               "credential_type": {
                                    "name": "VMware vCenter",
@@ -89,3 +186,4 @@
           }
      ]
 }
+

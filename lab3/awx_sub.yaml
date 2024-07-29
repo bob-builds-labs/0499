@@ -3,7 +3,7 @@ kind: Subscription
 metadata:
   labels:
     operators.coreos.com/awx-operator.awx-operator: ''  
-  name: awx-operator.v2.19.1
+  name: awx-operator
   namespace: awx-operator
 spec:
   channel: alpha
@@ -12,3 +12,7 @@ spec:
   source: community-operators
   sourceNamespace: openshift-marketplace
   startingCSV: awx-operator.v2.19.1
+
+
+
+
