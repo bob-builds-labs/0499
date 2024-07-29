@@ -1,4 +1,3 @@
-
 {
      "job_templates": [
           {
@@ -10,7 +9,7 @@
                "forks": 0,
                "limit": "",
                "verbosity": 0,
-               "extra_vars": "ppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: '{{ ansible_password }}'",
+               "extra_vars": "---",
                "job_tags": "",
                "force_handlers": false,
                "skip_tags": "",
@@ -28,7 +27,7 @@
                "ask_job_type_on_launch": false,
                "ask_verbosity_on_launch": false,
                "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": false,
+               "ask_credential_on_launch": true,
                "ask_execution_environment_on_launch": false,
                "ask_labels_on_launch": false,
                "ask_forks_on_launch": false,
@@ -64,10 +63,10 @@
                     "credentials": [
                          {
                               "organization": null,
-                              "name": "ppdmadmin",
+                              "name": "ppdm-1",
                               "credential_type": {
-                                   "name": "Machine",
-                                   "kind": "ssh",
+                                   "name": "Dell PPDM Credentials",
+                                   "kind": "cloud",
                                    "type": "credential_type"
                               },
                               "type": "credential"
@@ -97,7 +96,7 @@
                "forks": 0,
                "limit": "",
                "verbosity": 0,
-               "extra_vars": "---\nppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: '{{ ansible_password }}'",
+               "extra_vars": "---",
                "job_tags": "",
                "force_handlers": false,
                "skip_tags": "",
@@ -115,7 +114,7 @@
                "ask_job_type_on_launch": false,
                "ask_verbosity_on_launch": false,
                "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": false,
+               "ask_credential_on_launch": true,
                "ask_execution_environment_on_launch": false,
                "ask_labels_on_launch": false,
                "ask_forks_on_launch": false,
@@ -151,10 +150,10 @@
                     "credentials": [
                          {
                               "organization": null,
-                              "name": "ppdmadmin",
+                              "name": "ppdm-1",
                               "credential_type": {
-                                   "name": "Machine",
-                                   "kind": "ssh",
+                                   "name": "Dell PPDM Credentials",
+                                   "kind": "cloud",
                                    "type": "credential_type"
                               },
                               "type": "credential"
@@ -184,7 +183,7 @@
                "forks": 0,
                "limit": "",
                "verbosity": 0,
-               "extra_vars": "---\nppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: \"{{ ansible_password }}\"",
+               "extra_vars": "---",
                "job_tags": "",
                "force_handlers": false,
                "skip_tags": "",
@@ -202,7 +201,7 @@
                "ask_job_type_on_launch": false,
                "ask_verbosity_on_launch": false,
                "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": false,
+               "ask_credential_on_launch": true,
                "ask_execution_environment_on_launch": false,
                "ask_labels_on_launch": false,
                "ask_forks_on_launch": false,
@@ -238,10 +237,10 @@
                     "credentials": [
                          {
                               "organization": null,
-                              "name": "ppdmadmin",
+                              "name": "ppdm-1",
                               "credential_type": {
-                                   "name": "Machine",
-                                   "kind": "ssh",
+                                   "name": "Dell PPDM Credentials",
+                                   "kind": "cloud",
                                    "type": "credential_type"
                               },
                               "type": "credential"
@@ -271,7 +270,7 @@
                "forks": 0,
                "limit": "",
                "verbosity": 0,
-               "extra_vars": "---\nppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: \"{{ ansible_password }}\"",
+               "extra_vars": "---",
                "job_tags": "",
                "force_handlers": false,
                "skip_tags": "",
@@ -289,7 +288,7 @@
                "ask_job_type_on_launch": false,
                "ask_verbosity_on_launch": false,
                "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": false,
+               "ask_credential_on_launch": true,
                "ask_execution_environment_on_launch": false,
                "ask_labels_on_launch": false,
                "ask_forks_on_launch": false,
@@ -325,10 +324,10 @@
                     "credentials": [
                          {
                               "organization": null,
-                              "name": "ppdmadmin",
+                              "name": "ppdm-1",
                               "credential_type": {
-                                   "name": "Machine",
-                                   "kind": "ssh",
+                                   "name": "Dell PPDM Credentials",
+                                   "kind": "cloud",
                                    "type": "credential_type"
                               },
                               "type": "credential"
@@ -358,7 +357,7 @@
                "forks": 0,
                "limit": "",
                "verbosity": 0,
-               "extra_vars": "{\n  \"ppdm_fqdn\": \"ppdm-1.demo.local\",\n  \"ppdm_new_password\": \"{{ ansible_password }}\",\n  \"release\": 19.17\n}",
+               "extra_vars": "release: 19.17",
                "job_tags": "",
                "force_handlers": false,
                "skip_tags": "",
@@ -376,7 +375,7 @@
                "ask_job_type_on_launch": false,
                "ask_verbosity_on_launch": true,
                "ask_inventory_on_launch": true,
-               "ask_credential_on_launch": false,
+               "ask_credential_on_launch": true,
                "ask_execution_environment_on_launch": false,
                "ask_labels_on_launch": false,
                "ask_forks_on_launch": false,
@@ -412,10 +411,10 @@
                     "credentials": [
                          {
                               "organization": null,
-                              "name": "ppdmadmin",
+                              "name": "ppdm-1",
                               "credential_type": {
-                                   "name": "Machine",
-                                   "kind": "ssh",
+                                   "name": "Dell PPDM Credentials",
+                                   "kind": "cloud",
                                    "type": "credential_type"
                               },
                               "type": "credential"
