@@ -488,7 +488,18 @@
                                    "type": "job_template"
                               },
                               "related": {
-                                   "credentials": [],
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
                                    "success_nodes": [
                                         {
                                              "workflow_job_template": {
@@ -553,7 +564,18 @@
                                    "type": "job_template"
                               },
                               "related": {
-                                   "credentials": [],
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
                                    "success_nodes": [
                                         {
                                              "workflow_job_template": {
@@ -608,7 +630,18 @@
                                    "type": "job_template"
                               },
                               "related": {
-                                   "credentials": [],
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
                                    "success_nodes": [],
                                    "failure_nodes": [],
                                    "always_nodes": []
@@ -653,7 +686,18 @@
                                    "type": "job_template"
                               },
                               "related": {
-                                   "credentials": [],
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
                                    "success_nodes": [],
                                    "failure_nodes": [],
                                    "always_nodes": [
@@ -700,7 +744,18 @@
                                    "type": "workflow_job_template"
                               },
                               "related": {
-                                   "credentials": [],
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
                                    "success_nodes": [
                                         {
                                              "workflow_job_template": {
@@ -770,7 +825,18 @@
                                    "type": "job_template"
                               },
                               "related": {
-                                   "credentials": [],
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
                                    "success_nodes": [],
                                    "failure_nodes": [],
                                    "always_nodes": []
