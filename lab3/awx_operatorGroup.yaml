@@ -1,0 +1,13 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: AWX.v1beta1.awx.ansible.com,AWXBackup.v1beta1.awx.ansible.com,AWXMeshIngress.v1alpha1.awx.ansible.com,AWXRestore.v1beta1.awx.ansible.com
+  generateName: awx-operator-
+  generation: 1
+  # name: awx-operator-pldm5
+  namespace: awx-operator
+spec:
+  targetNamespaces:
+  - awx-operator
+  upgradeStrategy: Default

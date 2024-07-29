@@ -1,0 +1,163 @@
+
+{
+     "workflow_job_templates": [
+          {
+               "name": "1 - Deploy and Configure PPDM",
+               "description": "",
+               "extra_vars": "---\nppdm_timeZone: 'Europe/Berlin'\nppdm_ntp_server: \n    - 192.168.1.2\novf: dellemc-ppdm-sw-19.16.0-15.ova\nip0: '192.168.1.53'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.16",
+               "organization": null,
+               "survey_enabled": false,
+               "allow_simultaneous": false,
+               "ask_variables_on_launch": true,
+               "limit": null,
+               "scm_branch": null,
+               "ask_inventory_on_launch": false,
+               "ask_scm_branch_on_launch": false,
+               "ask_limit_on_launch": false,
+               "webhook_service": "",
+               "webhook_credential": null,
+               "ask_labels_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_tags_on_launch": false,
+               "skip_tags": null,
+               "job_tags": null,
+               "inventory": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               },
+               "related": {
+                    "schedules": [],
+                    "workflow_nodes": [
+                         {
+                              "extra_data": {
+                                   "ppdm_setup_password": "{{ ppdm_username }}",
+                                   "ppdm_timeZone": "Europe/Berlin",
+                                   "ppdm_ntp_server": [
+                                        "192.168.1.2"
+                                   ]
+                              },
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "b49a9f77-e78e-4011-8332-84f9923a7977",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "1 - Deploy and Configure PPDM",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "1.01 Configure Initial PPDM",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "1 - Deploy and Configure PPDM",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "b49a9f77-e78e-4011-8332-84f9923a7977",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {
+                                   "ovf": "dellemc-ppdm-sw-19.16.0-15.ova",
+                                   "ip0": "192.168.1.53",
+                                   "gateway": "192.168.1.1",
+                                   "netmask0": "255.255.255.0",
+                                   "DNS": "192.168.1.2",
+                                   "release": 19.16
+                              },
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "3c87191f-3b58-4432-87ac-3288104ffec7",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "1 - Deploy and Configure PPDM",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "1.0 Deploy PPDM",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [],
+                                   "success_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "1 - Deploy and Configure PPDM",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "b49a9f77-e78e-4011-8332-84f9923a7977",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "1 - Deploy and Configure PPDM",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "3c87191f-3b58-4432-87ac-3288104ffec7",
+                                   "type": "workflow_job_template_node"
+                              }
+                         }
+                    ],
+                    "labels": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": [],
+                    "notification_templates_approvals": [],
+                    "survey_spec": {}
+               },
+               "natural_key": {
+                    "organization": null,
+                    "name": "1 - Deploy and Configure PPDM",
+                    "type": "workflow_job_template"
+               }
+          }
+     ]
+}
