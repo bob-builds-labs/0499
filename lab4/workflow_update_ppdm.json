@@ -744,18 +744,7 @@
                                    "type": "workflow_job_template"
                               },
                               "related": {
-                                   "credentials": [
-                                        {
-                                             "organization": null,
-                                             "name": "ppdm-2",
-                                             "credential_type": {
-                                                  "name": "Dell PPDM Credentials",
-                                                  "kind": "cloud",
-                                                  "type": "credential_type"
-                                             },
-                                             "type": "credential"
-                                        }
-                                   ],
+                                   "credentials": [],
                                    "success_nodes": [
                                         {
                                              "workflow_job_template": {
