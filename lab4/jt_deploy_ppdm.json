@@ -96,7 +96,7 @@
                "forks": 0,
                "limit": "",
                "verbosity": 0,
-               "extra_vars": "---\nfqdn: \"{{ lookup('env','PPDM_FQDN') }}\"\nvm_name: \"{{ fqdn.split('.')[0] }}\"\novf: dellemc-ppdm-sw-19.16.0-15.ova\nip0: '192.168.1.53'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.16",
+               "extra_vars": "---\nfqdn: \"{{ lookup('env','PPDM_FQDN') }}\"\nvm_name: \"{{ fqdn.split('.')[0] }}\"\novf: dellemc-ppdm-sw-19.17.0-10.ova\nip0: '192.168.1.53'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.17",
                "job_tags": "",
                "force_handlers": false,
                "skip_tags": "",
