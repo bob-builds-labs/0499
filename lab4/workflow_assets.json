@@ -1,0 +1,280 @@
+{
+     "workflow_job_templates": [
+          {
+               "name": "130.0 AdHoc Protect K8S Asset",
+               "description": "",
+               "extra_vars": "---",
+               "organization": null,
+               "survey_enabled": true,
+               "allow_simultaneous": false,
+               "ask_variables_on_launch": false,
+               "limit": null,
+               "scm_branch": null,
+               "ask_inventory_on_launch": false,
+               "ask_scm_branch_on_launch": false,
+               "ask_limit_on_launch": false,
+               "webhook_service": "",
+               "webhook_credential": null,
+               "ask_labels_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_tags_on_launch": false,
+               "skip_tags": null,
+               "job_tags": null,
+               "inventory": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               },
+               "related": {
+                    "schedules": [],
+                    "workflow_nodes": [
+                         {
+                              "extra_data": {
+                                   "asset_filter": "name eq \"{{ namespace_name }}\" and type eq \"KUBERNETES\" and subtype eq \"K8S_NAMESPACE\" and details.k8s.inventorySourceName eq \"{{ k8s_name }}\""
+                              },
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "e37d6788-e741-41c8-9b31-8ccf024ade69",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "130.0 AdHoc Protect K8S Asset",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "130.0 AdHoc Asset Protection",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "130.0 AdHoc Protect K8S Asset",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "e37d6788-e741-41c8-9b31-8ccf024ade69",
+                                   "type": "workflow_job_template_node"
+                              }
+                         }
+                    ],
+                    "labels": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": [],
+                    "notification_templates_approvals": [],
+                    "survey_spec": {
+                         "name": "",
+                         "spec": [
+                              {
+                                   "max": 1024,
+                                   "min": 0,
+                                   "type": "multiplechoice",
+                                   "choices": [
+                                        "api.openshift.demo.local"
+                                   ],
+                                   "default": "api.openshift.demo.local",
+                                   "required": true,
+                                   "variable": "k8s_name",
+                                   "new_question": false,
+                                   "question_name": "Kubernetes Cluster",
+                                   "question_description": ""
+                              },
+                              {
+                                   "max": 1024,
+                                   "min": 0,
+                                   "type": "text",
+                                   "choices": "",
+                                   "default": "",
+                                   "required": true,
+                                   "variable": "namespace_name",
+                                   "new_question": false,
+                                   "question_name": "Kubernetes Namespace",
+                                   "question_description": "Enetr the name of the Kubernetes Namespace"
+                              },
+                              {
+                                   "max": 1024,
+                                   "min": 0,
+                                   "type": "multiplechoice",
+                                   "choices": [
+                                        "true",
+                                        "false"
+                                   ],
+                                   "default": "false",
+                                   "required": true,
+                                   "variable": "full_output",
+                                   "new_question": false,
+                                   "question_name": "DetailedOutput",
+                                   "question_description": "Display all Asset Details"
+                              }
+                         ],
+                         "description": ""
+                    }
+               },
+               "natural_key": {
+                    "organization": null,
+                    "name": "130.0 AdHoc Protect K8S Asset",
+                    "type": "workflow_job_template"
+               }
+          },
+          {
+               "name": "130.0 Query K8S Assets",
+               "description": "",
+               "extra_vars": "---",
+               "organization": null,
+               "survey_enabled": true,
+               "allow_simultaneous": false,
+               "ask_variables_on_launch": false,
+               "limit": null,
+               "scm_branch": null,
+               "ask_inventory_on_launch": false,
+               "ask_scm_branch_on_launch": false,
+               "ask_limit_on_launch": false,
+               "webhook_service": "",
+               "webhook_credential": null,
+               "ask_labels_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_tags_on_launch": false,
+               "skip_tags": null,
+               "job_tags": null,
+               "inventory": {
+                    "organization": {
+                         "name": "Default",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Inventory",
+                    "type": "inventory"
+               },
+               "related": {
+                    "schedules": [],
+                    "workflow_nodes": [
+                         {
+                              "extra_data": {
+                                   "asset_filter": "name eq \"{{ namespace_name }}\" and type eq \"KUBERNETES\" and subtype eq \"K8S_NAMESPACE\" and details.k8s.inventorySourceName eq \"{{ k8s_name }}\""
+                              },
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "e37d6788-e741-41c8-9b31-8ccf024ade69",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "130.0 Query K8S Assets",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "30.0 Query Assts",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "130.0 Query K8S Assets",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "e37d6788-e741-41c8-9b31-8ccf024ade69",
+                                   "type": "workflow_job_template_node"
+                              }
+                         }
+                    ],
+                    "labels": [],
+                    "notification_templates_started": [],
+                    "notification_templates_success": [],
+                    "notification_templates_error": [],
+                    "notification_templates_approvals": [],
+                    "survey_spec": {
+                         "name": "",
+                         "spec": [
+                              {
+                                   "max": 1024,
+                                   "min": 0,
+                                   "type": "multiplechoice",
+                                   "choices": [
+                                        "api.openshift.demo.local"
+                                   ],
+                                   "default": "api.openshift.demo.local",
+                                   "required": true,
+                                   "variable": "k8s_name",
+                                   "new_question": false,
+                                   "question_name": "Kubernetes Cluster",
+                                   "question_description": ""
+                              },
+                              {
+                                   "max": 1024,
+                                   "min": 0,
+                                   "type": "text",
+                                   "choices": "",
+                                   "default": "",
+                                   "required": true,
+                                   "variable": "namespace_name",
+                                   "new_question": false,
+                                   "question_name": "Kubernetes Namespace",
+                                   "question_description": "Enetr the name of the Kubernetes Namespace"
+                              },
+                              {
+                                   "max": 1024,
+                                   "min": 0,
+                                   "type": "multiplechoice",
+                                   "choices": [
+                                        "true",
+                                        "false"
+                                   ],
+                                   "default": "false",
+                                   "required": true,
+                                   "variable": "full_output",
+                                   "new_question": false,
+                                   "question_name": "DetailedOutput",
+                                   "question_description": "Display all Asset Details"
+                              }
+                         ],
+                         "description": ""
+                    }
+               },
+               "natural_key": {
+                    "organization": null,
+                    "name": "130.0 Query K8S Assets",
+                    "type": "workflow_job_template"
+               }
+          }
+     ]
+}
