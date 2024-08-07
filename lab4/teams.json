@@ -1,0 +1,52 @@
+{
+     "teams": [
+          {
+               "name": "App Team",
+               "description": "",
+               "organization": {
+                    "name": "Dell Org",
+                    "type": "organization"
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Dell Org",
+                         "type": "organization"
+                    },
+                    "name": "App Team",
+                    "type": "team"
+               }
+          },
+          {
+               "name": "kubernetes team",
+               "description": "Them who do not know what they do",
+               "organization": {
+                    "name": "Dell Org",
+                    "type": "organization"
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Dell Org",
+                         "type": "organization"
+                    },
+                    "name": "kubernetes team",
+                    "type": "team"
+               }
+          },
+          {
+               "name": "PPDM Team",
+               "description": "Moder Data Protection Team",
+               "organization": {
+                    "name": "Dell Org",
+                    "type": "organization"
+               },
+               "natural_key": {
+                    "organization": {
+                         "name": "Dell Org",
+                         "type": "organization"
+                    },
+                    "name": "PPDM Team",
+                    "type": "team"
+               }
+          }
+     ]
+}
