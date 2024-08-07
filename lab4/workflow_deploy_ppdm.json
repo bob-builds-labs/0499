@@ -22,7 +22,7 @@
                "job_tags": null,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -61,7 +61,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "1.01 Configure Initial PPDM",
@@ -124,7 +124,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "1.0 Deploy PPDM",
@@ -213,7 +213,7 @@
                "job_tags": null,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -252,7 +252,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "1.01 Configure Initial PPDM",
@@ -315,7 +315,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "1.0 Deploy PPDM",

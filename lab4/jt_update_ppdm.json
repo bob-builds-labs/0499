@@ -44,7 +44,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -52,7 +52,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -69,7 +69,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "_9.1 Upload PPDM Update from S3",
@@ -120,7 +120,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -128,7 +128,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -145,7 +145,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "_9.2 Precheck Update",
@@ -196,7 +196,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -204,7 +204,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -221,7 +221,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "_9.3 Update PPDM",
@@ -272,7 +272,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -280,7 +280,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -297,7 +297,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "_9.4 Update History",
@@ -348,7 +348,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -356,7 +356,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -373,7 +373,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "_9.9 Delete PPDM Update",

@@ -44,7 +44,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -52,7 +52,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -69,7 +69,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "1.01 Configure Initial PPDM",
@@ -120,7 +120,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -128,7 +128,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -145,7 +145,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "1.0 Deploy PPDM",

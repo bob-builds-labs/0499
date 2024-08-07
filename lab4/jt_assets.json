@@ -44,7 +44,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -52,7 +52,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -80,7 +80,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "130.0 AdHoc Asset Protection",
@@ -131,7 +131,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -139,7 +139,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -167,7 +167,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "30.0 Query Assts",

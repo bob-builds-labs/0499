@@ -44,7 +44,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -52,7 +52,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -80,7 +80,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.0 List Agents from PPDM",
@@ -131,7 +131,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -139,7 +139,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -167,7 +167,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.1 Download Agents",
@@ -218,7 +218,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -226,7 +226,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -254,7 +254,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.2 Set DNS for Agents",
@@ -305,7 +305,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -313,7 +313,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -341,7 +341,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.2 Set DNS for Agents v16",
@@ -392,7 +392,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -400,7 +400,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -417,7 +417,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.3 Clear_hosts_file_windows_agent",
@@ -468,7 +468,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -476,7 +476,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -504,7 +504,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.3 Copy and Deploy Agents from S3",
@@ -555,7 +555,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -563,7 +563,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -591,7 +591,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.4 Create Whitelist Entry from Address Query",
@@ -642,7 +642,7 @@
                "prevent_instance_group_fallback": false,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -650,7 +650,7 @@
                },
                "project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
@@ -667,7 +667,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "100.9 Uninstall-windows-agent",

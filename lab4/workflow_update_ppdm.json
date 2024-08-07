@@ -22,7 +22,7 @@
                "job_tags": null,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -54,7 +54,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.2 Precheck Update",
@@ -130,7 +130,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.1 Upload PPDM Update from S3",
@@ -196,7 +196,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.3 Update PPDM",
@@ -252,7 +252,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.4 Update History",
@@ -318,7 +318,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.9 Delete PPDM Update",
@@ -449,7 +449,7 @@
                "job_tags": null,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -543,7 +543,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.2 Precheck Update",
@@ -619,7 +619,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.4 Update History",
@@ -685,7 +685,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.9 Delete PPDM Update",
@@ -741,7 +741,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.1 Upload PPDM Update from S3",
@@ -807,7 +807,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "_9.3 Update PPDM",

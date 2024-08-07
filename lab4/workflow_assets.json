@@ -22,7 +22,7 @@
                "job_tags": null,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -56,7 +56,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "130.0 AdHoc Asset Protection",
@@ -160,7 +160,7 @@
                "job_tags": null,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -194,7 +194,7 @@
                               },
                               "unified_job_template": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "30.0 Query Assts",
