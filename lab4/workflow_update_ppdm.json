@@ -1,47 +1,25 @@
 {
-     "job_templates": [
+     "workflow_job_templates": [
           {
-               "name": "_9.1 Upload PPDM Update from S3",
+               "name": "9 Update PPDM-1",
                "description": "",
-               "job_type": "run",
-               "playbook": "9.9-playbook_upload_update_ppdm_from_s3.yml",
-               "scm_branch": "",
-               "forks": 0,
-               "limit": "",
-               "verbosity": 0,
-               "extra_vars": "---",
-               "job_tags": "",
-               "force_handlers": false,
-               "skip_tags": "",
-               "start_at_task": "",
-               "timeout": 0,
-               "use_fact_cache": false,
-               "execution_environment": null,
-               "host_config_key": "",
-               "ask_scm_branch_on_launch": false,
-               "ask_diff_mode_on_launch": false,
-               "ask_variables_on_launch": false,
-               "ask_limit_on_launch": false,
-               "ask_tags_on_launch": false,
-               "ask_skip_tags_on_launch": false,
-               "ask_job_type_on_launch": false,
-               "ask_verbosity_on_launch": false,
-               "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": true,
-               "ask_execution_environment_on_launch": false,
-               "ask_labels_on_launch": false,
-               "ask_forks_on_launch": false,
-               "ask_job_slice_count_on_launch": false,
-               "ask_timeout_on_launch": false,
-               "ask_instance_groups_on_launch": false,
+               "extra_vars": "package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg\nrelease: 19.17",
+               "organization": null,
                "survey_enabled": false,
-               "become_enabled": false,
-               "diff_mode": false,
                "allow_simultaneous": false,
-               "job_slice_count": 1,
+               "ask_variables_on_launch": true,
+               "limit": null,
+               "scm_branch": null,
+               "ask_inventory_on_launch": false,
+               "ask_scm_branch_on_launch": false,
+               "ask_limit_on_launch": false,
                "webhook_service": "",
                "webhook_credential": null,
-               "prevent_instance_group_fallback": false,
+               "ask_labels_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_tags_on_launch": false,
+               "skip_tags": null,
+               "job_tags": null,
                "inventory": {
                     "organization": {
                          "name": "Default",
@@ -50,85 +28,425 @@
                     "name": "PPDM Inventory",
                     "type": "inventory"
                },
-               "project": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "ansible-ppdm",
-                    "type": "project"
-               },
                "related": {
-                    "labels": [],
-                    "credentials": [
+                    "schedules": [],
+                    "workflow_nodes": [
                          {
-                              "organization": null,
-                              "name": "ppdm-2",
-                              "credential_type": {
-                                   "name": "Dell PPDM Credentials",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-1",
+                                   "type": "workflow_job_template"
                               },
-                              "type": "credential"
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.2 Precheck Update",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-1",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-1",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "failure_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-1",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-1",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "e78d519a-113f-46e8-bb7c-a02e52659961",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-1",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.1 Upload PPDM Update from S3",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-1",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-1",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-1",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "e78d519a-113f-46e8-bb7c-a02e52659961",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-1",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.3 Update PPDM",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-1",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-1",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-1",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.4 Update History",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-1",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-1",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-1",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-1",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.9 Delete PPDM Update",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-1",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-1",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-1",
+                                   "type": "workflow_job_template"
+                              },
+                              "related": {
+                                   "credentials": [],
+                                   "success_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-1",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "failure_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-1",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "always_nodes": [],
+                                   "create_approval_template": {
+                                        "timeout": 0,
+                                        "name": "Approve Update copy",
+                                        "description": "Approveval Request for PPDM Upgrade"
+                                   }
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-1",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
+                                   "type": "workflow_job_template_node"
+                              }
                          }
                     ],
-                    "schedules": [],
+                    "labels": [],
                     "notification_templates_started": [],
                     "notification_templates_success": [],
                     "notification_templates_error": [],
+                    "notification_templates_approvals": [],
                     "survey_spec": {}
                },
                "natural_key": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "_9.1 Upload PPDM Update from S3",
-                    "type": "job_template"
+                    "organization": null,
+                    "name": "9 Update PPDM-1",
+                    "type": "workflow_job_template"
                }
           },
           {
-               "name": "_9.2 Precheck Update",
+               "name": "9 Update PPDM-2",
                "description": "",
-               "job_type": "run",
-               "playbook": "9.9-playbook_precheck_update_ppdm.yml",
-               "scm_branch": "",
-               "forks": 0,
-               "limit": "",
-               "verbosity": 0,
-               "extra_vars": "",
-               "job_tags": "",
-               "force_handlers": false,
-               "skip_tags": "",
-               "start_at_task": "",
-               "timeout": 0,
-               "use_fact_cache": false,
-               "execution_environment": null,
-               "host_config_key": "",
-               "ask_scm_branch_on_launch": false,
-               "ask_diff_mode_on_launch": false,
-               "ask_variables_on_launch": false,
-               "ask_limit_on_launch": false,
-               "ask_tags_on_launch": false,
-               "ask_skip_tags_on_launch": false,
-               "ask_job_type_on_launch": false,
-               "ask_verbosity_on_launch": false,
-               "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": false,
-               "ask_execution_environment_on_launch": false,
-               "ask_labels_on_launch": false,
-               "ask_forks_on_launch": false,
-               "ask_job_slice_count_on_launch": false,
-               "ask_timeout_on_launch": false,
-               "ask_instance_groups_on_launch": false,
+               "extra_vars": "package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg\nrelease: 19.17",
+               "organization": null,
                "survey_enabled": false,
-               "become_enabled": false,
-               "diff_mode": false,
                "allow_simultaneous": false,
-               "job_slice_count": 1,
+               "ask_variables_on_launch": true,
+               "limit": null,
+               "scm_branch": null,
+               "ask_inventory_on_launch": false,
+               "ask_scm_branch_on_launch": false,
+               "ask_limit_on_launch": false,
                "webhook_service": "",
                "webhook_credential": null,
-               "prevent_instance_group_fallback": false,
+               "ask_labels_on_launch": false,
+               "ask_skip_tags_on_launch": false,
+               "ask_tags_on_launch": false,
+               "skip_tags": null,
+               "job_tags": null,
                "inventory": {
                     "organization": {
                          "name": "Default",
@@ -137,302 +455,403 @@
                     "name": "PPDM Inventory",
                     "type": "inventory"
                },
-               "project": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "ansible-ppdm",
-                    "type": "project"
-               },
                "related": {
-                    "labels": [],
-                    "credentials": [
+                    "schedules": [],
+                    "workflow_nodes": [
                          {
-                              "organization": null,
-                              "name": "ppdm-2",
-                              "credential_type": {
-                                   "name": "Dell PPDM Credentials",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-2",
+                                   "type": "workflow_job_template"
                               },
-                              "type": "credential"
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.2 Precheck Update",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-2",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "failure_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-2",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-2",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "e78d519a-113f-46e8-bb7c-a02e52659961",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-2",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.1 Upload PPDM Update from S3",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-2",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "cd09857d-67f0-4c9a-83ec-f3952ac0ad50",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-2",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "e78d519a-113f-46e8-bb7c-a02e52659961",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-2",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.3 Update PPDM",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-2",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-2",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.4 Update History",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-2",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ]
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-2",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "7f8d844e-9b87-46fc-b59c-751419031482",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-2",
+                                   "type": "workflow_job_template"
+                              },
+                              "related": {
+                                   "credentials": [],
+                                   "success_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-2",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "e6b4bf02-63e4-4e6b-91b9-f5020488172b",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "failure_nodes": [
+                                        {
+                                             "workflow_job_template": {
+                                                  "organization": null,
+                                                  "name": "9 Update PPDM-2",
+                                                  "type": "workflow_job_template"
+                                             },
+                                             "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                                             "type": "workflow_job_template_node"
+                                        }
+                                   ],
+                                   "always_nodes": [],
+                                   "create_approval_template": {
+                                        "timeout": 0,
+                                        "name": "Approve Update",
+                                        "description": "Approveval Request for PPDM Upgrade"
+                                   }
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-2",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "5227adc7-85a9-485e-96cd-7fe03cee6ce4",
+                                   "type": "workflow_job_template_node"
+                              }
+                         },
+                         {
+                              "extra_data": {},
+                              "inventory": null,
+                              "scm_branch": null,
+                              "job_type": null,
+                              "job_tags": null,
+                              "skip_tags": null,
+                              "limit": null,
+                              "diff_mode": null,
+                              "verbosity": null,
+                              "execution_environment": null,
+                              "forks": null,
+                              "job_slice_count": null,
+                              "timeout": null,
+                              "all_parents_must_converge": false,
+                              "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                              "workflow_job_template": {
+                                   "organization": null,
+                                   "name": "9 Update PPDM-2",
+                                   "type": "workflow_job_template"
+                              },
+                              "unified_job_template": {
+                                   "organization": {
+                                        "name": "Default",
+                                        "type": "organization"
+                                   },
+                                   "name": "_9.9 Delete PPDM Update",
+                                   "type": "job_template"
+                              },
+                              "related": {
+                                   "credentials": [
+                                        {
+                                             "organization": null,
+                                             "name": "ppdm-2",
+                                             "credential_type": {
+                                                  "name": "Dell PPDM Credentials",
+                                                  "kind": "cloud",
+                                                  "type": "credential_type"
+                                             },
+                                             "type": "credential"
+                                        }
+                                   ],
+                                   "success_nodes": [],
+                                   "failure_nodes": [],
+                                   "always_nodes": []
+                              },
+                              "natural_key": {
+                                   "workflow_job_template": {
+                                        "organization": null,
+                                        "name": "9 Update PPDM-2",
+                                        "type": "workflow_job_template"
+                                   },
+                                   "identifier": "714060ed-cf87-476f-b376-c68ce0a9983b",
+                                   "type": "workflow_job_template_node"
+                              }
                          }
                     ],
-                    "schedules": [],
+                    "labels": [],
                     "notification_templates_started": [],
                     "notification_templates_success": [],
                     "notification_templates_error": [],
+                    "notification_templates_approvals": [],
                     "survey_spec": {}
                },
                "natural_key": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "_9.2 Precheck Update",
-                    "type": "job_template"
-               }
-          },
-          {
-               "name": "_9.3 Update PPDM",
-               "description": "",
-               "job_type": "run",
-               "playbook": "9.9-playbook_install_update_ppdm.yml",
-               "scm_branch": "",
-               "forks": 0,
-               "limit": "",
-               "verbosity": 0,
-               "extra_vars": "---",
-               "job_tags": "",
-               "force_handlers": false,
-               "skip_tags": "",
-               "start_at_task": "",
-               "timeout": 0,
-               "use_fact_cache": false,
-               "execution_environment": null,
-               "host_config_key": "",
-               "ask_scm_branch_on_launch": false,
-               "ask_diff_mode_on_launch": false,
-               "ask_variables_on_launch": false,
-               "ask_limit_on_launch": false,
-               "ask_tags_on_launch": false,
-               "ask_skip_tags_on_launch": false,
-               "ask_job_type_on_launch": false,
-               "ask_verbosity_on_launch": false,
-               "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": true,
-               "ask_execution_environment_on_launch": false,
-               "ask_labels_on_launch": false,
-               "ask_forks_on_launch": false,
-               "ask_job_slice_count_on_launch": false,
-               "ask_timeout_on_launch": false,
-               "ask_instance_groups_on_launch": false,
-               "survey_enabled": false,
-               "become_enabled": false,
-               "diff_mode": false,
-               "allow_simultaneous": false,
-               "job_slice_count": 1,
-               "webhook_service": "",
-               "webhook_credential": null,
-               "prevent_instance_group_fallback": false,
-               "inventory": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "PPDM Inventory",
-                    "type": "inventory"
-               },
-               "project": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "ansible-ppdm",
-                    "type": "project"
-               },
-               "related": {
-                    "labels": [],
-                    "credentials": [
-                         {
-                              "organization": null,
-                              "name": "ppdm-2",
-                              "credential_type": {
-                                   "name": "Dell PPDM Credentials",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
-                              },
-                              "type": "credential"
-                         }
-                    ],
-                    "schedules": [],
-                    "notification_templates_started": [],
-                    "notification_templates_success": [],
-                    "notification_templates_error": [],
-                    "survey_spec": {}
-               },
-               "natural_key": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "_9.3 Update PPDM",
-                    "type": "job_template"
-               }
-          },
-          {
-               "name": "_9.4 Update History",
-               "description": "",
-               "job_type": "run",
-               "playbook": "9.9-playbook_get_ppdm_update_package_history.yml",
-               "scm_branch": "",
-               "forks": 0,
-               "limit": "",
-               "verbosity": 0,
-               "extra_vars": "---",
-               "job_tags": "",
-               "force_handlers": false,
-               "skip_tags": "",
-               "start_at_task": "",
-               "timeout": 0,
-               "use_fact_cache": false,
-               "execution_environment": null,
-               "host_config_key": "",
-               "ask_scm_branch_on_launch": false,
-               "ask_diff_mode_on_launch": false,
-               "ask_variables_on_launch": false,
-               "ask_limit_on_launch": false,
-               "ask_tags_on_launch": false,
-               "ask_skip_tags_on_launch": false,
-               "ask_job_type_on_launch": false,
-               "ask_verbosity_on_launch": false,
-               "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": true,
-               "ask_execution_environment_on_launch": false,
-               "ask_labels_on_launch": false,
-               "ask_forks_on_launch": false,
-               "ask_job_slice_count_on_launch": false,
-               "ask_timeout_on_launch": false,
-               "ask_instance_groups_on_launch": false,
-               "survey_enabled": false,
-               "become_enabled": false,
-               "diff_mode": false,
-               "allow_simultaneous": false,
-               "job_slice_count": 1,
-               "webhook_service": "",
-               "webhook_credential": null,
-               "prevent_instance_group_fallback": false,
-               "inventory": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "PPDM Inventory",
-                    "type": "inventory"
-               },
-               "project": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "ansible-ppdm",
-                    "type": "project"
-               },
-               "related": {
-                    "labels": [],
-                    "credentials": [
-                         {
-                              "organization": null,
-                              "name": "ppdm-2",
-                              "credential_type": {
-                                   "name": "Dell PPDM Credentials",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
-                              },
-                              "type": "credential"
-                         }
-                    ],
-                    "schedules": [],
-                    "notification_templates_started": [],
-                    "notification_templates_success": [],
-                    "notification_templates_error": [],
-                    "survey_spec": {}
-               },
-               "natural_key": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "_9.4 Update History",
-                    "type": "job_template"
-               }
-          },
-          {
-               "name": "_9.9 Delete PPDM Update",
-               "description": "Delte PPDM Update upon Denial",
-               "job_type": "run",
-               "playbook": "9.9-playbook_delete_ppdm_update_package.yml",
-               "scm_branch": "",
-               "forks": 0,
-               "limit": "",
-               "verbosity": 0,
-               "extra_vars": "---",
-               "job_tags": "",
-               "force_handlers": false,
-               "skip_tags": "",
-               "start_at_task": "",
-               "timeout": 0,
-               "use_fact_cache": false,
-               "execution_environment": null,
-               "host_config_key": "",
-               "ask_scm_branch_on_launch": false,
-               "ask_diff_mode_on_launch": false,
-               "ask_variables_on_launch": false,
-               "ask_limit_on_launch": false,
-               "ask_tags_on_launch": false,
-               "ask_skip_tags_on_launch": false,
-               "ask_job_type_on_launch": false,
-               "ask_verbosity_on_launch": false,
-               "ask_inventory_on_launch": false,
-               "ask_credential_on_launch": true,
-               "ask_execution_environment_on_launch": false,
-               "ask_labels_on_launch": false,
-               "ask_forks_on_launch": false,
-               "ask_job_slice_count_on_launch": false,
-               "ask_timeout_on_launch": false,
-               "ask_instance_groups_on_launch": false,
-               "survey_enabled": false,
-               "become_enabled": false,
-               "diff_mode": false,
-               "allow_simultaneous": false,
-               "job_slice_count": 1,
-               "webhook_service": "",
-               "webhook_credential": null,
-               "prevent_instance_group_fallback": false,
-               "inventory": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "PPDM Inventory",
-                    "type": "inventory"
-               },
-               "project": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "ansible-ppdm",
-                    "type": "project"
-               },
-               "related": {
-                    "labels": [],
-                    "credentials": [
-                         {
-                              "organization": null,
-                              "name": "ppdm-2",
-                              "credential_type": {
-                                   "name": "Dell PPDM Credentials",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
-                              },
-                              "type": "credential"
-                         }
-                    ],
-                    "schedules": [],
-                    "notification_templates_started": [],
-                    "notification_templates_success": [],
-                    "notification_templates_error": [],
-                    "survey_spec": {}
-               },
-               "natural_key": {
-                    "organization": {
-                         "name": "Default",
-                         "type": "organization"
-                    },
-                    "name": "_9.9 Delete PPDM Update",
-                    "type": "job_template"
+                    "organization": null,
+                    "name": "9 Update PPDM-2",
+                    "type": "workflow_job_template"
                }
           }
      ]
