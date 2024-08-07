@@ -8,7 +8,7 @@
                "variables": "---\nppdm_fqdn: ppdm-1.demo.local\nppdm_new_password: Password123!",
                "prevent_instance_group_fallback": false,
                "organization": {
-                    "name": "Default",
+                    "name": "Dell Org",
                     "type": "organization"
                },
                "related": {
@@ -21,7 +21,7 @@
                               "variables": "---",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -33,7 +33,7 @@
                                              "name": "ansible_executor",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -47,7 +47,7 @@
                                    "name": "ansible.demo.local",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -64,7 +64,7 @@
                               "variables": "{}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -76,7 +76,7 @@
                                              "name": "exchangehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -90,7 +90,7 @@
                                    "name": "exchange1",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -107,7 +107,7 @@
                               "variables": "{}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -119,7 +119,7 @@
                                              "name": "exchangehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -133,7 +133,7 @@
                                    "name": "exchange2",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -150,7 +150,7 @@
                               "variables": "{}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -162,7 +162,7 @@
                                              "name": "filehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -176,7 +176,7 @@
                                    "name": "file",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -193,7 +193,7 @@
                               "variables": "{\"vars\": {\"ansible_connection\": \"winrm\", \"ansible_password\": \"Password\", \"ansible_user\": \"administrator@demo.local\", \"ansible_winrm_transport\": \"ntlm\"}}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -205,7 +205,7 @@
                                              "name": "filehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -219,7 +219,7 @@
                                    "name": "launchpad",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -236,7 +236,7 @@
                               "variables": "{}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -248,7 +248,7 @@
                                              "name": "databasehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -262,7 +262,7 @@
                                    "name": "sql01",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -279,7 +279,7 @@
                               "variables": "{\"ansible_host\": \"sql02.demo.local\"}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -291,7 +291,7 @@
                                              "name": "databasehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -305,7 +305,7 @@
                                    "name": "sql02",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -322,7 +322,7 @@
                               "variables": "---",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -334,7 +334,7 @@
                                              "name": "ansible.demo.local",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -349,7 +349,7 @@
                                    "name": "ansible_executor",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -364,7 +364,7 @@
                               "variables": "{\"app_agent\": \"{{ msapp_agent_windows }}\", \"app_agent_product_id\": \"{165F48F4-38C4-49DF-904E-4A23D39078BF}\"}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -376,7 +376,7 @@
                                              "name": "sql01",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -388,7 +388,7 @@
                                              "name": "sql02",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -403,7 +403,7 @@
                                    "name": "databasehosts",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -418,7 +418,7 @@
                               "variables": "{\"app_agent\": \"{{ exchange_agent_windows }}\", \"app_agent_product_id\": \"{165F48F4-38C4-49DF-904E-4A23D39078BF}\"}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -430,7 +430,7 @@
                                              "name": "exchange1",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -442,7 +442,7 @@
                                              "name": "exchange2",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -457,7 +457,7 @@
                                    "name": "exchangehosts",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -472,7 +472,7 @@
                               "variables": "{\"app_agent\": \"{{ fs_agent_windows }}\", \"app_agent_product_id\": \"{49C974B3-BA72-485C-9A96-794B065339DF}\"}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -484,7 +484,7 @@
                                              "name": "file",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -496,7 +496,7 @@
                                              "name": "launchpad",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -511,7 +511,7 @@
                                    "name": "filehosts",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -526,7 +526,7 @@
                               "variables": "{\"ansible_connection\": \"winrm\", \"ansible_password\": \"Password123!\", \"ansible_python_interpreter\": \"C:\\\\\\\\Python39\\\\\\\\python.exe\", \"ansible_shell_type\": \"cmd\", \"ansible_user\": \"administrator@demo.local\", \"ansible_winrm_scheme\": \"https\", \"ansible_winrm_server_cert_validation\": \"ignore\", \"ansible_winrm_transport\": \"ntlm\"}",
                               "inventory": {
                                    "organization": {
-                                        "name": "Default",
+                                        "name": "Dell Org",
                                         "type": "organization"
                                    },
                                    "name": "PPDM Inventory",
@@ -539,7 +539,7 @@
                                              "name": "databasehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -551,7 +551,7 @@
                                              "name": "exchangehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -563,7 +563,7 @@
                                              "name": "filehosts",
                                              "inventory": {
                                                   "organization": {
-                                                       "name": "Default",
+                                                       "name": "Dell Org",
                                                        "type": "organization"
                                                   },
                                                   "name": "PPDM Inventory",
@@ -577,7 +577,7 @@
                                    "name": "windows",
                                    "inventory": {
                                         "organization": {
-                                             "name": "Default",
+                                             "name": "Dell Org",
                                              "type": "organization"
                                         },
                                         "name": "PPDM Inventory",
@@ -590,7 +590,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
