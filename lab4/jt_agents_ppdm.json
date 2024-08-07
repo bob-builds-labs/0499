@@ -515,7 +515,7 @@
                "name": "100.9 Uninstall-windows-agent",
                "description": "Remove Windows Agent",
                "job_type": "run",
-               "playbook": "100.9_playbook-uninstall-windows-agent.yaml",
+               "playbook": "100.9_playbook-uninstall-windows_agent_s3.yaml",
                "scm_branch": "",
                "forks": 0,
                "limit": "",
