@@ -60,18 +60,7 @@
                },
                "related": {
                     "labels": [],
-                    "credentials": [
-                         {
-                              "organization": null,
-                              "name": "ppdm-2",
-                              "credential_type": {
-                                   "name": "Dell PPDM Credentials",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
-                              },
-                              "type": "credential"
-                         }
-                    ],
+                    "credentials": [],
                     "schedules": [],
                     "notification_templates_started": [],
                     "notification_templates_success": [],
@@ -147,28 +136,7 @@
                },
                "related": {
                     "labels": [],
-                    "credentials": [
-                         {
-                              "organization": null,
-                              "name": "ppdm-2",
-                              "credential_type": {
-                                   "name": "Dell PPDM Credentials",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
-                              },
-                              "type": "credential"
-                         },
-                         {
-                              "organization": null,
-                              "name": "vcenter01",
-                              "credential_type": {
-                                   "name": "VMware vCenter",
-                                   "kind": "cloud",
-                                   "type": "credential_type"
-                              },
-                              "type": "credential"
-                         }
-                    ],
+                    "credentials": [],
                     "schedules": [],
                     "notification_templates_started": [],
                     "notification_templates_success": [],
@@ -186,4 +154,3 @@
           }
      ]
 }
-
