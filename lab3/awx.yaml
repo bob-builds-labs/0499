@@ -19,7 +19,7 @@ spec:
       memory: 64M
   task_liveness_period: 0
   metrics_utility_cronjob_report_schedule: '@monthly'
-  create_preload_data: true
+  create_preload_data: false
   route_tls_termination_mechanism: Edge
   garbage_collect_secrets: true
   ingress_type: Route
