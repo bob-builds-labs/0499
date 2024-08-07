@@ -19,7 +19,7 @@
                "default_environment": null,
                "signature_validation_credential": null,
                "organization": {
-                    "name": "Default",
+                    "name": "Dell Org",
                     "type": "organization"
                },
                "related": {
@@ -30,7 +30,7 @@
                },
                "natural_key": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "ansible-ppdm",
