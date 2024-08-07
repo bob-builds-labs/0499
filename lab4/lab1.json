@@ -21,7 +21,7 @@
                "update_cache_timeout": 0,
                "inventory": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "PPDM Inventory",
@@ -29,7 +29,7 @@
                },
                "source_project": {
                     "organization": {
-                         "name": "Default",
+                         "name": "Dell Org",
                          "type": "organization"
                     },
                     "name": "0499",
@@ -45,7 +45,7 @@
                     "name": "LAB1 Hosts",
                     "inventory": {
                          "organization": {
-                              "name": "Default",
+                              "name": "Dell Org",
                               "type": "organization"
                          },
                          "name": "PPDM Inventory",
