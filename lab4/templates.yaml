@@ -8,6 +8,6 @@
     - name: Job Template Permissions
       role_team_assignment:
         role_definition: 17
-        object_id: 10
+        object_id: 31
         team: App Team
         state: present
