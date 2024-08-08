@@ -6,7 +6,7 @@
     - awx.awx
   tasks:
     - name: Job Template Permissions
-      role_user_assignment:
+      role_team_assignment:
         role_definition: 17
         object_id: 10
         team: Apps Team
