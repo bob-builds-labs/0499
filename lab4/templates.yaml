@@ -4,7 +4,7 @@
   connection: local
   tasks:
     - name: Job Template Permissions
-      role_team_assignment:
+      awx.awx.role_user_assignment:
         role_definition: 17
         object_id: 10
         team: Apps Team
