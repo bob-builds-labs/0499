@@ -9,5 +9,5 @@
       role_team_assignment:
         role_definition: 17
         object_id: 10
-        team: Apps Team
+        team: App Team
         state: present
