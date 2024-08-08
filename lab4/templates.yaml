@@ -1,0 +1,11 @@
+---
+- name: AWX Role Based Access COntrol
+  hosts: localhost
+  connection: local
+  tasks:
+    - name: Job Template Permissions
+      role_team_assignment:
+        role_definition: 17
+        object_id: 10
+        team: Apps Team
+        state: present
