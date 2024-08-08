@@ -7,7 +7,7 @@
   tasks:
     - name: Job Template Permissions
       role_team_assignment:
-        role_definition: 17
-        object_id: 31
+        role_definition: 18
+        object_id: 10
         team: App Team
         state: present
