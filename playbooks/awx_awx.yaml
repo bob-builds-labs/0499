@@ -29,7 +29,15 @@
       inputs: {"fields":[{"id":"ppdm_fqdn","type":"string","label":"PPDM FQDN","help_text":"Enter the fqdn or IP address that corresponds to your PPDM Instance"},{"id":"ppdm_username","type":"string","label":"Username"},{"id":"ppdm_password","type":"string","label":"Password","secret":true}],"required":["ppdm_fqdn","ppdm_username","ppdm_password"]}
       injectors: {'env':{'PPDM_FQDN':'{{ "{{ " }}ppdm_fqdn{{ " }}" }}' ,'PPDM_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}','PPDM_USERNAME':'{{ "{{ " }}ppdm_username{{ " }}" }}','PPDM_INITIAL_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}'}}
       state: present
-      validate_certs: false      
+      validate_certs: false 
+  - credential_type:
+      name: AWX Credentials
+      description: Credential to log into AWX
+      kind: cloud
+      inputs: {"fields":[{"id":"awx_fqdn","type":"string","label":"AWX FQDN","help_text":"Enter the fqdn or IP address that corresponds to your AWX Instance"},{"id":"awx_username","type":"string","label":"Username"},{"id":"awx_password","type":"string","label":"Password","secret":true}],"required":["awx_fqdn","awx_username","awx_password"]}
+      injectors: {'env':{'CONTROLLER_HOST':'{{ "{{ " }}awx_fqdn{{ " }}" }}' ,'CONTROLLER_PASSWORD':'{{ "{{ " }}awx_password{{ " }}" }}','CONTROLLER_USERNAME':'{{ "{{ " }}awx_username{{ " }}" }}','CONTROLLER_VERIFY_SSL':'false'}}
+      state: present
+      validate_certs: false       
   - name: Create team
     team:
       name: "{{ awx_app_team }}"
