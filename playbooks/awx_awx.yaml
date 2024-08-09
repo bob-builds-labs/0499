@@ -143,3 +143,20 @@
       labels:
         - "{{ awx_infra_label }}"        
 
+  - name: Create Minio Instance
+    job_template:
+      name: "deploy minio to ansible host"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/playbook_deploy_minio_awx.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"
+      labels:
+        - "{{ awx_infra_label }}"
+      limit:
+        - ansible     
+
+
