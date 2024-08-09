@@ -36,4 +36,21 @@
   - name: Update Inventory Project
     project_update:
       project: "{{ awx_inventory_project }}"
-      timeout: 120      
+      timeout: 120
+  - name: Add inventory
+    inventory:
+      name: "PPDM Inventory"
+      description: "Our Foo Cloud Servers"
+      organization: "{{ awx_org }}"
+      state: present      
+#  - name: Add an inventory source From Project
+#    inventory_source:
+#      name: "PPDM"
+#      description: Source for inventory
+#      inventory: previously-created-inventory
+#      credential: previously-created-credential
+#      overwrite: True
+#      update_on_launch: True
+#      organization: Default
+#      source_vars:
+#        private: false      
