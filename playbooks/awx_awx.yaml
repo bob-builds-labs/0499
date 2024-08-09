@@ -4,7 +4,9 @@
   connection: local
   vars:
     awx_org: Dell Org
+    awx_org_description: Dell DPS Org
     awx_app_team: App Team
+    awx_app_team_description: Team handling all App Agent stuff
     
   collections:
     - awx.awx
@@ -12,11 +14,11 @@
   - name: Create organization
     organization:
       name: "{{ awx_org }}"
-      description: "{{ awx_org } organization"
+      description: "{{ awx_org_description }}"
       state: present  
   - name: Create team
     team:
       name: "{{ awx_app_team }}"
-      description: Team handling all App Agent stuff
+      description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
