@@ -17,6 +17,11 @@
   collections:
     - awx.awx
   tasks:
+  - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
+    settings:
+      name: ANSIBLE_JINJA2_NATIVE
+      value: true
+  register: testing_settings
   - name: Create organization {{ awx_org }}
     organization:
       name: "{{ awx_org }}"
