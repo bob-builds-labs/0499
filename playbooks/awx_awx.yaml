@@ -34,7 +34,7 @@
       name: AWX Credentials
       description: Credential to log into AWX
       kind: cloud
-      inputs: {"fields":[{"id":"awx_fqdn","type":"string","label":"AWX FQDN","help_text":"Enter the fqdn or IP address that corresponds to your AWX Instance"},{"id":"awx_username","type":"string","label":"Username"},{"id":"awx_password","type":"string","label":"Password","secret":true}],"required":["awx_fqdn","awx_username","awx_password"]}
+      inputs: {"fields":[{"id":"awx_host","type":"string","label":"AWX HOST","help_text":"Enter the fqdn or IP address that corresponds to your AWX Instance"},{"id":"awx_username","type":"string","label":"Username"},{"id":"awx_password","type":"string","label":"Password","secret":true}],"required":["awx_fqdn","awx_username","awx_password"]}
       injectors: {'env':{'CONTROLLER_HOST':'{{ "{{ " }}awx_fqdn{{ " }}" }}' ,'CONTROLLER_PASSWORD':'{{ "{{ " }}awx_password{{ " }}" }}','CONTROLLER_USERNAME':'{{ "{{ " }}awx_username{{ " }}" }}','CONTROLLER_VERIFY_SSL':'false'}}
       state: present
       validate_certs: false       
@@ -79,4 +79,12 @@
       name: "{{ awx_inventory_source_1 }}"
       inventory: "{{ awx_inventory_1 }}"
       organization: "{{ awx_org }}"
+  - name: Add Credential
+    credential:
+      name: AWX Admin Credentials
+      credential_type: AWX Credentials
+      organization: "{{ awx_org }}"
+      awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
+      awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
+      awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"  
 
