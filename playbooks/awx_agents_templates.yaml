@@ -50,7 +50,7 @@
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ ppdm_project }}"
       playbook: "100.0_list_agents.yml"
-      ask_credential_on_launch": true
+      ask_credential_on_launch: true
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}"
