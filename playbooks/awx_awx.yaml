@@ -17,7 +17,7 @@
   collections:
     - awx.awx
   tasks:
-  - name: Create organization
+  - name: Create organization {{ awx_org }}
     organization:
       name: "{{ awx_org }}"
       description: "{{ awx_org_description }}"
