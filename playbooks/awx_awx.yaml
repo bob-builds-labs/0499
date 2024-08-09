@@ -7,7 +7,9 @@
     awx_org_description: Dell DPS Org
     awx_app_team: App Team
     awx_app_team_description: Team handling all App Agent stuff
-    
+    awx_inventory_project: 0499
+    awx_inventory_project_description: Base Inventory and Templates for 0499
+    awc_inventory_url: https://github.com/bob-builds-labs/0499.git
   collections:
     - awx.awx
   tasks:
@@ -22,3 +24,11 @@
       description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
+  - name: Add Inventory Project
+    project:
+      name: "{{ awx_inventory_project }}"
+      description: "{{ awx_inventory_project_description }}"
+      organization: "{{ awx_org }}"
+      scm_url: True
+      scm_type: git
+      state: present   
