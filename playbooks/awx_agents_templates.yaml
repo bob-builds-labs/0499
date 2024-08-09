@@ -54,9 +54,9 @@
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}"
-  - name: 100.1 Download Agents
+  - name: Add 100.1 Download Agents
     job_template:
-      name: 100.0 List Agents from PPDM
+      name: 100.1 Download Agents
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
