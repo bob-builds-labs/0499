@@ -87,5 +87,16 @@
       inputs:
         awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
         awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
-        awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"  
+        awx_host: "{{ lookup('env','CONTROLLER_HOST') }}" 
+  - name: Create AWX Template
+    job_template:
+      name: "awx"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/awx_awx.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"        
 
