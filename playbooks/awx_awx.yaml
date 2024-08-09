@@ -150,7 +150,7 @@
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ awx_inventory_project }}"
-      playbook: "playbooks/playbook_deploy_minio_awx.yaml"
+      playbook: "playbooks/awx_awx_minio.yaml"
       credentials:
         - "AWX Admin Credentials"
       state: "present"
