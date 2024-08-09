@@ -1,0 +1,82 @@
+---
+- name: AWX Organiszation Agent Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+    awx_org: Dell Org
+    awx_org_description: Dell DPS Org
+    awx_app_team: App Team
+    awx_app_team_description: Team handling all App Agent stuff
+    awx_inventory_project: 0499
+    awx_inventory_project_description: Base Inventory and Templates for 0499
+    awx_inventory_url: https://github.com/bob-builds-labs/0499.git
+    awx_inventory_source_1_description: Inventory vor Lab 1 Hosts
+    awx_inventory_source_1: LAB1 Hosts
+    awx_inventory_1: PPDM Inventory
+    awx_inventory_1_description: PPDM Inventory for AWX
+    awx_infra_label: awx_infra
+    ppdm_agent_label: ppdm_agents
+    ppdm_project: ansible_ppdm
+    ppdm_release: 19.17
+    ppdm_1_credentials: ppdm-1
+    ppdm_1_username: admin
+    ppdm_1_password: Password123!
+    ppdm_1_fqdn: ppdm-1.demo.local
+    ppdm_2_credentials: ppdm-1
+    ppdm_2_username: admin
+    ppdm_2_password: Password123!
+    ppdm_2_fqdn: ppdm-1.demo.local
+  collections:
+    - awx.awx
+  tasks:
+ 
+  - name: Add {{ ppdm_agent_label }} label to organization {{ awx_org }}
+    label:
+      name: "{{ ppdm_agent_label }}"
+      organization: "{{ awx_org }}"    
+  - name: Create team {{ awx_app_team }}
+    team:
+      name: "{{ awx_app_team }}"
+      description: "{{ awx_app_team_description }}"
+      organization: "{{ awx_org }}"
+      state: present
+
+  - name: Add PPDM1 Credentials
+    credential:
+      name: "{{ ppdm_1_credentials }}"
+      credential_type: Dell PPDM Credentials
+      organization: "{{ awx_org }}"
+      inputs:
+        ppdm_username: "{{ ppdm_1_username }}"
+        ppdm_password: "{{ ppdm_1_password }}"
+        ppdm_fqdn: "{{ ppdm_1_fqdn }}"
+
+  - name: Add PPDM1 Credentials
+    credential:
+      name: "{{ ppdm_2_credentials }}"
+      credential_type: Dell PPDM Credentials
+      organization: "{{ awx_org }}"
+      inputs:
+        ppdm_username: "{{ ppdm_2_username }}"
+        ppdm_password: "{{ ppdm_2_password }}"
+        ppdm_fqdn: "{{ ppdm_2_fqdn }}"
+
+  - name: Add 130.0 AdHoc Asset Protection
+    job_template:
+      name: 130.0 AdHoc Asset Protection
+      description: AdHoc protection of Assets
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "130.0-playbook_start_asset_protection.yml"
+      ask_credential_on_launch: true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}" 
+      extra_vars: 
+        asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+      ask_variables_on_launch: true
+      ask_credentials_on_launch: true
