@@ -40,7 +40,7 @@
       organization: "{{ awx_org }}"
       inputs:
         ppdm_username: admin
-        awx_password: Password123!
+        ppdm_password: Password123!
         ppdm_fqdn: "ppdm-1.demo.local"
   - name: Add 100.0 List Agents from PPDM Job Template
     job_template:
