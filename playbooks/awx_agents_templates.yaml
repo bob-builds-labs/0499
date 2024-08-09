@@ -54,4 +54,16 @@
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}"
+  - name: 100.1 Download Agents
+    job_template:
+      name: 100.0 List Agents from PPDM
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "100.1_download_agents_s3.yml"
+      ask_credential_on_launch: true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}"        
 
