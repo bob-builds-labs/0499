@@ -27,15 +27,18 @@
     settings:
       name: AWX_TASK_ENV  
       value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
+
   - name: Create organization {{ awx_org }}
     organization:
       name: "{{ awx_org }}"
       description: "{{ awx_org_description }}"
       state: present
+
   - name: Add {{ awx_infra_label }} label to organization {{ awx_org }}
     label:
       name: "{{ awx_infra_label }}"
-      organization: "{{ awx_org }}"    
+      organization: "{{ awx_org }}"
+         
   - name: Create PPDM Credential Type
     credential_type:
       name: Dell PPDM Credentials
@@ -45,6 +48,7 @@
       injectors: {'env':{'PPDM_FQDN':'{{ "{{ " }}ppdm_fqdn{{ " }}" }}' ,'PPDM_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}','PPDM_USERNAME':'{{ "{{ " }}ppdm_username{{ " }}" }}','PPDM_INITIAL_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}'}}
       state: present
       validate_certs: false 
+
   - name: Create AWX Credential Type
     credential_type:
       name: AWX Credentials
@@ -53,13 +57,15 @@
       inputs: {"fields":[{"id":"awx_host","type":"string","label":"AWX HOST","help_text":"Enter the fqdn or IP address that corresponds to your AWX Instance"},{"id":"awx_username","type":"string","label":"Username"},{"id":"awx_password","type":"string","label":"Password","secret":true}],"required":["awx_fqdn","awx_username","awx_password"]}
       injectors: {'env':{'CONTROLLER_HOST':'{{ "{{ " }}awx_host{{ " }}" }}' ,'CONTROLLER_PASSWORD':'{{ "{{ " }}awx_password{{ " }}" }}','CONTROLLER_USERNAME':'{{ "{{ " }}awx_username{{ " }}" }}','CONTROLLER_VERIFY_SSL':'false'}}
       state: present
-      validate_certs: false       
+      validate_certs: false
+
   - name: Create team {{ awx_app_team }}
     team:
       name: "{{ awx_app_team }}"
       description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
+
   - name: Add {{ ppdm_project }} Project from {{ ppdm_modules_url }}
     project:
       name: "{{ ppdm_project }}"
@@ -69,10 +75,12 @@
       scm_type: git
       state: present 
       timeout: 120
+
   - name: Update Modules Project {{ ppdm_project }} 
     project_update:
       project:  "{{ ppdm_project }}"
-      timeout: 120      
+      timeout: 120 
+
   - name: Add Inventory Project {{ awx_inventory_project }}
     project:
       name: "{{ awx_inventory_project }}"
@@ -83,16 +91,19 @@
       state: present 
       timeout: 120
       scm_update_on_launch: true
+
   - name: Update Inventory Project {{ awx_inventory_project }}
     project_update:
       project: "{{ awx_inventory_project }}"
       timeout: 120
+
   - name: Add inventory {{ awx_inventory_1 }}
     inventory:
       name: "{{ awx_inventory_1 }}"
       description: "{{ awx_inventory_1_description }}"
       organization: "{{ awx_org }}"
-      state: present      
+      state: present  
+
   - name: Add inventory source {{ awx_inventory_source_1 }} from Project {{ awx_inventory_project }}
     inventory_source:
       name: "{{ awx_inventory_source_1 }}"
@@ -104,11 +115,13 @@
       source_project: "{{ awx_inventory_project }}"
       source_vars:
       state: present
+
   - name: Update inventory source {{ awx_inventory_source_1 }}
     inventory_source_update:
       name: "{{ awx_inventory_source_1 }}"
       inventory: "{{ awx_inventory_1 }}"
       organization: "{{ awx_org }}"
+
   - name: Add AWX Admin Credentials
     credential:
       name: AWX Admin Credentials
@@ -117,7 +130,16 @@
       inputs:
         awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
         awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
-        awx_host: "{{ lookup('env','CONTROLLER_HOST') }}" 
+        awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"
+
+  - name: Add Ansible Galaxy Credentials
+    credential:
+      name: Ansible Galaxy
+      credential_type: Ansible Galaxy/Automation Hub API Token
+      organization: "{{ awx_org }}"
+      inputs:
+        url: "https://galaxy.ansible.com" 
+
   - name: Create AWX deployment Job Template
     job_template:
       name: "{{ awx_infra_job_template }}"
@@ -132,14 +154,12 @@
       labels:
         - "{{ awx_infra_label }}"
 
-
   - name: Build a schedule for AWX Template
     schedule:
       name: "awx schedule"
       state: present
       unified_job_template: "{{ awx_infra_job_template }}"
       rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
-
 
   - name: Create PPDM  Agents Job Templates
     job_template:
