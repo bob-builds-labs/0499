@@ -17,7 +17,7 @@
     awx_infra_label: awx_infra
     ppdm_agent_label: ppdm_agents
     ppdm_project: ansible_ppdm
-
+    ppdm_release: 19.17
   collections:
     - awx.awx
   tasks:
@@ -81,7 +81,7 @@
         - "{{ ppdm_agent_label }}" 
   - name: Add 100.3 Clear Hosts File for Windows Agents
     job_template:
-      name: 100.3 Clear_hosts_file_windows_agent
+      name: 100.3 Clear hosts file windows agent
       description: Delete wrong localhost entries
       job_type: "run"
       organization: "{{ awx_org }}"
@@ -92,3 +92,21 @@
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}"         
+
+  - name: Add 100.3 Copy and Deploy Agents from S3
+    job_template:
+      name: 100.3 Copy and Deploy Agents from S3
+      description: Copy and deploy PPDm Agents from S3 Storage
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
+      extra_vars: "release: {{ ppdm_release }}"
+      ask_credential_on_launch: true
+      ask_variables_on_launch: true
+      ask_inventory_on_launch: true
+      ask_limit_on_launch: true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}"        
