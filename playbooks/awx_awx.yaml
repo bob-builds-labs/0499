@@ -1,0 +1,22 @@
+---
+- name: AWX Role Based Access COntrol
+  hosts: localhost
+  connection: local
+  vars:
+    awx_org: Dell Org
+    awx_app_team: App Team
+    
+  collections:
+    - awx.awx
+  tasks:
+  - name: Create organization
+    organization:
+      name: "{{ awx_org }}"
+      description: "{{ awx_org } organization"
+      state: present  
+  - name: Create team
+    team:
+      name: "{{ awx_app_team }}"
+      description: Team handling all App Agent stuff
+      organization: "{{ awx_org }}"
+      state: present
