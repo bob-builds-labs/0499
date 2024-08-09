@@ -1,0 +1,57 @@
+---
+- name: AWX Organiszation Agent Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+    awx_org: Dell Org
+    awx_org_description: Dell DPS Org
+    awx_app_team: App Team
+    awx_app_team_description: Team handling all App Agent stuff
+    awx_inventory_project: 0499
+    awx_inventory_project_description: Base Inventory and Templates for 0499
+    awx_inventory_url: https://github.com/bob-builds-labs/0499.git
+    awx_inventory_source_1_description: Inventory vor Lab 1 Hosts
+    awx_inventory_source_1: LAB1 Hosts
+    awx_inventory_1: PPDM Inventory
+    awx_inventory_1_description: PPDM Inventory for AWX
+    awx_infra_label: awx_infra
+    ppdm_agent_label: ppdm_agents
+    ppdm_project: ansible_ppdm
+
+  collections:
+    - awx.awx
+  tasks:
+ 
+  - name: Add {{ ppdm_agent_label }} label to organization {{ awx_org }}
+    label:
+      name: "{{ ppdm_agent_label }}"
+      organization: "{{ awx_org }}"    
+  - name: Create team {{ awx_app_team }}
+    team:
+      name: "{{ awx_app_team }}"
+      description: "{{ awx_app_team_description }}"
+      organization: "{{ awx_org }}"
+      state: present
+
+  - name: Add PPDM1 Credentials
+    credential:
+      name: ppdm-1
+      credential_type: PPDM Credentials
+      organization: "{{ awx_org }}"
+      inputs:
+        ppdm_username: admin
+        awx_password: Password123!
+        ppdm_fqdn: "ppdm-1.demo.local"
+  - name: Add 100.0 List Agents from PPDM Job Template
+    job_template:
+      name: 100.0 List Agents from PPDM
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "100.0_list_agents.yml"
+      ask_credential_on_launch": true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}"
+
