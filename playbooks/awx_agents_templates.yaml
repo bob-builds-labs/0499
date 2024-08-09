@@ -18,6 +18,7 @@
     ppdm_agent_label: ppdm_agents
     ppdm_project: ansible_ppdm
     ppdm_release: 19.17
+    ppdm_1_credentials: ppdm-1
   collections:
     - awx.awx
   tasks:
@@ -35,7 +36,7 @@
 
   - name: Add PPDM1 Credentials
     credential:
-      name: ppdm-1
+      name: "{{ ppdm_1_credentials }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
@@ -54,6 +55,8 @@
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}"  
   - name: Add 100.1 Download Agents
     job_template:
       name: 100.1 Download Agents
@@ -66,7 +69,8 @@
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}"        
-
+      credentials:
+        - "{{ ppdm_1_credentials }}" 
   - name: Add 100.2 Set DNS for Agents
     job_template:
       name: 100.2 Set DNS for Agents
@@ -78,7 +82,9 @@
       ask_credential_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}" 
+        - "{{ ppdm_agent_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}"          
   - name: Add 100.3 Clear Hosts File for Windows Agents
     job_template:
       name: 100.3 Clear hosts file windows agent
@@ -88,8 +94,9 @@
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ ppdm_project }}"
       playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
-      ask_credential_on_launch: true
       state: "present"
+      ask_inventory_on_launch: true
+      ask_limit_on_launch: true
       labels:
         - "{{ ppdm_agent_label }}"         
 
@@ -110,4 +117,6 @@
       ask_limit_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"        
+        - "{{ ppdm_agent_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}"          
