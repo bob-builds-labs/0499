@@ -98,7 +98,8 @@
       ask_inventory_on_launch: true
       ask_limit_on_launch: true
       labels:
-        - "{{ ppdm_agent_label }}"         
+        - "{{ ppdm_agent_label }}"
+      limit: launchpad           
 
   - name: Add 100.3 Copy and Deploy Agents from S3
     job_template:
@@ -115,6 +116,25 @@
       ask_variables_on_launch: true
       ask_inventory_on_launch: true
       ask_limit_on_launch: true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}"        
+
+  - name: Add 100.4 Create Whitelist Entry from Address Query
+    job_template:
+      name: 100.4 Create Whitelist Entry from Address Query
+      description: Approve Agents via Whitelist
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
+      extra_vars: 
+        host_list: launchpad.demo.local
+      ask_credential_on_launch: true
+      ask_variables_on_launch: true
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}"
