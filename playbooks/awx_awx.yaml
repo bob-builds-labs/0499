@@ -45,9 +45,12 @@
       state: present      
   - name: Add an inventory source From Project
     inventory_source:
-      name: "PPDM"
+      name: "PPDM Inventory"
       description: Source for inventory
-      inventory: "PPDM Inventory"
-      organization: Default
+      inventory: "LAB1 Hosts"
+      organization: "{{ awx_org }}"
+      source: scm
+      source_path: lab1/hosts.yaml
+      source_project: "{{ awx_inventory_project }}"
       source_vars:
-        private: false      
+      state: present         
