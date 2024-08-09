@@ -131,20 +131,12 @@
         - "{{ awx_infra_label }}"
 
 
-  - name: Scheduler for AWX Infra
+  - name: Build a schedule for AWX Template
     schedule:
-      name: "awx schedule"
+      name: "{{ sched1 }}"
       state: present
-      unified_job_template: "awx"
-      rrule: "{{ query(awx.awx.schedule_rruleset, '2022-04-30 23:30:45', rules=rrules, timezone='UTC' ) }}"
-    vars:
-      rrules:
-        - frequency: 'day'
-          every: 1
-        - frequency: 'day'
-          every: 1
-          on_days: 'saturday,sunday'
-          include: False
+      unified_job_template: "Demo Job Template"
+      rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1;COUNT=1"
 
 
   - name: Create PPDM  Agents Job Templates
