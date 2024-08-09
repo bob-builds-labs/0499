@@ -154,9 +154,9 @@
       state: "present"
       labels:
         - "{{ awx_infra_label }}"    
-  - name: Launch PPDM Agent Jobs Deployment
-    job_launch:
-      job_template: "{{ ppdm_agents_job_template }}"            
+#  - name: Launch PPDM Agent Jobs Deployment
+#    job_launch:
+#      job_template: "{{ ppdm_agents_job_template }}"            
 
   - name: Create Minio Instance Job
     job_template:
