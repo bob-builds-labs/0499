@@ -19,11 +19,11 @@
     ppdm_project: ansible_ppdm
     ppdm_release: 19.17
     ppdm_1_credentials: ppdm-1
-    ppdm_1_credentials_username: admin
+    ppdm_1_username: admin
     ppdm_1_password: Password123!
     ppdm_1_fqdn: ppdm-1.demo.local
     ppdm_2_credentials: ppdm-1
-    ppdm_2_credentials_username: admin
+    ppdm_2_username: admin
     ppdm_2_password: Password123!
     ppdm_2_fqdn: ppdm-1.demo.local
   collections:
