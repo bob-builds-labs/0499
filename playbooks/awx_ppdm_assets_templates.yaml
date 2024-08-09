@@ -98,4 +98,25 @@
       extra_vars: 
         asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
       ask_variables_on_launch: true
-      ask_credential_on_launch: true      
+      ask_credential_on_launch: true   
+
+  - name: Add 130.0 AdHoc Protect K8S Asset
+    awx.awx.workflow_job_template:
+      name: 130.0 AdHoc Protect K8S Asset
+      inventory: "{{ awx_inventory_1 }}"
+      workflow_nodes:
+        - identifier: e37d6788-e741-41c8-9b31-8ccf024ade69
+          extra_data:
+            asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+
+          unified_job_template:
+            name: 130.0 AdHoc Asset Protection
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+            credentials: []
