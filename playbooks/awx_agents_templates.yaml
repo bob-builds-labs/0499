@@ -79,7 +79,7 @@
       state: "present"
       labels:
         - "{{ ppdm_agent_label }}" 
-  - name: Add 100.3 Clear_hosts_file_windows_agent
+  - name: Add 100.3 Clear Hosts File for Windows Agents
     job_template:
       name: 100.3 Clear_hosts_file_windows_agent
       description: Delete wrong localhost entries
