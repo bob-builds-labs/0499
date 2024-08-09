@@ -36,7 +36,7 @@
   - name: Add PPDM1 Credentials
     credential:
       name: ppdm-1
-      credential_type: PPDM Credentials
+      credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
         ppdm_username: admin
