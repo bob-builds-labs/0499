@@ -1,0 +1,73 @@
+---
+- name: Deploy Minio for ansible in Bob Lab
+  gather_facts: no
+  vars:
+    minio_group: minio-user
+    minio_user: minio-user
+    datapath: /home/minio
+    ansible_become_password: Password123!
+    download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
+    minio_admin: minioadmin
+    minio_password: Password123!
+  tasks:
+  - name: "Get the Minio server checksum"
+    set_fact:
+      checksum: "{{ lookup('url', 'https://dl.minio.io/server/minio/release/linux-amd64/minio.sha256sum').split(' ')[0] }}"
+
+  - name: Create Minio group 
+    group:
+      name: "{{ minio_group }}"
+      state: present
+    become: true
+
+  - name: Create Minio user
+    user:
+      name: "{{ minio_user }}"
+      group: "{{ minio_group }}"
+      system: "yes"
+      shell: "/usr/sbin/nologin"
+    become: true
+
+  - name: Create the Minio data storage directories
+    file:
+      path: "{{ datapath }}"
+      state: directory
+      owner: "{{ minio_user }}"
+      group: "{{ minio_group }}"
+      mode: 0755
+    become: true
+
+  - name: Download the Minio server
+    get_url:
+      url: "{{ download_url }}"
+      dest: "/tmp"
+      mode: 0755
+      # checksum: "sha256:{{ checksum }}"
+    register: download
+    until: download is succeeded
+    retries: 5
+    delay: 2
+    become: true
+  - name: Create the Minio Config File
+    copy:
+      content: |
+        MINIO_ROOT_USER="{{ minio_admin }}"
+        MINIO_ROOT_PASSWORD="{{ minio_password }}"
+        MINIO_VOLUMES={{ datapath }}
+        MINIO_OPTS="--console-address :9090"
+
+      dest: "/etc/default/minio"
+      owner: "root"
+      group: "root"
+    become: true  
+  - name: Install Minio
+    apt:
+      deb: /tmp/minio.deb
+    become: true
+
+  - name: Enable and start the Minio service
+    service:
+      name: minio
+      state: restarted
+      enabled: true
+    become: true
