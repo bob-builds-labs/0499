@@ -1,5 +1,5 @@
 ---
-- name: AWX Organiszation Agent Templates Runbook
+- name: AWX Organiszation Assets Templates Runbook
   hosts: localhost
   connection: local
   vars:
@@ -16,6 +16,7 @@
     awx_inventory_1_description: PPDM Inventory for AWX
     awx_infra_label: awx_infra
     ppdm_agent_label: ppdm_agents
+    ppdm_assets_label: ppdm_assets
     ppdm_project: ansible_ppdm
     ppdm_release: 19.17
     ppdm_1_credentials: ppdm-1
@@ -30,9 +31,9 @@
     - awx.awx
   tasks:
  
-  - name: Add {{ ppdm_agent_label }} label to organization {{ awx_org }}
+  - name: Add {{ ppdm_assets_label }} label to organization {{ awx_org }}
     label:
-      name: "{{ ppdm_agent_label }}"
+      name: "{{ ppdm_assets_label }}"
       organization: "{{ awx_org }}"    
   - name: Create team {{ awx_app_team }}
     team:
@@ -73,10 +74,10 @@
       ask_credential_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"
+        - "{{ ppdm_assets_label }}"
       credentials:
         - "{{ ppdm_1_credentials }}" 
       extra_vars: 
         asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
       ask_variables_on_launch: true
-      ask_credentials_on_launch: true
+      ask_credential_on_launch: true
