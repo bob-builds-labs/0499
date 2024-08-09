@@ -1,0 +1,162 @@
+---
+- name: AWX Organiszation Deployment Runbook
+  hosts: localhost
+  connection: local
+  vars:
+    awx_org: Dell Org
+    awx_org_description: Dell DPS Org
+    awx_app_team: App Team
+    awx_app_team_description: Team handling all App Agent stuff
+    awx_inventory_project: 0499
+    awx_inventory_project_description: Base Inventory and Templates for 0499
+    awx_inventory_url: https://github.com/bob-builds-labs/0499.git
+    awx_inventory_source_1_description: Inventory vor Lab 1 Hosts
+    awx_inventory_source_1: LAB1 Hosts
+    awx_inventory_1: PPDM Inventory
+    awx_inventory_1_description: PPDM Inventory for AWX
+    awx_infra_label: awx_infra
+    ppdm_project: ansible_ppdm    
+    ppdm_modules_url: https://github.com/dell-examples/ansible_ppdm.git 
+    ppdm_project_description: Ansible PPDM Modules by Karsten Bott 
+  collections:
+    - awx.awx
+  tasks:
+  - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
+    settings:
+      name: AWX_TASK_ENV  
+      value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
+  - name: Create organization {{ awx_org }}
+    organization:
+      name: "{{ awx_org }}"
+      description: "{{ awx_org_description }}"
+      state: present
+  - name: Add {{ awx_infra_label }} label to organization {{ awx_org }}
+    label:
+      name: "{{ awx_infra_label }}"
+      organization: "{{ awx_org }}"    
+  - name: Create PPDM Credential Type
+    credential_type:
+      name: Dell PPDM Credentials
+      description: Credential to log into PowerProtect Datamanager
+      kind: cloud
+      inputs: {"fields":[{"id":"ppdm_fqdn","type":"string","label":"PPDM FQDN","help_text":"Enter the fqdn or IP address that corresponds to your PPDM Instance"},{"id":"ppdm_username","type":"string","label":"Username"},{"id":"ppdm_password","type":"string","label":"Password","secret":true}],"required":["ppdm_fqdn","ppdm_username","ppdm_password"]}
+      injectors: {'env':{'PPDM_FQDN':'{{ "{{ " }}ppdm_fqdn{{ " }}" }}' ,'PPDM_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}','PPDM_USERNAME':'{{ "{{ " }}ppdm_username{{ " }}" }}','PPDM_INITIAL_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}'}}
+      state: present
+      validate_certs: false 
+  - name: Create AWX Credential Type
+    credential_type:
+      name: AWX Credentials
+      description: Credential to log into AWX
+      kind: cloud
+      inputs: {"fields":[{"id":"awx_host","type":"string","label":"AWX HOST","help_text":"Enter the fqdn or IP address that corresponds to your AWX Instance"},{"id":"awx_username","type":"string","label":"Username"},{"id":"awx_password","type":"string","label":"Password","secret":true}],"required":["awx_fqdn","awx_username","awx_password"]}
+      injectors: {'env':{'CONTROLLER_HOST':'{{ "{{ " }}awx_host{{ " }}" }}' ,'CONTROLLER_PASSWORD':'{{ "{{ " }}awx_password{{ " }}" }}','CONTROLLER_USERNAME':'{{ "{{ " }}awx_username{{ " }}" }}','CONTROLLER_VERIFY_SSL':'false'}}
+      state: present
+      validate_certs: false       
+  - name: Create team {{ awx_app_team }}
+    team:
+      name: "{{ awx_app_team }}"
+      description: "{{ awx_app_team_description }}"
+      organization: "{{ awx_org }}"
+      state: present
+  - name: Add {{ ppdm_project }} Project from {{ ppdm_modules_url }}
+    project:
+      name: "{{ ppdm_project }}"
+      description: "{{ ppdm_project_description }}"
+      organization: "{{ awx_org }}"
+      scm_url: "{{ ppdm_modules_url }}"
+      scm_type: git
+      state: present 
+      timeout: 120
+  - name: Update Modules Project {{ ppdm_project }} 
+    project_update:
+      project:  "{{ ppdm_project }}"
+      timeout: 120      
+  - name: Add Inventory Project {{ awx_inventory_project }}
+    project:
+      name: "{{ awx_inventory_project }}"
+      description: "{{ awx_inventory_project_description }}"
+      organization: "{{ awx_org }}"
+      scm_url: "{{ awx_inventory_url }}"
+      scm_type: git
+      state: present 
+      timeout: 120
+      scm_update_on_launch: true
+  - name: Update Inventory Project {{ awx_inventory_project }}
+    project_update:
+      project: "{{ awx_inventory_project }}"
+      timeout: 120
+  - name: Add inventory {{ awx_inventory_1 }}
+    inventory:
+      name: "{{ awx_inventory_1 }}"
+      description: "{{ awx_inventory_1_description }}"
+      organization: "{{ awx_org }}"
+      state: present      
+  - name: Add inventory source {{ awx_inventory_source_1 }} from Project {{ awx_inventory_project }}
+    inventory_source:
+      name: "{{ awx_inventory_source_1 }}"
+      description: "{{ awx_inventory_source_1_description }}"
+      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx_org }}"
+      source: scm
+      source_path: lab1/hosts.yaml
+      source_project: "{{ awx_inventory_project }}"
+      source_vars:
+      state: present
+  - name: Update inventory source {{ awx_inventory_source_1 }}
+    inventory_source_update:
+      name: "{{ awx_inventory_source_1 }}"
+      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx_org }}"
+  - name: Add AWX Admin Credentials
+    credential:
+      name: AWX Admin Credentials
+      credential_type: AWX Credentials
+      organization: "{{ awx_org }}"
+      inputs:
+        awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
+        awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
+        awx_host: "{{ lookup('env','CONTROLLER_HOST') }}" 
+  - name: Create AWX deployment Job Template
+    job_template:
+      name: "awx"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/awx_awx.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"
+      labels:
+        - "{{ awx_infra_label }}"
+  - name: Create PPDM  Agents Job Templates
+    job_template:
+      name: "deploy ppdm agents templates"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/awx_agents_templates.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"
+      labels:
+        - "{{ awx_infra_label }}"        
+
+  - name: Create Minio Instance
+    job_template:
+      name: "deploy minio to ansible host"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/playbook_deploy_minio_awx.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"
+      labels:
+        - "{{ awx_infra_label }}"
+      limit:
+        - ansible     
+
+
