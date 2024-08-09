@@ -19,8 +19,8 @@
   tasks:
   - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
     settings:
-      name: "ANSIBLE_JINJA2_NATIVE"
-      value: "true"
+      name: AWX_TASK_ENV  
+      value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
   - name: Create organization {{ awx_org }}
     organization:
       name: "{{ awx_org }}"
