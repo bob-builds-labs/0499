@@ -1,5 +1,5 @@
 ---
-- name: Deploy Minio for ansible in Bob Lab
+- name: Deploy Minio for ansible in Bob Lab from AWX
   gather_facts: no
   vars:
     minio_group: minio-user
