@@ -15,6 +15,9 @@
     awx_inventory_1: PPDM Inventory
     awx_inventory_1_description: PPDM Inventory for AWX
     awx_infra_label: awx_infra
+    ppdm_project: ansible_ppdm    
+    ppdm_modules_url: https://github.com/dell-examples/ansible_ppdm.git 
+    ppdm_project_description: Ansible PPDM Modules by Karsten Bott 
   collections:
     - awx.awx
   tasks:
@@ -55,6 +58,19 @@
       description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
+  - name: Add {{ ppdm_project }} Project from {{ ppdm_modules_url }}
+    project:
+      name: "{{ ppdm_project }}"
+      description: "{{ ppdm_project_description }}"
+      organization: "{{ awx_org }}"
+      scm_url: "{{ ppdm_modules_url }}"
+      scm_type: git
+      state: present 
+      timeout: 120
+  - name: Update Modules Project {{ ppdm_project }} 
+    project_update:
+      project:  "{{ ppdm_project }}"
+      timeout: 120      
   - name: Add Inventory Project {{ awx_inventory_project }}
     project:
       name: "{{ awx_inventory_project }}"
