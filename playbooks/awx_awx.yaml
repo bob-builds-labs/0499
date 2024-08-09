@@ -84,7 +84,8 @@
       name: AWX Admin Credentials
       credential_type: AWX Credentials
       organization: "{{ awx_org }}"
-      awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
-      awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
-      awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"  
+      inputs:
+        awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
+        awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
+        awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"  
 
