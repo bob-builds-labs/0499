@@ -129,6 +129,24 @@
       state: "present"
       labels:
         - "{{ awx_infra_label }}"
+
+
+  - name: Scheduler for AWX Infra
+    schedule:
+      name: "awx schedule"
+      state: present
+      unified_job_template: "awx"
+      rrule: "{{ query(awx.awx.schedule_rruleset, '2022-04-30 23:30:45', rules=rrules, timezone='UTC' ) }}"
+    vars:
+      rrules:
+        - frequency: 'day'
+          every: 1
+        - frequency: 'day'
+          every: 1
+          on_days: 'saturday,sunday'
+          include: False
+
+
   - name: Create PPDM  Agents Job Templates
     job_template:
       name: "deploy ppdm agents templates"
