@@ -18,7 +18,8 @@
     ppdm_project: ansible_ppdm    
     ppdm_modules_url: https://github.com/dell-examples/ansible_ppdm.git 
     ppdm_project_description: Ansible PPDM Modules by Karsten Bott 
-    awx_infra_job_templkate: awx
+    ppdm_agents_job_template: deploy ppdm agents templates
+    awx_infra_job_template: awx
   collections:
     - awx.awx
   tasks:
@@ -119,7 +120,7 @@
         awx_host: "{{ lookup('env','CONTROLLER_HOST') }}" 
   - name: Create AWX deployment Job Template
     job_template:
-      name: "{{ awx_infra_job_templkate }}"
+      name: "{{ awx_infra_job_template }}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -136,13 +137,13 @@
     schedule:
       name: "awx schedule"
       state: present
-      unified_job_template: "{{ awx_infra_job_templkate }}"
+      unified_job_template: "{{ awx_infra_job_template }}"
       rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
 
 
   - name: Create PPDM  Agents Job Templates
     job_template:
-      name: "deploy ppdm agents templates"
+      name: "{{ ppdm_agents_job_template }}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -152,9 +153,12 @@
         - "AWX Admin Credentials"
       state: "present"
       labels:
-        - "{{ awx_infra_label }}"        
+        - "{{ awx_infra_label }}"    
+  - name: Launch PPDM Agent Jobs Deployment
+    job_launch:
+      job_template: "{{ ppdm_agents_job_template }}"            
 
-  - name: Create Minio Instance
+  - name: Create Minio Instance Job
     job_template:
       name: "deploy minio to ansible host"
       job_type: "run"
