@@ -1,5 +1,5 @@
 ---
-- name: AWX Role Based Access COntrol
+- name: AWX Organiszation Deployment Runbook
   hosts: localhost
   connection: local
   vars:
@@ -31,4 +31,5 @@
       organization: "{{ awx_org }}"
       scm_url: True
       scm_type: git
-      state: present   
+      state: present 
+      timeout: 120
