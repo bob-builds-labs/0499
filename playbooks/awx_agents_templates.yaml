@@ -102,7 +102,8 @@
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ ppdm_project }}"
       playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
-      extra_vars: "release: {{ ppdm_release }}"
+      extra_vars: 
+        release: "{{ ppdm_release }}"
       ask_credential_on_launch: true
       ask_variables_on_launch: true
       ask_inventory_on_launch: true
