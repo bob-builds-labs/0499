@@ -151,12 +151,11 @@
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ awx_inventory_project }}"
       playbook: "playbooks/awx_awx_minio.yaml"
-      credentials:
-        - "AWX Admin Credentials"
+#      credentials:
+#       - "AWX Admin Credentials"
       state: "present"
       labels:
         - "{{ awx_infra_label }}"
-      limit:
-        - ansible     
+      limit: ansible     
 
 
