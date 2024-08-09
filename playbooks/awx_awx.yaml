@@ -129,4 +129,17 @@
       state: "present"
       labels:
         - "{{ awx_infra_label }}"
+  - name: Create PPDM  Agents Job Templates
+    job_template:
+      name: "deploy ppdm agents templates"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/awx_agents_templates.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"
+      labels:
+        - "{{ awx_infra_label }}"        
 
