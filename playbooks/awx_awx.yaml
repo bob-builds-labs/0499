@@ -22,7 +22,8 @@
       name: "{{ awx_org }}"
       description: "{{ awx_org_description }}"
       state: present
-  - credential_type:
+  - name: Create PPDM Credential Type
+    credential_type:
       name: Dell PPDM Credentials
       description: Credential to log into PowerProtect Datamanager
       kind: cloud
@@ -30,7 +31,8 @@
       injectors: {'env':{'PPDM_FQDN':'{{ "{{ " }}ppdm_fqdn{{ " }}" }}' ,'PPDM_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}','PPDM_USERNAME':'{{ "{{ " }}ppdm_username{{ " }}" }}','PPDM_INITIAL_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}'}}
       state: present
       validate_certs: false 
-  - credential_type:
+  - name: Create AWX Credential Type
+    credential_type:
       name: AWX Credentials
       description: Credential to log into AWX
       kind: cloud
@@ -38,13 +40,13 @@
       injectors: {'env':{'CONTROLLER_HOST':'{{ "{{ " }}awx_host{{ " }}" }}' ,'CONTROLLER_PASSWORD':'{{ "{{ " }}awx_password{{ " }}" }}','CONTROLLER_USERNAME':'{{ "{{ " }}awx_username{{ " }}" }}','CONTROLLER_VERIFY_SSL':'false'}}
       state: present
       validate_certs: false       
-  - name: Create team
+  - name: Create team {{ awx_app_team }}
     team:
       name: "{{ awx_app_team }}"
       description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
-  - name: Add Inventory Project
+  - name: Add Inventory Project {{ awx_inventory_project }}
     project:
       name: "{{ awx_inventory_project }}"
       description: "{{ awx_inventory_project_description }}"
@@ -53,17 +55,17 @@
       scm_type: git
       state: present 
       timeout: 120
-  - name: Update Inventory Project
+  - name: Update Inventory Project {{ awx_inventory_project }}
     project_update:
       project: "{{ awx_inventory_project }}"
       timeout: 120
-  - name: Add inventory
+  - name: Add inventory {{ awx_inventory_1 }}
     inventory:
       name: "{{ awx_inventory_1 }}"
       description: "{{ awx_inventory_1_description }}"
       organization: "{{ awx_org }}"
       state: present      
-  - name: Add an inventory source From Project
+  - name: Add inventory source {{ awx_inventory_source_1 }} from Project {{ awx_inventory_project }}
     inventory_source:
       name: "{{ awx_inventory_source_1 }}"
       description: "{{ awx_inventory_source_1_description }}"
@@ -74,12 +76,12 @@
       source_project: "{{ awx_inventory_project }}"
       source_vars:
       state: present
-  - name: Update  inventory source
+  - name: Update inventory source {{ awx_inventory_source_1 }}
     inventory_source_update:
       name: "{{ awx_inventory_source_1 }}"
       inventory: "{{ awx_inventory_1 }}"
       organization: "{{ awx_org }}"
-  - name: Add Credential
+  - name: Add AWX Admin Credentials
     credential:
       name: AWX Admin Credentials
       credential_type: AWX Credentials
@@ -88,7 +90,7 @@
         awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
         awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
         awx_host: "{{ lookup('env','CONTROLLER_HOST') }}" 
-  - name: Create AWX Template
+  - name: Create AWX deployment Job Template
     job_template:
       name: "awx"
       job_type: "run"
