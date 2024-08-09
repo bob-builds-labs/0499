@@ -104,12 +104,12 @@
   - name: Add 100.3 Copy and Deploy Agents from S3
     job_template:
       name: 100.3 Copy and Deploy Agents from S3
-      description: Copy and deploy PPDm Agents from S3 Storage
+      description: Copy and deploy PPDM Agents from S3 Storage
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ ppdm_project }}"
-      playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
+      playbook: "100.3_playbook_copy_and_deploy_windows_agent_s3.yaml"
       extra_vars: 
         release: "{{ ppdm_release }}"
       ask_credential_on_launch: true
@@ -130,7 +130,7 @@
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ ppdm_project }}"
-      playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
+      playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
       extra_vars: 
         host_list: launchpad.demo.local
       ask_credential_on_launch: true
@@ -139,4 +139,24 @@
       labels:
         - "{{ ppdm_agent_label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}"          
+        - "{{ ppdm_1_credentials }}"
+
+  - name: Add 100.9 Uninstall Windows Agent
+    job_template:
+      name: 100.9 Uninstall Windows Agent
+      description: Remove Windows Agent
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "100.9_playbook-uninstall-windows_agent_s3.yaml"
+      extra_vars: 
+        release: "{{ ppdm_release }}"
+      ask_variables_on_launch: true
+      ask_inventory_on_launch: true
+      ask_limit_on_launch: true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}"                   
