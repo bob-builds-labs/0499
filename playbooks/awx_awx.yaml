@@ -133,9 +133,9 @@
 
   - name: Build a schedule for AWX Template
     schedule:
-      name: "{{ sched1 }}"
+      name: "awx schedule"
       state: present
-      unified_job_template: "Demo Job Template"
+      unified_job_template: "awx"
       rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1;COUNT=1"
 
 
