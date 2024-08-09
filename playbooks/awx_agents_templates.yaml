@@ -67,3 +67,28 @@
       labels:
         - "{{ ppdm_agent_label }}"        
 
+  - name: Add 100.2 Set DNS for Agents
+    job_template:
+      name: 100.2 Set DNS for Agents
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "100.2_set_dns_for_agents.yaml"
+      ask_credential_on_launch: true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}" 
+  - name: Add 100.3 Clear_hosts_file_windows_agent
+    job_template:
+      name: 100.3 Clear_hosts_file_windows_agent
+      description: Delete wrong localhost entries
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
+      ask_credential_on_launch: true
+      state: "present"
+      labels:
+        - "{{ ppdm_agent_label }}"         
