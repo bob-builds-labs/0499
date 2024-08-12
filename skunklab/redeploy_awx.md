@@ -29,6 +29,11 @@ oc wait --for=condition=ready pod -l "app.kubernetes.io/name=awx-prod-task" -n a
 cd ../lab4
 direnv allow .
 direnv reload
+export CONTROLLER_VERIFY_SSL=false
+export CONTROLLER_HOST=https://awx-prod-awx-operator.apps.openshift.demo.local
+export CONTROLLER_USERNAME=admin    
+export CONTROLLER_PASSWORD=$(oc get secret/awx-prod-admin-password -n awx-operator -o jsonpath={.data.password} | base64 -d)
+
 ansible-playbook ../playbooks/awx_awx.yaml
 echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
 ```
