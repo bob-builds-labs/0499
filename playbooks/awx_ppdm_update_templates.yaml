@@ -41,7 +41,7 @@
         ppdm_password: "{{ ppdm_2_password }}"
         ppdm_fqdn: "{{ ppdm_2_fqdn }}"
 
-  - name: Add 130.0 _9.1 Upload PPDM Update from S3
+  - name: Add _9.1 Upload PPDM Update from S3
     job_template:
       name: _9.1 Upload PPDM Update from S3
       description: AdHoc protection of Assets
