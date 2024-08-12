@@ -75,16 +75,48 @@
 
   - name: Add _9.3 Update PPDM
     job_template:
-      name: _9.2 Precheck Update
-      description: Runs the Update Precheck
+      name: _9.3 Update PPDM
+      description: Runs the Update
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
       project: "{{ ppdm_project }}"
-      playbook: "9.9-playbook_precheck_update_ppdm.yml"
+      playbook: "9.9-playbook_install_update_ppdm.yml"
       state: "present"
       labels:
         - "{{ ppdm_infra_label }}"
       credentials:
         - "{{ ppdm_1_credentials }}" 
-      ask_credential_on_launch: true      
+      ask_credential_on_launch: true   
+
+  - name: Add _9.4 Update History
+    job_template:
+      name: _9.4 Update History
+      description: Runs the Update
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "9.9-playbook_get_ppdm_update_package_history.yml"
+      state: "present"
+      labels:
+        - "{{ ppdm_infra_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}" 
+      ask_credential_on_launch: true            
+
+  - name: Add _9.9 Delete PPDM Update
+    job_template:
+      name: _9.9 Delete PPDM Update
+      description: Runs the Update
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "9.9-playbook_delete_ppdm_update_package.yml"
+      state: "present"
+      labels:
+        - "{{ ppdm_infra_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}" 
+      ask_credential_on_launch: true            
