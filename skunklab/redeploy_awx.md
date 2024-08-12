@@ -7,6 +7,11 @@ oc delete -f awx_sub.yaml -n awx-operator
 oc delete -f awx_operatorGroup.yaml
 oc delete ns awx-operator
 
+oc delete crd awxbackups.awx.ansible.com
+oc delete crd awxmeshingresses.awx.ansible.com 
+oc delete crd awxrestores.awx.ansible.com
+oc delete crd awxs.awx.ansible.com  
+
 oc create ns awx-operator
 oc create -f awx_operatorGroup.yaml
 oc apply -f awx_sub.yaml -n awx-operator
