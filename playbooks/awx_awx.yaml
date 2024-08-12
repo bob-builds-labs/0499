@@ -14,7 +14,9 @@
       name: AWX_TASK_ENV  
       value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
     register: result 
-
+  - debug: 
+      msg: "{{ result }}"
+      verbosity: 1
   - name: Set the Custom Login Info
     settings:
       name: CUSTOM_LOGIN_INFO  
