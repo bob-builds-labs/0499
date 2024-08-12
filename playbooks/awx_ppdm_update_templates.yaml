@@ -44,7 +44,7 @@
   - name: Add _9.1 Upload PPDM Update from S3
     job_template:
       name: _9.1 Upload PPDM Update from S3
-      description: AdHoc protection of Assets
+      description: Uploads the PPDM Update .pkg file from S3 to PPDM
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -56,3 +56,35 @@
       credentials:
         - "{{ ppdm_1_credentials }}" 
       ask_credential_on_launch: true
+
+  - name: Add _9.2 Precheck Update
+    job_template:
+      name: _9.2 Precheck Update
+      description: Runs the Update Precheck
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "9.9-playbook_precheck_update_ppdm.yml"
+      state: "present"
+      labels:
+        - "{{ ppdm_infra_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}" 
+      ask_credential_on_launch: true
+
+  - name: Add _9.3 Update PPDM
+    job_template:
+      name: _9.2 Precheck Update
+      description: Runs the Update Precheck
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "9.9-playbook_precheck_update_ppdm.yml"
+      state: "present"
+      labels:
+        - "{{ ppdm_infra_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}" 
+      ask_credential_on_launch: true      
