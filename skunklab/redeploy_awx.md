@@ -17,5 +17,6 @@ until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=awx-prod-task" -n awx-oper
 oc wait --for=condition=ready pod -l "app.kubernetes.io/name=awx-prod-task" -n awx-operator --timeout 600s
 cd ../lab4
 direnv allow .
+ansible-playbook ../playbooks/awx_awx.yaml
 echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
 ```
