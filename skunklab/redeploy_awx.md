@@ -15,6 +15,11 @@ oc delete crd awxs.awx.ansible.com
 oc create ns awx-operator
 oc create -f awx_operatorGroup.yaml
 oc apply -f awx_sub.yaml -n awx-operator
+echo "Waiting for AWX Operator to be ready"
+controller-manager
+until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=controller-manager" -n awx-operator) ]]; do echo "Sleeping 5 seconds";sleep 5; done
+oc wait --for=condition=ready pod -l "app.kubernetes.io/name=controller-manager" -n awx-operator --timeout 600s
+
 oc apply -f awx.yaml -n awx-operator
 echo "Waiting for AWX Prod to be ready"
 until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=awx-prod-task" -n awx-operator) ]]; do echo "Sleeping 5 seconds";sleep 5; done
