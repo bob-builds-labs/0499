@@ -13,6 +13,7 @@
     settings:
       name: AWX_TASK_ENV  
       value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
+    register: result 
 
   - name: Set the Custom Login Info
     settings:
