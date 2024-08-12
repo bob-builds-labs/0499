@@ -20,6 +20,7 @@
     ppdm_project_description: Ansible PPDM Modules by Karsten Bott 
     ppdm_agents_job_template: deploy ppdm agents templates
     ppdm_assets_job_template: deploy ppdm assets templates
+    ppdm_update_job_template: deploy ppdm update templates
     awx_infra_job_template: awx
   collections:
     - awx.awx
@@ -192,6 +193,21 @@
       state: "present"
       labels:
         - "{{ awx_infra_label }}"  
+
+  - name: Create PPDM update Job Templates
+    job_template:
+      name: "{{ ppdm_update_job_template }}"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/awx_ppdm_update_templates.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"
+      labels:
+        - "{{ awx_infra_label }}"  
+
 
   - name: Create Minio Instance Job
     job_template:

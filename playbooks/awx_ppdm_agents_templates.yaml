@@ -25,7 +25,7 @@
     ppdm_2_credentials: ppdm-1
     ppdm_2_username: admin
     ppdm_2_password: Password123!
-    ppdm_2_fqdn: ppdm-1.demo.local
+    ppdm_2_fqdn: ppdm-2.demo.local
   collections:
     - awx.awx
   tasks:
@@ -51,7 +51,7 @@
         ppdm_password: "{{ ppdm_1_password }}"
         ppdm_fqdn: "{{ ppdm_1_fqdn }}"
 
-  - name: Add PPDM1 Credentials
+  - name: Add PPDM2 Credentials
     credential:
       name: "{{ ppdm_2_credentials }}"
       credential_type: Dell PPDM Credentials

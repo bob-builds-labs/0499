@@ -1,0 +1,56 @@
+---
+- name: AWX Organiszation PPDM Update Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+
+  collections:
+    - awx.awx
+  tasks:
+ 
+  - name: Add {{ ppdm_infra_label }} label to organization {{ awx_org }}
+    label:
+      name: "{{ ppdm_infra_label }}"
+      organization: "{{ awx_org }}"    
+  - name: Create team {{ ppdm_infra_team }}
+    team:
+      name: "{{ ppdm_infra_team }}"
+      description: "{{ ppdm_infra_team_description }}"
+      organization: "{{ awx_org }}"
+      state: present
+
+  - name: Add PPDM1 Credentials
+    credential:
+      name: "{{ ppdm_1_credentials }}"
+      credential_type: Dell PPDM Credentials
+      organization: "{{ awx_org }}"
+      inputs:
+        ppdm_username: "{{ ppdm_1_username }}"
+        ppdm_password: "{{ ppdm_1_password }}"
+        ppdm_fqdn: "{{ ppdm_1_fqdn }}"
+
+  - name: Add PPDM2 Credentials
+    credential:
+      name: "{{ ppdm_2_credentials }}"
+      credential_type: Dell PPDM Credentials
+      organization: "{{ awx_org }}"
+      inputs:
+        ppdm_username: "{{ ppdm_2_username }}"
+        ppdm_password: "{{ ppdm_2_password }}"
+        ppdm_fqdn: "{{ ppdm_2_fqdn }}"
+
+  - name: Add 130.0 _9.1 Upload PPDM Update from S3
+    job_template:
+      name: _9.1 Upload PPDM Update from S3
+      description: AdHoc protection of Assets
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm_project }}"
+      playbook: "9.9-playbook_upload_update_ppdm_from_s3.yml"
+      state: "present"
+      labels:
+        - "{{ ppdm_infra_label }}"
+      credentials:
+        - "{{ ppdm_1_credentials }}" 
+      ask_credential_on_launch: true
