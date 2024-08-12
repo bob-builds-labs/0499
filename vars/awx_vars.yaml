@@ -2,8 +2,7 @@
     awx_org_description: Dell DPS Org
     awx_app_team: App Team
     awx_infra_team: Infra Team
-    awx_app_team_description: Team handling all App Agent stuff
-    ppdm_infra_team_description: Team handling all PPDM Infrastructure ( Deploy, Update )
+    awx_app_team_description: Team handling all App Agent stuff    
     awx_inventory_project: 0499
     awx_inventory_project_description: Base Inventory and Templates for 0499
     awx_inventory_url: https://github.com/bob-builds-labs/0499.git
@@ -12,8 +11,11 @@
     awx_inventory_1: PPDM Inventory
     awx_inventory_1_description: PPDM Inventory for AWX
     awx_infra_label: awx_infra
+    awx_infra_job_template: awx
+        
     ppdm_infra_label: ppdm_infra
     ppdm_infra_team: PPDM Infra Team
+    ppdm_infra_team_description: Team handling all PPDM Infrastructure ( Deploy, Update )    
     ppdm_agent_label: ppdm_agents
     ppdm_assets_label: ppdm_assets
     ppdm_project: ansible_ppdm
@@ -26,3 +28,16 @@
     ppdm_2_username: admin
     ppdm_2_password: Password123!
     ppdm_2_fqdn: ppdm-2.demo.local
+    ppdm_modules_url: https://github.com/dell-examples/ansible_ppdm.git 
+    ppdm_project_description: Ansible PPDM Modules by Karsten Bott 
+    ppdm_agents_job_template: deploy ppdm agents templates
+    ppdm_assets_job_template: deploy ppdm assets templates
+    ppdm_update_job_template: deploy ppdm update templates
+
+    minio_group: minio-user
+    minio_user: minio-user
+    datapath: /home/minio
+    ansible_become_password: Password123!
+    download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
+    minio_admin: minioadmin
+    minio_password: Password123!

@@ -3,13 +3,8 @@
   hosts: ansible
   gather_facts: no
   vars:
-    minio_group: minio-user
-    minio_user: minio-user
-    datapath: /home/minio
-    ansible_become_password: Password123!
-    download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
-    minio_admin: minioadmin
-    minio_password: Password123!
+  vars_files: 
+    - ../vars/awx_vars.yaml
   tasks:
   - name: "Get the Minio server checksum"
     set_fact:
