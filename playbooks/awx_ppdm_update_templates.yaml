@@ -69,8 +69,8 @@
       state: "present"
       labels:
         - "{{ ppdm_infra_label }}"
-      credentials:
-        - "{{ ppdm_1_credentials }}" 
+      credentials: []
+
       ask_credential_on_launch: true
 
   - name: Add _9.3 Update PPDM
@@ -142,4 +142,4 @@
             failure_nodes: []
             always_nodes: []
             credentials: 
-                - name: ppdm-1     
+                - name: "{{ ppdm_1_credentials }}"     
