@@ -125,7 +125,9 @@
     awx.awx.workflow_job_template:
       name: 9 Update PPDM-1
       inventory: "{{ awx_inventory_1 }}"
-      extra_vars: "package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg\nrelease: 19.17"
+      extra_vars: 
+          - package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg
+          - release: 19.17
       workflow_nodes:
         - identifier: "cd09857d-67f0-4c9a-83ec-f3952ac0ad50"
           extra_data: []
