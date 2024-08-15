@@ -273,10 +273,10 @@
                 name: "{{ awx_org }}"
             type: job_template
           related:
-            success_nodes: 
-              - identifier: "0_{{ ppdm_agents_job_template }}" 
-              - identifier: "0_{{ ppdm_assets_job_template }}" 
-              - identifier: "0_{{ ppdm_update_job_template }}" 
+            success_nodes: []
+ #             - identifier: "0_{{ ppdm_agents_job_template }}" 
+ #             - identifier: "0_{{ ppdm_assets_job_template }}" 
+ #             - identifier: "0_{{ ppdm_update_job_template }}" 
             failure_nodes: []
             always_nodes: []
             credentials: []      
