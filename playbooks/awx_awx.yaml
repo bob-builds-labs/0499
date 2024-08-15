@@ -24,7 +24,7 @@
   - name: Set the Custom Login Info
     settings:
       name: CUSTOM_LOGIN_INFO  
-      value: 'Welcome to Dell PDDM Automation Platform Environment'
+      value: "{{ awx_custom_login_info }}"
 
   - name: Set the Custom Logo
     settings:
