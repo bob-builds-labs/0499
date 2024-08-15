@@ -264,6 +264,20 @@
       name: "{{ awx_infra_workflow_job_template }}"
       inventory: "{{ awx_inventory_1 }}"
       workflow_nodes:
+        - identifier: "0_{{ awx_infra_job_template }}"
+          extra_data: []
+          unified_job_template:
+            name: "{{ awx_infra_job_template }}"
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: 
+              - "{{ awx_infra_job_template }}"
+            failure_nodes: []
+            always_nodes: []
+            credentials: []      
         - identifier: "0_{{ ppdm_agents_job_template }}"
           extra_data: []
           unified_job_template:
@@ -273,7 +287,8 @@
                 name: "{{ awx_org }}"
             type: job_template
           related:
-            success_nodes: []
+            success_nodes: 
+              - "{{ awx_infra_job_template }}"
             failure_nodes: []
             always_nodes: []
             credentials: []
@@ -286,7 +301,8 @@
                 name: "{{ awx_org }}"
             type: job_template
           related:
-            success_nodes: []
+            success_nodes: 
+              - "{{ awx_infra_job_template }}"
             failure_nodes: []
             always_nodes: []
             credentials: []            
@@ -300,7 +316,8 @@
                 name: "{{ awx_org }}"
             type: job_template
           related:
-            success_nodes: []
+            success_nodes: 
+              - "{{ awx_infra_job_template }}"
             failure_nodes: []
             always_nodes: []
             credentials: []            
