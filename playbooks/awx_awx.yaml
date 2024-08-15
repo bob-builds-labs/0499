@@ -263,6 +263,7 @@
     awx.awx.workflow_job_template:
       name: "{{ awx_infra_workflow_job_template }}"
       inventory: "{{ awx_inventory_1 }}"
+      description: "Automated awx update workflow for PPDM Automation"
       workflow_nodes:
         - identifier: "0_{{ awx_infra_job_template }}"
           extra_data: []
