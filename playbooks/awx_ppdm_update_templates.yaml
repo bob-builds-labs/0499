@@ -53,8 +53,7 @@
       state: "present"
       labels:
         - "{{ ppdm_infra_label }}"
-      credentials:
-        - "{{ ppdm_1_credentials }}" 
+      credentials: [] 
       ask_credential_on_launch: true
 
   - name: Add _9.2 Precheck Update
@@ -70,7 +69,6 @@
       labels:
         - "{{ ppdm_infra_label }}"
       credentials: []
-
       ask_credential_on_launch: true
 
   - name: Add _9.3 Update PPDM
@@ -85,8 +83,7 @@
       state: "present"
       labels:
         - "{{ ppdm_infra_label }}"
-      credentials:
-        - "{{ ppdm_1_credentials }}" 
+      credentials: []  
       ask_credential_on_launch: true   
 
   - name: Add _9.4 Update History
@@ -101,8 +98,7 @@
       state: "present"
       labels:
         - "{{ ppdm_infra_label }}"
-      credentials:
-        - "{{ ppdm_1_credentials }}" 
+      credentials: [] 
       ask_credential_on_launch: true            
 
   - name: Add _9.9 Delete PPDM Update
@@ -117,10 +113,14 @@
       state: "present"
       labels:
         - "{{ ppdm_infra_label }}"
-      credentials:
-        - "{{ ppdm_1_credentials }}" 
+      credentials: []
       ask_credential_on_launch: true            
 
+  
+
+     
+  
+  
   - name: 9 Update PPDM-1
     awx.awx.workflow_job_template:
       name: 9 Update PPDM-1
@@ -129,10 +129,56 @@
           package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg
           release: 19.17
       workflow_nodes:
-        - identifier: "cd09857d-67f0-4c9a-83ec-f3952ac0ad50"
+        - identifier: "node-09-01"
+          extra_data: []
+          unified_job_template:
+            name: _9.1 Upload PPDM Update from S3
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: 
+              -identifier: "node-09-02"
+            failure_nodes: []
+            always_nodes: []
+            credentials: 
+                - name: "{{ ppdm_1_credentials }}"
+        - identifier: "node-09-02"
           extra_data: []
           unified_job_template:
             name: _9.2 Precheck Update
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: 
+              - identifier: node-09-03-approve
+            failure_nodes: 
+              - identifier: node-09-04
+            always_nodes: []
+            credentials: 
+                - name: "{{ ppdm_1_credentials }}"
+        - identifier: "node-09-03-approve"
+          all_parents_must_coverage: false	
+          extra_data: []
+          unified_job_template:
+            name: _9.3 Approval for Update
+            timeout: 900
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: workflow_approval
+          related:
+            success_nodes: 
+              - identifier: node-09-03
+            failure_nodes: []
+            always_nodes: []
+        - identifier: "node-09-03"
+          extra_data: []
+          unified_job_template:
+            name: _9.3 Update PPDM
             inventory:
               organization:
                 name: "{{ awx_org }}"
@@ -143,3 +189,18 @@
             always_nodes: []
             credentials: 
                 - name: "{{ ppdm_1_credentials }}"     
+        - identifier: "node-09-04"
+          extra_data: []
+          unified_job_template:
+            name: _9.4 Update History
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: 
+              - identifier: node-09-09-delete
+            credentials: 
+                - name: "{{ ppdm_1_credentials }}"                                                                                   
