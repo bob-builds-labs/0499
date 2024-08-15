@@ -21,26 +21,6 @@
       organization: "{{ awx_org }}"
       state: present
 
-  - name: Add PPDM1 Credentials
-    credential:
-      name: "{{ ppdm_1_credentials }}"
-      credential_type: Dell PPDM Credentials
-      organization: "{{ awx_org }}"
-      inputs:
-        ppdm_username: "{{ ppdm_1_username }}"
-        ppdm_password: "{{ ppdm_1_password }}"
-        ppdm_fqdn: "{{ ppdm_1_fqdn }}"
-
-  - name: Add PPDM2 Credentials
-    credential:
-      name: "{{ ppdm_2_credentials }}"
-      credential_type: Dell PPDM Credentials
-      organization: "{{ awx_org }}"
-      inputs:
-        ppdm_username: "{{ ppdm_2_username }}"
-        ppdm_password: "{{ ppdm_2_password }}"
-        ppdm_fqdn: "{{ ppdm_2_fqdn }}"
-
   - name: Add 100.0 List Agents from PPDM Job Template
     job_template:
       name: 100.0 List Agents from PPDM
