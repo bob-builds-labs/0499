@@ -203,4 +203,18 @@
             always_nodes: 
               - identifier: node-09-09-delete
             credentials: 
-                - name: "{{ ppdm_1_credentials }}"                                                                                   
+                - name: "{{ ppdm_1_credentials }}"         
+        - identifier: "node-09-09-delete"
+          extra_data: []
+          unified_job_template:
+            name: _9.9 Delete PPDM Update
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: []
+            failure_nodes: []
+            always_nodes:  []
+            credentials: 
+                - name: "{{ ppdm_1_credentials }}"              
