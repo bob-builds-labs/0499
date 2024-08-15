@@ -12,6 +12,7 @@
     awx_inventory_1_description: PPDM Inventory for AWX
     awx_infra_label: awx_infra
     awx_infra_job_template: awx
+    awx_infra_workflow_job_template: 0_Maintain AWX
     awx_galaxy_credentials_name: Ansible Galaxy
     awx_custom_login_info: 'Welcome to Dell PPDM Automation Platform Environment'
     ppdm_infra_label: ppdm_infra

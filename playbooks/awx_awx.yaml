@@ -192,12 +192,7 @@
       labels:
         - "{{ awx_infra_label }}"
 
-  - name: Build a schedule for AWX Template
-    schedule:
-      name: "awx schedule"
-      state: present
-      unified_job_template: "{{ awx_infra_job_template }}"
-      rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
+
 
   - name: Create PPDM Agents Job Templates
     job_template:
@@ -258,6 +253,61 @@
       state: "present"
       labels:
         - "{{ awx_infra_label }}"
-      limit: ansible     
+      limit: ansible
 
 
+
+  
+  
+  - name: AWX PPDM template Maintain Workflow
+    awx.awx.workflow_job_template:
+      name: "{{ awx_infra_workflow_job_template }}"
+      inventory: "{{ awx_inventory_1 }}"
+      workflow_nodes:
+        - identifier: "0_{{ ppdm_agents_job_template }}"
+          extra_data: []
+          unified_job_template:
+            name: "{{ ppdm_agents_job_template }}"
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+            credentials: []
+        - identifier: "0_{{ ppdm_assets_job_template }}"
+          extra_data: []
+          unified_job_template:
+            name: "{{ ppdm_assets_job_template }}"
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+            credentials: []            
+
+        - identifier: "0_{{ ppdm_update_job_template }}"
+          extra_data: []
+          unified_job_template:
+            name: "{{ ppdm_update_job_template }}"
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+            credentials: []            
+
+  - name: Build a schedule for AWX Template
+    schedule:
+      name: "awx schedule"
+      state: present
+      unified_job_template: "{{ awx_infra_workflow_job_template }}"
+      rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
