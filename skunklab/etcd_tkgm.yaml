@@ -1,0 +1,55 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: etcd-backup
+  namespace: kube-system
+spec:
+  schedule: "*/5 * * * *"  # Run ievery 5 minutes
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+          - name: etcd-backup
+            image: projects.registry.vmware.com/tkg/etcd:v3.5.6_vmware.9
+            imagePullPolicy: IfNotPresent
+            command:
+            - /bin/sh
+            - -c
+            - |
+              echo 'Starting ETCD Backups'
+              export ETCDCTL_API=3
+              TIMESTAMP=$(date '+%Y-%m-%d-%H-%M-%s')
+              echo "Backing up etcd ... Snapshot file: /tmp/etcd-${TIMESTAMP} ..i"
+              etcdctl --endpoints=https://127.0.0.1:2379 --cacert=/etc/kubernetes/pki/etcd/ca.crt --cert=/etc/kubernetes/pki/etcd/server.crt --key=/etc/kubernetes/pki/etcd/server.key snapshot save /tmp/etcd-${TIMESTAMP}
+              echo "Moving backup to /backups"
+              mv /tmp/etcd-${TIMESTAMP} /backups
+              ls -l /backups
+              echo 'Deleting files older than 30 days'
+              find /backups/ -type f -mtime +30 -exec rm -f {} \;
+            volumeMounts:
+            - mountPath: /etc/kubernetes/pki/etcd
+              name: etcd-certs
+              readOnly: true
+            - name: etcd-backup
+              mountPath: /backups
+          restartPolicy: OnFailure
+          volumes:
+          - name: etcd-certs
+            hostPath:
+              path: /etc/kubernetes/pki/etcd
+              type: Directory
+          - name: etcd-backup
+            nfs:
+              path: /data/col1/etcd-cron
+              server: 192.168.1.30 #ddve-01.demo.local
+          securityContext:
+            seccompProfile:
+             type: RuntimeDefault
+          hostNetwork: true
+          tolerations:
+            - key: node-role.kubernetes.io/control-plane
+              effect: NoSchedule
+              operator: Exists
+          nodeSelector:
+           node-role.kubernetes.io/control-plane: ""
