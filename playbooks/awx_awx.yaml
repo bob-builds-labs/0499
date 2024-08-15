@@ -273,7 +273,7 @@
                 name: "{{ awx_org }}"
             type: job_template
           related:
-            success_nodes: [ "{{ awx_infra_job_template }}" ]
+            success_nodes: [ "{{ awx_infra_job_template | int }}" ]
             #  - 
             failure_nodes: []
             always_nodes: []
