@@ -139,12 +139,12 @@
             type: job_template
           related:
             success_nodes: 
-              -identifier: "node-09-02"
+              - identifier: node-09-02
             failure_nodes: []
             always_nodes: []
             credentials: 
                 - name: "{{ ppdm_1_credentials }}"
-        - identifier: "node-09-02"
+        - identifier: node-09-02
           extra_data: []
           unified_job_template:
             name: _9.2 Precheck Update
