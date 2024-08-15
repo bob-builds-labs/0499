@@ -129,7 +129,7 @@
           package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg
           release: 19.17
       workflow_nodes:
-        - identifier: "node-09-01"
+        - identifier: "09-01-upload"
           extra_data: []
           unified_job_template:
             name: _9.1 Upload PPDM Update from S3
@@ -139,12 +139,12 @@
             type: job_template
           related:
             success_nodes: 
-              - identifier: node-09-02
+              - identifier: 09-02-precheck-update
             failure_nodes: []
             always_nodes: []
             credentials: 
                 - name: "{{ ppdm_1_credentials }}"
-        - identifier: node-09-02
+        - identifier: 09-02-precheck-update
           extra_data: []
           unified_job_template:
             name: _9.2 Precheck Update
@@ -154,13 +154,13 @@
             type: job_template
           related:
             success_nodes: 
-              - identifier: node-09-03-approve
+              - identifier: 09-03-approve-update
             failure_nodes: 
-              - identifier: node-09-04
+              - identifier: 09-04-update-history
             always_nodes: []
             credentials: 
                 - name: "{{ ppdm_1_credentials }}"
-        - identifier: "node-09-03-approve"
+        - identifier: "09-03-approve-update"
           all_parents_must_coverage: false	
           extra_data: []
           unified_job_template:
@@ -172,10 +172,10 @@
             type: workflow_approval
           related:
             success_nodes: 
-              - identifier: node-09-03
+              - identifier: 09-03-update-ppdm
             failure_nodes: []
             always_nodes: []
-        - identifier: "node-09-03"
+        - identifier: "09-03-update-ppdm"
           extra_data: []
           unified_job_template:
             name: _9.3 Update PPDM
@@ -189,7 +189,7 @@
             always_nodes: []
             credentials: 
                 - name: "{{ ppdm_1_credentials }}"     
-        - identifier: "node-09-04"
+        - identifier: "09-04-update-history"
           extra_data: []
           unified_job_template:
             name: _9.4 Update History
@@ -201,10 +201,10 @@
             success_nodes: []
             failure_nodes: []
             always_nodes: 
-              - identifier: node-09-09-delete
+              - identifier: 09-09-delete-update-package
             credentials: 
                 - name: "{{ ppdm_1_credentials }}"         
-        - identifier: "node-09-09-delete"
+        - identifier: "09-09-delete-update-package"
           extra_data: []
           unified_job_template:
             name: _9.9 Delete PPDM Update
