@@ -36,6 +36,20 @@
       name: "{{ awx_org }}"
       description: "{{ awx_org_description }}"
       state: present
+  - name: Add Ansible Galaxy Credentials
+    credential:
+      name: "{{ awx_galaxy_credentials_name }}"
+      credential_type: Ansible Galaxy/Automation Hub API Token
+      organization: "{{ awx_org }}"
+      inputs:
+        url: "https://galaxy.ansible.com" 
+
+  - name: Add Galaxy Credentials to organization {{ awx_org }}
+    organization:
+      name: "{{ awx_org }}"
+      galaxy_credentials: "{{ awx_galaxy_credentials_name }}"
+      description: "{{ awx_org_description }}"
+      state: present
 
   - name: Add {{ awx_infra_label }} label to organization {{ awx_org }}
     label:
@@ -142,6 +156,9 @@
       organization: "{{ awx_org }}"
       inputs:
         url: "https://galaxy.ansible.com" 
+
+
+
 
   - name: Create AWX deployment Job Template
     job_template:
