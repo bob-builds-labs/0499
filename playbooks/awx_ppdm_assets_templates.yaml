@@ -98,3 +98,62 @@
             failure_nodes: []
             always_nodes: []
             credentials: []
+
+  - name: Add 130.0 Query K8S Assets
+    awx.awx.workflow_job_template:
+      name: 130.0 Query K8S Assets
+      inventory: "{{ awx_inventory_1 }}"
+      workflow_nodes:
+        - identifier: 130.0-Query-K8S-Assets
+          extra_data:
+            asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+
+          unified_job_template:
+            name: 130.0 AdHoc Asset Protection
+            inventory:
+              organization:
+                name: "{{ awx_org }}"
+            type: job_template
+          related:
+            success_nodes: []
+            failure_nodes: []
+            always_nodes: []
+            credentials: []
+          survey_enabled: true  
+          survey_spec: 
+            name: ''
+                spec:
+                  - max: 1024
+                    min: 0
+                    type: multiplechoice
+                    choices:
+                      - api.openshift.demo.local
+                    default: api.openshift.demo.local
+                    required: true
+                    variable: k8s_name
+                    new_question: false
+                    question_name: Kubernetes Cluster
+                    question_description: 'Please select your Kubernetes Cluster'
+                  - max: 1024
+                    min: 0
+                    type: text
+                    choices: ''
+                    default: ''
+                    required: true
+                    variable: namespace_name
+                    new_question: false
+                    question_name: Kubernetes Namespace
+                    question_description: 'Please Enter the name of the Kubernetes Namespace'
+                  - max: 1024
+                    min: 0
+                    type: multiplechoice
+                    choices:
+                      - 'true'
+                      - 'false'
+                    default: 'false'
+                    required: true
+                    variable: full_output
+                    new_question: false
+                    question_name: DetailedOutput
+                    question_description: Display all Asset Details
+                description: ''
