@@ -10,9 +10,9 @@
     - awx.awx
   tasks:
  
-  - name: Add {{ ppdm_agent_label }} label to organization {{ awx_org }}
+  - name: Add {{ ppdm.agents.label }} label to organization {{ awx_org }}
     label:
-      name: "{{ ppdm_agent_label }}"
+      name: "{{ ppdm.agents.label }}"
       organization: "{{ awx_org }}"    
   - name: Create team {{ awx_app_team }}
     team:
@@ -29,20 +29,20 @@
 
   - name: Add user to organization {{ awx_org }}
     user:
-      username: "{{ app_user_1.username }}"
-      password: "{{ app_user_1.password }}"
-      email: "{{ app_user_1.email }}"
+      username: "{{ ppdm.agents.user_1.username }}"
+      password: "{{ ppdm.agents.user_1.password }}"
+      email: "{{ ppdm.agents.user_1.email }}"
       organization: "{{ awx_org }}"
       state: present
       update_secrets: true
 
 
-  - name: Give {{ app_user_1.username }} permissions
+  - name: Give {{ ppdm.agents.user_1.username }} permissions
     role_user_assignment:
       role_definition: Team Member
 #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
       object_id: "{{ team.id }}"
-      user: "{{ app_user_1.username }}"
+      user: "{{ ppdm.agents.user_1.username }}"
       state: present
 
 
@@ -53,42 +53,42 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "100.0_list_agents.yml"
       ask_credential_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"
+        - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}"  
+        - "{{ ppdm.1.credentials }}"  
   - name: Add 100.1 Download Agents
     job_template:
       name: 100.1 Download Agents
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "100.1_download_agents_s3.yml"
       ask_credential_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"        
+        - "{{ ppdm.agents.label }}"        
       credentials:
-        - "{{ ppdm_1_credentials }}" 
+        - "{{ ppdm.1.credentials }}" 
   - name: Add 100.2 Set DNS for Agents
     job_template:
       name: 100.2 Set DNS for Agents
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "100.2_set_dns_for_agents.yaml"
       ask_credential_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"
+        - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}"          
+        - "{{ ppdm.1.credentials }}"          
   - name: Add 100.3 Clear Hosts File for Windows Agents
     job_template:
       name: 100.3 Clear hosts file windows agent
@@ -96,13 +96,13 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
       state: "present"
       ask_inventory_on_launch: true
       ask_limit_on_launch: true
       labels:
-        - "{{ ppdm_agent_label }}"
+        - "{{ ppdm.agents.label }}"
       limit: launchpad           
 
   - name: Add 100.3 Copy and Deploy Agents from S3
@@ -112,19 +112,19 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "100.3_playbook_copy_and_deploy_windows_agent_s3.yaml"
       extra_vars: 
-        release: "{{ ppdm_release }}"
+        release: "{{ ppdm.release }}"
       ask_credential_on_launch: true
       ask_variables_on_launch: true
       ask_inventory_on_launch: true
       ask_limit_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"
+        - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}"        
+        - "{{ ppdm.1.credentials }}"        
 
   - name: Add 100.4 Create Whitelist Entry from Address Query
     job_template:
@@ -133,7 +133,7 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
       extra_vars: 
         host_list: launchpad.demo.local
@@ -141,9 +141,9 @@
       ask_variables_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"
+        - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}"
+        - "{{ ppdm.1.credentials }}"
 
   - name: Add 100.9 Uninstall Windows Agent
     job_template:
@@ -152,15 +152,15 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "100.9_playbook-uninstall-windows_agent_s3.yaml"
       extra_vars: 
-        release: "{{ ppdm_release }}"
+        release: "{{ ppdm.release }}"
       ask_variables_on_launch: true
       ask_inventory_on_launch: true
       ask_limit_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm_agent_label }}"
+        - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}"                   
+        - "{{ ppdm.1.credentials }}"                   

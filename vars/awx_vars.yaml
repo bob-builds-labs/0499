@@ -15,26 +15,11 @@
     awx_infra_workflow_job_template: 0_Maintain AWX
     awx_galaxy_credentials_name: Ansible Galaxy
     awx_custom_login_info: 'Welcome to Dell PPDM Automation Platform Environment'
-    ppdm_infra_label: ppdm_infra
-    ppdm_infra_team: PPDM Infra Team
-    ppdm_infra_team_description: Team handling all PPDM Infrastructure ( Deploy, Update )    
-    ppdm_agent_label: ppdm_agents
-    ppdm_assets_label: ppdm_assets
-    ppdm_project: ansible_ppdm
-    ppdm_release: 19.17
-    ppdm_1_credentials: ppdm-1
-    ppdm_1_username: admin
-    ppdm_1_password: Password123!
-    ppdm_1_fqdn: ppdm-1.demo.local
-    ppdm_2_credentials: ppdm-2
-    ppdm_2_username: admin
-    ppdm_2_password: Password123!
-    ppdm_2_fqdn: ppdm-2.demo.local
-    ppdm_modules_url: https://github.com/dell-examples/ansible_ppdm.git 
-    ppdm_project_description: Ansible PPDM Modules by Karsten Bott 
-    ppdm_agents_job_template: deploy ppdm agents templates
-    ppdm_assets_job_template: deploy ppdm assets templates
-    ppdm_update_job_template: deploy ppdm update templates
+
+  
+
+
+ 
 
     minio_group: minio-user
     minio_user: minio-user
@@ -45,12 +30,51 @@
     minio_password: Password123!
 
 
-    app_user_1:
-        username: app_user_1
-        password: Password123!
-        email: appuser@demo.local
-    infra_user_1:
-        username: infra_user_1
-        password: Password123!
-        email: infrauser@demo.local
+    ppdm:
+        release: 19.17
+        project: 
+            name: ansible_ppdm
+            description: Ansible PPDM Modules by Karsten Bott
+            modules_url: https://github.com/dell-examples/ansible_ppdm.git 
+        1: 
+            credentials: ppdm-1
+            username: admin
+            password: Password123!
+            fqdn: ppdm-1.demo.local  
+        2: 
+            credentials: ppdm-1
+            username: admin
+            password: Password123!
+            fqdn: ppdm-1.demo.local  
+        agents:
+            job_template: deploy ppdm agents templates
+            team: App Team
+            team_description: Team handling all App Agent stuff
+            label: ppdm_agents
+            user_1:
+                username: ppdm.agents.user_1
+                password: Password123!
+                email: appuser@demo.local
+        infra:
+            team: PPDM Infra Team
+            description: Team handling all PPDM Infrastructure ( Deploy, Update ) 
+            label: ppdm_infra   
+            user_1:
+                username: ppdm.infra.user_1
+                password: Password123!
+                email: infrauser@demo.local
+            update_job_template: deploy ppdm update templates   
+        k8s: 
+            label: ppdm_k8s
+            job_template: deploy ppdm k8s templates
+            team: Kubernetes Team
+            team_description: They made us the new God´s
+            user_1:
+                username: ppdm.infra.user_1
+                password: Password123!
+                email: infrauser@demo.local
+        assets:
+            job_template: deploy ppdm assets templates 
+            label: ppdm_assets       
+
 

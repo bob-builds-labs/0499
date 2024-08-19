@@ -9,9 +9,9 @@
     - awx.awx
   tasks:
  
-  - name: Add {{ ppdm_assets_label }} label to organization {{ awx_org }}
+  - name: Add {{ ppdm.assets.label }} label to organization {{ awx_org }}
     label:
-      name: "{{ ppdm_assets_label }}"
+      name: "{{ ppdm.assets.label }}"
       organization: "{{ awx_org }}"    
   - name: Create team {{ awx_app_team }}
     team:
@@ -22,23 +22,23 @@
 
   - name: Add PPDM1 Credentials
     credential:
-      name: "{{ ppdm_1_credentials }}"
+      name: "{{ ppdm.1.credentials }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
-        ppdm_username: "{{ ppdm_1_username }}"
-        ppdm_password: "{{ ppdm_1_password }}"
-        ppdm_fqdn: "{{ ppdm_1_fqdn }}"
+        ppdm_username: "{{ ppdm.1.username }}"
+        ppdm_password: "{{ ppdm.1.password }}"
+        ppdm_fqdn: "{{ ppdm.1.fqdn }}"
 
   - name: Add PPDM2 Credentials
     credential:
-      name: "{{ ppdm_2_credentials }}"
+      name: "{{ ppdm.2.credentials }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
-        ppdm_username: "{{ ppdm_2_username }}"
-        ppdm_password: "{{ ppdm_2_password }}"
-        ppdm_fqdn: "{{ ppdm_2_fqdn }}"
+        ppdm_username: "{{ ppdm.2.username }}"
+        ppdm_password: "{{ ppdm.2.password }}"
+        ppdm_fqdn: "{{ ppdm.2.fqdn }}"
 
   - name: Add 130.0 AdHoc Asset Protection
     job_template:
@@ -47,13 +47,13 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "130.0-playbook_start_asset_protection.yml"
       state: "present"
       labels:
-        - "{{ ppdm_assets_label }}"
+        - "{{ ppdm.assets.label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}" 
+        - "{{ ppdm.1.credentials }}" 
       extra_vars: 
         asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
       ask_variables_on_launch: true
@@ -66,13 +66,13 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "30.0-playbook_get_assets.yml"
       state: "present"
       labels:
-        - "{{ ppdm_assets_label }}"
+        - "{{ ppdm.assets.label }}"
       credentials:
-        - "{{ ppdm_1_credentials }}" 
+        - "{{ ppdm.1.credentials }}" 
       extra_vars: 
         asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
       ask_variables_on_launch: true

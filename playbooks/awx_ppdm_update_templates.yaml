@@ -10,58 +10,58 @@
     - awx.awx
   tasks:
  
-  - name: Add {{ ppdm_infra_label }} label to organization {{ awx_org }}
+  - name: Add {{ ppdm.infra.label }} label to organization {{ awx_org }}
     label:
-      name: "{{ ppdm_infra_label }}"
+      name: "{{ ppdm.infra.label }}"
       organization: "{{ awx_org }}"    
-  - name: Create team {{ ppdm_infra_team }}
+  - name: Create team {{ ppdm.infra.team }}
     team:
-      name: "{{ ppdm_infra_team }}"
-      description: "{{ ppdm_infra_team_description }}"
+      name: "{{ ppdm.infra.team }}"
+      description: "{{ ppdm.infra.team_description }}"
       organization: "{{ awx_org }}"
       state: present
 
-  - name: Lookup {{ ppdm_infra_team }}  
+  - name: Lookup {{ ppdm.infra.team }}  
     set_fact:
-      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm_infra_team  }) }}"
+      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.infra.team  }) }}"
 
 
   - name: Add user to organization {{ awx_org }}
     user:
-      username: "{{ infra_user_1.username }}"
-      password: "{{ infra_user_1.password }}"
-      email: "{{ infra_user_1.email }}"
+      username: "{{ ppdm.infra.user_1.username }}"
+      password: "{{ ppdm.infra.user_1.password }}"
+      email: "{{ ppdm.infra.user_1.email }}"
       organization: "{{ awx_org }}"
       state: present
       update_secrets: true
 
-  - name: Give {{ infra_user_1.username }} permissions
+  - name: Give {{ ppdm.infra.user_1.username }} permissions
     role_user_assignment:
       role_definition: Team Member
 #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
       object_id: "{{ team.id }}"
-      user: "{{ infra_user_1.username }}"
+      user: "{{ ppdm.infra.user_1.username }}"
       state: present
 
   - name: Add PPDM1 Credentials
     credential:
-      name: "{{ ppdm_1_credentials }}"
+      name: "{{ ppdm.1.credentials }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
-        ppdm_username: "{{ ppdm_1_username }}"
-        ppdm_password: "{{ ppdm_1_password }}"
-        ppdm_fqdn: "{{ ppdm_1_fqdn }}"
+        ppdm_username: "{{ ppdm.1.username }}"
+        ppdm_password: "{{ ppdm.1.password }}"
+        ppdm_fqdn: "{{ ppdm.1.fqdn }}"
 
   - name: Add PPDM2 Credentials
     credential:
-      name: "{{ ppdm_2_credentials }}"
+      name: "{{ ppdm.2.credentials }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
-        ppdm_username: "{{ ppdm_2_username }}"
-        ppdm_password: "{{ ppdm_2_password }}"
-        ppdm_fqdn: "{{ ppdm_2_fqdn }}"
+        ppdm_username: "{{ ppdm.2.username }}"
+        ppdm_password: "{{ ppdm.2.password }}"
+        ppdm_fqdn: "{{ ppdm.2.fqdn }}"
 
   - name: Add _9.1 Upload PPDM Update from S3
     job_template:
@@ -70,11 +70,11 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "9.9-playbook_upload_update_ppdm_from_s3.yml"
       state: "present"
       labels:
-        - "{{ ppdm_infra_label }}"
+        - "{{ ppdm.infra.label }}"
       credentials: [] 
       ask_credential_on_launch: true
 
@@ -85,11 +85,11 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "9.9-playbook_precheck_update_ppdm.yml"
       state: "present"
       labels:
-        - "{{ ppdm_infra_label }}"
+        - "{{ ppdm.infra.label }}"
       credentials: []
       ask_credential_on_launch: true
 
@@ -100,11 +100,11 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "9.9-playbook_install_update_ppdm.yml"
       state: "present"
       labels:
-        - "{{ ppdm_infra_label }}"
+        - "{{ ppdm.infra.label }}"
       credentials: []  
       ask_credential_on_launch: true   
 
@@ -115,11 +115,11 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "9.9-playbook_get_ppdm_update_package_history.yml"
       state: "present"
       labels:
-        - "{{ ppdm_infra_label }}"
+        - "{{ ppdm.infra.label }}"
       credentials: [] 
       ask_credential_on_launch: true            
 
@@ -130,11 +130,11 @@
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm_project }}"
+      project: "{{ ppdm.project.name }}"
       playbook: "9.9-playbook_delete_ppdm_update_package.yml"
       state: "present"
       labels:
-        - "{{ ppdm_infra_label }}"
+        - "{{ ppdm.infra.label }}"
       credentials: []
       ask_credential_on_launch: true            
 
@@ -166,7 +166,7 @@
             failure_nodes: []
             always_nodes: []
             credentials: 
-                - name: "{{ ppdm_1_credentials }}"
+                - name: "{{ ppdm.1.credentials }}"
         - identifier: 09-02-precheck-update
           extra_data: []
           unified_job_template:
@@ -182,7 +182,7 @@
               - identifier: 09-04-update-history
             always_nodes: []
             credentials: 
-                - name: "{{ ppdm_1_credentials }}"
+                - name: "{{ ppdm.1.credentials }}"
         - identifier: "09-03-approve-update"
           all_parents_must_coverage: false	
           extra_data: []
@@ -211,7 +211,7 @@
             failure_nodes: []
             always_nodes: []
             credentials: 
-                - name: "{{ ppdm_1_credentials }}"     
+                - name: "{{ ppdm.1.credentials }}"     
         - identifier: "09-04-update-history"
           extra_data: []
           unified_job_template:
@@ -226,7 +226,7 @@
             always_nodes: 
               - identifier: 09-09-delete-update-package
             credentials: 
-                - name: "{{ ppdm_1_credentials }}"         
+                - name: "{{ ppdm.1.credentials }}"         
         - identifier: "09-09-delete-update-package"
           extra_data: []
           unified_job_template:
@@ -240,4 +240,4 @@
             failure_nodes: []
             always_nodes:  []
             credentials: 
-                - name: "{{ ppdm_1_credentials }}"              
+                - name: "{{ ppdm.1.credentials }}"              

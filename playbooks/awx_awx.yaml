@@ -67,23 +67,23 @@
       validate_certs: false 
   - name: Add PPDM1 Credentials
     credential:
-      name: "{{ ppdm_1_credentials }}"
+      name: "{{ ppdm.1.credentials }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
-        ppdm_username: "{{ ppdm_1_username }}"
-        ppdm_password: "{{ ppdm_1_password }}"
-        ppdm_fqdn: "{{ ppdm_1_fqdn }}"
+        ppdm_username: "{{ ppdm.1.username }}"
+        ppdm_password: "{{ ppdm.1.password }}"
+        ppdm_fqdn: "{{ ppdm.1.fqdn }}"
 
   - name: Add PPDM2 Credentials
     credential:
-      name: "{{ ppdm_2_credentials }}"
+      name: "{{ ppdm.2.credentials }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
-        ppdm_username: "{{ ppdm_2_username }}"
-        ppdm_password: "{{ ppdm_2_password }}"
-        ppdm_fqdn: "{{ ppdm_2_fqdn }}"
+        ppdm_username: "{{ ppdm.2.username }}"
+        ppdm_password: "{{ ppdm.2.password }}"
+        ppdm_fqdn: "{{ ppdm.2.fqdn }}"
   - name: Create AWX Credential Type
     credential_type:
       name: AWX Credentials
@@ -101,19 +101,19 @@
       organization: "{{ awx_org }}"
       state: present
 
-  - name: Add {{ ppdm_project }} Project from {{ ppdm_modules_url }}
+  - name: Add {{ ppdm.project.name }} Project from {{ ppdm.project.modules_url }}
     project:
-      name: "{{ ppdm_project }}"
-      description: "{{ ppdm_project_description }}"
+      name: "{{ ppdm.project.name }}"
+      description: "{{ ppdm.project.description  }}"
       organization: "{{ awx_org }}"
-      scm_url: "{{ ppdm_modules_url }}"
+      scm_url: "{{ ppdm.project.modules_url }}"
       scm_type: git
       state: present 
       timeout: 600
 
-  - name: Update Modules Project {{ ppdm_project }} 
+  - name: Update Modules Project {{ ppdm.project.name }} 
     project_update:
-      project:  "{{ ppdm_project }}"
+      project:  "{{ ppdm.project.name }}"
       timeout: 600 
 
   - name: Add Inventory Project {{ awx_inventory_project }}
@@ -196,7 +196,7 @@
 
   - name: Create PPDM Agents Job Templates
     job_template:
-      name: "{{ ppdm_agents_job_template }}"
+      name: "{{ ppdm.agents.job_template }}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -209,11 +209,11 @@
         - "{{ awx_infra_label }}"    
 #  - name: Launch PPDM Agent Jobs Deployment
 #    job_launch:
-#      job_template: "{{ ppdm_agents_job_template }}"   
+#      job_template: "{{ ppdm.agents.job_template }}"   
 
   - name: Create PPDM Assets Job Templates
     job_template:
-      name: "{{ ppdm_assets_job_template }}"
+      name: "{{ ppdm.assets.job_template }}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -227,7 +227,7 @@
 
   - name: Create PPDM update Job Templates
     job_template:
-      name: "{{ ppdm_update_job_template }}"
+      name: "{{ ppdm.infra.update_job_template }}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -239,6 +239,19 @@
       labels:
         - "{{ awx_infra_label }}"  
 
+  - name: Create PPDM K8S Job Templates
+    job_template:
+      name: "{{ ppdm.k8s.job_template }}"
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ awx_inventory_project }}"
+      playbook: "playbooks/awx_ppdm_k8s_templates.yaml"
+      credentials:
+        - "AWX Admin Credentials"
+      state: "present"
+      labels:
+        - "{{ awx_infra_label }}"
 
   - name: Create Minio Instance Job
     job_template:
@@ -277,16 +290,16 @@
             type: job_template
           related:
             success_nodes: 
-              - identifier: "0_{{ ppdm_agents_job_template }}" 
-              - identifier: "0_{{ ppdm_assets_job_template }}" 
-              - identifier: "0_{{ ppdm_update_job_template }}" 
+              - identifier: "0_{{ ppdm.agents.job_template }}" 
+              - identifier: "0_{{ ppdm.assets.job_template }}" 
+              - identifier: "0_{{ ppdm.infra.update_job_template }}" 
             failure_nodes: []
             always_nodes: []
             credentials: []      
-        - identifier: "0_{{ ppdm_agents_job_template }}"
+        - identifier: "0_{{ ppdm.agents.job_template }}"
           extra_data: []
           unified_job_template:
-            name: "{{ ppdm_agents_job_template }}"
+            name: "{{ ppdm.agents.job_template }}"
             description: "Automated Update of Agent Job Templates"
             inventory:
               organization:
@@ -297,10 +310,10 @@
             failure_nodes: []
             always_nodes: []
             credentials: []
-        - identifier: "0_{{ ppdm_assets_job_template }}"
+        - identifier: "0_{{ ppdm.assets.job_template }}"
           extra_data: []
           unified_job_template:
-            name: "{{ ppdm_assets_job_template }}"
+            name: "{{ ppdm.assets.job_template }}"
             description: "Automated Update of Asset Job Templates"
             inventory:
               organization:
@@ -312,10 +325,10 @@
             always_nodes: []
             credentials: []            
 
-        - identifier: "0_{{ ppdm_update_job_template }}"
+        - identifier: "0_{{ ppdm.infra.update_job_template }}"
           extra_data: []
           unified_job_template:
-            name: "{{ ppdm_update_job_template }}"
+            name: "{{ ppdm.infra.update_job_template }}"
             description: "Automated Update of Update Job Templates"
             inventory:
               organization:
