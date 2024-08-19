@@ -119,7 +119,7 @@
 
   
   - name: "{{ ppdm.infra.wjt.update }}"
-      awx.awx.workflow_job_template:
+    awx.awx.workflow_job_template:
       destroy_current_nodes: true    
       name: "{{ ppdm.infra.wjt.update }}"
       inventory: "{{ awx_inventory_1 }}"
