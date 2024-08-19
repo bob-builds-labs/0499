@@ -122,8 +122,8 @@
           survey_enabled: true  
           survey_spec: |
               {
-              "description": "",
-              "name": "",
+              "description": "Kubernetes Query Survey",
+              "name": "Query_K8S",
               "spec": [
                 {
                 "max": 1024,
