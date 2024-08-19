@@ -47,9 +47,9 @@
 
 
 
-  - name: Add 100.0 List Agents from PPDM Job Template
+  - name: "Add {{ ppdm.agents.jt.list }} Job Template"
     job_template:
-      name: 100.0 List Agents from PPDM
+      name: "{{ ppdm.agents.jt.list }}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -61,9 +61,9 @@
         - "{{ ppdm.agents.label }}"
       credentials:
         - "{{ ppdm.1.credentials }}"  
-  - name: Add 100.1 Download Agents
+  - name: "Add {{ ppdm.agents.jt.download }}"
     job_template:
-      name: 100.1 Download Agents
+      name: "{{ ppdm.agents.jt.download }}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -75,9 +75,9 @@
         - "{{ ppdm.agents.label }}"        
       credentials:
         - "{{ ppdm.1.credentials }}" 
-  - name: Add 100.2 Set DNS for Agents
+  - name: "Add {{ ppdm.agents.jt.set_dns}}"
     job_template:
-      name: 100.2 Set DNS for Agents
+      name: "{{ ppdm.agents.jt.set_dns}}"
       job_type: "run"
       organization: "{{ awx_org }}"
       inventory: "{{ awx_inventory_1 }}"
@@ -89,9 +89,9 @@
         - "{{ ppdm.agents.label }}"
       credentials:
         - "{{ ppdm.1.credentials }}"          
-  - name: Add 100.3 Clear Hosts File for Windows Agents
+  - name: "Add {{ ppdm.agents.jt.clear_hosts }}"
     job_template:
-      name: 100.3 Clear hosts file windows agent
+      name: "{{ ppdm.agents.jt.clear_hosts }}"
       description: Delete wrong localhost entries
       job_type: "run"
       organization: "{{ awx_org }}"
@@ -105,9 +105,9 @@
         - "{{ ppdm.agents.label }}"
       limit: launchpad           
 
-  - name: Add 100.3 Copy and Deploy Agents from S3
+  - name: "Add {{ ppdm.agents.jt.deploy }}"
     job_template:
-      name: 100.3 Copy and Deploy Agents from S3
+      name: "{{ ppdm.agents.jt.deploy }}"
       description: Copy and deploy PPDM Agents from S3 Storage
       job_type: "run"
       organization: "{{ awx_org }}"
@@ -126,9 +126,9 @@
       credentials:
         - "{{ ppdm.1.credentials }}"        
 
-  - name: Add 100.4 Create Whitelist Entry from Address Query
+  - name: "Add {{ ppdm.agents.jt.approve }}"
     job_template:
-      name: 100.4 Create Whitelist Entry from Address Query
+      name: "{{ ppdm.agents.jt.approve }}"
       description: Approve Agents via Whitelist
       job_type: "run"
       organization: "{{ awx_org }}"
@@ -145,9 +145,9 @@
       credentials:
         - "{{ ppdm.1.credentials }}"
 
-  - name: Add 100.9 Uninstall Windows Agent
+  - name: "Add {{ ppdm.agents.jt.uninstall }}"
     job_template:
-      name: 100.9 Uninstall Windows Agent
+      name: "{{ ppdm.agents.jt.uninstall }}"
       description: Remove Windows Agent
       job_type: "run"
       organization: "{{ awx_org }}"
@@ -164,3 +164,19 @@
         - "{{ ppdm.agents.label }}"
       credentials:
         - "{{ ppdm.1.credentials }}"                   
+
+  - name: Give {{ ppdmm.agents.user_1.username }} permissions
+    role_user_assignment:
+      role_definition: JobTemplate Execute
+      object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
+      user: "{{ ppdm.agents.user_1.username }}"
+      state: present
+    loop:
+      - "{{ ppdm.agents.jt.list }}"
+      - "{{ ppdm.agents.jt.download }}"
+      - "{{ ppdm.agents.jt.approve }}"
+      - "{{ ppdm.agents.jt.set_dns }}"
+      - "{{ ppdm.agents.jt.clear_hosts }}"
+      - "{{ ppdm.agents.jt.deploy }}"
+      - "{{ ppdm.agents.jt.uninstall }}"
+

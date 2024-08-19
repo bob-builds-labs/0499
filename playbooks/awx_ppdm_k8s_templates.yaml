@@ -206,5 +206,5 @@
       user: "{{ ppdm.k8s.user_1.username }}"
       state: present
     loop:
-     - "{{ ppdm.k8s.asset_protection_wjt }}"
-     - "{{ ppdm.k8s.asset_query_wjt }}"
+     - "{{ ppdm.k8s.wjt.asset_protection }}"
+     - "{{ ppdm.k8s.wjt.asset_query }}"

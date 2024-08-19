@@ -53,6 +53,16 @@
                 username: app_user_1
                 password: Password123!
                 email: appuser@demo.local
+            jt: 
+                list: 100.0 List Agents from PPDM
+                download: 100.1 Download Agents
+                set_dns: 100.2 Set DNS for Agents
+                clear_hosts: 100.3 Clear hosts file windows agent
+                deploy: 100.3 Copy and Deploy Agents from S3
+                approve: 100.4 Create Whitelist Entry from Address Query
+                uninstall: 100.9 Uninstall Windows Agent
+
+
         infra:
             team:
                 name: PPDM Infra Team
@@ -72,8 +82,9 @@
                 username: k8s_user_1
                 password: Password123!
                 email: k8suser@demo.local
-            asset_protection_wjt: 130.0 AdHoc Protect K8S Asset 
-            asset_query_wjt: 130.0 Query K8S Assets   
+            wjt:     
+                asset_protection: 130.0 AdHoc Protect K8S Asset 
+                asset_query: 130.0 Query K8S Assets   
         assets:
             job_template: deploy ppdm assets templates 
             label: ppdm_assets       
