@@ -119,7 +119,7 @@
 
   - name: Lookup {{ ppdm.k8s.asset_protection_wjt }}  
     set_fact:
-      wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_template', query_params={ 'name': ppdm.k8s.asset_protection_wjt  }) }}"
+      wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.asset_protection_wjt  }) }}"
 
 
   - name: Give {{ ppdmm.k8s.user_1.username }} permissions
