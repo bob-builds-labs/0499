@@ -42,10 +42,10 @@
             password: Password123!
             fqdn: ppdm-1.demo.local  
         2: 
-            credentials: ppdm-1
+            credentials: ppdm-2
             username: admin
             password: Password123!
-            fqdn: ppdm-1.demo.local  
+            fqdn: ppdm-2.demo.local  
         agents:
             job_template: deploy ppdm agents templates
             team: App Team
