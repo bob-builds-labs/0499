@@ -20,6 +20,7 @@
       description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
+    register: result    
 
   - name: Add user to organization {{ awx_org }}
     user:
@@ -29,6 +30,15 @@
       organization: "{{ awx_org }}"
       state: present
       update_secrets: true
+
+
+  - name: Give {{ app_user_1.username }} permissions
+    role_user_assignment:
+      role_definition: Team Member
+      object_id: 1
+      user: "{{ app_user_1.username }}"
+      state: present
+
 
 
   - name: Add 100.0 List Agents from PPDM Job Template
