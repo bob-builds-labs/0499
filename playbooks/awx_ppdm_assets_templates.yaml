@@ -121,8 +121,8 @@
             failure_nodes: []
             always_nodes: []
             credentials: []
-          survey_enabled: true  
-          survey_spec: |
+      survey_enabled: true  
+      survey_spec: |
               {
               "description": "Kubernetes Query Survey",
               "name": "Query_K8S",
