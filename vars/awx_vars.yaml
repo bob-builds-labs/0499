@@ -49,3 +49,8 @@
         username: app_user_1
         password: Password123!
         email: appuser@demo.local
+    infra_user_1:
+        username: infra_user_1
+        password: Password123!
+        email: infrauser@demo.local
+

@@ -21,6 +21,20 @@
       organization: "{{ awx_org }}"
       state: present
 
+  - name: Lookup {{ ppdm_infra_team }}  
+    set_fact:
+      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm_infra_team  }) }}"
+
+
+  - name: Add user to organization {{ awx_org }}
+    user:
+      username: "{{ infra_user_1.username }}"
+      password: "{{ infra_user_1.password }}"
+      email: "{{ infra_user_1.email }}"
+      organization: "{{ awx_org }}"
+      state: present
+      update_secrets: true
+
   - name: Add PPDM1 Credentials
     credential:
       name: "{{ ppdm_1_credentials }}"
