@@ -1,7 +1,7 @@
 {
      "workflow_job_templates": [
           {
-               "name": "130.0 AdHoc Protect K8S Asset",
+               "name": "{{ ppdm.k8s.asset_protection_wjt }}",
                "description": "",
                "extra_vars": "---",
                "organization": null,
@@ -51,7 +51,7 @@
                               "identifier": "e37d6788-e741-41c8-9b31-8ccf024ade69",
                               "workflow_job_template": {
                                    "organization": null,
-                                   "name": "130.0 AdHoc Protect K8S Asset",
+                                   "name": "{{ ppdm.k8s.asset_protection_wjt }}",
                                    "type": "workflow_job_template"
                               },
                               "unified_job_template": {
@@ -71,7 +71,7 @@
                               "natural_key": {
                                    "workflow_job_template": {
                                         "organization": null,
-                                        "name": "130.0 AdHoc Protect K8S Asset",
+                                        "name": "{{ ppdm.k8s.asset_protection_wjt }}",
                                         "type": "workflow_job_template"
                                    },
                                    "identifier": "e37d6788-e741-41c8-9b31-8ccf024ade69",
@@ -134,7 +134,7 @@
                },
                "natural_key": {
                     "organization": null,
-                    "name": "130.0 AdHoc Protect K8S Asset",
+                    "name": "{{ ppdm.k8s.asset_protection_wjt }}",
                     "type": "workflow_job_template"
                }
           },

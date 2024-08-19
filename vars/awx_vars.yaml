@@ -72,6 +72,7 @@
                 username: k8s_user_1
                 password: Password123!
                 email: k8suser@demo.local
+            asset_protection_wjt: 130.0 AdHoc Protect K8S Asset    
         assets:
             job_template: deploy ppdm assets templates 
             label: ppdm_assets       
