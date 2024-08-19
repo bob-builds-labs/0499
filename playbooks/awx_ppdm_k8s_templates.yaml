@@ -122,17 +122,14 @@
       wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.asset_protection_wjt  }).id }}"
 
 
-  - name: Give {{ ppdmm.k8s.user_1.username }} permissions
-    role_user_assignment:
-      role_definition: WorkflowJobTemplate Execute
-#      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
-      object_id: "{{ wjt }}"
-      user: "{{ ppdm.k8s.user_1.username }}"
-      state: present
 
-  - name: Add 130.0 Query K8S Assets
+
+
+
+
+  - name: Add {{ ppdm.k8s.asset_query_wjt }}
     awx.awx.workflow_job_template:
-      name: 130.0 Query K8S Assets
+      name: "{{ ppdm.k8s.asset_query_wjt }}"
       inventory: "{{ awx_inventory_1 }}"
       destroy_current_nodes: true
       workflow_nodes:
@@ -200,3 +197,14 @@
                 }
               ]
               }
+
+  - name: Give {{ ppdmm.k8s.user_1.username }} permissions
+    role_user_assignment:
+      role_definition: WorkflowJobTemplate Execute
+#      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
+      object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
+      user: "{{ ppdm.k8s.user_1.username }}"
+      state: present
+    loop:
+     - "{{ ppdm.k8s.asset_protection_wjt }}"
+     - "{{ ppdm.k8s.asset_query_wjt }}"
