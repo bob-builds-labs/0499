@@ -261,6 +261,7 @@
   
   - name: AWX PPDM template Maintain Workflow
     awx.awx.workflow_job_template:
+      destroy_current_nodes: true    
       name: "{{ awx_infra_workflow_job_template }}"
       inventory: "{{ awx_inventory_1 }}"
       description: "Automated AWX Update workflow for PPDM Automation"

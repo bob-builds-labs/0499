@@ -123,6 +123,7 @@
   
   - name: 9 Update PPDM-1
     awx.awx.workflow_job_template:
+      destroy_current_nodes: true    
       name: 9 Update PPDM-1
       inventory: "{{ awx_inventory_1 }}"
       extra_vars: 

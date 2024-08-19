@@ -82,6 +82,7 @@
     awx.awx.workflow_job_template:
       name: 130.0 AdHoc Protect K8S Asset
       inventory: "{{ awx_inventory_1 }}"
+      destroy_current_nodes: true
       workflow_nodes:
         - identifier: e37d6788-e741-41c8-9b31-8ccf024ade69
           extra_data:
@@ -98,7 +99,55 @@
             failure_nodes: []
             always_nodes: []
             credentials: []
-
+      survey_enabled: true  
+      survey_spec: |
+              {
+              "description": "Kubernetes Query Survey",
+              "name": "Query_K8S",
+              "spec": [
+                {
+                "max": 1024,
+                "min": 0,
+                "type": "multiplechoice",
+                "choices": [
+                    "api.openshift.demo.local"
+                ],
+                "default": "api.openshift.demo.local",
+                "required": true,
+                "variable": "k8s_name",
+                "new_question": false,
+                "question_name": "Kubernetes Cluster",
+                "question_description": ""
+                },
+                {
+                      "max": 1024,
+                      "min": 0,
+                      "type": "text",
+                      "choices": "",
+                      "default": "",
+                      "required": true,
+                      "variable": "namespace_name",
+                      "new_question": false,
+                      "question_name": "Kubernetes Namespace",
+                      "question_description": "Enter the name of the Kubernetes Namespace"
+                },
+                {
+                      "max": 1024,
+                      "min": 0,
+                      "type": "multiplechoice",
+                      "choices": [
+                          "true",
+                          "false"
+                      ],
+                      "default": "false",
+                      "required": true,
+                      "variable": "full_output",
+                      "new_question": false,
+                      "question_name": "DetailedOutput",
+                      "question_description": "Display all Asset Details"
+                }
+              ]
+              }
 
   - name: Add 130.0 Query K8S Assets
     awx.awx.workflow_job_template:
