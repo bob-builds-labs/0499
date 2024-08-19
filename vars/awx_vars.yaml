@@ -1,8 +1,5 @@
     awx_org: Dell Org
     awx_org_description: Dell DPS Org
-    awx_app_team: App Team
-    awx_infra_team: Infra Team
-    awx_app_team_description: Team handling all App Agent stuff    
     awx_inventory_project: 0499
     awx_inventory_project_description: Base Inventory and Templates for 0499
     awx_inventory_url: https://github.com/bob-builds-labs/0499.git
@@ -48,16 +45,18 @@
             fqdn: ppdm-2.demo.local  
         agents:
             job_template: deploy ppdm agents templates
-            team: App Team
-            team_description: Team handling all App Agent stuff
+            team: 
+                name: App Team
+                description: Team handling all App Agent stuff
             label: ppdm_agents
             user_1:
                 username: app_user_1
                 password: Password123!
                 email: appuser@demo.local
         infra:
-            team: PPDM Infra Team
-            description: Team handling all PPDM Infrastructure ( Deploy, Update ) 
+            team:
+                name: PPDM Infra Team
+                description: Team handling all PPDM Infrastructure ( Deploy, Update ) 
             label: ppdm_infra   
             user_1:
                 username: infra_user_1

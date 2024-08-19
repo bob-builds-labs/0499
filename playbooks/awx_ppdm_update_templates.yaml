@@ -14,16 +14,16 @@
     label:
       name: "{{ ppdm.infra.label }}"
       organization: "{{ awx_org }}"    
-  - name: Create team {{ ppdm.infra.team }}
+  - name: Create team {{ ppdm.infra.team.name }}
     team:
-      name: "{{ ppdm.infra.team }}"
-      description: "{{ ppdm.infra.team_description }}"
+      name: "{{ ppdm.infra.team.name }}"
+      description: "{{ ppdm.infra.team.description }}"
       organization: "{{ awx_org }}"
       state: present
 
-  - name: Lookup {{ ppdm.infra.team }}  
+  - name: Lookup {{ ppdm.infra.team.name }}  
     set_fact:
-      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.infra.team  }) }}"
+      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.infra.team.name  }) }}"
 
 
   - name: Add user to organization {{ awx_org }}

@@ -94,10 +94,10 @@
       state: present
       validate_certs: false
 
-  - name: Create team {{ awx_app_team }}
+  - name: Create team {{ ppdm.agents.team.name }}
     team:
-      name: "{{ awx_app_team }}"
-      description: "{{ awx_app_team_description }}"
+      name: "{{ ppdm.agents.team.name }}"
+      description: "{{ ppdm.agents.team.description }}"
       organization: "{{ awx_org }}"
       state: present
 
