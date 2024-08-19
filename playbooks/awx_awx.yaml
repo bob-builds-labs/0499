@@ -109,12 +109,12 @@
       scm_url: "{{ ppdm_modules_url }}"
       scm_type: git
       state: present 
-      timeout: 120
+      timeout: 600
 
   - name: Update Modules Project {{ ppdm_project }} 
     project_update:
       project:  "{{ ppdm_project }}"
-      timeout: 120 
+      timeout: 600 
 
   - name: Add Inventory Project {{ awx_inventory_project }}
     project:
