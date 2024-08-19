@@ -136,7 +136,6 @@
         - identifier: 130.0-Query-K8S-Assets
           extra_data:
             asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
-
           unified_job_template:
             name: 30.0 Query Assets
             inventory:

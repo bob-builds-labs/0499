@@ -118,7 +118,7 @@
       ask_credential_on_launch: true            
 
   
-  - name: "{{ ppdm.infra.wjt.update }}"
+  - name: Add {{ ppdm.infra.wjt.update }}
     awx.awx.workflow_job_template:
       destroy_current_nodes: true    
       name: "{{ ppdm.infra.wjt.update }}"
