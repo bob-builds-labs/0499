@@ -21,6 +21,16 @@
       organization: "{{ awx_org }}"
       state: present
 
+  - name: Add user to organization {{ awx_org }}
+    user:
+      username: "{{ app_user_1.username }}"
+      password: "{{ app_user_1.password }}"
+      email: "{{ app_user_1.email }}"
+      organization: "{{ awx_org }}"
+      state: present
+      update_secrets: true
+
+
   - name: Add 100.0 List Agents from PPDM Job Template
     job_template:
       name: 100.0 List Agents from PPDM

@@ -43,3 +43,9 @@
     download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
     minio_admin: minioadmin
     minio_password: Password123!
+
+
+    app_user_1:
+        username: app_user_1
+        password: Password123!
+        email: appuser@demo.local
