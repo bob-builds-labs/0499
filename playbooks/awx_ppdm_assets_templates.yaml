@@ -20,26 +20,6 @@
       organization: "{{ awx_org }}"
       state: present
 
-  - name: Add PPDM1 Credentials
-    credential:
-      name: "{{ ppdm.1.credentials }}"
-      credential_type: Dell PPDM Credentials
-      organization: "{{ awx_org }}"
-      inputs:
-        ppdm_username: "{{ ppdm.1.username }}"
-        ppdm_password: "{{ ppdm.1.password }}"
-        ppdm_fqdn: "{{ ppdm.1.fqdn }}"
-
-  - name: Add PPDM2 Credentials
-    credential:
-      name: "{{ ppdm.2.credentials }}"
-      credential_type: Dell PPDM Credentials
-      organization: "{{ awx_org }}"
-      inputs:
-        ppdm_username: "{{ ppdm.2.username }}"
-        ppdm_password: "{{ ppdm.2.password }}"
-        ppdm_fqdn: "{{ ppdm.2.fqdn }}"
-
   - name: Add 130.0 AdHoc Asset Protection
     job_template:
       name: 130.0 AdHoc Asset Protection
