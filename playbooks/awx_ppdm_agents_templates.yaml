@@ -24,7 +24,7 @@
 
   - name: Lookup {{ awx_app_team }}  
     set_fact:
-      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': 'App Team' }) }}"
+      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': awx_app_team  }) }}"
   - name: show Team
     debug:
       msg: "{{ team }}"
