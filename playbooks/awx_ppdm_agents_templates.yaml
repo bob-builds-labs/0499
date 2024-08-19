@@ -16,7 +16,7 @@
       organization: "{{ awx_org }}"    
   - name: Create team {{ awx_app_team }}
     team:
-      name: ""
+      name: "{{ awx_app_team }}"
       description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
