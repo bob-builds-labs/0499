@@ -119,14 +119,14 @@
 
   - name: Lookup {{ ppdm.k8s.asset_protection_wjt }}  
     set_fact:
-      wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.asset_protection_wjt  }) }}"
+      wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.asset_protection_wjt  }).id }}"
 
 
   - name: Give {{ ppdmm.k8s.user_1.username }} permissions
     role_user_assignment:
       role_definition: WorkflowJobTemplate Execute
 #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
-      object_id: "{{ wjt.id }}"
+      object_id: "{{ wjt }}"
       user: "{{ ppdm.k8s.user_1.username }}"
       state: present
 
