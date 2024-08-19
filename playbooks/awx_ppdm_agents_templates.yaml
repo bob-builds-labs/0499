@@ -165,7 +165,7 @@
       credentials:
         - "{{ ppdm.1.credentials }}"                   
 
-  - name: Give {{ ppdmm.agents.user_1.username }} permissions
+  - name: "Give {{ ppdmm.agents.user_1.username }} permissions"
     role_user_assignment:
       role_definition: JobTemplate Execute
       object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"

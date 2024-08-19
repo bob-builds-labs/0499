@@ -72,7 +72,11 @@
                 username: infra_user_1
                 password: Password123!
                 email: infrauser@demo.local
-            update_job_template: deploy ppdm update templates   
+            update_job_template: deploy ppdm update templates
+            jt:
+            wjt: 
+                update_ppdm: 9 Update PPDM-1
+
         k8s: 
             label: ppdm_k8s
             job_template: deploy ppdm k8s templates
