@@ -99,10 +99,12 @@
             always_nodes: []
             credentials: []
 
+
   - name: Add 130.0 Query K8S Assets
     awx.awx.workflow_job_template:
       name: 130.0 Query K8S Assets
       inventory: "{{ awx_inventory_1 }}"
+      destroy_current_nodes: true
       workflow_nodes:
         - identifier: 130.0-Query-K8S-Assets
           extra_data:
