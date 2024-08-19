@@ -1,5 +1,5 @@
 ---
-- name: AWX Organiszation Agent Templates Runbook
+- name: AWX Organiszation Kubernetes Templates Runbook
   hosts: localhost
   connection: local
   vars:
@@ -30,18 +30,18 @@
   - name: Add user to organization {{ awx_org }}
     user:
       username: "{{ ppdm.k8s.user_1.username }}"
-      password: "{{ ppdm.k8s_user_1.password }}"
-      email: "{{ ppdm.k8s_user_1.email }}"
+      password: "{{ ppdm.k8s.user_1.password }}"
+      email: "{{ ppdm.k8s.user_1.email }}"
       organization: "{{ awx_org }}"
       state: present
       update_secrets: true
 
 
-  - name: Give {{ ppdmm.k8s_user_1.username }} permissions
+  - name: Give {{ ppdmm.k8s.user_1.username }} permissions
     role_user_assignment:
       role_definition: Team Member
 #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
       object_id: "{{ team.id }}"
-      user: "{{ ppdm.k8s_user_1.username }}"
+      user: "{{ ppdm.k8s.user_1.username }}"
       state: present
 
