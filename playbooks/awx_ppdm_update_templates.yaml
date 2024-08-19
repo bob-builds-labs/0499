@@ -138,10 +138,6 @@
       ask_credential_on_launch: true            
 
   
-
-     
-  
-  
   - name: "{{ ppdm.infra.wjt.update }}"
     awx.awx.workflow_job_template:
       destroy_current_nodes: true    
@@ -239,13 +235,14 @@
             failure_nodes: []
             always_nodes:  []
             credentials: 
-                - name: "{{ ppdm.1.credentials }}"        
+                - name: "{{ ppdm.1.credentials }}"
 
-  - name: "Give {{ ppdmm.infra.user_1.username }} Job Template permissions"
-    role_user_assignment:
-      role_definition: WorkflowJobTemplate Execute
-      object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
-      user: "{{ ppdm.infra.user_1.username }}"
-      state: present
-    loop:
-      - "{{ ppdm.infra.wjt.update }}"
+
+#  - name: Give {{ ppdmm.infra.user_1.username }} Job Template permissions
+#    role_user_assignment:
+#      role_definition: WorkflowJobTemplate Execute
+#      object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
+#      user: "{{ ppdm.infra.user_1.username }}"
+#      state: present
+#    loop:
+#      - "{{ ppdm.infra.wjt.update }}"
