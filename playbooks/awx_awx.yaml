@@ -292,7 +292,8 @@
             success_nodes: 
               - identifier: "0_{{ ppdm.agents.job_template }}" 
               - identifier: "0_{{ ppdm.assets.job_template }}" 
-              - identifier: "0_{{ ppdm.infra.update_job_template }}" 
+              - identifier: "0_{{ ppdm.infra.update_job_template }}"
+              - identifier: "0_{{ ppdm.k8s.job_template }}"  
             failure_nodes: []
             always_nodes: []
             credentials: []      
