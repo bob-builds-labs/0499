@@ -52,7 +52,7 @@
             team_description: Team handling all App Agent stuff
             label: ppdm_agents
             user_1:
-                username: ppdm.agents.user_1
+                username: app_user_1
                 password: Password123!
                 email: appuser@demo.local
         infra:
@@ -60,7 +60,7 @@
             description: Team handling all PPDM Infrastructure ( Deploy, Update ) 
             label: ppdm_infra   
             user_1:
-                username: ppdm.infra.user_1
+                username: infra_user_1
                 password: Password123!
                 email: infrauser@demo.local
             update_job_template: deploy ppdm update templates   
@@ -70,9 +70,9 @@
             team: Kubernetes Team
             team_description: They made us the new God´s
             user_1:
-                username: ppdm.infra.user_1
+                username: k8s_user_1
                 password: Password123!
-                email: infrauser@demo.local
+                email: k8suser@demo.local
         assets:
             job_template: deploy ppdm assets templates 
             label: ppdm_assets       
