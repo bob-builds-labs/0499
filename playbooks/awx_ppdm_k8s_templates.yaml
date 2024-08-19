@@ -1,0 +1,47 @@
+---
+- name: AWX Organiszation Agent Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+  vars_files: 
+    - ../vars/awx_vars.yaml
+
+  collections:
+    - awx.awx
+  tasks:
+ 
+  - name: Add {{ ppdm.k8s.label }} label to organization {{ awx_org }}
+    label:
+      name: "{{ ppdm.k8s.label }}"
+      organization: "{{ awx_org }}"    
+  - name: Create team {{ ppdm.k8s.team }}
+    team:
+      name: "{{ ppdm.k8s.team }}"
+      description: "{{ ppdm.k8s.team_description }}"
+      organization: "{{ awx_org }}"
+      state: present
+    register: result   
+
+  - name: Lookup {{ ppdm.k8s.team }}  
+    set_fact:
+      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.k8s.team  }) }}"
+
+
+  - name: Add user to organization {{ awx_org }}
+    user:
+      username: "{{ ppdm.k8s.user_1.username }}"
+      password: "{{ k8s_user_1.password }}"
+      email: "{{ k8s_user_1.email }}"
+      organization: "{{ awx_org }}"
+      state: present
+      update_secrets: true
+
+
+  - name: Give {{ k8s_user_1.username }} permissions
+    role_user_assignment:
+      role_definition: Team Member
+#      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
+      object_id: "{{ team.id }}"
+      user: "{{ k8s_user_1.username }}"
+      state: present
+
