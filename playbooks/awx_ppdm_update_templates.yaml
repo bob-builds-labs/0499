@@ -35,6 +35,14 @@
       state: present
       update_secrets: true
 
+  - name: Give {{ infra_user_1.username }} permissions
+    role_user_assignment:
+      role_definition: Team Member
+#      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
+      object_id: "{{ team.id }}"
+      user: "{{ infra_user_1.username }}"
+      state: present
+
   - name: Add PPDM1 Credentials
     credential:
       name: "{{ ppdm_1_credentials }}"
