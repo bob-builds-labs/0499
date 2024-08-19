@@ -41,6 +41,7 @@
     role_user_assignment:
       role_definition: Team Member
       object_ansible_id: "{{ team.summary_fields.resource.ansible_id }}"
+      object_id: "{{ team.id }}"
       user: "{{ app_user_1.username }}"
       state: present
 
