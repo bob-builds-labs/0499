@@ -25,9 +25,7 @@
   - name: Lookup {{ awx_app_team }}  
     set_fact:
       team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': awx_app_team  }) }}"
-  - name: show Team
-    debug:
-      msg: "{{ team }}"
+
 
   - name: Add user to organization {{ awx_org }}
     user:
@@ -42,7 +40,7 @@
   - name: Give {{ app_user_1.username }} permissions
     role_user_assignment:
       role_definition: Team Member
-      object_id: 1
+      object_ansible_id: "{{ team.summary_fields.resource.ansible_id }}"
       user: "{{ app_user_1.username }}"
       state: present
 
