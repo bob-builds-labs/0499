@@ -16,15 +16,19 @@
       organization: "{{ awx_org }}"    
   - name: Create team {{ awx_app_team }}
     team:
-      name: "{{ awx_app_team }}"
+      name: ""
       description: "{{ awx_app_team_description }}"
       organization: "{{ awx_org }}"
       state: present
-    register: result    
+    register: result   
+
+  - name: Lookup {{ awx_app_team }}  
+    set_fact:
+      team: "lookup('awx.awx.controller_api', 'teams', query_params={ 'name': '{{ App Team }}' })"
   - name: show Team
     debug:
-      msg: "{{ result }}"
-      verbosity: 0
+      msg: "{{ team }}"
+
   - name: Add user to organization {{ awx_org }}
     user:
       username: "{{ app_user_1.username }}"
