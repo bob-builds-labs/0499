@@ -21,7 +21,10 @@
       organization: "{{ awx_org }}"
       state: present
     register: result    
-
+  - name: show Team
+    debug:
+      msg: "{{ result }}"
+      verbosity: 0
   - name: Add user to organization {{ awx_org }}
     user:
       username: "{{ app_user_1.username }}"
