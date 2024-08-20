@@ -46,9 +46,9 @@
       state: present
 
 
-  - name: Add {{ ppdm.k8s.asset_protection_wjt }}
+  - name: Add {{ ppdm.k8s.wjt.asset_protection }}
     awx.awx.workflow_job_template:
-      name: "{{ ppdm.k8s.asset_protection_wjt }}"
+      name: "{{ ppdm.k8s.wjt.asset_protection }}"
       inventory: "{{ awx_inventory_1 }}"
       destroy_current_nodes: true
       workflow_nodes:
@@ -95,7 +95,7 @@
                       "default": "",
                       "required": true,
                       "variable": "namespace_name",
-                      "new_question": false,
+                      "new_question": false,t
                       "question_name": "Kubernetes Namespace",
                       "question_description": "Enter the name of the Kubernetes Namespace"
                 },
@@ -117,9 +117,9 @@
               ]
               }
 
-  - name: Lookup {{ ppdm.k8s.asset_protection_wjt }}  
-    set_fact:
-      wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.asset_protection_wjt  }).id }}"
+#  - name: Lookup {{ ppdm.k8s.wjt.asset_protection }}  
+#    set_fact:
+#      wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.wjt.asset_protection  }).id }}"
 
 
 
@@ -127,9 +127,9 @@
 
 
 
-  - name: Add {{ ppdm.k8s.asset_query_wjt }}
+  - name: Add {{ ppdm.k8s.wjt.asset_query_wjt }}
     awx.awx.workflow_job_template:
-      name: "{{ ppdm.k8s.asset_query_wjt }}"
+      name: "{{ ppdm.k8s.wjt.asset_query_wjt }}"
       inventory: "{{ awx_inventory_1 }}"
       destroy_current_nodes: true
       workflow_nodes:
@@ -200,10 +200,9 @@
   - name: Give {{ ppdmm.k8s.user_1.username }} permissions
     role_user_assignment:
       role_definition: WorkflowJobTemplate Execute
-#      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
       object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
       user: "{{ ppdm.k8s.user_1.username }}"
       state: present
     loop:
      - "{{ ppdm.k8s.wjt.asset_protection }}"
-     - "{{ ppdm.k8s.wjt.asset_query }}"
+     - "{{ ppdm.k8s.wjt.wjt.asset_query }}"
