@@ -72,20 +72,20 @@
       credentials: []
       ask_credential_on_launch: true
 
-  - name: "Add Update" #{{ ppdm.infra.jt.update }}"
-    job_template:
-      name: "{{ ppdm.infra.jt.update }}"
-      description: Runs the Update
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "9.9-playbook_install_update_ppdm.yml"
-      state: "present"
-      labels:
-        - "{{ ppdm.infra.label }}"
-      credentials: []  
-      ask_credential_on_launch: true   
+#  - name: "Add Update" #{{ ppdm.infra.jt.update }}"
+#    job_template:
+#      name: "{{ ppdm.infra.jt.update }}"
+#      description: Runs the Update
+#      job_type: "run"
+#      organization: "{{ awx_org }}"
+#      inventory: "{{ awx_inventory_1 }}"
+#      project: "{{ ppdm.project.name }}"
+#      playbook: "9.9-playbook_install_update_ppdm.yml"
+#      state: "present"
+#      labels:
+#        - "{{ ppdm.infra.label }}"
+#     credentials: []  
+#     ask_credential_on_launch: true   
 
   - name: "Add {{ ppdm.infra.jt.update_history }}"
     job_template:
