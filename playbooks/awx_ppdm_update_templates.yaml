@@ -72,20 +72,20 @@
       credentials: []
       ask_credential_on_launch: true
 
-#  - name: "Add Update" #{{ ppdm.infra.jt.update }}"
-#    job_template:
-#      name: "{{ ppdm.infra.jt.update }}"
-#      description: Runs the Update
-#      job_type: "run"
-#      organization: "{{ awx_org }}"
-#      inventory: "{{ awx_inventory_1 }}"
-#      project: "{{ ppdm.project.name }}"
-#      playbook: "9.9-playbook_install_update_ppdm.yml"
-#      state: "present"
-#      labels:
-#        - "{{ ppdm.infra.label }}"
-#     credentials: []  
-#     ask_credential_on_launch: true   
+  - name: "Add Update" #{{ ppdm.infra.jt.execute_update }}"
+    job_template:
+      name: "{{ ppdm.infra.jt.execute_update }}"
+      description: Runs the Update
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm.project.name }}"
+      playbook: "9.9-playbook_install_update_ppdm.yml"
+      state: "present"
+      labels:
+        - "{{ ppdm.infra.label }}"
+     credentials: []  
+     ask_credential_on_launch: true   
 
   - name: "Add {{ ppdm.infra.jt.update_history }}"
     job_template:
@@ -170,13 +170,13 @@
             type: workflow_approval
           related:
             success_nodes: 
-              - identifier: "{{ ppdm.infra.jt.update }}"
+              - identifier: "{{ ppdm.infra.jt.execute_update }}"
             failure_nodes: []
             always_nodes: []
-        - identifier: "{{ ppdm.infra.jt.update }}"
+        - identifier: "{{ ppdm.infra.jt.execute_update }}"
           extra_data: []
           unified_job_template:
-            name: "{{ ppdm.infra.jt.update }}"
+            name: "{{ ppdm.infra.jt.execute_update }}"
             inventory:
               organization:
                 name: "{{ awx_org }}"
@@ -235,7 +235,7 @@
       state: present
     loop:
       - "{{ ppdm.infra.jt.upload_update }}"                 
-      - "{{ ppdm.infra.jt.update }}"
+      - "{{ ppdm.infra.jt.execute_update }}"
       - "{{ ppdm.infra.jt.precheck_update }}"  
 
   - name: Give {{ ppdmm.infra.user_1.username }} Execute Job Template permissions

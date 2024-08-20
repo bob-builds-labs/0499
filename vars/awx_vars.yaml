@@ -76,7 +76,8 @@
             jt:
                 upload_update: _9.1 Upload PPDM Update from S3
                 precheck_update: _9.2 Precheck Update
-                update: _9.3 Update PPDM
+                execute_update: _9.3 Update PPDM
+                approve_update: _9.3 Approval for Update
                 update_history: _9.4 Update History
                 delete_update: _9.9 Delete PPDM Update
             wjt: 
