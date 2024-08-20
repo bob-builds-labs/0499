@@ -156,4 +156,4 @@
       state: present
     loop:
      - "{{ ppdm.k8s.wjt.asset_protection }}"
-     - "{{ ppdm.k8s.wjt.wjt.asset_query }}"
+     - "{{ ppdm.k8s.wjt.asset_query }}"
