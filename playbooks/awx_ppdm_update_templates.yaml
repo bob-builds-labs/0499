@@ -234,9 +234,9 @@
             always_nodes:  []
             credentials: 
                 - name: "{{ ppdm.{{ ppdm_index +1 }}.credentials }}"
-      loop: "{{ ppdm.infra.wjt.update_ppdm }}"
-      loop_control:
-        index_var: ppdm_index      
+    loop: "{{ ppdm.infra.wjt.update_ppdm }}"
+    loop_control:
+      index_var: ppdm_index      
 
   - name: Give {{ ppdmm.infra.user_1.username }} Execute WF Job Template permissions
     role_user_assignment:
