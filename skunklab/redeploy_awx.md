@@ -56,3 +56,11 @@ And start populating our AWX from ansible playbook:
 ansible-playbook ../playbooks/awx_awx.yaml
 echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
 ```
+
+
+To use the testing branch: 
+
+```bash
+ansible-playbook ../playbooks/awx_awx.yaml --extra-vars "awx.inventory[0].scm_branch"
+echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
+``
