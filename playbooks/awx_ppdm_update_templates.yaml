@@ -136,8 +136,8 @@
         name: "{{ ppdm.infra.wjt.update_ppdm }}-{{ ppdm_index + 1 }}"
         inventory: "{{ awx.inventory[0].name }}"
         extra_vars:
-          package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg
-          release: 19.17
+          package: "dellemc-ppdm-upgrade-sw-{{ ppdm.release }}.0-10.pkg"
+          release: "{{ ppdm.release }}"
         workflow_nodes:
           - identifier: "{{ ppdm.infra.jt.upload_update }}"
             extra_data: []
