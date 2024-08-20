@@ -9,15 +9,15 @@
   collections:
     - awx.awx
   tasks:
-    - name: Add {{ ppdm.k8s.label }} label to organization {{ awx_org }}
+    - name: Add {{ ppdm.k8s.label }} label to organization {{ awx.org }}
       label:
         name: "{{ ppdm.k8s.label }}"
-        organization: "{{ awx_org }}"
+        organization: "{{ awx.org }}"
     - name: Create team {{ ppdm.k8s.team }}
       team:
         name: "{{ ppdm.k8s.team }}"
         description: "{{ ppdm.k8s.team_description }}"
-        organization: "{{ awx_org }}"
+        organization: "{{ awx.org }}"
         state: present
       register: result
 
@@ -25,12 +25,12 @@
       set_fact:
         team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.k8s.team  }) }}"
 
-    - name: Add user to organization {{ awx_org }}
+    - name: Add user to organization {{ awx.org }}
       user:
         username: "{{ ppdm.k8s.user_1.username }}"
         password: "{{ ppdm.k8s.user_1.password }}"
         email: "{{ ppdm.k8s.user_1.email }}"
-        organization: "{{ awx_org }}"
+        organization: "{{ awx.org }}"
         state: present
         update_secrets: true
 
@@ -45,7 +45,7 @@
     - name: Add {{ ppdm.k8s.wjt.asset_protection }}
       awx.awx.workflow_job_template:
         name: "{{ ppdm.k8s.wjt.asset_protection }}"
-        inventory: "{{ awx_inventory_1 }}"
+        inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.asset_protection }}"
@@ -55,7 +55,7 @@
               name: 130.0 AdHoc Asset Protection
               inventory:
                 organization:
-                  name: "{{ awx_org }}"
+                  name: "{{ awx.org }}"
               type: job_template
             related:
               success_nodes: []
@@ -119,7 +119,7 @@
     - name: Add {{ ppdm.k8s.wjt.asset_query }}
       awx.awx.workflow_job_template:
         name: "{{ ppdm.k8s.wjt.asset_query }}"
-        inventory: "{{ awx_inventory_1 }}"
+        inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.asset_query }}"
@@ -129,7 +129,7 @@
               name: 30.0 Query Assets
               inventory:
                 organization:
-                  name: "{{ awx_org }}"
+                  name: "{{ awx.org }}"
               type: job_template
             related:
               success_nodes: []

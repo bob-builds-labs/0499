@@ -1,17 +1,22 @@
-awx_org: Dell Org
-awx_org_description: Dell DPS Org
-awx_inventory_project: 0499
-awx_inventory_project_description: Base Inventory and Templates for 0499
-awx_inventory_url: https://github.com/bob-builds-labs/0499.git
-awx_inventory_source_1_description: Inventory vor Lab 1 Hosts
-awx_inventory_source_1: LAB1 Hosts
-awx_inventory_1: PPDM Inventory
-awx_inventory_1_description: PPDM Inventory for AWX
-awx_infra_label: awx_infra
-awx_infra_job_template: awx
-awx_infra_workflow_job_template: 0_Maintain AWX
-awx_galaxy_credentials_name: Ansible Galaxy
-awx_custom_login_info: "Welcome to Dell PPDM Automation Platform Environment"
+awx:
+  org: Dell Org
+  description: Dell DPS Org
+  custom_login_info: "Welcome to Dell PPDM Automation Platform Environment"
+  galaxy_credentials_name: Ansible Galaxy
+  infra:
+    label: awx_infra
+    job_template: awx
+    workflow_job_template: 0_Maintain AWX
+  inventory:
+    - project_name: 0499
+      scm_branch: main
+      scm url: https://github.com/bob-builds-labs/0499.git
+      scm_description: Base Inventory and Templates for 0499
+      name: PPDM Inventory
+      description: PPDM Inventory for AWX
+      source:
+        - name: LAB1 Hosts
+          description: Inventory for Lab1 Hosts  
 
 minio_group: minio-user
 minio_user: minio-user

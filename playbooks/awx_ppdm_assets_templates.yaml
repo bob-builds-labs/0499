@@ -8,15 +8,15 @@
   collections:
     - awx.awx
   tasks:
-    - name: Add {{ ppdm.assets.label }} label to organization {{ awx_org }}
+    - name: Add {{ ppdm.assets.label }} label to organization {{ awx.org }}
       label:
         name: "{{ ppdm.assets.label }}"
-        organization: "{{ awx_org }}"
+        organization: "{{ awx.org }}"
     - name: Create team {{ ppdm.agents.team.name }}
       team:
         name: "{{ ppdm.agents.team.name }}"
         description: "{{ ppdm.agents.team.description }}"
-        organization: "{{ awx_org }}"
+        organization: "{{ awx.org }}"
         state: present
 
     - name: Add 130.0 AdHoc Asset Protection
@@ -24,8 +24,8 @@
         name: 130.0 AdHoc Asset Protection
         description: AdHoc protection of Assets
         job_type: "run"
-        organization: "{{ awx_org }}"
-        inventory: "{{ awx_inventory_1 }}"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
         project: "{{ ppdm.project.name }}"
         playbook: "130.0-playbook_start_asset_protection.yml"
         state: "present"
@@ -43,8 +43,8 @@
         name: 30.0 Query Assets
         description: Query for Assets
         job_type: "run"
-        organization: "{{ awx_org }}"
-        inventory: "{{ awx_inventory_1 }}"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
         project: "{{ ppdm.project.name }}"
         playbook: "30.0-playbook_get_assets.yml"
         state: "present"

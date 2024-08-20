@@ -10,15 +10,15 @@
     - awx.awx
   tasks:
  
-  - name: Add {{ ppdm.agents.label }} label to organization {{ awx_org }}
+  - name: Add {{ ppdm.agents.label }} label to organization {{ awx.org }}
     label:
       name: "{{ ppdm.agents.label }}"
-      organization: "{{ awx_org }}"    
+      organization: "{{ awx.org }}"    
   - name: Create team {{ ppdm.agents.team.name }}
     team:
       name: "{{ ppdm.agents.team.name }}"
       description: "{{ ppdm.agents.team.description }}"
-      organization: "{{ awx_org }}"
+      organization: "{{ awx.org }}"
       state: present
     register: result   
 
@@ -27,12 +27,12 @@
       team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.agents.team.name  }) }}"
 
 
-  - name: Add user to organization {{ awx_org }}
+  - name: Add user to organization {{ awx.org }}
     user:
       username: "{{ ppdm.agents.user_1.username }}"
       password: "{{ ppdm.agents.user_1.password }}"
       email: "{{ ppdm.agents.user_1.email }}"
-      organization: "{{ awx_org }}"
+      organization: "{{ awx.org }}"
       state: present
       update_secrets: true
 
@@ -51,8 +51,8 @@
     job_template:
       name: "{{ ppdm.agents.jt.list }}"
       job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
       project: "{{ ppdm.project.name }}"
       playbook: "100.0_list_agents.yml"
       ask_credential_on_launch: true
@@ -65,8 +65,8 @@
     job_template:
       name: "{{ ppdm.agents.jt.download }}"
       job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
       project: "{{ ppdm.project.name }}"
       playbook: "100.1_download_agents_s3.yml"
       ask_credential_on_launch: true
@@ -79,8 +79,8 @@
     job_template:
       name: "{{ ppdm.agents.jt.set_dns}}"
       job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
       project: "{{ ppdm.project.name }}"
       playbook: "100.2_set_dns_for_agents.yaml"
       ask_credential_on_launch: true
@@ -94,8 +94,8 @@
       name: "{{ ppdm.agents.jt.clear_hosts }}"
       description: Delete wrong localhost entries
       job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
       project: "{{ ppdm.project.name }}"
       playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
       state: "present"
@@ -110,8 +110,8 @@
       name: "{{ ppdm.agents.jt.deploy }}"
       description: Copy and deploy PPDM Agents from S3 Storage
       job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
       project: "{{ ppdm.project.name }}"
       playbook: "100.3_playbook_copy_and_deploy_windows_agent_s3.yaml"
       extra_vars: 
@@ -131,8 +131,8 @@
       name: "{{ ppdm.agents.jt.approve }}"
       description: Approve Agents via Whitelist
       job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
       project: "{{ ppdm.project.name }}"
       playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
       extra_vars: 
@@ -150,8 +150,8 @@
       name: "{{ ppdm.agents.jt.uninstall }}"
       description: Remove Windows Agent
       job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
       project: "{{ ppdm.project.name }}"
       playbook: "100.9_playbook-uninstall-windows_agent_s3.yaml"
       extra_vars: 
