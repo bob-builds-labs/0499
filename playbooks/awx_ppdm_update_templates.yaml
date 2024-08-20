@@ -232,7 +232,7 @@
       loop_control:
         index_var: ppdm_index
 
-    - name: Give {{ ppdmm.infra.user_1.username }} Execute WF Job Template permissions
+    - name: Give {{ ppdm.infra.user_1.username }} Execute WF Job Template permissions
       role_user_assignment:
         role_definition: WorkflowJobTemplate Execute
         object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ( ppdm.infra.wjt.update_ppdm ~ '-' ~ (ppdm_index + 1) )  }).id }}"
@@ -242,7 +242,7 @@
       loop_control:
         index_var: ppdm_index
 
-    - name: Give {{ ppdmm.infra.user_1.username }} View  Job Template permissions
+    - name: Give {{ ppdm.infra.user_1.username }} View  Job Template permissions
       role_user_assignment:
         role_definition: JobTemplate View
         object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
@@ -253,7 +253,7 @@
         - "{{ ppdm.infra.jt.execute_update }}"
         - "{{ ppdm.infra.jt.precheck_update }}"
 
-    - name: Give {{ ppdmm.infra.user_1.username }} Execute Job Template permissions
+    - name: Give {{ ppdm.infra.user_1.username }} Execute Job Template permissions
       role_user_assignment:
         role_definition: JobTemplate Execute
         object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
@@ -263,7 +263,7 @@
         - "{{ ppdm.infra.jt.update_history }}"
         - "{{ ppdm.infra.jt.delete_update }}"
 
-    - name: Give {{ ppdmm.infra.user_1.username }} Use Credentials  permissions
+    - name: Give {{ ppdm.infra.user_1.username }} Use Credentials  permissions
       role_user_assignment:
         role_definition: Credential Use
         object_id: "{{ lookup('awx.awx.controller_api', 'credentials', query_params={ 'name': item.name  }).id }}"

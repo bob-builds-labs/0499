@@ -34,7 +34,7 @@
         state: present
         update_secrets: true
 
-    - name: Give {{ ppdmm.k8s.user_1.username }} permissions
+    - name: Give {{ ppdm.k8s.user_1.username }} permissions
       role_user_assignment:
         role_definition: Team Member
         #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
@@ -186,7 +186,7 @@
           ]
           }
 
-    - name: "Give {{ ppdmm.k8s.user_1.username }} WJT permissions"
+    - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
       role_user_assignment:
         role_definition: WorkflowJobTemplate Execute
         object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
@@ -196,7 +196,7 @@
         - "{{ ppdm.k8s.wjt.asset_protection }}"
         - "{{ ppdm.k8s.wjt.asset_query }}"
 
-    - name: "Give {{ ppdmm.k8s.user_1.username }} JT permissions"
+    - name: "Give {{ ppdm.k8s.user_1.username }} JT permissions"
       role_user_assignment:
         role_definition: JobTemplate View
         object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"

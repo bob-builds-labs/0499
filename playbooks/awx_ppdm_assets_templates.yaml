@@ -3,58 +3,56 @@
   hosts: localhost
   connection: local
   vars:
-  vars_files: 
+  vars_files:
     - ../vars/awx_vars.yaml
   collections:
     - awx.awx
   tasks:
- 
-  - name: Add {{ ppdm.assets.label }} label to organization {{ awx_org }}
-    label:
-      name: "{{ ppdm.assets.label }}"
-      organization: "{{ awx_org }}"    
-  - name: Create team {{ ppdm.agents.team.name }}
-    team:
-      name: "{{ ppdm.agents.team.name }}"
-      description: "{{ ppdm.agents.team.description }}"
-      organization: "{{ awx_org }}"
-      state: present
+    - name: Add {{ ppdm.assets.label }} label to organization {{ awx_org }}
+      label:
+        name: "{{ ppdm.assets.label }}"
+        organization: "{{ awx_org }}"
+    - name: Create team {{ ppdm.agents.team.name }}
+      team:
+        name: "{{ ppdm.agents.team.name }}"
+        description: "{{ ppdm.agents.team.description }}"
+        organization: "{{ awx_org }}"
+        state: present
 
-  - name: Add 130.0 AdHoc Asset Protection
-    job_template:
-      name: 130.0 AdHoc Asset Protection
-      description: AdHoc protection of Assets
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "130.0-playbook_start_asset_protection.yml"
-      state: "present"
-      labels:
-        - "{{ ppdm.assets.label }}"
-      credentials:
-        - "{{ ppdm.credentials[0].name }}" 
-      extra_vars: 
-        asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
-      ask_variables_on_launch: true
-      ask_credential_on_launch: true
+    - name: Add 130.0 AdHoc Asset Protection
+      job_template:
+        name: 130.0 AdHoc Asset Protection
+        description: AdHoc protection of Assets
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "130.0-playbook_start_asset_protection.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
-  - name: Add 30.0 Query Assets
-    job_template:
-      name: 30.0 Query Assets
-      description: Query for Assets
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "30.0-playbook_get_assets.yml"
-      state: "present"
-      labels:
-        - "{{ ppdm.assets.label }}"
-      credentials:
-        - "{{ ppdm.credentials[0].name }}" 
-      extra_vars: 
-        asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
-      ask_variables_on_launch: true
-      ask_credential_on_launch: true   
-
+    - name: Add 30.0 Query Assets
+      job_template:
+        name: 30.0 Query Assets
+        description: Query for Assets
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
