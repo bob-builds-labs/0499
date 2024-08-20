@@ -52,7 +52,7 @@
       inventory: "{{ awx_inventory_1 }}"
       destroy_current_nodes: true
       workflow_nodes:
-        - identifier: e37d6788-e741-41c8-9b31-8ccf024ade69
+        - identifier: "{{ ppdm.k8s.wjt.asset_protection }}"
           extra_data:
             asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
 
@@ -133,7 +133,7 @@
       inventory: "{{ awx_inventory_1 }}"
       destroy_current_nodes: true
       workflow_nodes:
-        - identifier: 130.0-Query-K8S-Assets
+        - identifier: "{{ ppdm.k8s.wjt.asset_query_wjt }}"
           extra_data:
             asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
           unified_job_template:
