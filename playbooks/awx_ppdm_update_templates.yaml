@@ -248,4 +248,14 @@
       state: present
     loop:
       - "{{ ppdm.infra.jt.update_history }}"
-      - "{{ ppdm.infra.jt.delete_update }}"                     
+      - "{{ ppdm.infra.jt.delete_update }}"         
+
+  - name: Give {{ ppdmm.infra.user_1.username }} Use Credentials  permissions
+    role_user_assignment:
+      role_definition: Credential Use
+      object_id: "{{ lookup('awx.awx.controller_api', 'credentials', query_params={ 'name': item  }).id }}"
+      user: "{{ ppdm.infra.user_1.username }}"
+      state: present
+    loop:
+      - "{{ ppdm.2.credentials }}"
+      - "{{ ppdm.2.credentials }}"                     			            
