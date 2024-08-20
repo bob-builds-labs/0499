@@ -3,276 +3,270 @@
   hosts: localhost
   connection: local
   vars:
-  vars_files: 
+  vars_files:
     - ../vars/awx_vars.yaml
 
   collections:
     - awx.awx
   tasks:
- 
-  - name: Add {{ ppdm.infra.label }} label to organization {{ awx_org }}
-    label:
-      name: "{{ ppdm.infra.label }}"
-      organization: "{{ awx_org }}"    
-  - name: Create team {{ ppdm.infra.team.name }}
-    team:
-      name: "{{ ppdm.infra.team.name }}"
-      description: "{{ ppdm.infra.team.description }}"
-      organization: "{{ awx_org }}"
-      state: present
+    - name: Add {{ ppdm.infra.label }} label to organization {{ awx_org }}
+      label:
+        name: "{{ ppdm.infra.label }}"
+        organization: "{{ awx_org }}"
+    - name: Create team {{ ppdm.infra.team.name }}
+      team:
+        name: "{{ ppdm.infra.team.name }}"
+        description: "{{ ppdm.infra.team.description }}"
+        organization: "{{ awx_org }}"
+        state: present
 
-  - name: Lookup {{ ppdm.infra.team.name }}  
-    set_fact:
-      team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.infra.team.name  }) }}"
+    - name: Lookup {{ ppdm.infra.team.name }}
+      set_fact:
+        team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.infra.team.name  }) }}"
 
+    - name: Add user to organization {{ awx_org }}
+      user:
+        username: "{{ ppdm.infra.user_1.username }}"
+        password: "{{ ppdm.infra.user_1.password }}"
+        email: "{{ ppdm.infra.user_1.email }}"
+        organization: "{{ awx_org }}"
+        state: present
+        update_secrets: true
 
-  - name: Add user to organization {{ awx_org }}
-    user:
-      username: "{{ ppdm.infra.user_1.username }}"
-      password: "{{ ppdm.infra.user_1.password }}"
-      email: "{{ ppdm.infra.user_1.email }}"
-      organization: "{{ awx_org }}"
-      state: present
-      update_secrets: true
+    - name: Give {{ ppdm.infra.user_1.username }} permissions
+      role_user_assignment:
+        role_definition: Team Member
+        object_id: "{{ team.id }}"
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
 
-  - name: Give {{ ppdm.infra.user_1.username }} permissions
-    role_user_assignment:
-      role_definition: Team Member
-      object_id: "{{ team.id }}"
-      user: "{{ ppdm.infra.user_1.username }}"
-      state: present
+    - name: "Add {{ ppdm.infra.jt.upload_update }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.upload_update }}"
+        description: Uploads the PPDM Update .pkg file from S3 to PPDM
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "9.9-playbook_upload_update_ppdm_from_s3.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
 
-  - name: "Add {{ ppdm.infra.jt.upload_update }}"
-    job_template:
-      name: "{{ ppdm.infra.jt.upload_update }}"
-      description: Uploads the PPDM Update .pkg file from S3 to PPDM
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "9.9-playbook_upload_update_ppdm_from_s3.yml"
-      state: "present"
-      labels:
-        - "{{ ppdm.infra.label }}"
-      credentials: [] 
-      ask_credential_on_launch: true
+    - name: "Add {{ ppdm.infra.jt.precheck_update }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.precheck_update }}"
+        description: Runs the Update Precheck
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "9.9-playbook_precheck_update_ppdm.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
 
-  - name: "Add {{ ppdm.infra.jt.precheck_update }}"
-    job_template:
-      name: "{{ ppdm.infra.jt.precheck_update }}"
-      description: Runs the Update Precheck
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "9.9-playbook_precheck_update_ppdm.yml"
-      state: "present"
-      labels:
-        - "{{ ppdm.infra.label }}"
-      credentials: []
-      ask_credential_on_launch: true
+    - name: "Add Update {{ ppdm.infra.jt.execute_update }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.execute_update }}"
+        description: Runs the Update
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "9.9-playbook_install_update_ppdm.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
 
-  - name: "Add Update {{ ppdm.infra.jt.execute_update }}"
-    job_template:
-      name: "{{ ppdm.infra.jt.execute_update }}"
-      description: Runs the Update
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "9.9-playbook_install_update_ppdm.yml"
-      state: "present"
-      labels:
-         - "{{ ppdm.infra.label }}"
-      credentials: [] 
-      ask_credential_on_launch: true
+    - name: "Add {{ ppdm.infra.jt.update_history }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.update_history }}"
+        description: Runs the Update
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "9.9-playbook_get_ppdm_update_package_history.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.infra.jt.delete_update }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.delete_update }}"
+        description: Runs the Update
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "9.9-playbook_delete_ppdm_update_package.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
 
+    - name: "Add Update {{ ppdm.infra.jt.execute_update }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.execute_update }}"
+        description: Runs the Update
+        job_type: "run"
+        organization: "{{ awx_org }}"
+        inventory: "{{ awx_inventory_1 }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "9.9-playbook_install_update_ppdm.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
 
-  - name: "Add {{ ppdm.infra.jt.update_history }}"
-    job_template:
-      name: "{{ ppdm.infra.jt.update_history }}"
-      description: Runs the Update
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "9.9-playbook_get_ppdm_update_package_history.yml"
-      state: "present"
-      labels:
-        - "{{ ppdm.infra.label }}"
-      credentials: [] 
-      ask_credential_on_launch: true            
-
-  - name: "Add {{ ppdm.infra.jt.delete_update }}"
-    job_template:
-      name: "{{ ppdm.infra.jt.delete_update }}"
-      description: Runs the Update
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "9.9-playbook_delete_ppdm_update_package.yml"
-      state: "present"
-      labels:
-        - "{{ ppdm.infra.label }}"
-      credentials: []
-      ask_credential_on_launch: true            
-
-  
-  - name: "Add Update {{ ppdm.infra.jt.execute_update }}"
-    job_template:
-      name: "{{ ppdm.infra.jt.execute_update }}"
-      description: Runs the Update
-      job_type: "run"
-      organization: "{{ awx_org }}"
-      inventory: "{{ awx_inventory_1 }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "9.9-playbook_install_update_ppdm.yml"
-      state: "present"
-      labels:
-         - "{{ ppdm.infra.label }}"
-      credentials: [] 
-      ask_credential_on_launch: true
-
-
-  - name: Add PPDM Upgrade Workflow(s)
-    awx.awx.workflow_job_template:
-      destroy_current_nodes: true    
-      name: "{{ ppdm.infra.wjt.update_ppdm }}-{{ ppdm_index + 1 }}"
-      inventory: "{{ awx_inventory_1 }}"
-      extra_vars: 
+    - name: Add PPDM Upgrade Workflow(s)
+      awx.awx.workflow_job_template:
+        destroy_current_nodes: true
+        name: "{{ ppdm.infra.wjt.update_ppdm }}-{{ ppdm_index + 1 }}"
+        inventory: "{{ awx_inventory_1 }}"
+        extra_vars:
           package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg
           release: 19.17
-      workflow_nodes:
-        - identifier: "{{ ppdm.infra.jt.upload_update }}"
-          extra_data: []
-          unified_job_template:
-            name: "{{ ppdm.infra.jt.upload_update }}"
-            inventory:
-              organization:
-                name: "{{ awx_org }}"
-            type: job_template
-          related:
-            success_nodes: 
-              - identifier: "{{ ppdm.infra.jt.precheck_update }}"
-            failure_nodes: []
-            always_nodes: []
-            credentials: 
-                - name: "{{ item.name }}" 
-        - identifier: "{{ ppdm.infra.jt.precheck_update }}"
-          extra_data: []
-          unified_job_template:
-            name: "{{ ppdm.infra.jt.precheck_update }}"
-            inventory:
-              organization:
-                name: "{{ awx_org }}"
-            type: job_template
-          related:
-            success_nodes: 
-              - identifier: "{{ ppdm.infra.jt.approve_update }}"
-            failure_nodes: 
-              - identifier: "{{ ppdm.infra.jt.update_history }}"
-            always_nodes: []
-            credentials: 
-                - name: "{{ item.name }}" 
-        - identifier: "{{ ppdm.infra.jt.approve_update }}"
-          all_parents_must_coverage: false	
-          extra_data: []
-          unified_job_template:
-            name: "{{ ppdm.infra.jt.approve_update }}"
-            timeout: 900
-            inventory:
-              organization:
-                name: "{{ awx_org }}"
-            type: workflow_approval
-          related:
-            success_nodes: 
-              - identifier: "{{ ppdm.infra.jt.execute_update }}"
-            failure_nodes: []
-            always_nodes: []
-        - identifier: "{{ ppdm.infra.jt.execute_update }}"
-          extra_data: []
-          unified_job_template:
-            name: "{{ ppdm.infra.jt.execute_update }}"
-            inventory:
-              organization:
-                name: "{{ awx_org }}"
-            type: job_template
-          related:
-            success_nodes: []
-            failure_nodes: []
-            always_nodes: []
-            credentials: 
-                - name: "{{ item.name }}"     
-        - identifier: "{{ ppdm.infra.jt.update_history }}"
-          extra_data: []
-          unified_job_template:
-            name: "{{ ppdm.infra.jt.update_history }}"
-            inventory:
-              organization:
-                name: "{{ awx_org }}"
-            type: job_template
-          related:
-            success_nodes: []
-            failure_nodes: []
-            always_nodes: 
-              - identifier: "{{ ppdm.infra.jt.delete_update }}"
-            credentials: 
-                - name: "{{ item.name }}"         
-        - identifier: "{{ ppdm.infra.jt.delete_update }}"
-          extra_data: []
-          unified_job_template:
-            name: "{{ ppdm.infra.jt.delete_update }}"
-            inventory:
-              organization:
-                name: "{{ awx_org }}"
-            type: job_template
-          related:
-            success_nodes: []
-            failure_nodes: []
-            always_nodes:  []
-            credentials: 
-                - name: "{{ item.name }}"         
-    loop: "{{ ppdm.credentials }}"
-    loop_control:
-      index_var: ppdm_index      
+        workflow_nodes:
+          - identifier: "{{ ppdm.infra.jt.upload_update }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.upload_update }}"
+              inventory:
+                organization:
+                  name: "{{ awx_org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.precheck_update }}"
+              inventory:
+                organization:
+                  name: "{{ awx_org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.approve_update }}"
+              failure_nodes:
+                - identifier: "{{ ppdm.infra.jt.update_history }}"
+              always_nodes: []
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.approve_update }}"
+            all_parents_must_coverage: false
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.approve_update }}"
+              timeout: 900
+              inventory:
+                organization:
+                  name: "{{ awx_org }}"
+              type: workflow_approval
+            related:
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.execute_update }}"
+              failure_nodes: []
+              always_nodes: []
+          - identifier: "{{ ppdm.infra.jt.execute_update }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.execute_update }}"
+              inventory:
+                organization:
+                  name: "{{ awx_org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.update_history }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.update_history }}"
+              inventory:
+                organization:
+                  name: "{{ awx_org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes:
+                - identifier: "{{ ppdm.infra.jt.delete_update }}"
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.delete_update }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.delete_update }}"
+              inventory:
+                organization:
+                  name: "{{ awx_org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - name: "{{ item.name }}"
+      loop: "{{ ppdm.credentials }}"
+      loop_control:
+        index_var: ppdm_index
 
-  - name: Give {{ ppdmm.infra.user_1.username }} Execute WF Job Template permissions
-    role_user_assignment:
-      role_definition: WorkflowJobTemplate Execute
-      object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ( ppdm.infra.wjt.update_ppdm ~ '-' ~ (ppdm_index + 1) )  }).id }}"
-      user: "{{ ppdm.infra.user_1.username }}"
-      state: present
-    loop: "{{ ppdm.credentials }}"
-    loop_control:
-      index_var: ppdm_index
+    - name: Give {{ ppdmm.infra.user_1.username }} Execute WF Job Template permissions
+      role_user_assignment:
+        role_definition: WorkflowJobTemplate Execute
+        object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ( ppdm.infra.wjt.update_ppdm ~ '-' ~ (ppdm_index + 1) )  }).id }}"
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
+      loop: "{{ ppdm.credentials }}"
+      loop_control:
+        index_var: ppdm_index
 
-  - name: Give {{ ppdmm.infra.user_1.username }} View  Job Template permissions
-    role_user_assignment:
-      role_definition: JobTemplate View
-      object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
-      user: "{{ ppdm.infra.user_1.username }}"
-      state: present
-    loop:
-      - "{{ ppdm.infra.jt.upload_update }}"                 
-      - "{{ ppdm.infra.jt.execute_update }}"
-      - "{{ ppdm.infra.jt.precheck_update }}"  
+    - name: Give {{ ppdmm.infra.user_1.username }} View  Job Template permissions
+      role_user_assignment:
+        role_definition: JobTemplate View
+        object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
+      loop:
+        - "{{ ppdm.infra.jt.upload_update }}"
+        - "{{ ppdm.infra.jt.execute_update }}"
+        - "{{ ppdm.infra.jt.precheck_update }}"
 
-  - name: Give {{ ppdmm.infra.user_1.username }} Execute Job Template permissions
-    role_user_assignment:
-      role_definition: JobTemplate Execute
-      object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
-      user: "{{ ppdm.infra.user_1.username }}"
-      state: present
-    loop:
-      - "{{ ppdm.infra.jt.update_history }}"
-      - "{{ ppdm.infra.jt.delete_update }}"         
+    - name: Give {{ ppdmm.infra.user_1.username }} Execute Job Template permissions
+      role_user_assignment:
+        role_definition: JobTemplate Execute
+        object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
+      loop:
+        - "{{ ppdm.infra.jt.update_history }}"
+        - "{{ ppdm.infra.jt.delete_update }}"
 
-  - name: Give {{ ppdmm.infra.user_1.username }} Use Credentials  permissions
-    role_user_assignment:
-      role_definition: Credential Use
-      object_id: "{{ lookup('awx.awx.controller_api', 'credentials', query_params={ 'name': item.name  }).id }}"
-      user: "{{ ppdm.infra.user_1.username }}"
-      state: present
-    loop: "{{ ppdm.credentials }}"            			            
+    - name: Give {{ ppdmm.infra.user_1.username }} Use Credentials  permissions
+      role_user_assignment:
+        role_definition: Credential Use
+        object_id: "{{ lookup('awx.awx.controller_api', 'credentials', query_params={ 'name': item.name  }).id }}"
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
+      loop: "{{ ppdm.credentials }}"
