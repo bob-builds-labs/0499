@@ -74,16 +74,7 @@
         ppdm_username: "{{ item.username }}"
         ppdm_password: "{{ item.password }}"
         ppdm_fqdn: "{{ item.fqdn }}"
-
-  - name: Add PPDM2 Credentials
-    credential:
-      name: "{{ ppdm.2.credentials }}"
-      credential_type: Dell PPDM Credentials
-      organization: "{{ awx_org }}"
-      inputs:
-        ppdm_username: "{{ ppdm.2.username }}"
-        ppdm_password: "{{ ppdm.2.password }}"
-        ppdm_fqdn: "{{ ppdm.2.fqdn }}"
+    loop: "{{ ppdm.credentials }}"
   - name: Create AWX Credential Type
     credential_type:
       name: AWX Credentials
