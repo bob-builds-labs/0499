@@ -42,7 +42,7 @@
       user: "{{ ppdm.infra.user_1.username }}"
       state: present
 
-  - name: Add "{{ ppdm.infra.jt.upload_update }}"
+  - name: "Add {{ ppdm.infra.jt.upload_update }}"
     job_template:
       name: "{{ ppdm.infra.jt.upload_update }}"
       description: Uploads the PPDM Update .pkg file from S3 to PPDM
@@ -57,7 +57,7 @@
       credentials: [] 
       ask_credential_on_launch: true
 
-  - name: Add "{{ ppdm.infra.jt.precheck_update }}"
+  - name: "Add {{ ppdm.infra.jt.precheck_update }}"
     job_template:
       name: "{{ ppdm.infra.jt.precheck_update }}"
       description: Runs the Update Precheck
@@ -72,7 +72,7 @@
       credentials: []
       ask_credential_on_launch: true
 
-  - name: Add "{{ ppdm.infra.jt.update }}"
+  - name: "Add {{ ppdm.infra.jt.update }}"
     job_template:
       name: "{{ ppdm.infra.jt.update }}"
       description: Runs the Update
@@ -87,7 +87,7 @@
       credentials: []  
       ask_credential_on_launch: true   
 
-  - name: Add "{{ ppdm.infra.jt.update_history }}"
+  - name: "Add {{ ppdm.infra.jt.update_history }}"
     job_template:
       name: "{{ ppdm.infra.jt.update_history }}"
       description: Runs the Update
@@ -102,7 +102,7 @@
       credentials: [] 
       ask_credential_on_launch: true            
 
-  - name: Add "{{ ppdm.infra.jt.delete_update }}"
+  - name: "Add {{ ppdm.infra.jt.delete_update }}"
     job_template:
       name: "{{ ppdm.infra.jt.delete_update }}"
       description: Runs the Update
