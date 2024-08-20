@@ -120,10 +120,26 @@
       ask_credential_on_launch: true            
 
   
-  - name: "{{ ppdm.infra.wjt.update_ppdm }}"
+  - name: "Add Update {{ ppdm.infra.jt.execute_update }}"
+    job_template:
+      name: "{{ ppdm.infra.jt.execute_update }}"
+      description: Runs the Update
+      job_type: "run"
+      organization: "{{ awx_org }}"
+      inventory: "{{ awx_inventory_1 }}"
+      project: "{{ ppdm.project.name }}"
+      playbook: "9.9-playbook_install_update_ppdm.yml"
+      state: "present"
+      labels:
+         - "{{ ppdm.infra.label }}"
+      credentials: [] 
+      ask_credential_on_launch: true
+
+
+  - name: "{{ item }}"
     awx.awx.workflow_job_template:
       destroy_current_nodes: true    
-      name: "{{ ppdm.infra.wjt.update_ppdm }}"
+      name: "{{ item }}"
       inventory: "{{ awx_inventory_1 }}"
       extra_vars: 
           package: dellemc-ppdm-upgrade-sw-19.17.0-10.pkg
@@ -218,9 +234,9 @@
             always_nodes:  []
             credentials: 
                 - name: "{{ ppdm.{{ ppdm_index +1 }}.credentials }}"
-		loop: "{{ ppdm.infra.wjt.update_ppdm }}"
-		loop_control:
-			index_var: ppdm_index
+      loop: "{{ ppdm.infra.wjt.update_ppdm }}"
+      loop_control:
+        index_var: ppdm_index      
 
   - name: Give {{ ppdmm.infra.user_1.username }} Execute WF Job Template permissions
     role_user_assignment:
