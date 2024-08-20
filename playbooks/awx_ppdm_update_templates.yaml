@@ -159,7 +159,7 @@
             failure_nodes: []
             always_nodes: []
             credentials: 
-                - name: "{{ ppdm.{{ ppdm_index +1 }}.credentials }}"
+                - name: "{{ ppdm.[ppdm_index +1].credentials }}" 
         - identifier: "{{ ppdm.infra.jt.precheck_update }}"
           extra_data: []
           unified_job_template:
@@ -175,7 +175,7 @@
               - identifier: "{{ ppdm.infra.jt.update_history }}"
             always_nodes: []
             credentials: 
-                - name: "{{ ppdm.{{ ppdm_index +1 }}.credentials }}"
+                - name: "{{ ppdm.[ppdm_index +1].credentials }}" 
         - identifier: "{{ ppdm.infra.jt.approve_update }}"
           all_parents_must_coverage: false	
           extra_data: []
@@ -204,7 +204,7 @@
             failure_nodes: []
             always_nodes: []
             credentials: 
-                - name: "{{ ppdm.{{ ppdm_index +1 }}.credentials }}"     
+                - name: "{{ ppdm.[ppdm_index +1].credentials }}"     
         - identifier: "{{ ppdm.infra.jt.update_history }}"
           extra_data: []
           unified_job_template:
@@ -219,7 +219,7 @@
             always_nodes: 
               - identifier: "{{ ppdm.infra.jt.delete_update }}"
             credentials: 
-                - name: "{{ ppdm.{{ ppdm_index +1 }}.credentials }}"         
+                - name: "{{ ppdm.[ppdm_index +1].credentials }}"         
         - identifier: "{{ ppdm.infra.jt.delete_update }}"
           extra_data: []
           unified_job_template:
