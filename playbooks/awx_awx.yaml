@@ -361,3 +361,12 @@
       state: present
       unified_job_template: "{{ awx_infra_workflow_job_template }}"
       rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
+
+  - name: Create Role Job Template Viewer
+    role_definition:
+      name: JobTemplate View
+      permissions:
+        - awx.view_jobtemplate
+      content_type: awx.jobtemplate
+      description: Role Definition to view Job Templates
+      state: present      
