@@ -148,7 +148,7 @@
               ]
               }
 
-  - name: Give {{ ppdmm.k8s.user_1.username }} permissions
+  - name: "Give {{ ppdmm.k8s.user_1.username }} permissions"
     role_user_assignment:
       role_definition: WorkflowJobTemplate Execute
       object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
@@ -157,3 +157,5 @@
     loop:
      - "{{ ppdm.k8s.wjt.asset_protection }}"
      - "{{ ppdm.k8s.wjt.asset_query }}"
+
+     
