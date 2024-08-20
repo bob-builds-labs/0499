@@ -65,15 +65,15 @@
       injectors: {'env':{'PPDM_FQDN':'{{ "{{ " }}ppdm_fqdn{{ " }}" }}' ,'PPDM_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}','PPDM_USERNAME':'{{ "{{ " }}ppdm_username{{ " }}" }}','PPDM_INITIAL_PASSWORD':'{{ "{{ " }}ppdm_password{{ " }}" }}'}}
       state: present
       validate_certs: false 
-  - name: Add PPDM1 Credentials
+  - name: Add PPDM Credentials
     credential:
-      name: "{{ ppdm.1.credentials }}"
+      name: "{{ item.name }}"
       credential_type: Dell PPDM Credentials
       organization: "{{ awx_org }}"
       inputs:
-        ppdm_username: "{{ ppdm.1.username }}"
-        ppdm_password: "{{ ppdm.1.password }}"
-        ppdm_fqdn: "{{ ppdm.1.fqdn }}"
+        ppdm_username: "{{ item.username }}"
+        ppdm_password: "{{ item.password }}"
+        ppdm_fqdn: "{{ item.fqdn }}"
 
   - name: Add PPDM2 Credentials
     credential:

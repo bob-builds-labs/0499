@@ -1,104 +1,97 @@
-    awx_org: Dell Org
-    awx_org_description: Dell DPS Org
-    awx_inventory_project: 0499
-    awx_inventory_project_description: Base Inventory and Templates for 0499
-    awx_inventory_url: https://github.com/bob-builds-labs/0499.git
-    awx_inventory_source_1_description: Inventory vor Lab 1 Hosts
-    awx_inventory_source_1: LAB1 Hosts
-    awx_inventory_1: PPDM Inventory
-    awx_inventory_1_description: PPDM Inventory for AWX
-    awx_infra_label: awx_infra
-    awx_infra_job_template: awx
-    awx_infra_workflow_job_template: 0_Maintain AWX
-    awx_galaxy_credentials_name: Ansible Galaxy
-    awx_custom_login_info: 'Welcome to Dell PPDM Automation Platform Environment'
+awx_org: Dell Org
+awx_org_description: Dell DPS Org
+awx_inventory_project: 0499
+awx_inventory_project_description: Base Inventory and Templates for 0499
+awx_inventory_url: https://github.com/bob-builds-labs/0499.git
+awx_inventory_source_1_description: Inventory vor Lab 1 Hosts
+awx_inventory_source_1: LAB1 Hosts
+awx_inventory_1: PPDM Inventory
+awx_inventory_1_description: PPDM Inventory for AWX
+awx_infra_label: awx_infra
+awx_infra_job_template: awx
+awx_infra_workflow_job_template: 0_Maintain AWX
+awx_galaxy_credentials_name: Ansible Galaxy
+awx_custom_login_info: 'Welcome to Dell PPDM Automation Platform Environment'
 
-  
-
-
- 
-
-    minio_group: minio-user
-    minio_user: minio-user
-    datapath: /home/minio
-    ansible_become_password: Password123!
-    download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
-    minio_admin: minioadmin
-    minio_password: Password123!
+minio_group: minio-user
+minio_user: minio-user
+datapath: /home/minio
+ansible_become_password: Password123!
+download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
+minio_admin: minioadmin
+minio_password: Password123!
 
 
-    ppdm:
-        release: 19.17
-        project: 
-            name: ansible_ppdm
-            description: Ansible PPDM Modules by Karsten Bott
-            modules_url: https://github.com/dell-examples/ansible_ppdm.git 
-        1: 
-            credentials: ppdm-1
-            username: admin
+ppdm:
+    release: 19.17
+    project: 
+        name: ansible_ppdm
+        description: Ansible PPDM Modules by Karsten Bott
+        modules_url: https://github.com/dell-examples/ansible_ppdm.git 
+    credentials: 
+        - name: ppdm-1
+          username: admin
+          password: Password123!
+          fqdn: ppdm-1.demo.local  
+        - name: ppdm-2
+          username: admin
+          password: Password123!
+          fqdn: ppdm-2.demo.local
+
+    agents:
+        job_template: deploy ppdm agents templates
+        team: 
+            name: App Team
+            description: Team handling all App Agent stuff
+        label: ppdm_agents
+        user_1:
+            username: app_user_1
             password: Password123!
-            fqdn: ppdm-1.demo.local  
-        2: 
-            credentials: ppdm-2
-            username: admin
+            email: appuser@demo.local
+        jt: 
+            list: 100.0 List Agents from PPDM
+            download: 100.1 Download Agents
+            set_dns: 100.2 Set DNS for Agents
+            clear_hosts: 100.3 Clear hosts file windows agent
+            deploy: 100.3 Copy and Deploy Agents from S3
+            approve: 100.4 Create Whitelist Entry from Address Query
+            uninstall: 100.9 Uninstall Windows Agent
+
+
+    infra:
+        team:
+            name: PPDM Infra Team
+            description: Team handling all PPDM Infrastructure ( Deploy, Update ) 
+        label: ppdm_infra   
+        user_1:
+            username: infra_user_1
             password: Password123!
-            fqdn: ppdm-2.demo.local  
-        agents:
-            job_template: deploy ppdm agents templates
-            team: 
-                name: App Team
-                description: Team handling all App Agent stuff
-            label: ppdm_agents
-            user_1:
-                username: app_user_1
-                password: Password123!
-                email: appuser@demo.local
-            jt: 
-                list: 100.0 List Agents from PPDM
-                download: 100.1 Download Agents
-                set_dns: 100.2 Set DNS for Agents
-                clear_hosts: 100.3 Clear hosts file windows agent
-                deploy: 100.3 Copy and Deploy Agents from S3
-                approve: 100.4 Create Whitelist Entry from Address Query
-                uninstall: 100.9 Uninstall Windows Agent
+            email: infrauser@demo.local
+        update_job_template: deploy ppdm update templates
+        jt:
+            upload_update: _9.1 Upload PPDM Update from S3
+            precheck_update: _9.2 Precheck Update
+            execute_update: _9.3 Update PPDM
+            approve_update: _9.3 Approval for Update
+            update_history: _9.4 Update History
+            delete_update: _9.9 Delete PPDM Update
+        wjt: 
+            update_ppdm:
+                - 9 Update PPDM-1
+                - 9 Update PPDM-1
 
-
-        infra:
-            team:
-                name: PPDM Infra Team
-                description: Team handling all PPDM Infrastructure ( Deploy, Update ) 
-            label: ppdm_infra   
-            user_1:
-                username: infra_user_1
-                password: Password123!
-                email: infrauser@demo.local
-            update_job_template: deploy ppdm update templates
-            jt:
-                upload_update: _9.1 Upload PPDM Update from S3
-                precheck_update: _9.2 Precheck Update
-                execute_update: _9.3 Update PPDM
-                approve_update: _9.3 Approval for Update
-                update_history: _9.4 Update History
-                delete_update: _9.9 Delete PPDM Update
-            wjt: 
-                update_ppdm:
-                    - 9 Update PPDM-1
-                    - 9 Update PPDM-1
-
-        k8s: 
-            label: ppdm_k8s
-            job_template: deploy ppdm k8s templates
-            team: Kubernetes Team
-            team_description: They made us the new God´s
-            user_1:
-                username: k8s_user_1
-                password: Password123!
-                email: k8suser@demo.local
-            wjt:     
-                asset_protection: 130.0 AdHoc Protect K8S Asset 
-                asset_query: 130.0 Query K8S Assets   
-        assets:
-            job_template: deploy ppdm assets templates 
-            label: ppdm_assets       
-
-
+    k8s: 
+        label: ppdm_k8s
+        job_template: deploy ppdm k8s templates
+        team: Kubernetes Team
+        team_description: They made us the new God´s
+        user_1:
+            username: k8s_user_1
+            password: Password123!
+            email: k8suser@demo.local
+        wjt:     
+            asset_protection: 130.0 AdHoc Protect K8S Asset 
+            asset_query: 130.0 Query K8S Assets   
+    assets:
+        job_template: deploy ppdm assets templates 
+        label: ppdm_assets      

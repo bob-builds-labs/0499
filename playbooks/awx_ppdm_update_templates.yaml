@@ -159,7 +159,7 @@
             failure_nodes: []
             always_nodes: []
             credentials: 
-                - name: "{{ ppdm.[ppdm_index +1].credentials }}" 
+                - name: "{{ ppdm.[ppdm_index].credentials }}" 
         - identifier: "{{ ppdm.infra.jt.precheck_update }}"
           extra_data: []
           unified_job_template:
