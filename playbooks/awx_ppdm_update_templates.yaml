@@ -244,8 +244,7 @@
       object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
       user: "{{ ppdm.infra.user_1.username }}"
       state: present
-    loop:
-      - "{{ ppdm.infra.wjt.update_ppdm }}"
+    loop: "{{ ppdm.infra.wjt.update_ppdm }}"
 
   - name: Give {{ ppdmm.infra.user_1.username }} View  Job Template permissions
     role_user_assignment:
