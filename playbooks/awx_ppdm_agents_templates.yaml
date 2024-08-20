@@ -60,7 +60,7 @@
       labels:
         - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm.1.credentials }}"  
+        - "{{ ppdm.credentials[0].name }}"  
   - name: "Add {{ ppdm.agents.jt.download }}"
     job_template:
       name: "{{ ppdm.agents.jt.download }}"
@@ -74,7 +74,7 @@
       labels:
         - "{{ ppdm.agents.label }}"        
       credentials:
-        - "{{ ppdm.1.credentials }}" 
+        - "{{ ppdm.credentials[0].name }}" 
   - name: "Add {{ ppdm.agents.jt.set_dns}}"
     job_template:
       name: "{{ ppdm.agents.jt.set_dns}}"
@@ -88,7 +88,7 @@
       labels:
         - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm.1.credentials }}"          
+        - "{{ ppdm.credentials[0].name }}"          
   - name: "Add {{ ppdm.agents.jt.clear_hosts }}"
     job_template:
       name: "{{ ppdm.agents.jt.clear_hosts }}"
@@ -124,7 +124,7 @@
       labels:
         - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm.1.credentials }}"        
+        - "{{ ppdm.credentials[0].name }}"        
 
   - name: "Add {{ ppdm.agents.jt.approve }}"
     job_template:
@@ -143,7 +143,7 @@
       labels:
         - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm.1.credentials }}"
+        - "{{ ppdm.credentials[0].name }}"
 
   - name: "Add {{ ppdm.agents.jt.uninstall }}"
     job_template:
@@ -163,7 +163,7 @@
       labels:
         - "{{ ppdm.agents.label }}"
       credentials:
-        - "{{ ppdm.1.credentials }}"                   
+        - "{{ ppdm.credentials[0].name }}"                   
 
   - name: "Give {{ ppdmm.agents.user_1.username }} permissions"
     role_user_assignment:

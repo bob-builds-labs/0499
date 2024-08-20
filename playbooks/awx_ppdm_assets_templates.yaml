@@ -33,7 +33,7 @@
       labels:
         - "{{ ppdm.assets.label }}"
       credentials:
-        - "{{ ppdm.1.credentials }}" 
+        - "{{ ppdm.credentials[0].name }}" 
       extra_vars: 
         asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
       ask_variables_on_launch: true
@@ -52,7 +52,7 @@
       labels:
         - "{{ ppdm.assets.label }}"
       credentials:
-        - "{{ ppdm.1.credentials }}" 
+        - "{{ ppdm.credentials[0].name }}" 
       extra_vars: 
         asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
       ask_variables_on_launch: true
