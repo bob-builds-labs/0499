@@ -16,7 +16,7 @@ awx:
       description: PPDM Inventory for AWX
       source:
         - name: LAB1 Hosts
-          description: Inventory for Lab1 Hosts  
+          description: Inventory for Lab1 Hosts
 
 minio_group: minio-user
 minio_user: minio-user
