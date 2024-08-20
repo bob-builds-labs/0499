@@ -74,6 +74,17 @@
                 email: infrauser@demo.local
             update_job_template: deploy ppdm update templates
             jt:
+                upload_update: _9.1 Upload PPDM Update from S3
+                precheck_update: _9.2 Precheck Update
+                update: _9.3 Update PPDM
+                update_history: _9.4 Update History
+                delete_update: _9.9 Delete PPDM Update
+
+
+
+
+
+
             wjt: 
                 update_ppdm: 9 Update PPDM-1
 
