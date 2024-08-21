@@ -13,7 +13,7 @@ cd ../lab3
 
 ```bash
 oc delete -f aap.yaml -n awx-operator
-oc delete -f awx_operatorGroup.yaml
+oc delete -f aap_operatorGroup.yaml
 oc delete ns aap
 
 oc delete crd ansiblecredentials.tower.ansible.com
