@@ -46,7 +46,7 @@ echo "Waiting for AWX Operator Pod to be deployed"
 until [[ ! -z $(oc get pod -l "control-plane=controller-manager" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
 echo "Waiting for AAP Operator to be ready"
 oc wait --for=condition=ready pod -l "control-plane=controller-manager" -n aap --timeout 600s
-oc apply -f aap.yaml -n awx-operator
+oc apply -f aap.yaml -n aap
 echo "Waiting for AAP Controller Prod instance pod to be deployed"
 until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=aap-task" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
 echo "Waiting for AAP Controller instance to be ready"
