@@ -1,4 +1,4 @@
-# AWX AUtomation Platform automated deployment and Configuration
+# AAP Ansible Automation Platform automated deployment and Configuration
 
 ## Cleanup
 
@@ -37,7 +37,7 @@ oc delete crd jobtemplates.tower.ansible.com
 oc delete crd workflowtemplates.tower.ansible.com 
 ```
 
-## Deploy AWX to Openshift
+## Deploy AAP to Openshift
 
 ```bash
 oc create -f aap_operatorGroup.yaml
@@ -53,7 +53,7 @@ echo "Waiting for AAP Controller instance to be ready"
 oc wait --for=condition=ready pod -l "app.kubernetes.io/name=aap-task" -n aap --timeout 600s
 ```
 
-## Configure AWX
+## Configure AAP
 
 Lets head over to lab4 environment
 
