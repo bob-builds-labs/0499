@@ -20,8 +20,8 @@ spec:
     minioServiceLabels: {}
   subPath: ''
   certConfig: {}
-  users:
-    - name: minio-creds-secret
+  # users:
+  #   - name: minio-creds-secret
   externalClientCertSecrets: []
   env: []
   imagePullSecret: {}
