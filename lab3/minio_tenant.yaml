@@ -25,8 +25,8 @@ spec:
   externalClientCertSecrets: []
   env: []
   imagePullSecret: {}
-  configuration:
-    name: storage-configuration
+  # configuration:
+  #  name: storage-configuration
   pools:
     - containerSecurityContext: {}
       name: pool-0
