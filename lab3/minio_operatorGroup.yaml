@@ -1,0 +1,14 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  annotations:
+    olm.providedAPIs: MinIOJob.v1alpha1.job.min.io,PolicyBinding.v1alpha1.sts.min.io,Tenant.v2.minio.min.io
+  generateName: minio-operator-
+  generation: 1
+  namespace: minio-operator
+  resourceVersion: "3847130"
+spec:
+  upgradeStrategy: Default
+status:
+  namespaces:
+  - ""
