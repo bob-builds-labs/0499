@@ -20,30 +20,14 @@
   - name: Set the value of awx settings LICENSE
     settings:
       name: LICENSE 
-      value: |-
-        '{
-        "sku": "SER0569",
-        "trial": true,
-        "usage": "",
-        "pool_id": "2c945966916bfecf0191752a44e83edc",
-        "satellite": null,
-        "valid_key": true,
-        "license_date": 1729396799,
-        "license_type": "trial",
-        "product_name": "Red Hat Ansible Automation Platform",
-        "support_level": "Self-Support",
-        "account_number": "8686832",
-        "instance_count": 100,
-        "subscription_id": "15393811",
-        "subscription_name": "60 Day Product Trial of Red Hat Ansible Automation Platform, Self-Supported (100 Managed Nodes)"
-        }'     
+      value: '{"sku":"SER0569","trial":true,"usage":"","pool_id":"2c945966916bfecf0191752a44e83edc","satellite":null,"valid_key":true,"license_date":1729396799,"license_type":"trial","product_name":"Red Hat Ansible Automation Platform","support_level":"Self-Support","account_number":"8686832","instance_count":100,"subscription_id":"15393811","subscription_name":"60 Day Product Trial of Red Hat Ansible Automation Platform, Self-Supported (100 Managed Nodes)"}' 
     register: result 
     until: result.failed is defined and result.failed == false
     retries: 10
     delay: 10
   - debug: 
       msg: "{{ result }}"
-      verbosity: 1
+      verbosity: 0
   - name: Set the PENDO_TRACKING_STATE
     settings:
       name: PENDO_TRACKING_STATE  
