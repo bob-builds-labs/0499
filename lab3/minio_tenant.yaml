@@ -1,0 +1,54 @@
+apiVersion: minio.min.io/v2
+kind: Tenant
+metadata:
+  annotations:
+    prometheus.io/path: /minio/v2/metrics/cluster
+    prometheus.io/port: '9000'
+    prometheus.io/scrape: 'true'
+  resourceVersion: '3904408'
+  name: myminio
+  namespace: minio-operator
+  labels:
+    app: minio
+spec:
+  requestAutoCert: true
+  serviceAccountName: ''
+  serviceMetadata:
+    consoleServiceAnnotations: {}
+    consoleServiceLabels: {}
+    minioServiceAnnotations: {}
+    minioServiceLabels: {}
+  subPath: ''
+  certConfig: {}
+  users:
+    - name: minio-creds-secret
+  externalClientCertSecrets: []
+  env: []
+  imagePullSecret: {}
+  configuration:
+    name: storage-configuration
+  pools:
+    - containerSecurityContext: {}
+      name: pool-0
+      securityContext: {}
+      servers: 3
+      volumeClaimTemplate:
+        metadata:
+          name: data
+        spec:
+          accessModes:
+            - ReadWriteOnce
+          resources:
+            requests:
+              storage: 4Gi
+          storageClassName: thin-csi-immediate
+      volumesPerServer: 2
+  podManagementPolicy: Parallel
+  image: 'quay.io/minio/minio@sha256:f95dc4fc35439654a71300f765b485e114e7a720318dbce24ccd4f324d1475cf'
+  features:
+    bucketDNS: false
+    domains: {}
+  externalCaCertSecret: []
+  mountPath: /export
+  externalCertSecret: []
+  priorityClassName: ''
