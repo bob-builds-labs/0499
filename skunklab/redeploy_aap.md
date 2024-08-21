@@ -17,28 +17,41 @@ oc delete -f awx_sub.yaml -n awx-operator
 oc delete -f awx_operatorGroup.yaml
 oc delete ns awx-operator
 
-oc delete crd awxbackups.awx.ansible.com
-oc delete crd awxmeshingresses.awx.ansible.com 
-oc delete crd awxrestores.awx.ansible.com
-oc delete crd awxs.awx.ansible.com  
+oc delete crd ansiblecredentials.tower.ansible.com
+oc delete crd ansibleinstancegroups.tower.ansible.com
+oc delete crd ansibleinventories.tower.ansible.com
+oc delete crd ansiblejobs.tower.ansible.com
+oc delete crd ansiblelightspeeds.lightspeed.ansible.com
+oc delete crd ansibleprojects.tower.ansible.com
+oc delete crd ansibleschedules.tower.ansible.com
+oc delete crd ansibleworkflows.tower.ansible.com
+oc delete crd automationcontrollerbackups.automationcontroller.ansible.com
+oc delete crd automationcontrollerrestores.automationcontroller.ansible.com
+oc delete crd automationcontrollers.automationcontroller.ansible.com
+oc delete crd automationhubbackups.automationhub.ansible.com
+oc delete crd automationhubrestores.automationhub.ansible.com
+oc delete crd automationhubs.automationhub.ansible.com
+oc delete crd edabackups.eda.ansible.com
+oc delete crd edarestores.eda.ansible.com
+oc delete crd edas.eda.ansible.com 
+oc delete crd jobtemplates.tower.ansible.com
+oc delete crd workflowtemplates.tower.ansible.com 
 ```
 
 ## Deploy AWX to Openshift
 
 ```bash
-oc create ns awx-operator
-oc create -f awx_operatorGroup.yaml
-oc apply -f awx_sub.yaml -n awx-operator
+oc create -f aap_operatorGroup.yaml
 echo "Waiting for AWX Operator Pod to be deployed"
 
-until [[ ! -z $(oc get pod -l "control-plane=controller-manager" -n awx-operator) ]]; do echo "Sleeping 5 seconds";sleep 5; done
-echo "Waiting for AWX Operator to be ready"
-oc wait --for=condition=ready pod -l "control-plane=controller-manager" -n awx-operator --timeout 600s
-oc apply -f awx.yaml -n awx-operator
-echo "Waiting for AWX Prod instance pod to be deployed"
-until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=awx-prod-task" -n awx-operator) ]]; do echo "Sleeping 5 seconds";sleep 5; done
-echo "Waiting for AWX Prod instance to be ready"
-oc wait --for=condition=ready pod -l "app.kubernetes.io/name=awx-prod-task" -n awx-operator --timeout 600s
+until [[ ! -z $(oc get pod -l "control-plane=controller-manager" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
+echo "Waiting for AAP Operator to be ready"
+oc wait --for=condition=ready pod -l "control-plane=controller-manager" -n aap --timeout 600s
+oc apply -f aap.yaml -n awx-operator
+echo "Waiting for AAP Controller Prod instance pod to be deployed"
+until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=aap-task" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
+echo "Waiting for AAP Controller instance to be ready"
+oc wait --for=condition=ready pod -l "app.kubernetes.io/name=aap-task" -n aap --timeout 600s
 ```
 
 ## Configure AWX
