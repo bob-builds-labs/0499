@@ -12,10 +12,9 @@ cd ../lab3
 ## Remove potential previously deployed Instances
 
 ```bash
-oc delete -f awx.yaml -n awx-operator
-oc delete -f awx_sub.yaml -n awx-operator
+oc delete -f aap.yaml -n awx-operator
 oc delete -f awx_operatorGroup.yaml
-oc delete ns awx-operator
+oc delete ns aap
 
 oc delete crd ansiblecredentials.tower.ansible.com
 oc delete crd ansibleinstancegroups.tower.ansible.com
