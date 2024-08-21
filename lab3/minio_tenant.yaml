@@ -27,7 +27,7 @@ spec:
   imagePullSecret: {}
   # configuration:
   #  name: storage-configuration
-  configSecret: minio-creds-secret
+  configSecret: console-secret
   pools:
     - containerSecurityContext: {}
       name: pool-0
