@@ -1,0 +1,19 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: minio-creds-secret
+type: Opaque
+data:
+  accesskey: bWluaW8=
+  secretkey: bWluaW8xMjM=
+---  
+apiVersion: v1
+kind: Secret
+metadata:
+  name: console-secret
+type: Opaque
+data:
+  CONSOLE_PBKDF_PASSPHRASE: U0VDUkVU
+  CONSOLE_PBKDF_SALT: U0VDUkVU
+  CONSOLE_ACCESS_KEY: WU9VUkNPTlNPTEVBQ0NFU1M=
+  CONSOLE_SECRET_KEY: WU9VUkNPTlNPTEVTRUNSRVQ=
