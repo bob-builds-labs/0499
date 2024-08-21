@@ -1,0 +1,49 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: aap
+  annotations:
+    openshift.io/description: Ansible Automation Platform
+    openshift.io/display-name: Ansible Automation Platform
+    openshift.io/node-selector: ''
+spec: {}
+---
+apiVersion: v1
+items:
+- apiVersion: operators.coreos.com/v1
+  kind: OperatorGroup
+  metadata:
+    annotations:
+      olm.providedAPIs: AnsibleCredential.v1alpha1.tower.ansible.com,AnsibleInstanceGroup.v1alpha1.tower.ansible.com,AnsibleInventory.v1alpha1.tower.ansible.com,AnsibleJob.v1alpha1.tower.ansible.com,AnsibleLightspeed.v1alpha1.lightspeed.ansible.com,AnsibleProject.v1alpha1.tower.ansible.com,AnsibleSchedule.v1alpha1.tower.ansible.com,AnsibleWorkflow.v1alpha1.tower.ansible.com,AutomationController.v1beta1.automationcontroller.ansible.com,AutomationControllerBackup.v1beta1.automationcontroller.ansible.com,AutomationControllerRestore.v1beta1.automationcontroller.ansible.com,AutomationHub.v1beta1.automationhub.ansible.com,AutomationHubBackup.v1beta1.automationhub.ansible.com,AutomationHubRestore.v1beta1.automationhub.ansible.com,EDA.v1alpha1.eda.ansible.com,EDABackup.v1alpha1.eda.ansible.com,EDARestore.v1alpha1.eda.ansible.com,JobTemplate.v1alpha1.tower.ansible.com,WorkflowTemplate.v1alpha1.tower.ansible.com
+    generateName: aap-
+    name: aap-sffjr
+    namespace: aap
+  spec:
+    upgradeStrategy: Default
+  status:
+    lastUpdated: "2024-08-21T10:33:46Z"
+    namespaces:
+    - ""
+kind: List
+metadata:
+  resourceVersion: ""
+---
+apiVersion: v1
+items:
+- apiVersion: operators.coreos.com/v1alpha1
+  kind: Subscription
+  metadata:
+    labels:
+      operators.coreos.com/ansible-automation-platform-operator.aap: ""
+    name: ansible-automation-platform-operator
+    namespace: aap
+  spec:
+    channel: stable-2.4-cluster-scoped
+    installPlanApproval: Automatic
+    name: ansible-automation-platform-operator
+    source: redhat-operators
+    sourceNamespace: openshift-marketplace
+    startingCSV: aap-operator.v2.4.0-0.1720482740
+kind: List
+metadata:
+  resourceVersion: ""  
