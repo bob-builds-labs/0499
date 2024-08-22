@@ -234,4 +234,4 @@
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
         job_templates:
-        "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
+        - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
