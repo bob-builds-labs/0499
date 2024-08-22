@@ -1,0 +1,20 @@
+---
+- name: AWX Organization Deployment Runbook
+  hosts: localhost
+  connection: local
+  vars_files: 
+    - ../vars/awx_vars.yaml
+    - ../vars/logo_var.yaml
+  collections:
+    - ansible.controller
+    - awx.awx
+  tasks:
+  - name: Create Kubeconfig Credentials
+    credential_type:
+      name: kubeconfig
+      description: Credential to use kube config file
+      kind: cloud
+      inputs: {"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}
+      injectors: {"file":{"template":"[mykubeconfig]\nkubeconfig='{{ "{{ " }}kubeconfig{{ " }}" }}'"},"env":{"K8S_AUTH_KUBECONFIG":'{{ "{{ " }}awx.filename{{ " }}" }}}}
+      state: present
+      validate_certs: false 
