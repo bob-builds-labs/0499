@@ -257,7 +257,7 @@
 
     - name: Give {{ ppdm.infra.user_1.username }} Execute Job Template permissions
       role:
-        role: JobTemplate Execute
+        role: execute
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
         job_templates:
