@@ -203,7 +203,7 @@
       description: Credential to use kube config file
       kind: cloud
       inputs: {"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}
-      injectors: {"file":{"template":"[mykubeconfig]\nkubeconfig={{ kubeconfig }}"},"env":{"K8S_AUTH_KUBECONFIG":"{{ awx.filename }}"}}
+      injectors: {"file":{"template":"[mykubeconfig]\nkubeconfig='{{ "{{ " }}kubeconfig{{ " }}" }}'"},"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}awx.filename{{ " }}" }}"}}
       state: present
       validate_certs: false 
 
