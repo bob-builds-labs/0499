@@ -205,7 +205,7 @@
       description: Credential to use kube config file
       kind: cloud
       inputs: '{"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}'
-      injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ awx_filename_class }}{{ " }}" }}"},"file":{"template":"[mykubeconfig]\n{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
+      injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ awx_filename_class }}{{ " }}" }}"},"file":{"template":"{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
       state: present
       validate_certs: false 
 
