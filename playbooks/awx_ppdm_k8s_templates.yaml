@@ -187,6 +187,26 @@
           ]
           }
 
+    - name: "Add {{ ppdm.k8s.jt.add_ppdm_rbac  }}"
+      job_template:
+        name: "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
+        description: Add / Update Kubernetes Cluster to PPDM with RBAC
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "130.1_playbook_rbac_add_k8s_to_ppdm.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "openshift.demo.local"
+        ask_credential_on_launch: true
+        ask_variables_on_launch: true
+        extra_vars:
+          vcenter_server: vcenter01.demo.local
+
     - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
       role:
         role: execute
@@ -198,7 +218,7 @@
 
 
 
-    - name: "Give {{ ppdm.k8s.user_1.username }} JT permissions"
+    - name: "Give {{ ppdm.k8s.user_1.username }} JT Read permissions"
       role:
         role: read        
         user: "{{ ppdm.k8s.user_1.username }}"
@@ -206,3 +226,12 @@
         job_templates:
         - "{{ ppdm.assets.jt.query  }}"
         - "{{ ppdm.assets.jt.adhoc_protection  }}"
+
+
+    - name: "Give {{ ppdm.k8s.user_1.username }} JT Execute permissions"
+      role:
+        role: execute        
+        user: "{{ ppdm.k8s.user_1.username }}"
+        state: present
+        job_templates:
+        "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
