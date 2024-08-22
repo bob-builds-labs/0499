@@ -3,12 +3,12 @@
   hosts: localhost
   connection: local
   vars:
+    awx_collection: ansible.controller
   vars_files: 
     - ../vars/awx_vars.yaml
     - ../vars/logo_var.yaml
   collections:
-    - awx.awx
-    - ansible.controller
+    - "{{ awx_collection  }}"
   tasks:
   - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
     settings:
