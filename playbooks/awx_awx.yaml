@@ -28,24 +28,16 @@
   - debug: 
       msg: "{{ result }}"
       verbosity: 0
-  - name: Set the PENDO_TRACKING_STATE
+  - name: Set the TRACKING_STATE
     settings:
-      name: PENDO_TRACKING_STATE  
-      value: off
-  - name: Set the INSIGHTS_TRACKING_STATE
-    settings:
-      name: INSIGHTS_TRACKING_STATE 
+      PENDO_TRACKING_STATE: off  
+      INSIGHTS_TRACKING_STATE: false 
       value: false
                   
   - name: Set the Custom Login Info
     settings:
-      name: CUSTOM_LOGIN_INFO  
-      value: "{{ awx.custom_login_info }}"
-
-  - name: Set the Custom Logo
-    settings:
-      name: CUSTOM_LOGO  
-      value: "{{ custom_logo }}"
+      CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
+      CUSTOM_LOGO: "{{ custom_logo }}"
   
   - name: Create organization {{ awx.org }}
     organization:
