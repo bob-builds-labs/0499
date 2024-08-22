@@ -233,10 +233,11 @@
       loop_control:
         index_var: ppdm_index
 
-    - name: Give {{ ppdm.infra.user_1.username }} Execute WF Job Template permissions
-      role_user_assignment:
-        role_definition: WorkflowJobTemplate Execute
-        object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ( ppdm.infra.wjt.update_ppdm ~ '-' ~ (ppdm_index + 1) )  }).id }}"
+    - name: Give "{{ ppdm.infra.user_1.username }}" Execute WF Job Template permissions
+      role:
+        role_: execute
+        workflows: 
+          - "{{ ppdm.infra.wjt.update_ppdm }}-{{ index + 1 }}"
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
       loop: "{{ ppdm.credentials }}"
@@ -245,29 +246,27 @@
 
     - name: Give {{ ppdm.infra.user_1.username }} View  Job Template permissions
       role_user_assignment:
-        role_definition: JobTemplate View
-        object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
+        role_definition: view
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
-      loop:
-        - "{{ ppdm.infra.jt.upload_update }}"
-        - "{{ ppdm.infra.jt.execute_update }}"
-        - "{{ ppdm.infra.jt.precheck_update }}"
+        job_templates:
+          - "{{ ppdm.infra.jt.upload_update }}"
+          - "{{ ppdm.infra.jt.execute_update }}"
+          - "{{ ppdm.infra.jt.precheck_update }}"
 
     - name: Give {{ ppdm.infra.user_1.username }} Execute Job Template permissions
-      role_user_assignment:
-        role_definition: JobTemplate Execute
-        object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
+      role:
+        role: JobTemplate Execute
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
-      loop:
-        - "{{ ppdm.infra.jt.update_history }}"
-        - "{{ ppdm.infra.jt.delete_update }}"
+        job_templates:
+          - "{{ ppdm.infra.jt.update_history }}"
+          - "{{ ppdm.infra.jt.delete_update }}"
 
     - name: Give {{ ppdm.infra.user_1.username }} Use Credentials  permissions
-      role_user_assignment:
-        role_definition: Credential Use
-        object_id: "{{ lookup('awx.awx.controller_api', 'credentials', query_params={ 'name': item.name  }).id }}"
+      role:
+        role: use
+        credentials: "{{ item.name }}"
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
       loop: "{{ ppdm.credentials }}"

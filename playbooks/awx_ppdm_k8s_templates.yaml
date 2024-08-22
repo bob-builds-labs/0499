@@ -199,11 +199,10 @@
 
 
     - name: "Give {{ ppdm.k8s.user_1.username }} JT permissions"
-      role_user_assignment:
-        role_definition: read
-        object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
+      role:
+        role: read        
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
-      loop:
+        job_templates:
         - "{{ ppdm.assets.jt.query  }}"
         - "{{ ppdm.assets.jt.adhoc_protection  }}"
