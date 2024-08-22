@@ -44,7 +44,7 @@
         state: present
 
     - name: Add {{ ppdm.k8s.wjt.asset_protection }}
-      awx.awx.workflow_job_template:
+      workflow_job_template:
         name: "{{ ppdm.k8s.wjt.asset_protection }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
@@ -118,7 +118,7 @@
     #      wjt: "{{ lookup('ansible.controller.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.wjt.asset_protection  }).id }}"
 
     - name: Add {{ ppdm.k8s.wjt.asset_query }}
-      awx.awx.workflow_job_template:
+      workflow_job_template:
         name: "{{ ppdm.k8s.wjt.asset_query }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
