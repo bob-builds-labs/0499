@@ -246,7 +246,7 @@
         index_var: ppdm_index
 
     - name: Give {{ ppdm.infra.user_1.username }} View  Job Template permissions
-      rolea:
+      role:
         role: read
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
