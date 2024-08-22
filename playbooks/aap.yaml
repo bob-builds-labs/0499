@@ -206,6 +206,7 @@
       injectors: {"file":{"template":"[mykubeconfig]\nkubeconfig='{{ "{{ " }}kubeconfig{{ " }}" }}'"},"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}awx.filename{{ " }}" }}"}}
       state: present
       validate_certs: false 
+      
 
 
   - name: Create AWX deployment Job Templat
