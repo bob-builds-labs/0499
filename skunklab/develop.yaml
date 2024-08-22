@@ -11,7 +11,7 @@
   vars:
     filename: tower.filename  
   tasks:
-  - name: Create Kubeconfig Credentials
+  - name: Create Kubeconfig Credentials Type
     credential_type: 
       name: kubeconfig
       description: Credential to use kube config file
@@ -20,3 +20,11 @@
       injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ filename }}{{ " }}" }}"},"file":{"template":"[mykubeconfig]\n{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
       state: present
       validate_certs: false 
+
+  - name: Add Kubeconfig Credentials
+    credential:
+      name: "openshift.demo.local"
+      credential_type: kubeconfig
+      organization: "{{ awx.org }}"
+      inputs:
+        kubeconfig: "{{ lookup('file', lookup('env','K8S_AUTH_KUBECONFIG')) }}"
