@@ -24,7 +24,7 @@
 
     - name: Lookup {{ ppdm.k8s.team }}
       set_fact:
-        team: "{{ lookup('awx.awx.controller_api', 'teams', query_params={ 'name': ppdm.k8s.team  }) }}"
+        team: "{{ lookup('ansible.controller.controller_api', 'teams', query_params={ 'name': ppdm.k8s.team  }) }}"
 
     - name: Add user to organization {{ awx.org }}
       user:
@@ -115,7 +115,7 @@
 
     #  - name: Lookup {{ ppdm.k8s.wjt.asset_protection }}
     #    set_fact:
-    #      wjt: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.wjt.asset_protection  }).id }}"
+    #      wjt: "{{ lookup('ansible.controller.controller_api', 'workflow_job_templates', query_params={ 'name': ppdm.k8s.wjt.asset_protection  }).id }}"
 
     - name: Add {{ ppdm.k8s.wjt.asset_query }}
       awx.awx.workflow_job_template:
