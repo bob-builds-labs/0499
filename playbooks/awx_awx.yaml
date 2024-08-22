@@ -20,26 +20,16 @@
 
   - debug: 
       msg: "{{ result }}"
-      verbosity: 0
-  - name: Set the TRACKING_STATE
-    settings:
-      settings:
-        PENDO_TRACKING_STATE: off  
-        INSIGHTS_TRACKING_STATE: false 
-
-
-  - name: Set Subscription
-    settings:
-      settings:
-        SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-        SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}" 
-
-
+      verbosity: 1
   - name: Set the Custom Login Info
     settings:
-      settings:
-        CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
-        CUSTOM_LOGO: "{{ custom_logo }}"
+      name: CUSTOM_LOGIN_INFO  
+      value: "{{ awx_custom_login_info }}"
+
+  - name: Set the Custom Logo
+    settings:
+      name: CUSTOM_LOGO  
+      value: "{{ custom_logo }}"
   
   - name: Create organization {{ awx.org }}
     organization:
@@ -48,7 +38,7 @@
       state: present
   - name: Add Ansible Galaxy Credentials
     credential:
-      name: "{{ awx.galaxy_credentials_name }}"
+      name: "{{ awx_galaxy_credentials_name }}"
       credential_type: Ansible Galaxy/Automation Hub API Token
       organization: "{{ awx.org }}"
       inputs:
@@ -57,7 +47,7 @@
   - name: Add Galaxy Credentials to organization {{ awx.org }}
     organization:
       name: "{{ awx.org }}"
-      galaxy_credentials: "{{ awx.galaxy_credentials_name }}"
+      galaxy_credentials: "{{ awx_galaxy_credentials_name }}"
       description: "{{ awx.description }}"
       state: present
 
@@ -65,27 +55,7 @@
     label:
       name: "{{ awx.infra.label }}"
       organization: "{{ awx.org }}"
-
-
-  - name: Create RH Subscription Credential Type
-    credential_type:
-      name: RedHat Subscription Credentials
-      description: Credential for RedHat Subscription
-      kind: cloud
-      inputs: {"fields":[{"id":"rh_username","type":"string","label":"Username"},{"id":"rh_password","type":"string","label":"Password","secret":true}],"required":["rh_username","rh_password"]}
-      injectors: {'env':{'SUBSCRIPTION_PASSWORD':'{{ "{{ " }}rh_password{{ " }}" }}','SUBSCRIPTION_USERNAME':'{{ "{{ " }}rh_username{{ " }}" }}'}}
-      state: present
-      validate_certs: false 
-
-  - name: Add Subscription Credentials
-    credential:
-      name: "RedHat Subscription Credentials"
-      credential_type: RedHat Subscription Credentials
-      organization: "{{ awx.org }}"
-      inputs:
-        rh_username: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-        rh_password: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
-
+         
   - name: Create PPDM Credential Type
     credential_type:
       name: Dell PPDM Credentials
@@ -202,7 +172,7 @@
 
   - name: Create AWX deployment Job Template
     job_template:
-      name: "{{ awx.infra.job_template }}"
+      name: "{{ awx_infra_job_template }}"
       job_type: "run"
       organization: "{{ awx.org }}"
       inventory: "{{ awx.inventory[0].name }}"
@@ -210,7 +180,6 @@
       playbook: "playbooks/awx_awx.yaml"
       credentials:
         - "AWX Admin Credentials"
-        - "RedHat Subscription Credentials"
       state: "present"
       labels:
         - "{{ awx.infra.label }}"
@@ -274,7 +243,7 @@
         - "AWX Admin Credentials"
       state: "present"
       labels:
-        - "{{ awx.infra.label }}"
+        - "{{ awx_infra_label }}"
 
   - name: Create Minio Instance Job
     job_template:
@@ -288,7 +257,7 @@
 #       - "AWX Admin Credentials"
       state: "present"
       labels:
-        - "{{ awx.infra.label }}"
+        - "{{ awx_infra_label }}"
       limit: ansible
 
 
@@ -298,14 +267,14 @@
   - name: AWX PPDM template Maintain Workflow
     awx.awx.workflow_job_template:
       destroy_current_nodes: true    
-      name: "{{ awx.infra.workflow_job_template }}"
+      name: "{{ awx_infra_workflow_job_template }}"
       inventory: "{{ awx.inventory[0].name }}"
       description: "Automated AWX Update workflow for PPDM Automation"
       workflow_nodes:
-        - identifier: "0_{{ awx.infra.job_template }}"
+        - identifier: "0_{{ awx_infra_job_template }}"
           extra_data: []
           unified_job_template:
-            name: "{{ awx.infra.job_template }}"
+            name: "{{ awx_infra_job_template }}"
             description: "Automated AWX Infrustructure Update"
             inventory:
               organization:
@@ -382,14 +351,14 @@
     schedule:
       name: "awx schedule"
       state: present
-      unified_job_template: "{{ awx.infra.workflow_job_template }}"
+      unified_job_template: "{{ awx_infra_workflow_job_template }}"
       rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
 
-#  - name: Create Role Job Template Viewer
-#    role_definition:
-#      name: JobTemplate View
-#      permissions:
-#        - awx.view_jobtemplate
-#      content_type: awx.jobtemplate
-#      description: Role Definition to view Job Templates
-#      state: present      
+  - name: Create Role Job Template Viewer
+    role_definition:
+      name: JobTemplate View
+      permissions:
+        - awx.view_jobtemplate
+      content_type: awx.jobtemplate
+      description: Role Definition to view Job Templates
+      state: present      

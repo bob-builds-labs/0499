@@ -166,17 +166,17 @@
         - "{{ ppdm.credentials[0].name }}"                   
 
   - name: "Give {{ ppdm.agents.user_1.username }} permissions"
-    role_user_assignment:
-      role_definition: JobTemplate Execute
-      object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
-      user: "{{ ppdm.agents.user_1.username }}"
+    role:
+      user: "{{ ppdm.agents.user_1.username }}"    
+      role: execute
+      job_templates:
+        - "{{ ppdm.agents.jt.list }}"
+        - "{{ ppdm.agents.jt.download }}"
+        - "{{ ppdm.agents.jt.approve }}"
+        - "{{ ppdm.agents.jt.set_dns }}"
+        - "{{ ppdm.agents.jt.clear_hosts }}"
+        - "{{ ppdm.agents.jt.deploy }}"
+        - "{{ ppdm.agents.jt.uninstall }}"      
       state: present
-    loop:
-      - "{{ ppdm.agents.jt.list }}"
-      - "{{ ppdm.agents.jt.download }}"
-      - "{{ ppdm.agents.jt.approve }}"
-      - "{{ ppdm.agents.jt.set_dns }}"
-      - "{{ ppdm.agents.jt.clear_hosts }}"
-      - "{{ ppdm.agents.jt.deploy }}"
-      - "{{ ppdm.agents.jt.uninstall }}"
+
 

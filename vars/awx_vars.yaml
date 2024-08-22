@@ -3,6 +3,7 @@ awx:
   description: Dell DPS Org
   custom_login_info: "Welcome to Dell PPDM Automation Platform Environment"
   galaxy_credentials_name: Ansible Galaxy
+  playbook: "playbooks/aap.yaml"
   infra:
     label: awx_infra
     job_template: awx
@@ -41,12 +42,19 @@ ppdm:
       username: admin
       password: Password123!
       fqdn: ppdm-2.demo.local
+  assets:
+    job_template: deploy ppdm assets templates
+    label: ppdm_assets
+    jt:
+        query: 30.0 Query Assets
+        adhoc_protection: 130.0 AdHoc Asset Protection
+
 
   agents:
     job_template: deploy ppdm agents templates
     team:
-      name: App Team
-      description: Team handling all App Agent stuff
+        name: App Team
+        description: Team handling all App Agent stuff
     label: ppdm_agents
     user_1:
       username: app_user_1
@@ -93,6 +101,5 @@ ppdm:
     wjt:
       asset_protection: 130.0 AdHoc Protect K8S Asset
       asset_query: 130.0 Query K8S Assets
-  assets:
-    job_template: deploy ppdm assets templates
-    label: ppdm_assets
+
+

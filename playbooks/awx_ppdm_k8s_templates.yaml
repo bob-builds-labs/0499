@@ -52,7 +52,7 @@
             extra_data:
               asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
             unified_job_template:
-              name: 130.0 AdHoc Asset Protection
+              name: "{{ ppdm.assets.jt.adhoc_protection  }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -126,7 +126,7 @@
             extra_data:
               asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
             unified_job_template:
-              name: 30.0 Query Assets
+              name: "{{ ppdm.assets.jt.query  }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -187,21 +187,22 @@
           }
 
     - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
-      role_user_assignment:
-        role_definition: WorkflowJobTemplate Execute
-        object_id: "{{ lookup('awx.awx.controller_api', 'workflow_job_templates', query_params={ 'name': item  }).id }}"
-        user: "{{ ppdm.k8s.user_1.username }}"
-        state: present
-      loop:
+      role:
+        role: execute
+        workflows:
         - "{{ ppdm.k8s.wjt.asset_protection }}"
         - "{{ ppdm.k8s.wjt.asset_query }}"
+        user: "{{ ppdm.k8s.user_1.username }}"
+        state: present
+
+
 
     - name: "Give {{ ppdm.k8s.user_1.username }} JT permissions"
       role_user_assignment:
-        role_definition: JobTemplate View
+        role_definition: read
         object_id: "{{ lookup('awx.awx.controller_api', 'job_templates', query_params={ 'name': item  }).id }}"
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
       loop:
-        - "30.0 Query Assets"
-        - "130.0 AdHoc Asset Protection"
+        - "{{ ppdm.assets.jt.query  }}"
+        - "{{ ppdm.assets.jt.adhoc_protection  }}"

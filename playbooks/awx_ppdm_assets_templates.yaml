@@ -19,9 +19,9 @@
         organization: "{{ awx.org }}"
         state: present
 
-    - name: Add 130.0 AdHoc Asset Protection
+    - name: "Add {{ ppdm.assets.jt.adhoc_protection  }}"
       job_template:
-        name: 130.0 AdHoc Asset Protection
+        name: "{{ ppdm.assets.jt.adhoc_protection  }}"
         description: AdHoc protection of Assets
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -38,9 +38,9 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: Add 30.0 Query Assets
+    - name: "Add {{ ppdm.assets.jt.query  }}"
       job_template:
-        name: 30.0 Query Assets
+        name: "{{ ppdm.assets.jt.query  }}"
         description: Query for Assets
         job_type: "run"
         organization: "{{ awx.org }}"
