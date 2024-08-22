@@ -39,10 +39,11 @@
 
 
   - name: Give {{ ppdm.agents.user_1.username }} permissions
-    role_user_assignment:
-      role_definition: Team Member
+    role:
+      role: member
 #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
-      object_id: "{{ team.id }}"
+      teams: 
+        - "{{ team.id }}"
       user: "{{ ppdm.agents.user_1.username }}"
       state: present
 

@@ -36,10 +36,10 @@
         update_secrets: true
 
     - name: Give {{ ppdm.k8s.user_1.username }} permissions
-      role_user_assignment:
-        role_definition: Team Member
-        #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
-        object_id: "{{ team.id }}"
+      role:
+        role: member
+        teams:
+         - "{{ team.id }}"
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 

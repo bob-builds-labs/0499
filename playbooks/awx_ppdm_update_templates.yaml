@@ -35,9 +35,10 @@
         update_secrets: true
 
     - name: Give {{ ppdm.infra.user_1.username }} permissions
-      role_user_assignment:
-        role_definition: Team Member
-        object_id: "{{ team.id }}"
+      role:
+        role: member
+        teams:
+          -  "{{ team.id }}"
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
 
