@@ -17,14 +17,7 @@
     until: result.failed is defined and result.failed == false
     retries: 10
     delay: 10
-  - name: Set the value of awx settings LICENSE
-    settings:
-      name: LICENSE 
-      value: '{"sku":"SER0569","trial":true,"usage":"","pool_id":"2c945966916bfecf0191752a44e83edc","satellite":null,"valid_key":true,"license_date":1729396799,"license_type":"trial","product_name":"Red Hat Ansible Automation Platform","support_level":"Self-Support","account_number":"8686832","instance_count":100,"subscription_id":"15393811","subscription_name":"60 Day Product Trial of Red Hat Ansible Automation Platform, Self-Supported (100 Managed Nodes)"}' 
-    register: result 
-    until: result.failed is defined and result.failed == false
-    retries: 10
-    delay: 10
+
   - debug: 
       msg: "{{ result }}"
       verbosity: 0
@@ -33,7 +26,19 @@
       PENDO_TRACKING_STATE: off  
       INSIGHTS_TRACKING_STATE: false 
       value: false
-                  
+
+  - name: Set Subscription
+    SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+    SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}" 
+
+  - name: Set the value of awx settings LICENSE
+    settings:
+      name: LICENSE 
+      value: '{"sku":"SER0569","trial":true,"usage":"","pool_id":"2c945966916bfecf0191752a44e83edc","satellite":null,"valid_key":true,"license_date":1729396799,"license_type":"trial","product_name":"Red Hat Ansible Automation Platform","support_level":"Self-Support","account_number":"8686832","instance_count":100,"subscription_id":"15393811","subscription_name":"60 Day Product Trial of Red Hat Ansible Automation Platform, Self-Supported (100 Managed Nodes)"}' 
+    register: result 
+    until: result.failed is defined and result.failed == false
+    retries: 10
+    delay: 10
   - name: Set the Custom Login Info
     settings:
       CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
@@ -63,7 +68,27 @@
     label:
       name: "{{ awx.infra.label }}"
       organization: "{{ awx.org }}"
-         
+
+
+  - name: Create RH SUbscription Credential Type
+    credential_type:
+      name: RedHat Subscription Credentials
+      description: Credential for RedHat Subscription
+      kind: cloud
+      inputs: {"fields":[{"id":"rh_username","type":"string","label":"Username"},{"id":"rh_password","type":"string","label":"Password","secret":true}],"required":["rh_username","rh_password"]}
+      injectors: {'env':{'SUBSCRIPTION_PASSWORD':'{{ "{{ " }}rh_password{{ " }}" }}','SUBSCRIPTION_USERNAME':'{{ "{{ " }}rh_username{{ " }}" }}'}}
+      state: present
+      validate_certs: false 
+
+  - name: Add Subscription Credentials
+    credential:
+      name: "RedHat Subscription Credentials"
+      credential_type: RedHat Subscription Credentials
+      organization: "{{ awx.org }}"
+      inputs:
+        rh_username: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+        rh_password: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+
   - name: Create PPDM Credential Type
     credential_type:
       name: Dell PPDM Credentials
@@ -188,6 +213,7 @@
       playbook: "playbooks/awx_awx.yaml"
       credentials:
         - "AWX Admin Credentials"
+        - "RedHat Subscription Credentials"
       state: "present"
       labels:
         - "{{ awx.infra.label }}"
