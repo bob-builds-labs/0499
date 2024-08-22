@@ -197,10 +197,18 @@
       inputs:
         url: "https://galaxy.ansible.com" 
 
+  - name: Create Kubeconfig Credentials
+    credential_type:
+      name: kubeconfig
+      description: Credential to use kube config file
+      kind: cloud
+      inputs: {"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}
+      injectors: {'env':"K8S_AUTH_KUBECONFIG": "{{ awx.filename.kubeconfig_file }}" },{'file':"template.kubeconfig_file": "[mykubeconfig]\n{{ kubeconfig }}"}
+      state: present
+      validate_certs: false 
 
 
-
-  - name: Create AWX deployment Job Template
+  - name: Create AWX deployment Job Templat
     job_template:
       name: "{{ awx.infra.job_template }}"
       job_type: "run"
