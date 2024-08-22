@@ -101,5 +101,8 @@ ppdm:
     wjt:
       asset_protection: 130.0 AdHoc Protect K8S Asset
       asset_query: 130.0 Query K8S Assets
+    jt: 
+      add_ppdm_rbac: 130.1 Add K8S to PPDM
+  
 
 
