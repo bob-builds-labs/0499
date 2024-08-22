@@ -23,14 +23,16 @@
       verbosity: 0
   - name: Set the TRACKING_STATE
     settings:
-      PENDO_TRACKING_STATE: off  
-      INSIGHTS_TRACKING_STATE: false 
-      value: false
+      settings:
+        PENDO_TRACKING_STATE: off  
+        INSIGHTS_TRACKING_STATE: false 
+
 
   - name: Set Subscription
     settings:
-      SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-      SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}" 
+      settings:
+        SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+        SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}" 
 
   - name: Set the value of awx settings LICENSE
     settings:
@@ -42,8 +44,9 @@
     delay: 10
   - name: Set the Custom Login Info
     settings:
-      CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
-      CUSTOM_LOGO: "{{ custom_logo }}"
+      settings:
+        CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
+        CUSTOM_LOGO: "{{ custom_logo }}"
   
   - name: Create organization {{ awx.org }}
     organization:
