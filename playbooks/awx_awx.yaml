@@ -34,14 +34,7 @@
         SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
         SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}" 
 
-  - name: Set the value of awx settings LICENSE
-    settings:
-      name: LICENSE 
-      value: '{"sku":"SER0569","trial":true,"usage":"","pool_id":"2c945966916bfecf0191752a44e83edc","satellite":null,"valid_key":true,"license_date":1729396799,"license_type":"trial","product_name":"Red Hat Ansible Automation Platform","support_level":"Self-Support","account_number":"8686832","instance_count":100,"subscription_id":"15393811","subscription_name":"60 Day Product Trial of Red Hat Ansible Automation Platform, Self-Supported (100 Managed Nodes)"}' 
-    register: result 
-    until: result.failed is defined and result.failed == false
-    retries: 10
-    delay: 10
+
   - name: Set the Custom Login Info
     settings:
       settings:
@@ -74,7 +67,7 @@
       organization: "{{ awx.org }}"
 
 
-  - name: Create RH SUbscription Credential Type
+  - name: Create RH Subscription Credential Type
     credential_type:
       name: RedHat Subscription Credentials
       description: Credential for RedHat Subscription
