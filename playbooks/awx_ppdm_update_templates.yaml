@@ -133,7 +133,7 @@
         ask_credential_on_launch: true
 
     - name: Add PPDM Upgrade Workflow(s)
-      awx.awx.workflow_job_template:
+      workflow_job_template:
         destroy_current_nodes: true
         name: "{{ ppdm.infra.wjt.update_ppdm }}-{{ ppdm_index + 1 }}"
         inventory: "{{ awx.inventory[0].name }}"
