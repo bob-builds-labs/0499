@@ -6,7 +6,7 @@
     - ../vars/awx_vars.yaml
     - ../vars/logo_var.yaml
   vars:
-    filename: tower.filename    
+    awx_filename_class: tower.filename    
   collections:
     - ansible.controller
     - awx.awx
@@ -205,7 +205,7 @@
       description: Credential to use kube config file
       kind: cloud
       inputs: '{"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}'
-      injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ filename }}{{ " }}" }}"},"file":{"template":"[mykubeconfig]\n{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
+      injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ awx_filename_class }}{{ " }}" }}"},"file":{"template":"[mykubeconfig]\n{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
       state: present
       validate_certs: false 
 
