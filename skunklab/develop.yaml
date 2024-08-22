@@ -9,7 +9,7 @@
     - ansible.controller
     - awx.awx
   vars:
-    filename: tower.filename  
+    filename: tower.filename 
   tasks:
   - name: Create Kubeconfig Credentials Type
     credential_type: 
