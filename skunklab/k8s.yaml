@@ -12,7 +12,10 @@
    - kubernetes.core     
   vars: 
 
-  tasks:    
+  tasks:
+  - debug:
+      msg: "{{ lookup('env','K8S_AUTH_KUBECONFIG') }}"
+    verbosity: 0      
   - name: Get Cluster information
     kubernetes.core.k8s_cluster_info:
 #      verify_ssl: no

@@ -17,7 +17,7 @@
       description: Credential to use kube config file
       kind: cloud
       inputs: '{"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}'
-      injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ filename }}{{ " }}" }}"},"file":{"template":"[mykubeconfig]\n{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
+      injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ filename }}{{ " }}" }}"},"file":{"template":"{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
       state: present
       validate_certs: false 
 
@@ -28,3 +28,4 @@
       organization: "{{ awx.org }}"
       inputs:
         kubeconfig: "{{ lookup('file', lookup('env','K8S_AUTH_KUBECONFIG')) }}"
+        
