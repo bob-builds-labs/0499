@@ -10,11 +10,11 @@
     - awx.awx
   tasks:
   - name: Create Kubeconfig Credentials
-    credential_type:
+    credential_type: 
       name: kubeconfig
       description: Credential to use kube config file
       kind: cloud
-      inputs: {"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}
-      injectors: {"file":{"template":"[mykubeconfig]\nkubeconfig='{{ "{{ " }}kubeconfig{{ " }}" }}'"},"env":{"K8S_AUTH_KUBECONFIG":'{{ "{{ " }}awx.filename{{ " }}" }}}}
+      inputs: '{"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}'
+      injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ awx.filename }}"},"file":{"template":"[mykubeconfig]\n{{ kubeconfig }}"}}'
       state: present
       validate_certs: false 
