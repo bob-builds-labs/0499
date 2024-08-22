@@ -6,6 +6,7 @@
   vars_files:
     - ../vars/awx_vars.yaml
   collections:
+    - ansible.controller
     - awx.awx
   tasks:
     - name: Add {{ ppdm.assets.label }} label to organization {{ awx.org }}

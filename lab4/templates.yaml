@@ -3,6 +3,7 @@
   hosts: localhost
   connection: local
   collections:
+    - ansible.controller
     - awx.awx
   tasks:
     - name: Job Template Permissions
