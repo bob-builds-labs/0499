@@ -199,7 +199,7 @@
       inputs:
         url: "https://galaxy.ansible.com" 
 
-  - name: Create Kubeconfig Credentials
+  - name: Create Kubeconfig Credential Type
     credential_type: 
       name: kubeconfig
       description: Credential to use kube config file
@@ -209,7 +209,13 @@
       state: present
       validate_certs: false 
 
-
+  - name: Add Kubeconfig Credentials
+    credential:
+      name: "openshift.demo.local"
+      credential_type: kubeconfig
+      organization: "{{ awx.org }}"
+      inputs:
+        kubeconfig: "{{ lookup('file', lookup('env','K8S_AUTH_KUBECONFIG')) }}"
 
   - name: Create AWX deployment Job Templat
     job_template:
@@ -283,6 +289,7 @@
       playbook: "playbooks/awx_ppdm_k8s_templates.yaml"
       credentials:
         - "AWX Admin Credentials"
+        - "openshift.demo.local"
       state: "present"
       labels:
         - "{{ awx.infra.label }}"
