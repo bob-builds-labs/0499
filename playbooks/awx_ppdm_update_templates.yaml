@@ -236,7 +236,7 @@
 
     - name: Give "{{ ppdm.infra.user_1.username }}" Execute WF Job Template permissions
       role:
-        role_: execute
+        role: execute
         workflows: 
           - "{{ ppdm.infra.wjt.update_ppdm }}-{{ index + 1 }}"
         user: "{{ ppdm.infra.user_1.username }}"
@@ -246,8 +246,8 @@
         index_var: ppdm_index
 
     - name: Give {{ ppdm.infra.user_1.username }} View  Job Template permissions
-      role_user_assignment:
-        role_definition: view
+      rolea:
+        role: read
         user: "{{ ppdm.infra.user_1.username }}"
         state: present
         job_templates:
