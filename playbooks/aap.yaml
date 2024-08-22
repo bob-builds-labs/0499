@@ -8,6 +8,7 @@
     - ../vars/logo_var.yaml
   collections:
     - awx.awx
+    - ansible.controller
   tasks:
   - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
     settings:
