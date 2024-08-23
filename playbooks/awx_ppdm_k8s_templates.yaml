@@ -125,7 +125,7 @@
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.asset_state_query }}"
             extra_data:
-              asset_filter: type eq "KUBERNETES" and protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' #and subtype eq "K8S_NAMESPACE" 
+              asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' #
             unified_job_template:
               name: "{{ ppdm.assets.jt.query  }}"
               inventory:
