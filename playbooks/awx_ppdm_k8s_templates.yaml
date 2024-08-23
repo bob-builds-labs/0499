@@ -112,6 +112,10 @@
             }
           ]
           }
+#    - name: remove {{ ppdm.k8s.wjt.asset_state_query }}
+#      workflow_job_template:
+#        name: "{{ ppdm.k8s.wjt.asset_state_query }}"
+#        state: absent
 
     - name: Add {{ ppdm.k8s.wjt.asset_state_query }}
       workflow_job_template:
@@ -121,9 +125,7 @@
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.asset_state_query }}"
             extra_data:
-              asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
-
-              # type eq "KUBERNETES" and protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
+              asset_filter: type eq "KUBERNETES" and protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' #and subtype eq "K8S_NAMESPACE" 
             unified_job_template:
               name: "{{ ppdm.assets.jt.query  }}"
               inventory:
@@ -191,7 +193,6 @@
           - identifier: "{{ ppdm.k8s.wjt.asset_query }}"
             extra_data:
               asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
-
             unified_job_template:
               name: "{{ ppdm.assets.jt.query  }}"
               inventory:
