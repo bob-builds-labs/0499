@@ -53,7 +53,8 @@
           - "{{ ppdm.assets.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
-#        extra_vars:
+        extra_vars: {}
+        verbosity: 0
 #          asset_filter: {} #name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
         ask_variables_on_launch: true
         ask_credential_on_launch: true
