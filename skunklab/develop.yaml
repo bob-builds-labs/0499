@@ -11,15 +11,15 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: Add {{ ppdm.k8s.wjt.asset_query }}
+    - name: Add {{ ppdm.k8s.wjt.asset_state_query }}
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.asset_query }}"
+        name: "{{ ppdm.k8s.wjt.asset_state_query }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.asset_query }}"
+          - identifier: "{{ ppdm.k8s.wjt.asset_state_query }}"
             extra_data:
-              asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+              asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
             unified_job_template:
               name: "{{ ppdm.assets.jt.query  }}"
               inventory:
@@ -34,8 +34,8 @@
         survey_enabled: true
         survey_spec: |
           {
-          "description": "Kubernetes Query Survey",
-          "name": "Query_K8S",
+          "description": "Kubernetes Asset Protection Survey",
+          "name": "K8S_Asset_Survey",
           "spec": [
             {
             "max": 1024,
@@ -52,31 +52,20 @@
             "question_description": ""
             },
             {
-                  "max": 1024,
-                  "min": 0,
-                  "type": "text",
-                  "choices": "",
-                  "default": "",
-                  "required": true,
-                  "variable": "namespace_name",
-                  "new_question": false,
-                  "question_name": "Kubernetes Namespace",
-                  "question_description": "Enter the name of the Kubernetes Namespace"
-            },
-            {
-                  "max": 1024,
-                  "min": 0,
-                  "type": "multiplechoice",
-                  "choices": [
-                      "true",
-                      "false"
-                  ],
-                  "default": "false",
-                  "required": true,
-                  "variable": "full_output",
-                  "new_question": false,
-                  "question_name": "DetailedOutput",
-                  "question_description": "Display all Asset Details"
-            }
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "PROTECTED",
+                "UNPROTECTED"
+            ],
+            "default": "PROTECTED",
+            "required": true,
+            "variable": "protection_state",
+            "new_question": false,
+            "question_name": "Protection State",
+            "question_description": "State of the Namespace"
+            }            
           ]
           }
+

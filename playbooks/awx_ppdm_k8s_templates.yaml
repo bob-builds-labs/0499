@@ -112,10 +112,6 @@
             }
           ]
           }
-    - name: remove {{ ppdm.k8s.wjt.asset_state_query }}
-      workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.asset_state_query }}"
-        state: absent
 
     - name: Add {{ ppdm.k8s.wjt.asset_state_query }}
       workflow_job_template:
