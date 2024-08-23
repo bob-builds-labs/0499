@@ -11,7 +11,7 @@
   vars:
     filename: tower.filename 
   tasks:
-- name: Add {{ ppdm.k8s.wjt.asset_query }}
+  - name: Add {{ ppdm.k8s.wjt.asset_query }}
       workflow_job_template:
         name: "{{ ppdm.k8s.wjt.asset_query }}"
         inventory: "{{ awx.inventory[0].name }}"
