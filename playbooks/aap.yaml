@@ -149,7 +149,7 @@
       scm_type: git
       state: present 
       timeout: 120
-      scm_update_on_launch: true
+      scm_update_on_launch: false
 
   - name: Update Inventory Project {{ awx.inventory[0].project_name  }}
     project_update:
