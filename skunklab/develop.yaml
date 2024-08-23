@@ -19,7 +19,7 @@
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.asset_query }}"
             extra_data:
-              asset_filter: name eq '{{ "'"'{{ " }}namespace_name{{ " }}'"'" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq {{ "'"'{{ " }}k8s_name{{ " }}'"'" }}
+              asset_filter: name eq {{ "\u00B2""{{ " }}namespace_name{{ " }}""\u00B2" }} and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq {{ "\u00B2""{{ " }}k8s_name{{ " }}""\u00B2" }}
             unified_job_template:
               name: "{{ ppdm.assets.jt.query  }}"
               inventory:
