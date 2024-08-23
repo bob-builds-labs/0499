@@ -119,7 +119,7 @@
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.asset_protection }}"
+          - identifier: "{{ asset_state_query }}"
             extra_data:
               asset_filter: type eq "KUBERNETES" and protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
             unified_job_template:
