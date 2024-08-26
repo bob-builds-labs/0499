@@ -69,8 +69,3 @@ And start populating our AAP from ansible playbook:
 ansible-playbook ../playbooks/aap.yaml 
 echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
 ```
-
-
-```bash
-oc -n kube-system describe secret $(oc -n kube-system get secret | (grep admin-user || echo "$_") | awk '{print $1}') | grep token: | awk '{print $2}'
-```
