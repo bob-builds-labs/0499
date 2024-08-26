@@ -57,7 +57,7 @@
     - name: Add PPDD Credentials
       credential:
         name: "{{ item.name }}"
-        credential_type: Dell PPDD Credentials
+        credential_type: Dell PowerProtect DataDomain Credentials
         organization: "{{ awx.org }}"
         inputs:
           ppdd_username: "{{ item.username }}"
