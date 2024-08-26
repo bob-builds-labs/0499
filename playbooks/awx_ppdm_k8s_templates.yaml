@@ -334,7 +334,7 @@
       role:
         role: execute
         workflows:
-          "{{ ppdm.k8s.wjt.namespace }}"    
+          ["{{ ppdm.k8s.wjt.namespace }}" ]   
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
@@ -356,4 +356,4 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-          "{{ ppdm.assets.jt.namespace }}"
+        ["{{ ppdm.assets.jt.namespace }}"]
