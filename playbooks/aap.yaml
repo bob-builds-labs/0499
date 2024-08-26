@@ -217,7 +217,7 @@
       inputs:
         kubeconfig: "{{ lookup('file', lookup('env','K8S_AUTH_KUBECONFIG')) }}"
 
-  - name: Create AWX deployment Job Templat
+  - name: Create AWX deployment Job Template
     job_template:
       name: "{{ awx.infra.job_template }}"
       job_type: "run"
@@ -232,7 +232,7 @@
       state: "present"
       labels:
         - "{{ awx.infra.label }}"
-
+      ask_variables_on_launch: true
 
 
   - name: Create PPDM Agents Job Templates

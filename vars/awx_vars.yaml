@@ -109,5 +109,6 @@ ppdm:
         query: 130.3 Query K8S Assets By Name
         state: 130.3 Query Namespaces by Protection State
         adhoc_protection: 130.5 AdHoc Protect K8S Asset
-
+      plc:
+        get: 130.4 Get all Kubernetes Policies 
 
