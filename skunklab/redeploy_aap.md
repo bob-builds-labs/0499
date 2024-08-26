@@ -42,7 +42,7 @@ oc delete crd workflowtemplates.tower.ansible.com
 
 ```bash
 oc create -f aap_operatorGroup.yaml
-echo "Waiting for AWX Operator Pod to be deployed"
+echo "Waiting for AAP Operator Pod to be deployed"
 
 until [[ ! -z $(oc get pod -l "control-plane=controller-manager" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
 echo "Waiting for AAP Operator to be ready"
@@ -63,10 +63,10 @@ cd ../lab4
 direnv allow .
 ```
 
-And start populating our AWX from ansible playbook:  
+And start populating our AAP from ansible playbook:  
 
 ```bash
-ansible-playbook ../playbooks/awx_awx.yaml
+ansible-playbook ../playbooks/aap.yaml -
 echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
 ```
 
