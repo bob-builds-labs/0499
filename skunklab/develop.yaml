@@ -11,9 +11,7 @@
   vars:
     filename: tower.filename
   tasks:
-
-
-    - name: "Add {{ ppdm.k8s.jt.plc.create }}"
+    - name: Add {{ ppdm.k8s.jt.plc.create }} JT
       job_template:
         name: "{{ ppdm.k8s.jt.plc.create}}"
         description: Get K8S Policies
@@ -34,7 +32,7 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: Add {{ ppdm.k8s.wjt.plc.create }}
+    - name: Add {{ ppdm.k8s.wjt.plc.create }} WJT
       workflow_job_template:
         name: "{{ ppdm.k8s.wjt.plc.create }}"
         inventory: "{{ awx.inventory[0].name }}"
@@ -99,4 +97,3 @@
             }
           ]
           }
-
