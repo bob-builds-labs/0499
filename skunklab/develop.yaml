@@ -14,7 +14,10 @@
     - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
       role:
         role: execute
-        workflows:  ["{{ ppdm.k8s.wjt.namespace }}"]  
+        workflows:
+        - "{{ ppdm.k8s.wjt.namespace.query }}"
+        - "{{ ppdm.k8s.wjt.namespace.state }}"  
+        - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 

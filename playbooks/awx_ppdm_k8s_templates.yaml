@@ -334,7 +334,10 @@
       role:
         role: execute
         workflows:
-        - "{{ ppdm.k8s.wjt.namespace }}"  
+        - "{{ ppdm.k8s.wjt.namespace.query }}"
+        - "{{ ppdm.k8s.wjt.namespace.state }}"  
+        - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
+
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
@@ -356,4 +359,7 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-        - "{{ ppdm.k8s.jt.namespace }}"
+        - "{{ ppdm.k8s.jt.namespace.query }}"
+        - "{{ ppdm.k8s.jt.namespace.state }}"  
+        - "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"  
+
