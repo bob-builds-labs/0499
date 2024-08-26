@@ -25,9 +25,29 @@
           - "{{ ppdm.assets.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
+          - "{{ dd }}"
         extra_vars:
           k8s_policy_name: unique_name
           description: your_description          
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
+  - name: Create PPDD Credential Type
+    credential_type:
+      name: Dell PowerProtect DataDomain Credentials
+      description: Credential to log into PowerProtect DataDomain
+      kind: cloud
+      inputs: {"fields":[{"id":"ppdd_fqdn","type":"string","label":"PPDD FQDN","help_text":"Enter the fqdn or IP address that corresponds to your PPDD Instance"},{"id":"ppdd_username","type":"string","label":"Username"},{"id":"ppdd_password","type":"string","label":"Password","secret":true}],"required":["ppdd_fqdn","ppdd_username","ppdd_password"]}
+      injectors: {'env':{'DDVE_FQDN':'{{ "{{ " }}ppdd_fqdn{{ " }}" }}' ,'DDVE_PASSWORD':'{{ "{{ " }}ppdd_password{{ " }}" }}','DDVE_USERNAME':'{{ "{{ " }}ppdd_username{{ " }}" }}','PPDD_FQDN':'{{ "{{ " }}ppdd_fqdn{{ " }}" }}' ,'PPDD_PASSWORD':'{{ "{{ " }}ppdd_password{{ " }}" }}','PPDD_USERNAME':'{{ "{{ " }}ppdd_username{{ " }}" }}'}}
+      state: present
+      validate_certs: false 
+  - name: Add PPDD Credentials
+    credential:
+      name: "{{ item.name }}"
+      credential_type: Dell PPDD Credentials
+      organization: "{{ awx.org }}"
+      inputs:
+        ppdd_username: "{{ item.username }}"
+        ppdd_password: "{{ item.password }}"
+        ppdd_fqdn: "{{ item.fqdn }}"
+    loop: "{{ ppdd.credentials }}"

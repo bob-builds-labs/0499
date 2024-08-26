@@ -27,6 +27,18 @@ download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
 minio_admin: minioadmin
 minio_password: Password123!
 
+
+
+ppdd:
+  credentials:
+    - name: ddve-1
+      username: sysadmin
+      password: Password123!
+      fqdn: ddve-01.demo.local
+    - name: ddve-2
+      username: sysadmin
+      password: Password123!
+      fqdn: ddve-02.demo.local
 ppdm:
   release: 19.17
   project:

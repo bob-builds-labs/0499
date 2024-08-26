@@ -107,6 +107,8 @@
         ppdm_password: "{{ item.password }}"
         ppdm_fqdn: "{{ item.fqdn }}"
     loop: "{{ ppdm.credentials }}"
+
+    
   - name: Create AWX Credential Type
     credential_type:
       name: AWX Credentials
