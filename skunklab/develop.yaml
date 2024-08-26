@@ -11,9 +11,9 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Add {{ ppdm.k8s.jt.plc }}"
+    - name: "Add {{ ppdm.k8s.jt.plc.get }}"
       job_template:
-        name: "{{ ppdm.k8s.jt.plc }}"
+        name: "{{ ppdm.k8s.jt.plc.get }}"
         description: Get K8S Policies
         job_type: "run"
         organization: "{{ awx.org }}"
