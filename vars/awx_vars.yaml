@@ -101,7 +101,8 @@ ppdm:
       email: k8suser@demo.local
     wjt:
       asset:
-        protection: 130.5 AdHoc Protect K8S Asset
+        adhoc:
+            protection: 130.5 AdHoc Protect K8S Asset
         query: 130.3 Query K8S Assets By Name
         state: 130.3 K8S Assets Protection State
     jt: 

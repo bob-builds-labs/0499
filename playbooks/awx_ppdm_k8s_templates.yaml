@@ -43,6 +43,26 @@
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
+
+    - name: "Add {{ ppdm.k8s.jt.assets.adhoc.protection }}"
+      job_template:
+        name: "{{ ppdm.k8s.jt.assets.adhoc.protection }}"
+        description: AdHoc Backup K8S Namespace
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
     - name: Add {{ ppdm.k8s.wjt.asset.adhoc.protection }}
       workflow_job_template:
         name: "{{ ppdm.k8s.wjt.asset.adhoc.protection }}"
@@ -53,7 +73,7 @@
             extra_data:
               asset_filter: {}
             unified_job_template:
-              name: "{{ ppdm.assets.jt.adhoc.protection  }}"
+              name: "{{ ppdm.k8s.jt.assets.adhoc.protection }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -340,5 +360,6 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-        - "{{ ppdm.assets.jt.namespace.query }}"
+        - "{{ ppdm.k8s.jt.namespace.query }}"
         - "{{ ppdm.k8s.jt.assets }}"
+        - "{{ ppdm.k8s.jt.adhoc.protection  }}"
