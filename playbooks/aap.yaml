@@ -29,11 +29,11 @@
           PENDO_TRACKING_STATE: off
           INSIGHTS_TRACKING_STATE: false
 
-    - name: Set Subscription
-      settings:
-        settings:
-          SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-          SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+#    - name: Set Subscription
+#      settings:
+#        settings:
+#          SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+#          SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
 
     - name: Set the Custom Login Info
       settings:
@@ -210,7 +210,7 @@
           ppdd_password: "{{ item.password }}"
           ppdd_fqdn: "{{ item.fqdn }}"
       loop: "{{ ppdd.credentials }}"
-			
+
     - name: Create AWX Credential Type
       credential_type:
         name: AWX Credentials

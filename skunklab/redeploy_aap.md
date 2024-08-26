@@ -66,7 +66,7 @@ direnv allow .
 And start populating our AAP from ansible playbook:  
 
 ```bash
-ansible-playbook ../playbooks/aap.yaml -
+export SUBSCRIPTION_USERNAME=bottkars_12345;export SUBSCRIPTION_PASSWORD=Breda1208!; ansible-playbook ../playbooks/aap.yaml 
 echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
 ```
 
