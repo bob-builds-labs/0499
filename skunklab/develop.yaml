@@ -58,25 +58,11 @@
           "name": "Kubernetes Policy Name",
           "spec": [
             {
-            "max": 1024,
-            "min": 0,
-            "type": "multiplechoice",
-            "choices": [
-                "api.openshift.demo.local"
-            ],
-            "default": "api.openshift.demo.local",
-            "required": true,
-            "variable": "k8s_name",
-            "new_question": false,
-            "question_name": "Kubernetes Cluster",
-            "question_description": ""
-            },
-            {
                   "max": 64,
                   "min": 0,
                   "type": "text",
                   "choices": "",
-                  "default": "",
+                  "default": "default_policy",
                   "required": true,
                   "variable": "k8s_policy_name",
                   "new_question": false,
@@ -88,7 +74,7 @@
                   "min": 0,
                   "type": "text",
                   "choices": "",
-                  "default": "",
+                  "default": "default_policy_description",
                   "required": true,
                   "variable": "decscription",
                   "new_question": false,
