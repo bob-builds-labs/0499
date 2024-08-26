@@ -209,6 +209,13 @@
       state: present
       validate_certs: false 
 
+  - debug:
+      msg: "{{ lookup('env','K8S_AUTH_KUBECONFIG') }}"
+      verbosity: 0 
+  - debug:
+      msg: "{{ lookup('file', lookup('env','K8S_AUTH_KUBECONFIG')) }}" 
+      verbosity: 0
+
   - name: Add Kubeconfig Credentials
     credential:
       name: "openshift.demo.local"
