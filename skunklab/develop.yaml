@@ -11,13 +11,13 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: Add {{ ppdm.k8s.wjt.asset_state_query }}
+    - name: Add {{ ppdm.k8s.wjt.asset.state }}
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.asset_state_query }}"
+        name: "{{ ppdm.k8s.wjt.asset.state }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.asset_state_query }}"
+          - identifier: "{{ ppdm.k8s.wjt.asset.state }}"
             extra_data:
               asset_filter: protectionStatus eq "{{  "{{ " }}protection_state{{ " }}" }}" and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq "{{ "{{ " }}k8s_name{{ " }}" }}"
             unified_job_template:
