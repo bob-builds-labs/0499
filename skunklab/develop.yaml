@@ -11,61 +11,11 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: Add {{ ppdm.k8s.wjt.namespace.state }}
-      workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.namespace.state }}"
-        inventory: "{{ awx.inventory[0].name }}"
-        destroy_current_nodes: true
-        workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.namespace.state }}"
-            extra_data:
-              asset_filter: protectionStatus eq "{{  "{{ " }}protection_state{{ " }}" }}" and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq "{{ "{{ " }}k8s_name{{ " }}" }}"
-            unified_job_template:
-              name: "{{ ppdm.assets.jt.query  }}"
-              inventory:
-                organization:
-                  name: "{{ awx.org }}"
-              type: job_template
-            related:
-              success_nodes: []
-              failure_nodes: []
-              always_nodes: []
-              credentials: []
-        survey_enabled: true
-        survey_spec: |
-          {
-          "description": "Kubernetes Asset Protection Survey",
-          "name": "K8S_Asset_Survey",
-          "spec": [
-            {
-            "max": 1024,
-            "min": 0,
-            "type": "multiplechoice",
-            "choices": [
-                "api.openshift.demo.local"
-            ],
-            "default": "api.openshift.demo.local",
-            "required": true,
-            "variable": "k8s_name",
-            "new_question": false,
-            "question_name": "Kubernetes Cluster",
-            "question_description": ""
-            },
-            {
-            "max": 1024,
-            "min": 0,
-            "type": "multiplechoice",
-            "choices": [
-                "PROTECTED",
-                "UNPROTECTED"
-            ],
-            "default": "PROTECTED",
-            "required": true,
-            "variable": "protection_state",
-            "new_question": false,
-            "question_name": "Protection State",
-            "question_description": "State of the Namespace"
-            }            
-          ]
-          }
+    - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
+      role:
+        role: execute
+        workflows:
+        - "{{ ppdm.k8s.wjt.namespace }}"  
+        user: "{{ ppdm.k8s.user_1.username }}"
+        state: present
 
