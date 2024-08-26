@@ -294,6 +294,83 @@
         extra_vars:
           vcenter_server: vcenter01.demo.local
 
+
+    - name: Add {{ ppdm.k8s.jt.plc.create }} JT
+      job_template:
+        name: "{{ ppdm.k8s.jt.plc.create}}"
+        description: Get K8S Policies
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "130.2_playbook_add_k8s_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          k8s_policy_name: unique_name
+          description: your_description
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: Add {{ ppdm.k8s.wjt.plc.create }} WJT
+      workflow_job_template:
+        name: "{{ ppdm.k8s.wjt.plc.create }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        destroy_current_nodes: true
+        workflow_nodes:
+          - identifier: "{{ ppdm.k8s.wjt.plc.create }}"
+            extra_data:
+            unified_job_template:
+              name: "{{ ppdm.k8s.jt.plc.create }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+        survey_enabled: true
+        survey_spec: |
+          {
+          "description": "Kubernetes Policy Survey",
+          "name": "Kubernetes Policy Name",
+          "spec": [
+            {
+                  "max": 64,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "default_policy",
+                  "required": true,
+                  "variable": "k8s_policy_name",
+                  "new_question": false,
+                  "question_name": "Kubernetes Namespace",
+                  "question_description": "Enter the name of the Kubernetes Policy to create"
+            },
+            {
+                  "max": 1024,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "default_policy_description",
+                  "required": true,
+                  "variable": "decscription",
+                  "new_question": false,
+                  "question_name": "Description",
+                  "question_description": "Enter the description of the Kubernetes Policy to create"
+            }
+          ]
+          }
+
+
+
+
     - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
       role:
         role: execute
@@ -301,7 +378,8 @@
         - "{{ ppdm.k8s.wjt.namespace.query }}"
         - "{{ ppdm.k8s.wjt.namespace.state }}"  
         - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
-        - "{{ ppdm.k8s.wjt.plc.get }}"  
+        - "{{ ppdm.k8s.wjt.plc.get }}"
+        - "{{ ppdm.k8s.wjt.plc.create }}"  
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
@@ -314,7 +392,9 @@
         state: present
         job_templates:
         - "{{ ppdm.assets.jt.query  }}"
-
+        - "{{ ppdm.k8s.jt.plc.create }}"
+        - "{{ ppdm.k8s.jt.namespace.query }}"
+        - "{{ ppdm.k8s.jt.namespace.state }}"  
 
     - name: "Give {{ ppdm.k8s.user_1.username }} JT Execute permissions"
       role:
@@ -323,7 +403,6 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-        - "{{ ppdm.k8s.jt.namespace.query }}"
-        - "{{ ppdm.k8s.jt.namespace.state }}"  
+
         - "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"  
 
