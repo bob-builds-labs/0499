@@ -356,4 +356,4 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-        ["{{ ppdm.assets.jt.namespace }}"]
+        - "{{ ppdm.assets.jt.namespace }}"
