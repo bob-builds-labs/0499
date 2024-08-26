@@ -32,10 +32,6 @@
         ask_credential_on_launch: true
 
 
-
-
-
-
     - name: Add {{ ppdm.k8s.wjt.namespace.state }}
       workflow_job_template:
         name: "{{ ppdm.k8s.wjt.namespace.state }}"

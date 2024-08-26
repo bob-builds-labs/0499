@@ -154,9 +154,6 @@
         ask_credential_on_launch: true
 
 
-
-
-
     - name: Add {{ ppdm.k8s.wjt.namespace.state }}
       workflow_job_template:
         name: "{{ ppdm.k8s.wjt.namespace.state }}"
@@ -164,8 +161,6 @@
         destroy_current_nodes: true
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.namespace.state }}"
-            extra_data:
-              asset_filter: {}
             unified_job_template:
               name: "{{ ppdm.k8s.jt.namespace.state  }}"
               inventory:
@@ -218,6 +213,8 @@
 
 
 
+
+
     - name: "Add {{ ppdm.k8s.jt.namespace.query  }}"
       job_template:
         name: "{{ ppdm.k8s.jt.namespace.query }}"
@@ -248,7 +245,6 @@
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.namespace.query }}"
             extra_data:
-              asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
             unified_job_template:
               name: "{{ ppdm.k8s.jt.namespace.query }}"
               inventory:
