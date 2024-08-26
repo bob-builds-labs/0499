@@ -334,7 +334,7 @@
       role:
         role: execute
         workflows:
-          ["{{ ppdm.k8s.wjt.namespace }}" ]   
+        - "{{ ppdm.k8s.wjt.namespace }}"  
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
