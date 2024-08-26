@@ -47,7 +47,8 @@ ppdm:
     label: ppdm_assets
     jt:
         query: 30.0 Query Assets
-        adhoc_protection: 130.0 AdHoc Asset Protection
+        adhoc:
+            protection: 130.0 AdHoc Asset Protection
 
 
   agents:

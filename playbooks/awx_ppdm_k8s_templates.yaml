@@ -43,17 +43,17 @@
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
-    - name: Add {{ ppdm.k8s.wjt.asset.protection }}
+    - name: Add {{ ppdm.k8s.wjt.asset.adhoc.protection }}
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.asset.protection }}"
+        name: "{{ ppdm.k8s.wjt.asset.adhoc.protection }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.asset.protection }}"
+          - identifier: "{{ ppdm.k8s.wjt.asset.adhoc.protection }}"
             extra_data:
-              asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+              asset_filter: {}
             unified_job_template:
-              name: "{{ ppdm.assets.jt.adhoc_protection  }}"
+              name: "{{ ppdm.assets.jt.adhoc.protection  }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -314,7 +314,7 @@
       role:
         role: execute
         workflows:
-        - "{{ ppdm.k8s.wjt.asset.protection }}"
+        - "{{ ppdm.k8s.wjt.asset.adhoc.protection }}"
         - "{{ ppdm.k8s.wjt.asset.query }}"
         - "{{ ppdm.k8s.wjt.asset.state }}"        
         user: "{{ ppdm.k8s.user_1.username }}"
@@ -329,7 +329,7 @@
         state: present
         job_templates:
         - "{{ ppdm.assets.jt.query  }}"
-        - "{{ ppdm.assets.jt.adhoc_protection  }}"
+        - "{{ ppdm.assets.jt.adhoc.protection  }}"
 
 
 
