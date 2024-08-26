@@ -44,7 +44,7 @@
           {
             "env":
               {
-                "DDVE_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
+                "DDVE_PRIVATE_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
                 "DDVE_PASSWORD": '{{ "{{ " }}ppdd_password{{ " }}" }}',
                 "DDVE_USERNAME": '{{ "{{ " }}ppdd_username{{ " }}" }}',
                 "PPDD_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
