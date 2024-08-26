@@ -149,7 +149,7 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          asset_filter: protectionStatus eq "{{  "{{ " }}protection_state{{ " }}" }}" and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq "{{ "{{ " }}k8s_name{{ " }}" }}"
+          asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
@@ -165,7 +165,7 @@
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.namespace.state }}"
             extra_data:
-              asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
+              asset_filter: {}
             unified_job_template:
               name: "{{ ppdm.k8s.jt.namespace.state  }}"
               inventory:
