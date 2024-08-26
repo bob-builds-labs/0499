@@ -95,20 +95,19 @@ ppdm:
     team: Kubernetes Team
     team_description: They made us the new God´s
     user_1:
-      username: k8s_user_1
-      password: Password123!
-      email: k8suser@demo.local
+        username: k8s_user_1
+        password: Password123!
+        email: k8suser@demo.local
     wjt:
-      namespace:
-        adhoc_protection: 130.5 AdHoc Protect K8S Asset
-        query: 130.3 Query K8S Assets By Name
-        state: 130.3 Query Namespaces by Protection State
+        namespace:
+            adhoc_protection: 130.5 AdHoc Protect K8S Asset
+            query: 130.3 Query K8S Assets By Name
+            state: 130.3 Query Namespaces by Protection State
     jt: 
-      add_ppdm_rbac: 130.1 Add K8S to PPDM 
-      namespace: 
-        query: 130.3 Query K8S Assets By Name
-        state: 130.3 Query Namespaces by Protection State
-        adhoc_protection: 130.5 AdHoc Protect K8S Asset
-      plc:
-        get: 130.4 Get all Kubernetes Policies 
+        add_ppdm_rbac: 130.1 Add K8S to PPDM 
+            namespace: 
+            query: 130.3 Query K8S Assets By Name
+            state: 130.3 Query Namespaces by Protection State
+            adhoc_protection: 130.5 AdHoc Protect K8S Asset
+        plc: 130.4 Get all Kubernetes Policies 
 
