@@ -43,7 +43,6 @@
         destroy_current_nodes: true
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.wjt.namespace.state }}"
-            extra_data: {}
             unified_job_template:
               name: "{{ ppdm.k8s.jt.namespace.state  }}"
               inventory:
