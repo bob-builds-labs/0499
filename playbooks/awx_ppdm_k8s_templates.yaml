@@ -44,9 +44,9 @@
         state: present
 
 
-    - name: "Add {{ ppdm.k8s.jt.assets.adhoc_protection }}"
+    - name: "Add {{ ppdm.k8s.jt.namespace.adhoc_protection }}"
       job_template:
-        name: "{{ ppdm.k8s.jt.assets.adhoc_protection }}"
+        name: "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"
         description: AdHoc Backup K8S Namespace
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -73,7 +73,7 @@
             extra_data:
               asset_filter: {}
             unified_job_template:
-              name: "{{ ppdm.k8s.jt.assets.adhoc_protection }}"
+              name: "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -356,4 +356,4 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-        - "{{ ppdm.assets.jt.namespace }}"
+        - "{{ ppdm.k8s.jt.namespace }}"
