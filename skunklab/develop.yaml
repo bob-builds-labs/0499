@@ -11,27 +11,6 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Add {{ ppdm.k8s.jt.plc.create }}"
-      job_template:
-        name: "{{ ppdm.k8s.jt.plc.create}}"
-        description: Get K8S Policies
-        job_type: "run"
-        organization: "{{ awx.org }}"
-        inventory: "{{ awx.inventory[0].name }}"
-        project: "{{ ppdm.project.name }}"
-        playbook: "130.2_playbook_add_k8s_policy_v3.yaml"
-        state: "present"
-        labels:
-          - "{{ ppdm.assets.label }}"
-        credentials:
-          - "{{ ppdm.credentials[0].name }}"
-          - "{{ ppdd.credentials[0].name }}"
-        extra_vars:
-          k8s_policy_name: unique_name
-          description: your_description
-        ask_variables_on_launch: true
-        ask_credential_on_launch: true
-
     - name: Create PPDD Credential Type
       credential_type:
         name: Dell PowerProtect DataDomain Credentials
@@ -85,3 +64,25 @@
           ppdd_password: "{{ item.password }}"
           ppdd_fqdn: "{{ item.fqdn }}"
       loop: "{{ ppdd.credentials }}"
+
+    - name: "Add {{ ppdm.k8s.jt.plc.create }}"
+      job_template:
+        name: "{{ ppdm.k8s.jt.plc.create}}"
+        description: Get K8S Policies
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "130.2_playbook_add_k8s_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          k8s_policy_name: unique_name
+          description: your_description
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
