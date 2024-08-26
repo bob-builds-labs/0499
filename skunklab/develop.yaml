@@ -26,7 +26,6 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          filter: assetType eq "KUBERNETES"
-          # and name eq "{{ k8s_policy_name }}"
+          filter: assetType eq "KUBERNETES" # and name eq "{{ k8s_policy_name }}"
         ask_variables_on_launch: true
         ask_credential_on_launch: true
