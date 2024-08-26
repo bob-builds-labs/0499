@@ -235,6 +235,7 @@
       credentials:
         - "AWX Admin Credentials"
         - "RedHat Subscription Credentials"
+        - "openshift.demo.local"
       state: "present"
       labels:
         - "{{ awx.infra.label }}"
