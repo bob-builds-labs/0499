@@ -11,21 +11,23 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Add {{ ppdm.k8s.jt.plc.list }}"
+    - name: "Add {{ ppdm.k8s.jt.plc.create }}"
       job_template:
-        name: "{{ ppdm.k8s.jt.plc.list}}"
+        name: "{{ ppdm.k8s.jt.plc.create}}"
         description: Get K8S Policies
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
         project: "{{ ppdm.project.name }}"
-        playbook: "110.0_get_protection_policies.yaml"
+        playbook: "130.2_playbook_add_k8s_policy_v3.yaml"
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          filter: assetType eq "KUBERNETES" # and name eq "{{ k8s_policy_name }}"
+          k8s_policy_name: unique_name
+          description: your_description          
         ask_variables_on_launch: true
         ask_credential_on_launch: true
+
