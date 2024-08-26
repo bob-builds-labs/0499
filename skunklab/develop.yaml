@@ -11,13 +11,24 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
-      role:
-        role: execute
-        workflows:
-        - "{{ ppdm.k8s.wjt.namespace.query }}"
-        - "{{ ppdm.k8s.wjt.namespace.state }}"  
-        - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
-        user: "{{ ppdm.k8s.user_1.username }}"
-        state: present
+
+    - name: "Add {{ ppdm.k8s.jt.namespace.state  }}"
+      job_template:
+        name: "{{ ppdm.k8s.jt.namespace.state }}"
+        description: Query Namespaces by Protection State
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
 
