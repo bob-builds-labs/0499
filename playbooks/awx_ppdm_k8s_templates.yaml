@@ -44,9 +44,9 @@
         state: present
 
 
-    - name: "Add {{ ppdm.k8s.jt.plc.get }}"
+    - name: "Add {{ ppdm.k8s.jt.plc.list }}"
       job_template:
-        name: "{{ ppdm.k8s.jt.plc.get }}"
+        name: "{{ ppdm.k8s.jt.plc.list}}"
         description: Get K8S Policies
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -59,10 +59,31 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          filter: assetType eq "KUBERNETES" 
-          # and name eq "{{ k8s_policy_name }}" 
+          filter: assetType eq "KUBERNETES" # and name eq "{{ k8s_policy_name }}"
         ask_variables_on_launch: true
         ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.k8s.jt.plc.create }}"
+      job_template:
+        name: "{{ ppdm.k8s.jt.plc.create}}"
+        description: Get K8S Policies
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "130.2_playbook_add_k8s_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          k8s_policy_name: unique_name
+          description: your_description          
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+
 
 
     - name: "Add {{ ppdm.k8s.jt.namespace.adhoc_protection }}"
