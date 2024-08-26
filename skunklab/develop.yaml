@@ -25,7 +25,7 @@
           - "{{ ppdm.assets.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
-          - "{{ dd }}"
+          - "{{ ppdd.credentials[0].name }}"
         extra_vars:
           k8s_policy_name: unique_name
           description: your_description
