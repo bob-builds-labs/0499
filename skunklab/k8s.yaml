@@ -29,9 +29,9 @@
       msg: "Connected to {{ api_status }}"
       verbosity: 0
 
-- name: Get a list of all Namespaces
-  k8s_info:
-    api_version: v1
-    kind: Service
-    namespace: testing
-  register: service_list     
+  - name: Get a list of all Namespaces
+    k8s_info:
+      api_version: v1
+      kind: Service
+      namespace: testing
+    register: service_list     
