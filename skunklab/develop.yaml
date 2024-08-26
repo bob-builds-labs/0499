@@ -11,59 +11,7 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: Create PPDD Credential Type
-      credential_type:
-        name: Dell PowerProtect DataDomain Credentials
-        description: Credential to log into PowerProtect DataDomain
-        kind: cloud
-        inputs:
-          {
-            "fields":
-              [
-                {
-                  "id": "ppdd_fqdn",
-                  "type": "string",
-                  "label": "PPDD FQDN",
-                  "help_text": "Enter the fqdn or IP address that corresponds to your PPDD Instance",
-                },
-                {
-                  "id": "ppdd_username",
-                  "type": "string",
-                  "label": "Username",
-                },
-                {
-                  "id": "ppdd_password",
-                  "type": "string",
-                  "label": "Password",
-                  "secret": true,
-                },
-              ],
-            "required": ["ppdd_fqdn", "ppdd_username", "ppdd_password"],
-          }
-        injectors:
-          {
-            "env":
-              {
-                "DDVE_PRIVATE_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
-                "DDVE_PASSWORD": '{{ "{{ " }}ppdd_password{{ " }}" }}',
-                "DDVE_USERNAME": '{{ "{{ " }}ppdd_username{{ " }}" }}',
-                "PPDD_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
-                "PPDD_PASSWORD": '{{ "{{ " }}ppdd_password{{ " }}" }}',
-                "PPDD_USERNAME": '{{ "{{ " }}ppdd_username{{ " }}" }}',
-              },
-          }
-        state: present
-        validate_certs: false
-    - name: Add PPDD Credentials
-      credential:
-        name: "{{ item.name }}"
-        credential_type: Dell PowerProtect DataDomain Credentials
-        organization: "{{ awx.org }}"
-        inputs:
-          ppdd_username: "{{ item.username }}"
-          ppdd_password: "{{ item.password }}"
-          ppdd_fqdn: "{{ item.fqdn }}"
-      loop: "{{ ppdd.credentials }}"
+
 
     - name: "Add {{ ppdm.k8s.jt.plc.create }}"
       job_template:
@@ -85,4 +33,70 @@
           description: your_description
         ask_variables_on_launch: true
         ask_credential_on_launch: true
+
+    - name: Add {{ ppdm.k8s.wjt.plc.create }}
+      workflow_job_template:
+        name: "{{ ppdm.k8s.wjt.plc.create }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        destroy_current_nodes: true
+        workflow_nodes:
+          - identifier: "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
+            extra_data:
+            unified_job_template:
+              name: "{{ ppdm.k8s.jt.plc.create }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+        survey_enabled: true
+        survey_spec: |
+          {
+          "description": "Kubernetes Policy Survey",
+          "name": "Kubernetes Policy Name",
+          "spec": [
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "api.openshift.demo.local"
+            ],
+            "default": "api.openshift.demo.local",
+            "required": true,
+            "variable": "k8s_name",
+            "new_question": false,
+            "question_name": "Kubernetes Cluster",
+            "question_description": ""
+            },
+            {
+                  "max": 64,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "",
+                  "required": true,
+                  "variable": "k8s_policy_name",
+                  "new_question": false,
+                  "question_name": "Kubernetes Namespace",
+                  "question_description": "Enter the name of the Kubernetes Policy to create"
+            },
+            {
+                  "max": 1024,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "",
+                  "required": true,
+                  "variable": "decscription",
+                  "new_question": false,
+                  "question_name": "Description",
+                  "question_description": "Enter the description of the Kubernetes Policy to create"
+            }
+          ]
+          }
 
