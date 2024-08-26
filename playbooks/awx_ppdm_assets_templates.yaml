@@ -20,9 +20,9 @@
         organization: "{{ awx.org }}"
         state: present
 
-    - name: "Add {{ ppdm.assets.jt.adhoc.protection  }}"
+    - name: "Add {{ ppdm.assets.jt.adhoc_protection  }}"
       job_template:
-        name: "{{ ppdm.assets.jt.adhoc.protection  }}"
+        name: "{{ ppdm.assets.jt.adhoc_protection  }}"
         description: AdHoc protection of Assets
         job_type: "run"
         organization: "{{ awx.org }}"

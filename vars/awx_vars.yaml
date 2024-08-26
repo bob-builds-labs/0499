@@ -47,8 +47,7 @@ ppdm:
     label: ppdm_assets
     jt:
         query: 30.0 Query Assets
-        adhoc:
-            protection: 130.0 AdHoc Asset Protection
+        adhoc_protection: 130.0 AdHoc Asset Protection
 
 
   agents:
@@ -100,17 +99,15 @@ ppdm:
       password: Password123!
       email: k8suser@demo.local
     wjt:
-      asset:
-        adhoc:
-            protection: 130.5 AdHoc Protect K8S Asset
+      namespace:
+        adhoc_protection: 130.5 AdHoc Protect K8S Asset
         query: 130.3 Query K8S Assets By Name
         state: 130.3 Query Namespaces by Protection State
     jt: 
       add_ppdm_rbac: 130.1 Add K8S to PPDM 
-      assets: 
+      namespace: 
         query: 130.3 Query K8S Assets By Name
         state: 130.3 Query Namespaces by Protection State
-        adhoc:
-            protection: 130.5 AdHoc Protect K8S Asset
+        adhoc_protection: 130.5 AdHoc Protect K8S Asset
 
 

@@ -44,9 +44,9 @@
         state: present
 
 
-    - name: "Add {{ ppdm.k8s.jt.assets.adhoc.protection }}"
+    - name: "Add {{ ppdm.k8s.jt.assets.adhoc_protection }}"
       job_template:
-        name: "{{ ppdm.k8s.jt.assets.adhoc.protection }}"
+        name: "{{ ppdm.k8s.jt.assets.adhoc_protection }}"
         description: AdHoc Backup K8S Namespace
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -63,17 +63,17 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: Add {{ ppdm.k8s.wjt.asset.adhoc.protection }}
+    - name: Add {{ ppdm.k8s.wjt.namespace.adhoc_protection }}
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.asset.adhoc.protection }}"
+        name: "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.asset.adhoc.protection }}"
+          - identifier: "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
             extra_data:
               asset_filter: {}
             unified_job_template:
-              name: "{{ ppdm.k8s.jt.assets.adhoc.protection }}"
+              name: "{{ ppdm.k8s.jt.assets.adhoc_protection }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -157,13 +157,13 @@
 
 
 
-    - name: Add {{ ppdm.k8s.wjt.asset.state }}
+    - name: Add {{ ppdm.k8s.wjt.namespace.state }}
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.asset.state }}"
+        name: "{{ ppdm.k8s.wjt.namespace.state }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.asset.state }}"
+          - identifier: "{{ ppdm.k8s.wjt.namespace.state }}"
             extra_data:
               asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
             unified_job_template:
@@ -240,13 +240,13 @@
 
 
 
-    - name: Add {{ ppdm.k8s.wjt.asset.query }}
+    - name: Add {{ ppdm.k8s.wjt.namespace.query }}
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.asset.query }}"
+        name: "{{ ppdm.k8s.wjt.namespace.query }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.asset.query }}"
+          - identifier: "{{ ppdm.k8s.wjt.namespace.query }}"
             extra_data:
               asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
             unified_job_template:
@@ -334,9 +334,7 @@
       role:
         role: execute
         workflows:
-        - "{{ ppdm.k8s.wjt.asset.adhoc.protection }}"
-        - "{{ ppdm.k8s.wjt.asset.query }}"
-        - "{{ ppdm.k8s.wjt.asset.state }}"        
+        "{{ ppdm.k8s.wjt.namespace }}"    
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
@@ -349,8 +347,6 @@
         state: present
         job_templates:
         - "{{ ppdm.assets.jt.query  }}"
-        - "{{ ppdm.assets.jt.adhoc.protection  }}"
-
 
 
     - name: "Give {{ ppdm.k8s.user_1.username }} JT Execute permissions"
@@ -360,6 +356,4 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-        - "{{ ppdm.k8s.jt.namespace.query }}"
-        - "{{ ppdm.k8s.jt.assets }}"
-        - "{{ ppdm.k8s.jt.adhoc.protection  }}"
+        "{{ ppdm.assets.jt.namespace }}"
