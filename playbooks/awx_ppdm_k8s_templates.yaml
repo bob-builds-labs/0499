@@ -378,7 +378,7 @@
         - "{{ ppdm.k8s.wjt.namespace.query }}"
         - "{{ ppdm.k8s.wjt.namespace.state }}"  
         - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
-        - "{{ ppdm.k8s.wjt.plc.get }}"
+        - "{{ ppdm.k8s.wjt.plc.query }}"
         - "{{ ppdm.k8s.wjt.plc.create }}"  
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present

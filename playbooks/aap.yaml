@@ -96,14 +96,14 @@
         state: present
         validate_certs: false
 
-    - name: Add Subscription Credentials
-      credential:
-        name: "RedHat Subscription Credentials"
-        credential_type: RedHat Subscription Credentials
-        organization: "{{ awx.org }}"
-        inputs:
-          rh_username: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-          rh_password: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+#    - name: Add Subscription Credentials
+#      credential:
+#        name: "RedHat Subscription Credentials"
+#        credential_type: RedHat Subscription Credentials
+#        organization: "{{ awx.org }}"
+#        inputs:
+#          rh_username: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+#          rh_password: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
 
     - name: Create PPDM Credential Type
       credential_type:
@@ -359,7 +359,7 @@
         playbook: "{{awx.playbook}}"
         credentials:
           - "AWX Admin Credentials"
-          - "RedHat Subscription Credentials"
+#          - "RedHat Subscription Credentials"
           - "openshift.demo.local"
         state: "present"
         labels:
