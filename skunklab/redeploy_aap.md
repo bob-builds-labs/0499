@@ -60,7 +60,24 @@ echo "Waiting for AAP Controller instance to be ready"
 oc wait --for=condition=ready pod -l "app.kubernetes.io/name=aap-task" -n aap --timeout 600s
 ```
 
+## Configure AAP
 
+Lets head over to lab4 environment
+
+```bash
+cd ../lab4
+direnv allow .
+```
+
+And start populating our AAP from ansible playbook:  
+
+```bash
+ansible-playbook ../playbooks/aap.yaml 
+echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
+```
+
+
+# Redeploy
 ## Remove potential previously deployed Instances
 
 ```bash
@@ -92,18 +109,3 @@ oc delete crd workflowtemplates.tower.ansible.com
 
 
 
-## Configure AAP
-
-Lets head over to lab4 environment
-
-```bash
-cd ../lab4
-direnv allow .
-```
-
-And start populating our AAP from ansible playbook:  
-
-```bash
-ansible-playbook ../playbooks/aap.yaml 
-echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
-```
