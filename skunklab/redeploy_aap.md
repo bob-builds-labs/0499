@@ -24,6 +24,35 @@ git pull
 cd ~/workspace/0499/lab3
 direnv allow .
 ```
+If OpenShift is freshly started, make sure to approve  csr´s as in lab  [03.0](https://github.com/bob-builds-labs/bob-builds-labs.github.io/blob/main/docs/03.0_prepare_openshift_lab.md)
+This can take up to 15 Minutes and multiple CSR´s apprals for the Cluster to reconcile
+```bash
+oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
+```
+
+rember to run this multiple times, until you [Openshift Console](https://console-openshift-console.apps.openshift.demo.local) is working and 
+```bash
+oc get nodes
+```
+shows all nodes ready
+
+
+## Deploy AAP to Openshift
+
+```bash
+oc create -f aap_operatorGroup.yaml
+echo "Waiting for AAP Operator Pod to be deployed"
+
+until [[ ! -z $(oc get pod -l "control-plane=controller-manager" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
+echo "Waiting for AAP Operator to be ready"
+oc wait --for=condition=ready pod -l "control-plane=controller-manager" -n aap --timeout 600s
+oc apply -f aap.yaml -n aap
+echo "Waiting for AAP Controller Prod instance pod to be deployed"
+until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=aap-task" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
+echo "Waiting for AAP Controller instance to be ready"
+oc wait --for=condition=ready pod -l "app.kubernetes.io/name=aap-task" -n aap --timeout 600s
+```
+
 
 ## Remove potential previously deployed Instances
 
@@ -54,21 +83,7 @@ oc delete crd jobtemplates.tower.ansible.com
 oc delete crd workflowtemplates.tower.ansible.com 
 ```
 
-## Deploy AAP to Openshift
 
-```bash
-oc create -f aap_operatorGroup.yaml
-echo "Waiting for AAP Operator Pod to be deployed"
-
-until [[ ! -z $(oc get pod -l "control-plane=controller-manager" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
-echo "Waiting for AAP Operator to be ready"
-oc wait --for=condition=ready pod -l "control-plane=controller-manager" -n aap --timeout 600s
-oc apply -f aap.yaml -n aap
-echo "Waiting for AAP Controller Prod instance pod to be deployed"
-until [[ ! -z $(oc get pod -l "app.kubernetes.io/name=aap-task" -n aap) ]]; do echo "Sleeping 5 seconds";sleep 5; done
-echo "Waiting for AAP Controller instance to be ready"
-oc wait --for=condition=ready pod -l "app.kubernetes.io/name=aap-task" -n aap --timeout 600s
-```
 
 ## Configure AAP
 
