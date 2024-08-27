@@ -103,7 +103,7 @@
 
     - name: "Add {{ ppdm.k8s.wjt.namespace.adhoc_protection }} WJT"
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.plc.create }}"
+        name: "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
