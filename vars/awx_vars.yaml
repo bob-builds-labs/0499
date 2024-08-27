@@ -58,7 +58,6 @@ ppdm:
     jt:
       query: 30.0 Query Assets
       adhoc_protection: 130.0 AdHoc Asset Protection
-
   agents:
     job_template: deploy ppdm agents templates
     team:
@@ -77,7 +76,6 @@ ppdm:
       deploy: 100.3 Copy and Deploy Agents from S3
       approve: 100.4 Create Whitelist Entry from Address Query
       uninstall: 100.9 Uninstall Windows Agent
-
   infra:
     team:
       name: PPDM Infra Team
@@ -97,8 +95,15 @@ ppdm:
       delete_update: _9.9 Delete PPDM Update
     wjt:
       update_ppdm: 9 Update PPDM
-
   k8s:
+    wjt:
+      namespace:
+        query: 130.3 Query K8S Assets By Name
+        state: 130.3 Query Namespaces by Protection State
+        adhoc_protection: 1130.5 AdHoc Protect K8S Asset
+      plc:
+        list: 130.4 Get details of Kubernetes Policy
+        create: 130.2 Create Kubernetes Protection Policy
     label: ppdm_k8s
     job_template: deploy ppdm k8s templates
     team: Kubernetes Team
@@ -107,14 +112,6 @@ ppdm:
       username: k8s_user_1
       password: Password123!
       email: k8suser@demo.local
-    wjt:
-      namespace:
-        adhoc_protection: 130.5 AdHoc Protect K8S Asset
-        query: 130.3 Query K8S Assets By Name
-        state: 130.3 Query Namespaces by Protection State
-      plc:
-        list: 130.4 Get details of Kubernetes Policy
-        create: 130.2 Create Kubernetes Protection Policy
     jt:
       add_ppdm_rbac: 130.1 Add K8S to PPDM
       namespace:
