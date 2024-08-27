@@ -1,12 +1,27 @@
 # AAP Ansible Automation Platform automated deployment and Configuration
 
-## Cleanup
+
+
+## Prework: 
+
+From your vCenter, make sure ansible, as well Openshift and PowerProtect vApp are started:
+![image](https://github.com/user-attachments/assets/355f1d9f-3b8b-44a4-abf6-51a239bfbd4c)
+
+
+
+## Deploy ( From Ansible Host )
+Log into Ansible Host mRemote. If not done from previous,
+Clone into 0499 if not done from earlier lab
+```bash
+git clone https://github.com/bob-builds-labs/0499.git ~/workspace/0499
+```
 
 Go to lab3 directory
 
 ```bash
 git pull
 cd ../lab3
+direnv allow .
 ```
 
 ## Remove potential previously deployed Instances
