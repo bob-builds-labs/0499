@@ -19,6 +19,7 @@ git clone https://github.com/bob-builds-labs/0499.git ~/workspace/0499
 Go to lab3 directory
 
 ```bash
+cd ~/workspace/0499
 git pull
 cd ../lab3
 direnv allow .
