@@ -12,7 +12,7 @@ From your vCenter, make sure ansible, as well Openshift and PowerProtect vApp ar
 ```Powershell
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.108 -ClientId "005056a3bbad" -Name "openshift-72g6c-master-0.demo.local" -Description "openshift-72g6c-master-0.demo.local"
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.111 -ClientId "005056a32d4e" -Name "openshift-72g6c-master-1.demo.local" -Description "openshift-72g6c-master-1.demo.local"
-Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.104 -ClientId "005056a3729e" -Name "openshift-72g6c-master-2.demo.local" -Description
+Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.104 -ClientId "005056a3729e" -Name "openshift-72g6c-master-2.demo.local" -Description "openshift-72g6c-master-2.demo.local"
 ```
 
 ## Deploy ( From Ansible Host )
