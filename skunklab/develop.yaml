@@ -49,76 +49,37 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
-        survey_enabled: true
+				survey_enabled: true
         survey_spec: |
+          {
+          "description": "Kubernetes Asset Protection Survey",
+          "name": "Query_K8S",
+          "spec": [
             {
-            "description": "Kubernetes Asset Protection Survey",
-            "name": "K8S_Asset_Survey",
-            "spec": [
-								{
-								"max": 1024,
-								"min": 0,
-								"type": "multiplechoice",
-								"choices": [
-										"api.openshift.demo.local"
-								],
-								"default": "api.openshift.demo.local",
-								"required": true,
-								"variable": "k8s_name",
-								"new_question": false,
-								"question_name": "Kubernetes Cluster",
-								"question_description": ""
-								},
-              {
-              "max": 1024,
-              "min": 0,
-              "type": "multiplechoice",
-              "choices": [
-                  "PROTECTED",
-                  "UNPROTECTED"
-              ],
-              "default": "PROTECTED",
-              "required": true,
-              "variable": "protection_state",
-              "new_question": false,
-              "question_name": "Protection State",
-              "question_description": "State of the Namespace"
-              }            
-            ]
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "api.openshift.demo.local"
+            ],
+            "default": "api.openshift.demo.local",
+            "required": true,
+            "variable": "k8s_name",
+            "new_question": false,
+            "question_name": "Kubernetes Cluster",
+            "question_description": ""
+            },
+            {
+                  "max": 1024,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "",
+                  "required": true,
+                  "variable": "namespace_name",
+                  "new_question": false,
+                  "question_name": "Kubernetes Namespace",
+                  "question_description": "Enter the name of the Kubernetes Namespace"
             }
-
-
-
-        survey_spec: |
-								{
-								"description": "Kubernetes Asset Protection Survey",
-								"name": "K8S_Asset_Survey",
-								"spec": [
-								{
-								"max": 1024,
-								"min": 0,
-								"type": "multiplechoice",
-								"choices": [
-										"api.openshift.demo.local"
-								],
-								"default": "api.openshift.demo.local",
-								"required": true,
-								"variable": "k8s_name",
-								"new_question": false,
-								"question_name": "Kubernetes Cluster",
-								"question_description": ""
-								},
-								{
-								"max": 64,
-								"min": 0,
-								"type": "text",
-								"choices": "",
-								"default": "default_policy",
-								"required": true,
-								"variable": "namespace_name",
-								"new_question": false,
-								"question_name": "Kubernetes Namespace",
-								"question_description": "Enter the name of the Kubernetes Policy to create"
-								}            
-								]
-								}
+          ]
+          }
