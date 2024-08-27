@@ -27,8 +27,6 @@ download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
 minio_admin: minioadmin
 minio_password: Password123!
 
-
-
 ppdd:
   credentials:
     - name: ddve-1
@@ -58,15 +56,14 @@ ppdm:
     job_template: deploy ppdm assets templates
     label: ppdm_assets
     jt:
-        query: 30.0 Query Assets
-        adhoc_protection: 130.0 AdHoc Asset Protection
-
+      query: 30.0 Query Assets
+      adhoc_protection: 130.0 AdHoc Asset Protection
 
   agents:
     job_template: deploy ppdm agents templates
     team:
-        name: App Team
-        description: Team handling all App Agent stuff
+      name: App Team
+      description: Team handling all App Agent stuff
     label: ppdm_agents
     user_1:
       username: app_user_1
@@ -105,26 +102,25 @@ ppdm:
     label: ppdm_k8s
     job_template: deploy ppdm k8s templates
     team: Kubernetes Team
-    team_description: They made us the new God´s
+    team_description: "They made us the new God´s"
     user_1:
-        username: k8s_user_1
-        password: Password123!
-        email: k8suser@demo.local
+      username: k8s_user_1
+      password: Password123!
+      email: k8suser@demo.local
     wjt:
-        namespace:
-            adhoc_protection: 130.5 AdHoc Protect K8S Asset
-            query: 130.3 Query K8S Assets By Name
-            state: 130.3 Query Namespaces by Protection State
-        plc:
-            list: 130.4 Get details of Kubernetes Policy
-            create: 130.2 Create Kubernetes Protection Policy            
-    jt: 
-        add_ppdm_rbac: 130.1 Add K8S to PPDM 
-        namespace: 
-            query: 130.3 Query K8S Assets By Name
-            state: 130.3 Query Namespaces by Protection State
-            adhoc_protection: 130.5 AdHoc Protect K8S Asset
-        plc:
-            list: 130.4 Get all Kubernetes Policies
-            create: 130.2 Create Kubernetes Protection Policy
-
+      namespace:
+        adhoc_protection: 130.5 AdHoc Protect K8S Asset
+        query: 130.3 Query K8S Assets By Name
+        state: 130.3 Query Namespaces by Protection State
+      plc:
+        list: 130.4 Get details of Kubernetes Policy
+        create: 130.2 Create Kubernetes Protection Policy
+    jt:
+      add_ppdm_rbac: 130.1 Add K8S to PPDM
+      namespace:
+        query: 130.3 Query K8S Assets By Name
+        state: 130.3 Query Namespaces by Protection State
+        adhoc_protection: 130.5 AdHoc Protect K8S Asset
+      plc:
+        list: 130.4 Get all Kubernetes Policies
+        create: 130.2 Create Kubernetes Protection Policy
