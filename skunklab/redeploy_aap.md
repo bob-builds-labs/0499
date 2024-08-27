@@ -24,6 +24,13 @@ git pull
 cd ~/workspace/0499/lab3
 direnv allow .
 ```
+To use the testing Branch:
+
+```bash
+git checkout testing
+```
+
+
 If OpenShift is freshly started, make sure to approve  csr´s as in lab  [03.0](https://github.com/bob-builds-labs/bob-builds-labs.github.io/blob/main/docs/03.0_prepare_openshift_lab.md)
 This can take up to 15 Minutes and multiple CSR´s apprals for the Cluster to reconcile
 ```bash
