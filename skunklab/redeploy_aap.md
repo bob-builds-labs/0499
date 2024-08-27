@@ -21,7 +21,7 @@ Go to lab3 directory
 ```bash
 cd ~/workspace/0499
 git pull
-cd ../lab3
+cd ~/workspace/0499/lab3
 direnv allow .
 ```
 
