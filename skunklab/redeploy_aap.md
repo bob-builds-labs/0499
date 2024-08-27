@@ -82,7 +82,7 @@ echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with
 
 ```bash
 oc delete -f aap.yaml -n aap
-oc delete pvc  postgres-13-aap-postgres-13-0 -n aap
+oc delete pvc postgres-13-aap-postgres-13-0 -n aap
 oc delete -f aap_operatorGroup.yaml
 oc delete ns aap
 
