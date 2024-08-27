@@ -105,6 +105,60 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
+    - name: Add {{ ppdm.k8s.wjt.namespace.adhoc_protection }} WJT
+      workflow_job_template:
+        name: "{{ ppdm.k8s.wjt.plc.create }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        destroy_current_nodes: true
+        workflow_nodes:
+          - identifier: "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
+            extra_data:
+            unified_job_template:
+              name: "{{ ppdm.k8s.jt.plc.namespace.adhoc_protection }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+        survey_enabled: true
+        survey_spec: |
+								{
+								"description": "Kubernetes Asset Protection Survey",
+								"name": "K8S_Asset_Survey",
+								"spec": [
+								{
+								"max": 1024,
+								"min": 0,
+								"type": "multiplechoice",
+								"choices": [
+										"api.openshift.demo.local"
+								],
+								"default": "api.openshift.demo.local",
+								"required": true,
+								"variable": "k8s_name",
+								"new_question": false,
+								"question_name": "Kubernetes Cluster",
+								"question_description": ""
+								},
+								{
+								"max": 64,
+								"min": 0,
+								"type": "text",
+								"choices": "",
+								"default": "default_policy",
+								"required": true,
+								"variable": "namespace_name",
+								"new_question": false,
+								"question_name": "Kubernetes Namespace",
+								"question_description": "Enter the name of the Kubernetes Policy to create"
+								}            
+								]
+								}
+
 
     - name: "Add {{ ppdm.k8s.jt.namespace.state  }}"
       job_template:
@@ -146,41 +200,41 @@
               credentials: []
         survey_enabled: true
         survey_spec: |
-          {
-          "description": "Kubernetes Asset Protection Survey",
-          "name": "K8S_Asset_Survey",
-          "spec": [
             {
-            "max": 1024,
-            "min": 0,
-            "type": "multiplechoice",
-            "choices": [
-                "api.openshift.demo.local"
-            ],
-            "default": "api.openshift.demo.local",
-            "required": true,
-            "variable": "k8s_name",
-            "new_question": false,
-            "question_name": "Kubernetes Cluster",
-            "question_description": ""
-            },
-            {
-            "max": 1024,
-            "min": 0,
-            "type": "multiplechoice",
-            "choices": [
-                "PROTECTED",
-                "UNPROTECTED"
-            ],
-            "default": "PROTECTED",
-            "required": true,
-            "variable": "protection_state",
-            "new_question": false,
-            "question_name": "Protection State",
-            "question_description": "State of the Namespace"
-            }            
-          ]
-          }
+            "description": "Kubernetes Asset Protection Survey",
+            "name": "K8S_Asset_Survey",
+            "spec": [
+              {
+              "max": 1024,
+              "min": 0,
+              "type": "multiplechoice",
+              "choices": [
+                  "api.openshift.demo.local"
+              ],
+              "default": "api.openshift.demo.local",
+              "required": true,
+              "variable": "k8s_name",
+              "new_question": false,
+              "question_name": "Kubernetes Cluster",
+              "question_description": ""
+              },
+              {
+              "max": 1024,
+              "min": 0,
+              "type": "multiplechoice",
+              "choices": [
+                  "PROTECTED",
+                  "UNPROTECTED"
+              ],
+              "default": "PROTECTED",
+              "required": true,
+              "variable": "protection_state",
+              "new_question": false,
+              "question_name": "Protection State",
+              "question_description": "State of the Namespace"
+              }            
+            ]
+            }
 
 
     - name: "Add {{ ppdm.k8s.jt.namespace.query  }}"
@@ -377,8 +431,7 @@
         workflows:
         - "{{ ppdm.k8s.wjt.namespace.query }}"
         - "{{ ppdm.k8s.wjt.namespace.state }}"  
-#        - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
-#        - "{{ ppdm.k8s.wjt.plc.list }}"
+        - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
         - "{{ ppdm.k8s.wjt.plc.create }}"  
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
@@ -403,6 +456,6 @@
         state: present
         job_templates:
         - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-
+        - "{{ ppdm.k8s.jt.plc.list }}"
         - "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"  
 
