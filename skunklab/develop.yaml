@@ -30,9 +30,9 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: Add {{ ppdm.k8s.wjt.namespace.adhoc_protection }} WJT
+    - name: "Add {{ ppdm.k8s.wjt.namespace.adhoc_protection }} WJT"
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.plc.create }}"
+        name: "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
@@ -49,7 +49,7 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
-				survey_enabled: true
+        survey_enabled: true
         survey_spec: |
           {
           "description": "Kubernetes Asset Protection Survey",
