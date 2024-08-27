@@ -39,10 +39,9 @@
       role:
         role: member
         teams:
-         - "{{ team.id }}"
+          - "{{ team.id }}"
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
-
 
     - name: "Add {{ ppdm.k8s.jt.plc.list }}"
       job_template:
@@ -79,12 +78,9 @@
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
           k8s_policy_name: unique_name
-          description: your_description          
+          description: your_description
         ask_variables_on_launch: true
         ask_credential_on_launch: true
-
-
-
 
     - name: "Add {{ ppdm.k8s.jt.namespace.adhoc_protection }}"
       job_template:
@@ -124,7 +120,7 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
-				survey_enabled: true
+        survey_enabled: true
         survey_spec: |
           {
           "description": "Kubernetes Asset Protection Survey",
@@ -159,8 +155,6 @@
           ]
           }
 
-
-
     - name: "Add {{ ppdm.k8s.jt.namespace.state  }}"
       job_template:
         name: "{{ ppdm.k8s.jt.namespace.state }}"
@@ -176,10 +170,9 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
+          asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
         ask_variables_on_launch: true
         ask_credential_on_launch: true
-
 
     - name: Add {{ ppdm.k8s.wjt.namespace.state }}
       workflow_job_template:
@@ -201,42 +194,41 @@
               credentials: []
         survey_enabled: true
         survey_spec: |
+          {
+          "description": "Kubernetes Asset Protection Survey",
+          "name": "K8S_Asset_Survey",
+          "spec": [
             {
-            "description": "Kubernetes Asset Protection Survey",
-            "name": "K8S_Asset_Survey",
-            "spec": [
-              {
-              "max": 1024,
-              "min": 0,
-              "type": "multiplechoice",
-              "choices": [
-                  "api.openshift.demo.local"
-              ],
-              "default": "api.openshift.demo.local",
-              "required": true,
-              "variable": "k8s_name",
-              "new_question": false,
-              "question_name": "Kubernetes Cluster",
-              "question_description": ""
-              },
-              {
-              "max": 1024,
-              "min": 0,
-              "type": "multiplechoice",
-              "choices": [
-                  "PROTECTED",
-                  "UNPROTECTED"
-              ],
-              "default": "PROTECTED",
-              "required": true,
-              "variable": "protection_state",
-              "new_question": false,
-              "question_name": "Protection State",
-              "question_description": "State of the Namespace"
-              }            
-            ]
-            }
-
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "api.openshift.demo.local"
+            ],
+            "default": "api.openshift.demo.local",
+            "required": true,
+            "variable": "k8s_name",
+            "new_question": false,
+            "question_name": "Kubernetes Cluster",
+            "question_description": ""
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "PROTECTED",
+                "UNPROTECTED"
+            ],
+            "default": "PROTECTED",
+            "required": true,
+            "variable": "protection_state",
+            "new_question": false,
+            "question_name": "Protection State",
+            "question_description": "State of the Namespace"
+            }            
+          ]
+          }
 
     - name: "Add {{ ppdm.k8s.jt.namespace.query  }}"
       job_template:
@@ -253,12 +245,10 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}' 
-#          protectionStatus eq "{{  "{{ " }}protection_state{{ " }}" }}" and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq "{{ "{{ " }}k8s_name{{ " }}" }}"
+          asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+        #          protectionStatus eq "{{  "{{ " }}protection_state{{ " }}" }}" and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq "{{ "{{ " }}k8s_name{{ " }}" }}"
         ask_variables_on_launch: true
         ask_credential_on_launch: true
-
-
 
     - name: Add {{ ppdm.k8s.wjt.namespace.query }}
       workflow_job_template:
@@ -349,7 +339,6 @@
         extra_vars:
           vcenter_server: vcenter01.demo.local
 
-
     - name: Add {{ ppdm.k8s.jt.plc.create }} JT
       job_template:
         name: "{{ ppdm.k8s.jt.plc.create}}"
@@ -423,41 +412,34 @@
           ]
           }
 
-
-
-
     - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
       role:
         role: execute
         workflows:
-        - "{{ ppdm.k8s.wjt.namespace.query }}"
-        - "{{ ppdm.k8s.wjt.namespace.state }}"  
-        - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"  
-        - "{{ ppdm.k8s.wjt.plc.create }}"  
+          - "{{ ppdm.k8s.wjt.namespace.query }}"
+          - "{{ ppdm.k8s.wjt.namespace.state }}"
+          - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
+          - "{{ ppdm.k8s.wjt.plc.create }}"
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
-
-
 
     - name: "Give {{ ppdm.k8s.user_1.username }} JT Read permissions"
       role:
-        role: read        
+        role: read
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
         job_templates:
-        - "{{ ppdm.assets.jt.query  }}"
-        - "{{ ppdm.k8s.jt.plc.create }}"
-        - "{{ ppdm.k8s.jt.namespace.query }}"
-        - "{{ ppdm.k8s.jt.namespace.state }}"  
-        - "{{ ppdm.k8s.jt.namespace.adhoc_protection }}" 
+          - "{{ ppdm.assets.jt.query  }}"
+          - "{{ ppdm.k8s.jt.plc.create }}"
+          - "{{ ppdm.k8s.jt.namespace.query }}"
+          - "{{ ppdm.k8s.jt.namespace.state }}"
+          - "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"
 
     - name: "Give {{ ppdm.k8s.user_1.username }} JT Execute permissions"
       role:
-        role: execute        
+        role: execute
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
         job_templates:
-        - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
-        - "{{ ppdm.k8s.jt.plc.list }}"
- 
-
+          - "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
+          - "{{ ppdm.k8s.jt.plc.list }}"
