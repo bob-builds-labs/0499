@@ -7,13 +7,16 @@
 From your vCenter, make sure ansible, as well Openshift and PowerProtect vApp are started:
 ![image](https://github.com/user-attachments/assets/355f1d9f-3b8b-44a4-abf6-51a239bfbd4c)
 
-!!!! Attention, due to a recent issue with the new Submitted lab ( Hana Instance grabbing master2 DHCP lease ), please run the following from Powershell on Launchpad before starting OpenShift:  
+!!!! Attention, due to a recent issue with the new Submitted lab v2.5 ( Hana Instance grabbing master2 DHCP lease ), please run the following from Powershell on Launchpad before starting OpenShift:  
 
 ```Powershell
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.108 -ClientId "005056a3bbad" -Name "openshift-72g6c-master-0.demo.local" -Description "openshift-72g6c-master-0.demo.local"
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.111 -ClientId "005056a32d4e" -Name "openshift-72g6c-master-1.demo.local" -Description "openshift-72g6c-master-1.demo.local"
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.104 -ClientId "005056a3729e" -Name "openshift-72g6c-master-2.demo.local" -Description "openshift-72g6c-master-2.demo.local"
 ```
+
+## Important, as thise Inferastructure HickUps can cause Trouble, it is recommended that you upgrade you cluster first to latest 4.14.x !!!!
+
 
 ## Deploy ( From Ansible Host )
 Log into Ansible Host mRemote. If not done from previous,
