@@ -336,7 +336,7 @@
         ask_credential_on_launch: true
         ask_variables_on_launch: true
         extra_vars:
-          vcenter_server: vcenter01.demo.local
+          vcenter_address: vcenter01.demo.local
 
     - name: Add {{ ppdm.k8s.jt.plc.create }} JT
       job_template:
