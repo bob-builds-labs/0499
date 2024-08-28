@@ -15,7 +15,10 @@ Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.111 -Clien
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.104 -ClientId "005056a3729e" -Name "openshift-72g6c-master-2.demo.local" -Description "openshift-72g6c-master-2.demo.local"
 ```
 
-## Important, as thise Inferastructure HickUps can cause Trouble, it is recommended that you upgrade you cluster first to latest 4.14.x !!!!
+## Important, as those Inferastructure HickUps can cause Trouble, it is recommended that you upgrade you cluster first to latest 4.14.x !!!!
+From Administration, Cluster Setting, select latest 4.14 and wait .....
+
+![image](https://github.com/user-attachments/assets/17c131ae-71bc-4f9c-9703-81e1bd4e599d)
 
 
 ## Deploy ( From Ansible Host )
