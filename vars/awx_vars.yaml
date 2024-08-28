@@ -10,7 +10,7 @@ awx:
     workflow_job_template: 0_Maintain AWX
   inventory:
     - project_name: 0499
-      scm_branch: testing
+      scm_branch: "{{ release }}"
       scm_url: https://github.com/bob-builds-labs/0499.git
       scm_description: Base Inventory and Templates for 0499
       name: PPDM Inventory
