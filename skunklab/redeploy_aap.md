@@ -1,13 +1,11 @@
 # AAP Ansible Automation Platform automated deployment and Configuration
 
-
-
-## Prework: 
+## Prework:
 
 From your vCenter, make sure ansible, as well Openshift and PowerProtect vApp are started:
 ![image](https://github.com/user-attachments/assets/355f1d9f-3b8b-44a4-abf6-51a239bfbd4c)
 
-!!!! Attention, due to a recent issue with the new Submitted lab v2.5 ( Hana Instance grabbing master2 DHCP lease ), please run the following from Powershell on Launchpad before starting OpenShift:  
+!!!! Attention, due to a recent issue with the new Submitted lab v2.5 ( Hana Instance grabbing master2 DHCP lease ), please run the following from Powershell on Launchpad before starting OpenShift:
 
 ```Powershell
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.108 -ClientId "005056a3bbad" -Name "openshift-72g6c-master-0.demo.local" -Description "openshift-72g6c-master-0.demo.local"
@@ -15,15 +13,11 @@ Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.111 -Clien
 Add-DhcpServerv4Reservation -ScopeId 192.168.1.0 -IPAddress 192.168.1.104 -ClientId "005056a3729e" -Name "openshift-72g6c-master-2.demo.local" -Description "openshift-72g6c-master-2.demo.local"
 ```
 
-## Important, as those Inferastructure HickUps can cause Trouble, it is recommended that you upgrade you cluster first to latest 4.14.x !!!!
-From Administration, Cluster Setting, select latest 4.14 and wait .....
-
-![image](https://github.com/user-attachments/assets/17c131ae-71bc-4f9c-9703-81e1bd4e599d)
-
-
 ## Deploy ( From Ansible Host )
+
 Log into Ansible Host mRemote. If not done from previous,
 Clone into 0499 if not done from earlier lab
+
 ```bash
 git clone https://github.com/bob-builds-labs/0499.git ~/workspace/0499
 ```
@@ -36,25 +30,33 @@ git pull
 cd ~/workspace/0499/lab3
 direnv allow .
 ```
+
+If OpenShift is freshly started, make sure to approve csr´s as in lab [03.0](https://github.com/bob-builds-labs/bob-builds-labs.github.io/blob/main/docs/03.0_prepare_openshift_lab.md)
+This can take up to 15 Minutes and multiple CSR´s apprals for the Cluster to reconcile
+
+```bash
+oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
+```
+
+Rember to run this multiple times, until you [Openshift Console](https://console-openshift-console.apps.openshift.demo.local) is working and
+
+```bash
+oc get nodes
+```
+
+shows all nodes ready
+
+## Important, as those Inferastructure HickUps can cause Trouble, it is recommended that you upgrade you cluster first to latest 4.14.x !!!!
+
+From Administration, Cluster Setting, select latest 4.14 and wait .....
+
+![image](https://github.com/user-attachments/assets/17c131ae-71bc-4f9c-9703-81e1bd4e599d)
+
 To use the testing Branch:
 
 ```bash
 git checkout testing
 ```
-
-
-If OpenShift is freshly started, make sure to approve  csr´s as in lab  [03.0](https://github.com/bob-builds-labs/bob-builds-labs.github.io/blob/main/docs/03.0_prepare_openshift_lab.md)
-This can take up to 15 Minutes and multiple CSR´s apprals for the Cluster to reconcile
-```bash
-oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
-```
-
-rember to run this multiple times, until you [Openshift Console](https://console-openshift-console.apps.openshift.demo.local) is working and 
-```bash
-oc get nodes
-```
-shows all nodes ready
-
 
 ## Deploy AAP to Openshift
 
@@ -81,15 +83,15 @@ cd ../lab4
 direnv allow .
 ```
 
-And start populating our AAP from ansible playbook:  
+And start populating our AAP from ansible playbook:
 
 ```bash
-ansible-playbook ../playbooks/aap.yaml 
+ansible-playbook ../playbooks/aap.yaml
 echo  "You can now login to ${CONTROLLER_HOST} using ${CONTROLLER_USERNAME} with password ${CONTROLLER_PASSWORD}"
 ```
 
-
 # Redeploy
+
 ## Remove potential previously deployed Instances
 
 ```bash
@@ -114,10 +116,7 @@ oc delete crd automationhubrestores.automationhub.ansible.com
 oc delete crd automationhubs.automationhub.ansible.com
 oc delete crd edabackups.eda.ansible.com
 oc delete crd edarestores.eda.ansible.com
-oc delete crd edas.eda.ansible.com 
+oc delete crd edas.eda.ansible.com
 oc delete crd jobtemplates.tower.ansible.com
-oc delete crd workflowtemplates.tower.ansible.com 
+oc delete crd workflowtemplates.tower.ansible.com
 ```
-
-
-
