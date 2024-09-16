@@ -154,7 +154,7 @@
           ]
           }
 
-    - name: "Add {{ ppdm.k8s.jt.namespace.state  }}"
+    - name: "Add {{ ppdm.k8s.jt.namespace.state }}"
       job_template:
         name: "{{ ppdm.k8s.jt.namespace.state }}"
         description: Query Namespaces by Protection State
@@ -172,6 +172,9 @@
           asset_filter: protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
         ask_variables_on_launch: true
         ask_credential_on_launch: true
+
+
+
 
     - name: Add {{ ppdm.k8s.wjt.namespace.state }}
       workflow_job_template:
