@@ -30,7 +30,7 @@
           policy_name: '{{ "{{ " }}policy_name{{ " }}" }}'
         ask_variables_on_launch: true
         ask_credential_on_launch: true
-        
+
     - name: "Add {{ ppdm.k8s.wjt.namespace.add }} WJT"
       workflow_job_template:
         name: "{{ ppdm.k8s.wjt.namespace.add }}"
@@ -74,7 +74,7 @@
                   "min": 0,
                   "type": "text",
                   "choices": "",
-                  "default": "",
+                  "default": "openshift-image-registry",
                   "required": true,
                   "variable": "namespace_name",
                   "new_question": false,
@@ -86,12 +86,26 @@
                   "min": 0,
                   "type": "text",
                   "choices": "",
-                  "default": "",
+                  "default": "default_policy",
                   "required": true,
                   "variable": "policy_name",
                   "new_question": false,
                   "question_name": "Protection Policy Name",
                   "question_description": "Enter the name of the Protection Policy"
-            }            
+            },
+            {
+                  "max": 1024,
+                  "min": 0,
+                  "type": "multiplechoice",
+                  "choices": [
+                      "UNPROTECTED"
+                  ],
+                  "default": "UNPROTECTED",
+                  "required": true,
+                  "variable": "protection_state",
+                  "new_question": false,
+                  "question_name": "Kubernetes Namespace",
+                  "question_description": "Enter the name of the Kubernetes Namespace"
+            }                        
           ]
           }
