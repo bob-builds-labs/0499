@@ -14,7 +14,7 @@
     - name: "Add {{ ppdm.k8s.jt.namespace.remove.name  }}"
       job_template:
         name: "{{ ppdm.k8s.jt.namespace.remove.name }}"
-        description: {{ ppdm.k8s.jt.namespace.remove.description }}"
+        description: "{{ ppdm.k8s.jt.namespace.remove.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
