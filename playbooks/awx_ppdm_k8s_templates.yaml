@@ -413,6 +413,105 @@
             }
           ]
           }
+    - name: "Add {{ ppdm.k8s.jt.namespace.add  }}"
+      job_template:
+        name: "{{ ppdm.k8s.jt.namespace.add }}"
+        description: Add PPDM Namespace to PPDM Policy
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
+          policy_name: '{{ "{{ " }}policy_name{{ " }}" }}'
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.k8s.wjt.namespace.add }} WJT"
+      workflow_job_template:
+        name: "{{ ppdm.k8s.wjt.namespace.add }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        destroy_current_nodes: true
+        workflow_nodes:
+          - identifier: "{{ ppdm.k8s.jt.namespace.add }}"
+            unified_job_template:
+              name: "{{ ppdm.k8s.jt.namespace.add }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+        survey_enabled: true
+        survey_spec: |        
+          {
+          "description": "Kubernetes Asset Onboaring Survey",
+          "name": "Query_K8S",
+          "spec": [
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "api.openshift.demo.local"
+            ],
+            "default": "api.openshift.demo.local",
+            "required": true,
+            "variable": "k8s_name",
+            "new_question": false,
+            "question_name": "Kubernetes Cluster",
+            "question_description": ""
+            },
+            {
+                  "max": 1024,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "openshift-image-registry",
+                  "required": true,
+                  "variable": "namespace_name",
+                  "new_question": false,
+                  "question_name": "Kubernetes Namespace",
+                  "question_description": "Enter the name of the Kubernetes Namespace"
+            },
+            {
+                  "max": 1024,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "default_policy",
+                  "required": true,
+                  "variable": "policy_name",
+                  "new_question": false,
+                  "question_name": "Protection Policy Name",
+                  "question_description": "Enter the name of the Protection Policy"
+            },
+            {
+                  "max": 1024,
+                  "min": 0,
+                  "type": "multiplechoice",
+                  "choices": [
+                      "UNPROTECTED"
+                  ],
+                  "default": "UNPROTECTED",
+                  "required": true,
+                  "variable": "protection_state",
+                  "new_question": false,
+                  "question_name": "Kubernetes Namespace",
+                  "question_description": "Enter the name of the Kubernetes Namespace"
+            }                        
+          ]
+          }
+
 
     - name: "Give {{ ppdm.k8s.user_1.username }} WJT permissions"
       role:
@@ -421,6 +520,7 @@
           - "{{ ppdm.k8s.wjt.namespace.query }}"
           - "{{ ppdm.k8s.wjt.namespace.state }}"
           - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
+          - "{{ ppdm.k8s.wjt.namespace.delete }}"
           - "{{ ppdm.k8s.wjt.plc.create }}"
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
@@ -436,6 +536,7 @@
           - "{{ ppdm.k8s.jt.namespace.query }}"
           - "{{ ppdm.k8s.jt.namespace.state }}"
           - "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"
+          - "{{ ppdm.k8s.jt.namespace.add }}"
 
     - name: "Give {{ ppdm.k8s.user_1.username }} JT Execute permissions"
       role:
