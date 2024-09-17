@@ -105,8 +105,8 @@
                   "required": true,
                   "variable": "protection_state",
                   "new_question": false,
-                  "question_name": "Kubernetes Namespace",
-                  "question_description": "Enter the name of the Kubernetes Namespace"
+                  "question_name": "Asset State",
+                  "question_description": "Enter State Requirement for the Asset"
             }                        
           ]
           }
