@@ -101,7 +101,9 @@ ppdm:
         query: 130.3 Query K8S Assets By Name
         state: 130.3 Query Namespaces by Protection State
         adhoc_protection: 130.5 AdHoc Protect K8S Asset
-        add: 130.2 Add Namespace to Policy
+        add:
+          name: 130.2 Add Namespace to Policy
+          description: Assigns a Namespace asset from a Protection Policy
         remove:
           name: 130.2 Remove Namespace from Policy
           description: Unassigns a Namespace asset from a Protection Policy
@@ -122,7 +124,9 @@ ppdm:
         query: 130.3 Query K8S Assets By Name
         state: 130.3 Query Namespaces by Protection State
         adhoc_protection: 130.5 AdHoc Protect K8S Asset
-        add: 130.2 Add Namespace to Policy
+        add: 
+          name: 130.2 Add Namespace to Policy
+          description: Assigns a Namespace asset to a Protection Policy
         remove:
           name: 130.2 Remove Namespace from Policy
           description: Unassigns a Namespace asset from a Protection Policy
