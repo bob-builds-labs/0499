@@ -11,15 +11,15 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Add {{ ppdm.k8s.jt.namespace.add  }}"
+    - name: "Add {{ ppdm.k8s.jt.namespace.remove.name  }}"
       job_template:
-        name: "{{ ppdm.k8s.jt.namespace.add }}"
-        description: Add PPDM Namespace to PPDM Policy
+        name: "{{ ppdm.k8s.jt.namespace.remove.name }}"
+        description: {{ ppdm.k8s.jt.namespace.remove.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
         project: "{{ ppdm.project.name }}"
-        playbook: "120.2_playbook_add_assets_to_policy.yaml"
+        playbook: "120.2_playbook_remove_assets_from_policy.yaml"
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
@@ -31,15 +31,15 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: "Add {{ ppdm.k8s.wjt.namespace.add }} WJT"
+    - name: "Add {{ ppdm.k8s.wjt.namespace.remve.name }} WJT"
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.namespace.add }}"
+        name: "{{ ppdm.k8s.wjt.namespace.remove.name }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.jt.namespace.add }}"
+          - identifier: "{{ ppdm.k8s.jt.namespace.remove.name }}"
             unified_job_template:
-              name: "{{ ppdm.k8s.jt.namespace.add }}"
+              name: "{{ ppdm.k8s.jt.namespace.remove.name }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -52,7 +52,7 @@
         survey_enabled: true
         survey_spec: |        
           {
-          "description": "Kubernetes Asset Onboaring Survey",
+          "description": "Kubernetes Asset Offboaring Survey",
           "name": "Query_K8S",
           "spec": [
             {
@@ -98,9 +98,10 @@
                   "min": 0,
                   "type": "multiplechoice",
                   "choices": [
-                      "UNPROTECTED"
+                      "PROTECTED",
+                      "DELETED"
                   ],
-                  "default": "UNPROTECTED",
+                  "default": "PROTECTED",
                   "required": true,
                   "variable": "protection_state",
                   "new_question": false,

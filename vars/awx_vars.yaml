@@ -102,6 +102,9 @@ ppdm:
         state: 130.3 Query Namespaces by Protection State
         adhoc_protection: 130.5 AdHoc Protect K8S Asset
         add: 130.2 Add Namespace to Policy
+        remove:
+          name: 130.2 Remove Namespace from Policy
+          description: Unassigns a Namespace asset from a Protection Policy
       plc:
         list: 130.4 Get details of Kubernetes Policy
         create: 130.2 Create Kubernetes Protection Policy
@@ -120,6 +123,9 @@ ppdm:
         state: 130.3 Query Namespaces by Protection State
         adhoc_protection: 130.5 AdHoc Protect K8S Asset
         add: 130.2 Add Namespace to Policy
+        remove:
+          name: 130.2 Remove Namespace from Policy
+          description: Unassigns a Namespace asset from a Protection Policy
       plc:
         list: 130.4 Get all Kubernetes Policies
         create: 130.2 Create Kubernetes Protection Policy  
