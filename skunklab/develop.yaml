@@ -61,7 +61,8 @@
             related:
               success_nodes:
                 - identifier: "{{ ppdm.infra.jt.execute_update }}"
-              failure_nodes: []
+              failure_nodes:
+                - identifier: "{{ ppdm.infra.jt.delete_update }}"
               always_nodes: []
           - identifier: "{{ ppdm.infra.jt.execute_update }}"
             extra_data: []
