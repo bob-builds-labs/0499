@@ -117,7 +117,7 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "19.18"
+                "19.18",
                 "19.17",
                 "19.16",
                 "19.15"
@@ -130,16 +130,16 @@
             "question_description": "select the PPDM Release"
             },           
             {
-            "max": 1024,
-            "min": 0,
-            "type": "text",
-            "choices": "",
-            "default": "dellemc-ppdm-upgrade-sw-19.17.0-18.pkg",
-            "required": true,
-            "variable": "package",
-            "new_question": false,
-            "question_name": "Package Name",
-            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.17.0-18.pkg"
+                  "max": 1024,
+                  "min": 0,
+                  "type": "text",
+                  "choices": "",
+                  "default": "dellemc-ppdm-upgrade-sw-19.17.0-18.pkg",
+                  "required": true,
+                  "variable": "package",
+                  "new_question": false,
+                  "question_name": "Package Name",
+                  "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.17.0-18.pkg"
             }                       
           ]
           }
