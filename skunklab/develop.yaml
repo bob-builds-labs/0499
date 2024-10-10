@@ -17,7 +17,7 @@
         name: "{{ ppdm.infra.wjt.update_ppdm }}-{{ ppdm_index + 1 }}"
         inventory: "{{ awx.inventory[0].name }}"
         extra_vars:
-          package: "{{ package_name }}"
+          package: '{{ "{{ " }}package_name{{ " }}" }}'
           release: "{{ ppdm.release }}"
         workflow_nodes:
           - identifier: "{{ ppdm.infra.jt.upload_update }}"
