@@ -17,7 +17,6 @@
         name: "{{ ppdm.infra.wjt.update_ppdm }}-{{ ppdm_index + 1 }}"
         inventory: "{{ awx.inventory[0].name }}"
         extra_vars:
-          package: '{{ "{{ " }}package_name{{ " }}" }}'
           release: "{{ ppdm.release }}"
         workflow_nodes:
           - identifier: "{{ ppdm.infra.jt.upload_update }}"
@@ -122,7 +121,7 @@
                   "choices": "",
                   "default": "dellemc-ppdm-upgrade-sw-19.17.0-18.pkg",
                   "required": true,
-                  "variable": "package_name",
+                  "variable": "package",
                   "new_question": false,
                   "question_name": "Package Name",
                   "question_description": "Enter the name of the Kpackage, e.g. dellemc-ppdm-upgrade-sw-19.17.0-18.pkg"
