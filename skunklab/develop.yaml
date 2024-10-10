@@ -11,35 +11,65 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Add {{ ppdm.k8s.jt.namespace.remove.name  }}"
-      job_template:
-        name: "{{ ppdm.k8s.jt.namespace.remove.name }}"
-        description: "{{ ppdm.k8s.jt.namespace.remove.description }}"
-        job_type: "run"
-        organization: "{{ awx.org }}"
-        inventory: "{{ awx.inventory[0].name }}"
-        project: "{{ ppdm.project.name }}"
-        playbook: "120.2_playbook_remove_assets_from_policy.yaml"
-        state: "present"
-        labels:
-          - "{{ ppdm.assets.label }}"
-        credentials:
-          - "{{ ppdm.credentials[0].name }}"
-        extra_vars:
-          asset_filter: name eq '{{ "{{ " }}namespace_name{{ " }}" }}' and protectionStatus eq '{{ "{{ " }}protection_state{{ " }}" }}' and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq '{{ "{{ " }}k8s_name{{ " }}" }}'
-          policy_name: '{{ "{{ " }}policy_name{{ " }}" }}'
-        ask_variables_on_launch: true
-        ask_credential_on_launch: true
-
-    - name: "Add {{ ppdm.k8s.wjt.namespace.remve.name }} WJT"
+    - name: Add PPDM Upgrade Workflow(s)
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.namespace.remove.name }}"
-        inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
+        name: "{{ ppdm.infra.wjt.update_ppdm }}-{{ ppdm_index + 1 }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        extra_vars:
+          package: "{{ package_survey }}"
+          release: "{{ ppdm.release }}"
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.jt.namespace.remove.name }}"
+          - identifier: "{{ ppdm.infra.jt.upload_update }}"
+            extra_data: []
             unified_job_template:
-              name: "{{ ppdm.k8s.jt.namespace.remove.name }}"
+              name: "{{ ppdm.infra.jt.upload_update }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.precheck_update }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.approve_update }}"
+              failure_nodes:
+                - identifier: "{{ ppdm.infra.jt.update_history }}"
+              always_nodes: []
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.approve_update }}"
+            all_parents_must_coverage: false
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.approve_update }}"
+              timeout: 900
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: workflow_approval
+            related:
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.execute_update }}"
+              failure_nodes: []
+              always_nodes: []
+          - identifier: "{{ ppdm.infra.jt.execute_update }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.execute_update }}"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
@@ -48,65 +78,58 @@
               success_nodes: []
               failure_nodes: []
               always_nodes: []
-              credentials: []
-        survey_enabled: true
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.update_history }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.update_history }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes:
+                - identifier: "{{ ppdm.infra.jt.delete_update }}"
+              credentials:
+                - name: "{{ item.name }}"
+          - identifier: "{{ ppdm.infra.jt.delete_update }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.delete_update }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - name: "{{ item.name }}"
+        survey_enabled: true        
         survey_spec: |        
           {
-          "description": "Kubernetes Asset Offboaring Survey",
-          "name": "Query_K8S",
+          "description": "Upgrade Survey",
+          "name": "Upgrade_PPDM",
           "spec": [
             {
-            "max": 1024,
-            "min": 0,
-            "type": "multiplechoice",
-            "choices": [
-                "api.openshift.demo.local"
-            ],
-            "default": "api.openshift.demo.local",
-            "required": true,
-            "variable": "k8s_name",
-            "new_question": false,
-            "question_name": "Kubernetes Cluster",
-            "question_description": ""
-            },
-            {
                   "max": 1024,
                   "min": 0,
                   "type": "text",
                   "choices": "",
-                  "default": "openshift-image-registry",
+                  "default": "dellemc-ppdm-upgrade-sw-19.17.0-18.pkg",
                   "required": true,
-                  "variable": "namespace_name",
+                  "variable": "package_name",
                   "new_question": false,
-                  "question_name": "Kubernetes Namespace",
-                  "question_description": "Enter the name of the Kubernetes Namespace"
-            },
-            {
-                  "max": 1024,
-                  "min": 0,
-                  "type": "text",
-                  "choices": "",
-                  "default": "default_policy",
-                  "required": true,
-                  "variable": "policy_name",
-                  "new_question": false,
-                  "question_name": "Protection Policy Name",
-                  "question_description": "Enter the name of the Protection Policy"
-            },
-            {
-                  "max": 1024,
-                  "min": 0,
-                  "type": "multiplechoice",
-                  "choices": [
-                      "PROTECTED",
-                      "DELETED"
-                  ],
-                  "default": "PROTECTED",
-                  "required": true,
-                  "variable": "protection_state",
-                  "new_question": false,
-                  "question_name": "Asset State",
-                  "question_description": "Enter State Requirement for the Asset"
-            }                        
+                  "question_name": "Package Name",
+                  "question_description": "Enter the name of the Kpackage, e.g. dellemc-ppdm-upgrade-sw-19.17.0-18.pkg"
+            }                       
           ]
           }
+
+      loop: "{{ ppdm.credentials }}"
+      loop_control:
+        index_var: ppdm_index
