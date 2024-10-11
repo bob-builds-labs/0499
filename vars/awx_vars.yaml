@@ -94,7 +94,11 @@ ppdm:
       update_history: _9.4 Update History
       delete_update: _9.9 Delete PPDM Update
     wjt:
-      update_ppdm: 9 Update PPDM
+      update_ppdm:
+        name: 9 Update PPDM
+        description: |
+          "This workflow will Upgrade PPDM using Packages from S3. The update must be available on the S3 Host ansible. (Prepare S3 using the Workflow 'deploy minio to ansible host')
+           The package mus be in the format on Bucket dps-products,  with the prefix /powerprotect/{release}, e.g. s3://dps-products/powerprotect/19.17/dellemc-ppdm-upgrade-sw-19.17.0-18.pkg"
   k8s:
     wjt:
       namespace:
