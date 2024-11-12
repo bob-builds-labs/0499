@@ -38,7 +38,7 @@ ppdd:
       password: Password123!
       fqdn: ddve-02.demo.local
 ppdm:
-  release: 19.17
+  release: 19.18
   project:
     name: ansible_ppdm
     description: Ansible PPDM Modules by Karsten Bott
@@ -98,7 +98,7 @@ ppdm:
         name: 9 Update PPDM
         description: |
           This workflow will Upgrade PPDM using Packages from S3. The update must be available on the S3 Host ansible. (Prepare S3 using the Workflow 'deploy minio to ansible host')
-          The package mus be in the format dellemc-ppdm-upgrade-sw-{release}.{build}.pkg on Bucket dps-products,  with the prefix /powerprotect/{release}, e.g. s3://dps-products/powerprotect/19.17/dellemc-ppdm-upgrade-sw-19.17.0-18.pkg
+          The package mus be in the format dellemc-ppdm-upgrade-sw-{release}.{build}.pkg on Bucket dps-products,  with the prefix /powerprotect/{release}, e.g. s3://dps-products/powerprotect/19.18/dellemc-ppdm-upgrade-sw-19.18.0-14.pkg
   k8s:
     wjt:
       namespace:
