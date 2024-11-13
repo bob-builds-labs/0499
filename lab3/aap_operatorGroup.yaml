@@ -43,7 +43,7 @@ items:
     name: ansible-automation-platform-operator
     source: redhat-operators
     sourceNamespace: openshift-marketplace
-    startingCSV: aap-operator.v2.5.0-0.1729742145
+#    startingCSV: aap-operator.v2.5.0-0.1729742145
 kind: List
 metadata:
   resourceVersion: ""  
