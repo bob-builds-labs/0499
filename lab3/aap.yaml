@@ -35,3 +35,28 @@ spec:
   admin_user: admin
   loadbalancer_protocol: http
   metrics_utility_cronjob_gather_schedule: '@hourly'
+---
+apiVersion: aap.ansible.com/v1alpha1
+kind: AnsibleAutomationPlatform
+metadata:
+  name: aap-platform
+  namespace: aap
+spec:
+  eda:
+    disabled: true
+  route_tls_termination_mechanism: Edge
+  ingress_type: Route
+  loadbalancer_port: 80
+  no_log: true
+  redis_mode: standalone
+  hub:
+    disabled: true
+  api:
+    log_level: INFO
+    replicas: 1
+  database:
+    postgres_data_volume_init: false
+  loadbalancer_protocol: http
+  controller:
+    disabled: false
+    name: aap  
