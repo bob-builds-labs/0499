@@ -20,10 +20,6 @@ items:
     namespace: aap
   spec:
     upgradeStrategy: Default
-  status:
-    lastUpdated: "2024-08-21T10:33:46Z"
-    namespaces:
-    - ""
 kind: List
 metadata:
   resourceVersion: ""
@@ -38,12 +34,11 @@ items:
     name: ansible-automation-platform-operator
     namespace: aap
   spec:
-    channel: stable-2.4-cluster-scoped
+    channel: stable-2.5-cluster-scoped
     installPlanApproval: Automatic
     name: ansible-automation-platform-operator
     source: redhat-operators
     sourceNamespace: openshift-marketplace
-    startingCSV: aap-operator.v2.4.0-0.1720482740
 kind: List
 metadata:
   resourceVersion: ""  
