@@ -11,4 +11,4 @@ spec:
   name: dell-csm-operator-certified
   source: certified-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: dell-csm-operator-certified.v1.4.3
+  startingCSV: dell-csm-operator-certified.v1.7.1
