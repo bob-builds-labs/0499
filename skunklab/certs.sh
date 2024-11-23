@@ -1,6 +1,7 @@
 #!/bin/bash
 # certificates come first in the chain
 # patchg proxy for root ca
+# *.apps and api
 oc create configmap custom-ca \
      --from-file=ca-bundle.crt=ca.pem \
      -n openshift-config
