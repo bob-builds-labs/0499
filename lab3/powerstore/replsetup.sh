@@ -3,4 +3,4 @@ wget https://github.com/dell/csm-replication/releases/download/v1.10.0/repctl-li
 mv repctl-linux-amd64 ~/.local/bin/repctl
 chmod +X ~/.local/bin/repctl
 chmod 755 ~/.local/bin/repctl
-./repctl cluster add -f ${KUBECONFIG} -n "openshift1-1"
+./repctl cluster add -f ${KUBECONFIG} -n "openshift-1"
