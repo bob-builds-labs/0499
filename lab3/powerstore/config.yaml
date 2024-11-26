@@ -1,6 +1,6 @@
 arrays:
    - endpoint: "https://192.168.1.40/api/rest"     # full URL path to the PowerStore API
-     globalID: "powersore-1"                        # unique id of the PowerStore array
+     globalID: "powerstore-1"                        # unique id of the PowerStore array
      username: "admin"                          # username for connecting to API
      password: "Password123!"                      # password for connecting to API
      skipCertificateValidation: true           # indicates if client side validation of (management)server's certificate can be skipped
