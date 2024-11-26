@@ -1,0 +1,20 @@
+sourceClusterID: "openshift-1"
+targetClusterID: "openshift-1"
+name: "powerstore-replication"
+driver: "powerstore"
+reclaimPolicy: "Retain"
+replicationPrefix: "replication.storage.dell.com"
+remoteRetentionPolicy:
+  RG: "Retain"
+  PV: "Retain"
+parameters:
+  arrayID: # populate with unique ids of storage arrays
+    source: "powerstore-1"
+    target: "Ppowerstore-2"
+  remoteSystem: # populate with name of the remote system as seen from the current PowerStore instance
+    source: "VSA-cluster-1"
+    target: "VSA-cluster-2"
+  rpo: "Five_Minutes"
+  mode : "ASYNC"  # For SYNC, rpo will be set to zero by default and not required to specify.
+  ignoreNamespaces: "false"
+  volumeGroupPrefix: "csi"
