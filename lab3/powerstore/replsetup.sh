@@ -7,3 +7,4 @@ repctl cluster add -f ${KUBECONFIG} -n "openshift-1"
 repctl create -f ~/workspace/0499/lab3/powerstore/replicationcrds.all.yaml
 repctl create -f ~/workspace/0499/lab3/powerstore/controller.yaml
 repctl cluster inject --use-sa
+repctl create sc --from-config ~/workspace/0499/lab3/powerstore/powerstore_replication.yaml
