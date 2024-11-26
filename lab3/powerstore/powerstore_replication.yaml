@@ -12,8 +12,8 @@ parameters:
     source: "powerstore-1"
     target: "powerstore-2"
   remoteSystem: # populate with name of the remote system as seen from the current PowerStore instance
-    source: "VSA-cluster-1"
-    target: "VSA-cluster-2"
+    source: "VSA-cluster-2"
+    target: "VSA-cluster-1"
   rpo: "Five_Minutes"
   mode : "ASYNC"  # For SYNC, rpo will be set to zero by default and not required to specify.
   ignoreNamespaces: "false"
