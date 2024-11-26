@@ -1,0 +1,57 @@
+kind: Namespace
+apiVersion: v1
+metadata:
+  name: powerstore-demo
+  labels:
+    name: powerstore-demo
+    ppdm_policy: PPDM_GOLD
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: replicated-powerstore-pvc
+  namespace: powerstore-demo
+spec:
+  accessModes:
+  - ReadWriteOnce
+  resources:
+    requests:
+      storage: 1Gi
+  storageClassName: powerstore-1
+---  
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: demo
+  namespace: powerstore-demo
+data:
+  sample: file data
+---
+apiVersion: v1
+kind: Pod
+metadata:
+  name: powerstore-pod
+  namespace: powerstore-demo
+spec:
+  containers:
+  - name: task-pv-container
+    image: quay.io/centos/centos
+    ports:
+      - containerPort: 80
+        name: "http-server"
+    volumeMounts:
+      - mountPath: "/mnt"
+        name: fciscsi
+      - mountPath: "/tmp"
+        name: confmap
+    command: ["/bin/bash", "-c", "cp /tmp/keys /mnt/keys && sleep 2000000000"]
+  volumes:
+    - name: fciscsi
+      persistentVolumeClaim:
+        claimName: replicated-powerstore-pvc
+    - name: confmap
+      configMap:
+        name: demo
+        items:
+        - key: sample
+          path: keys
