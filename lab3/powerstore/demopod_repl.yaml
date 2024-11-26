@@ -17,7 +17,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: powerstore-1
+  storageClassName: powerstore-replication
 ---  
 apiVersion: v1
 kind: ConfigMap
