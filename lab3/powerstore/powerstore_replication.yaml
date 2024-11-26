@@ -10,7 +10,7 @@ remoteRetentionPolicy:
 parameters:
   arrayID: # populate with unique ids of storage arrays
     source: "powerstore-1"
-    target: "Ppowerstore-2"
+    target: "powerstore-2"
   remoteSystem: # populate with name of the remote system as seen from the current PowerStore instance
     source: "VSA-cluster-1"
     target: "VSA-cluster-2"
