@@ -177,6 +177,29 @@ spec:
       #   operator: "Exists"
       #   effect: "NoSchedule"
   modules:
+    - name: replication  
+      configVersion: v1.10.0
+      enabled: true
+      components:
+        - name: dell-csi-replicator
+          envs:
+            - name: X_CSI_REPLICATION_PREFIX
+              value: replication.storage.dell.com
+            - name: X_CSI_REPLICATION_CONTEXT_PREFIX
+              value: powerstore
+          image: 'registry.connect.redhat.com/dell-emc/dell-csm-replicator@sha256:013043c3893ce67ffba2d4772dc6ee6bf26a6c857b587d32ae4fc839dd9f9073'
+          
+        # - envs:
+        #     - name: REPLICATION_CTRL_LOG_LEVEL
+        #       value: debug
+        #     - name: REPLICATION_CTRL_REPLICAS
+        #       value: '1'
+        #     - name: RETRY_INTERVAL_MIN
+        #       value: 1s
+        #     - name: RETRY_INTERVAL_MAX
+        #       value: 5m
+        #   image: 'registry.connect.redhat.com/dell-emc/dell-csm-replication-controller-manager@sha256:fd3455285cd0a8771594d7e441da0fdd77e9a843a6b75058a2d1e14326e120dd'
+        #   name: dell-replication-controller-manager
     - name: resiliency
       # enabled: Enable/Disable Resiliency feature
       # Allowed values:
