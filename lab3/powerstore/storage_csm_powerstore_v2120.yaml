@@ -17,7 +17,7 @@ apiVersion: storage.dell.com/v1
 kind: ContainerStorageModule
 metadata:
   name: powerstore
-  namespace: powerstore
+  namespace: csi-powerstore
 spec:
   driver:
     csiDriverType: "powerstore"
