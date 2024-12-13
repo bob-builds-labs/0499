@@ -42,7 +42,7 @@
           CUSTOM_LOGO: "{{ custom_logo }}"
 
     - name: Create organization {{ awx.org }}
-      organization:
+      aap.organizations:
         name: "{{ awx.org }}"
         description: "{{ awx.description }}"
         state: present
