@@ -22,3 +22,12 @@
         gateway_username: "{{ lookup('env', 'GATEWAY_USERNAME' ) }}"
         gateway_password: "{{ lookup('env', 'GATEWAY_PASSWORD' ) }}"
         validate_certs: false
+    - name: Playbook to configure ansible controller post installation
+      hosts: localhost
+      connection: local
+      # Define following vars here, or in platform_configs/controller_auth.yml
+      # aap_hostname: ansible-controller-web-svc-test-project.example.com
+      # aap_username: admin
+      # aap_password: changeme
+      roles:
+        - {role: infra.aap_configuration.controller_organizations}        
