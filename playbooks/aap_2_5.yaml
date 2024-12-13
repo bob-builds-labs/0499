@@ -1,0 +1,540 @@
+---
+- name: AWX Organization Deployment Runbook
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ../vars/awx_vars.yaml
+    - ../vars/logo_var.yaml
+  vars:
+    awx_filename_class: tower.filename
+  collections:
+    - ansible.controller
+    - awx.awx
+  tasks:
+    - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
+      settings:
+        name: AWX_TASK_ENV
+        value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
+      register: result
+      until: result.failed is defined and result.failed == false
+      retries: 10
+      delay: 10
+
+    - debug:
+        msg: "{{ result }}"
+        verbosity: 0
+    - name: Set the TRACKING_STATE
+      settings:
+        settings:
+          PENDO_TRACKING_STATE: off
+          INSIGHTS_TRACKING_STATE: false
+
+#    - name: Set Subscription
+#      settings:
+#        settings:
+#          SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+#          SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+
+    - name: Set the Custom Login Info
+      settings:
+        settings:
+          CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
+          CUSTOM_LOGO: "{{ custom_logo }}"
+
+    - name: Create organization {{ awx.org }}
+      organization:
+        name: "{{ awx.org }}"
+        description: "{{ awx.description }}"
+        state: present
+    - name: Add Ansible Galaxy Credentials
+      credential:
+        name: "{{ awx.galaxy_credentials_name }}"
+        credential_type: Ansible Galaxy/Automation Hub API Token
+        organization: "{{ awx.org }}"
+        inputs:
+          url: "https://galaxy.ansible.com"
+
+    - name: Add Galaxy Credentials to organization {{ awx.org }}
+      organization:
+        name: "{{ awx.org }}"
+        galaxy_credentials: "{{ awx.galaxy_credentials_name }}"
+        description: "{{ awx.description }}"
+        state: present
+
+    - name: Add {{ awx.infra.label }} label to organization {{ awx.org }}
+      label:
+        name: "{{ awx.infra.label }}"
+        organization: "{{ awx.org }}"
+
+    - name: Create RH Subscription Credential Type
+      credential_type:
+        name: RedHat Subscription Credentials
+        description: Credential for RedHat Subscription
+        kind: cloud
+        inputs:
+          {
+            "fields":
+              [
+                { "id": "rh_username", "type": "string", "label": "Username" },
+                {
+                  "id": "rh_password",
+                  "type": "string",
+                  "label": "Password",
+                  "secret": true,
+                },
+              ],
+            "required": ["rh_username", "rh_password"],
+          }
+        injectors:
+          {
+            "env":
+              {
+                "SUBSCRIPTION_PASSWORD": '{{ "{{ " }}rh_password{{ " }}" }}',
+                "SUBSCRIPTION_USERNAME": '{{ "{{ " }}rh_username{{ " }}" }}',
+              },
+          }
+        state: present
+        validate_certs: false
+
+#    - name: Add Subscription Credentials
+#      credential:
+#        name: "RedHat Subscription Credentials"
+#        credential_type: RedHat Subscription Credentials
+#        organization: "{{ awx.org }}"
+#        inputs:
+#          rh_username: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+#          rh_password: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+
+    - name: Create PPDM Credential Type
+      credential_type:
+        name: Dell PPDM Credentials
+        description: Credential to log into PowerProtect Datamanager
+        kind: cloud
+        inputs:
+          {
+            "fields":
+              [
+                {
+                  "id": "ppdm_fqdn",
+                  "type": "string",
+                  "label": "PPDM FQDN",
+                  "help_text": "Enter the fqdn or IP address that corresponds to your PPDM Instance",
+                },
+                {
+                  "id": "ppdm_username",
+                  "type": "string",
+                  "label": "Username",
+                },
+                {
+                  "id": "ppdm_password",
+                  "type": "string",
+                  "label": "Password",
+                  "secret": true,
+                },
+              ],
+            "required": ["ppdm_fqdn", "ppdm_username", "ppdm_password"],
+          }
+        injectors:
+          {
+            "env":
+              {
+                "PPDM_FQDN": '{{ "{{ " }}ppdm_fqdn{{ " }}" }}',
+                "PPDM_PASSWORD": '{{ "{{ " }}ppdm_password{{ " }}" }}',
+                "PPDM_USERNAME": '{{ "{{ " }}ppdm_username{{ " }}" }}',
+                "PPDM_INITIAL_PASSWORD": '{{ "{{ " }}ppdm_password{{ " }}" }}',
+              },
+          }
+        state: present
+        validate_certs: false
+    - name: Add PPDM Credentials
+      credential:
+        name: "{{ item.name }}"
+        credential_type: Dell PPDM Credentials
+        organization: "{{ awx.org }}"
+        inputs:
+          ppdm_username: "{{ item.username }}"
+          ppdm_password: "{{ item.password }}"
+          ppdm_fqdn: "{{ item.fqdn }}"
+      loop: "{{ ppdm.credentials }}"
+
+    - name: Create PPDD Credential Type
+      credential_type:
+        name: Dell PowerProtect DataDomain Credentials
+        description: Credential to log into PowerProtect DataDomain
+        kind: cloud
+        inputs:
+          {
+            "fields":
+              [
+                {
+                  "id": "ppdd_fqdn",
+                  "type": "string",
+                  "label": "PPDD FQDN",
+                  "help_text": "Enter the fqdn or IP address that corresponds to your PPDD Instance",
+                },
+                {
+                  "id": "ppdd_username",
+                  "type": "string",
+                  "label": "Username",
+                },
+                {
+                  "id": "ppdd_password",
+                  "type": "string",
+                  "label": "Password",
+                  "secret": true,
+                },
+              ],
+            "required": ["ppdd_fqdn", "ppdd_username", "ppdd_password"],
+          }
+        injectors:
+          {
+            "env":
+              {
+                "DDVE_PRIVATE_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
+                "DDVE_PASSWORD": '{{ "{{ " }}ppdd_password{{ " }}" }}',
+                "DDVE_USERNAME": '{{ "{{ " }}ppdd_username{{ " }}" }}',
+                "PPDD_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
+                "PPDD_PASSWORD": '{{ "{{ " }}ppdd_password{{ " }}" }}',
+                "PPDD_USERNAME": '{{ "{{ " }}ppdd_username{{ " }}" }}',
+              },
+          }
+        state: present
+        validate_certs: false
+    - name: Add PPDD Credentials
+      credential:
+        name: "{{ item.name }}"
+        credential_type: Dell PowerProtect DataDomain Credentials
+        organization: "{{ awx.org }}"
+        inputs:
+          ppdd_username: "{{ item.username }}"
+          ppdd_password: "{{ item.password }}"
+          ppdd_fqdn: "{{ item.fqdn }}"
+      loop: "{{ ppdd.credentials }}"
+
+    - name: Create AWX Credential Type
+      credential_type:
+        name: AWX Credentials
+        description: Credential to log into AWX
+        kind: cloud
+        inputs:
+          {
+            "fields":
+              [
+                {
+                  "id": "awx_host",
+                  "type": "string",
+                  "label": "AWX HOST",
+                  "help_text": "Enter the fqdn or IP address that corresponds to your AWX Instance",
+                },
+                { "id": "awx_username", "type": "string", "label": "Username" },
+                {
+                  "id": "awx_password",
+                  "type": "string",
+                  "label": "Password",
+                  "secret": true,
+                },
+              ],
+            "required": ["awx_fqdn", "awx_username", "awx_password"],
+          }
+        injectors:
+          {
+            "env":
+              {
+                "CONTROLLER_HOST": '{{ "{{ " }}awx_host{{ " }}" }}',
+                "CONTROLLER_PASSWORD": '{{ "{{ " }}awx_password{{ " }}" }}',
+                "CONTROLLER_USERNAME": '{{ "{{ " }}awx_username{{ " }}" }}',
+                "CONTROLLER_VERIFY_SSL": "false",
+              },
+          }
+        state: present
+        validate_certs: false
+
+    - name: Create team {{ ppdm.agents.team.name }}
+      team:
+        name: "{{ ppdm.agents.team.name }}"
+        description: "{{ ppdm.agents.team.description }}"
+        organization: "{{ awx.org }}"
+        state: present
+
+    - name: Add {{ ppdm.project.name }} Project from {{ ppdm.project.modules_url }}
+      project:
+        name: "{{ ppdm.project.name }}"
+        description: "{{ ppdm.project.description  }}"
+        organization: "{{ awx.org }}"
+        scm_url: "{{ ppdm.project.modules_url }}"
+        scm_type: git
+        state: present
+        timeout: 600
+
+    - name: Update Modules Project {{ ppdm.project.name }}
+      project_update:
+        project: "{{ ppdm.project.name }}"
+        timeout: 600
+
+    - name: Add Inventory Project {{ awx.inventory[0].project_name  }}
+      project:
+        name: "{{ awx.inventory[0].project_name  }}"
+        description: "{{ awx.inventory[0].scm_description }}"
+        organization: "{{ awx.org }}"
+        scm_url: "{{ awx.inventory[0].scm_url }}"
+        scm_branch: "{{ awx.inventory[0].scm_branch }}"
+        scm_type: git
+        state: present
+        timeout: 120
+        scm_update_on_launch: false
+
+    - name: Update Inventory Project {{ awx.inventory[0].project_name  }}
+      project_update:
+        project: "{{ awx.inventory[0].project_name  }}"
+        timeout: 600
+
+    - name: Add inventory {{ awx.inventory[0].name }}
+      inventory:
+        name: "{{ awx.inventory[0].name }}"
+        description: "{{ awx.inventory[0].name  }}"
+        organization: "{{ awx.org }}"
+        state: present
+
+    - name: Add inventory source {{ awx.inventory[0].source[0].name }} from Project {{ awx.inventory[0].project_name  }}
+      inventory_source:
+        name: "{{ awx.inventory[0].source[0].name }}"
+        description: "{{ awx.inventory[0].source[0].description }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        organization: "{{ awx.org }}"
+        source: scm
+        source_path: lab1/hosts.yaml
+        source_project: "{{ awx.inventory[0].project_name  }}"
+        source_vars:
+        state: present
+
+    - name: Update inventory source {{ awx.inventory[0].source[0].name }}
+      inventory_source_update:
+        name: "{{ awx.inventory[0].source[0].name }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        organization: "{{ awx.org }}"
+
+    - name: Add AWX Admin Credentials
+      credential:
+        name: AWX Admin Credentials
+        credential_type: AWX Credentials
+        organization: "{{ awx.org }}"
+        inputs:
+          awx_username: "{{ lookup('env','CONTROLLER_USERNAME') }}"
+          awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
+          awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"
+
+    - name: Add Ansible Galaxy Credentials
+      credential:
+        name: Ansible Galaxy
+        credential_type: Ansible Galaxy/Automation Hub API Token
+        organization: "{{ awx.org }}"
+        inputs:
+          url: "https://galaxy.ansible.com"
+
+    - name: Create Kubeconfig Credential Type
+      credential_type:
+        name: kubeconfig
+        description: Credential to use kube config file
+        kind: cloud
+        inputs: '{"fields":[{"id":"kubeconfig","type":"string","label":"KubeConfig","help_text":"Paste your KubeConfig"}]}'
+        injectors: '{"env":{"K8S_AUTH_KUBECONFIG":"{{ "{{ " }}{{ awx_filename_class }}{{ " }}" }}"},"file":{"template":"{{ "{{ " }}kubeconfig{{ " }}" }}"}}'
+        state: present
+        validate_certs: false
+
+    - name: Add Kubeconfig Credentials
+      credential:
+        name: "openshift.demo.local"
+        credential_type: kubeconfig
+        organization: "{{ awx.org }}"
+        inputs:
+          kubeconfig: "{{ lookup('file', lookup('env','K8S_AUTH_KUBECONFIG')) }}"
+
+    - name: Create AWX deployment Job Template
+      job_template:
+        name: "{{ awx.infra.job_template }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ awx.inventory[0].project_name  }}"
+        playbook: "{{awx.playbook}}"
+        credentials:
+          - "AWX Admin Credentials"
+#          - "RedHat Subscription Credentials"
+          - "openshift.demo.local"
+        state: "present"
+        labels:
+          - "{{ awx.infra.label }}"
+        ask_variables_on_launch: true
+
+    - name: Create PPDM Agents Job Templates
+      job_template:
+        name: "{{ ppdm.agents.job_template }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ awx.inventory[0].project_name  }}"
+        playbook: "playbooks/awx_ppdm_agents_templates.yaml"
+        credentials:
+          - "AWX Admin Credentials"
+        state: "present"
+        labels:
+          - "{{ awx.infra.label }}"
+    #  - name: Launch PPDM Agent Jobs Deployment
+    #    job_launch:
+    #      job_template: "{{ ppdm.agents.job_template }}"
+
+    - name: Create PPDM Assets Job Templates
+      job_template:
+        name: "{{ ppdm.assets.job_template }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ awx.inventory[0].project_name  }}"
+        playbook: "playbooks/awx_ppdm_assets_templates.yaml"
+        credentials:
+          - "AWX Admin Credentials"
+        state: "present"
+        labels:
+          - "{{ awx.infra.label }}"
+
+    - name: Create PPDM update Job Templates
+      job_template:
+        name: "{{ ppdm.infra.update_job_template }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ awx.inventory[0].project_name  }}"
+        playbook: "playbooks/awx_ppdm_update_templates.yaml"
+        credentials:
+          - "AWX Admin Credentials"
+        state: "present"
+        labels:
+          - "{{ awx.infra.label }}"
+
+    - name: Create PPDM K8S Job Templates
+      job_template:
+        name: "{{ ppdm.k8s.job_template }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ awx.inventory[0].project_name  }}"
+        playbook: "playbooks/awx_ppdm_k8s_templates.yaml"
+        credentials:
+          - "AWX Admin Credentials"
+          - "openshift.demo.local"
+        state: "present"
+        labels:
+          - "{{ awx.infra.label }}"
+
+    - name: Create Minio Instance Job
+      job_template:
+        name: "deploy minio to ansible host"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ awx.inventory[0].project_name  }}"
+        playbook: "playbooks/awx_awx_minio.yaml"
+        credentials:
+        #       - "AWX Admin Credentials"
+        state: "present"
+        labels:
+          - "{{ awx.infra.label }}"
+        limit: ansible
+
+    - name: AWX PPDM template Maintain Workflow
+      workflow_job_template:
+        destroy_current_nodes: true
+        name: "{{ awx.infra.workflow_job_template }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        description: "Automated AWX Update workflow for PPDM Automation"
+        workflow_nodes:
+          - identifier: "0_{{ awx.infra.job_template }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ awx.infra.job_template }}"
+              description: "Automated AWX Infrustructure Update"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "0_{{ ppdm.agents.job_template }}"
+                - identifier: "0_{{ ppdm.assets.job_template }}"
+                - identifier: "0_{{ ppdm.infra.update_job_template }}"
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+          - identifier: "0_{{ ppdm.agents.job_template }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.agents.job_template }}"
+              description: "Automated Update of Agent Job Templates"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+          - identifier: "0_{{ ppdm.assets.job_template }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.assets.job_template }}"
+              description: "Automated Update of Asset Job Templates"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "0_{{ ppdm.k8s.job_template }}"
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+
+          - identifier: "0_{{ ppdm.infra.update_job_template }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.update_job_template }}"
+              description: "Automated Update of Update Job Templates"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+          - identifier: "0_{{ ppdm.k8s.job_template }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.k8s.job_template }}"
+              description: "Automated Update of K8S Job Templates"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+
+    - name: Build a schedule for AWX Template
+      schedule:
+        name: "awx schedule"
+        state: present
+        unified_job_template: "{{ awx.infra.workflow_job_template }}"
+        rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
+#  - name: Create Role Job Template Viewer
+#    role_definition:
+#      name: JobTemplate View
+#      permissions:
+#        - awx.view_jobtemplate
+#      content_type: awx.jobtemplate
+#      description: Role Definition to view Job Templates
+#      state: present
