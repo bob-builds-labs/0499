@@ -10,11 +10,11 @@
   collections:
     - ansible.controller
     - ansible.platform
-    - infra.platform_configuration
+    - infra.aap_configuration
 #    - awx.awx
   tasks:
     - name: Create organization {{ awx.org }}
-      infra.platform_configuration.organizations:
+      infra.aap_configuration.organizations:
         name: "{{ awx.org }}"
         description: "{{ awx.description }}"
         state: present
