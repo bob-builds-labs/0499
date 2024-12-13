@@ -10,6 +10,7 @@
   collections:
     - ansible.controller
     - ansible.platform
+    - infra.platform_configuration
 #    - awx.awx
   tasks:
     - name: Create organization {{ awx.org }}
