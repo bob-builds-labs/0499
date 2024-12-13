@@ -11,35 +11,7 @@
     - ansible.controller
     - awx.awx
   tasks:
-    - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
-      settings:
-        name: AWX_TASK_ENV
-        value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
-      register: result
-      until: result.failed is defined and result.failed == false
-      retries: 10
-      delay: 10
 
-    - debug:
-        msg: "{{ result }}"
-        verbosity: 0
-    - name: Set the TRACKING_STATE
-      settings:
-        settings:
-          PENDO_TRACKING_STATE: off
-          INSIGHTS_TRACKING_STATE: false
-
-#    - name: Set Subscription
-#      settings:
-#        settings:
-#          SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-#          SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
-
-    - name: Set the Custom Login Info
-      settings:
-        settings:
-          CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
-          CUSTOM_LOGO: "{{ custom_logo }}"
 
     - name: Create organization {{ awx.org }}
       organization:
