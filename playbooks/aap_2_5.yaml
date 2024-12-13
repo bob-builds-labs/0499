@@ -12,7 +12,7 @@
 #    - awx.awx
   tasks:
     - name: Create organization {{ awx.org }}
-      aap_organizations:
+      controller_organizations:
         name: "{{ awx.org }}"
         description: "{{ awx.description }}"
         state: present
