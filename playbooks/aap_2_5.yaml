@@ -14,7 +14,7 @@
 #    - awx.awx
   tasks:
     - name: Create organization {{ awx.org }}
-      organizations:
+      infra.platform_configuration.organizations:
         name: "{{ awx.org }}"
         description: "{{ awx.description }}"
         state: present
