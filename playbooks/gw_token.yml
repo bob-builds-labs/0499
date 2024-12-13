@@ -18,6 +18,6 @@
         description: 'Creating token to test platform jobs'
         scope: "write"
         state: present
-        gateway_host: "{{ lookup('env', 'GATEWAY_HOST') }}"
+        gateway_hostname: "{{ lookup('env', 'GATEWAY_HOST') }}"
         gateway_username: "{{ lookup('env', 'GATEWAY_USERNAME' ) }}"
         gateway_password: "{{ lookup('env', 'GATEWAY_PASSWORD' ) }}"
