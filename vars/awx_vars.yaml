@@ -1,3 +1,6 @@
+aap_username: "{{ lookup('env','AAP_USERNAME') }}"
+aap_password: "{{ lookup('env','AAP_PASSWORD') }}"
+aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
 awx:
   org: Dell Org
   description: Dell DPS Org
