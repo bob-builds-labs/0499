@@ -14,11 +14,10 @@
 #    - awx.awx
   tasks:
     - name: Create organization {{ awx.org }}
-      ansible.builtin.include_role:
-        name: ansible.platform.organizations
- #         name: "{{ awx.org }}"
- #         description: "{{ awx.description }}"
- #         state: present
+      controller_organization:
+        name: "{{ awx.org }}"
+        description: "{{ awx.description }}"
+        state: present
     - name: Add Ansible Galaxy Credentials
       credential:
         name: "{{ awx.galaxy_credentials_name }}"
