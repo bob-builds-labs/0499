@@ -21,3 +21,4 @@
         gateway_hostname: "{{ lookup('env', 'GATEWAY_HOST') }}"
         gateway_username: "{{ lookup('env', 'GATEWAY_USERNAME' ) }}"
         gateway_password: "{{ lookup('env', 'GATEWAY_PASSWORD' ) }}"
+        validate_certs: false
