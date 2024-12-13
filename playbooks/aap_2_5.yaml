@@ -9,6 +9,7 @@
     awx_filename_class: tower.filename
   collections:
     - ansible.controller
+    - ansible.platform
 #    - awx.awx
   tasks:
     - name: Create organization {{ awx.org }}
