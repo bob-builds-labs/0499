@@ -14,7 +14,7 @@
 
 
     - name: Create organization {{ awx.org }}
-      organization:
+      aap_organization:
         name: "{{ awx.org }}"
         description: "{{ awx.description }}"
         state: present
