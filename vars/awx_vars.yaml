@@ -4,7 +4,7 @@ aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
 awx:
   ansible_ppdm:
     git_credentials_name: ansible_ppdm_source
-    git_credential_key: | 
+    git_credentials_key: | 
       -----BEGIN OPENSSH PRIVATE KEY-----
       b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
       NhAAAAAwEAAQAAAgEAic9HFSqFsWjB0n7pFohg2mon3VgFb1su0dEGOBFGhSlEoygNoS5w
@@ -56,7 +56,7 @@ awx:
       -----END OPENSSH PRIVATE KEY-----
   0499:
     git_credentials_name: 0499_source
-    git_credential_key: | 
+    git_credentials_key: | 
       -----BEGIN OPENSSH PRIVATE KEY-----
       b3BlbnNzaC1rZXktdjEAAAAABG5vbmUAAAAEbm9uZQAAAAAAAAABAAACFwAAAAdzc2gtcn
       NhAAAAAwEAAQAAAgEAprWEIot/a35xZkD0mVmuP7vqJ4289IOp/T/ggyP407IJ87OAXKj0
