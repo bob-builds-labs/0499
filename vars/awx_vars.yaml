@@ -2,6 +2,110 @@ aap_username: "{{ lookup('env','AAP_USERNAME') }}"
 aap_password: "{{ lookup('env','AAP_PASSWORD') }}"
 aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
 awx:
+  ansible_ppdm:
+    git_credentials_name: ansible_ppdm_source
+    git_credential_key: | 
+      -----BEGIN OPENSSH PRIVATE KEY-----
+      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
+      -----END OPENSSH PRIVATE KEY-----
+  0499:
+    git_credentials_name: 0499_source
+    git_credential_key: | 
+      -----BEGIN OPENSSH PRIVATE KEY-----
+      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
+      uWUTkF5B4gcAAAAEMDQ5OQECAwQFBgc=
+      -----END OPENSSH PRIVATE KEY-----
   org: Dell Org
   description: Dell DPS Org
   custom_login_info: "Welcome to Dell PPDM Automation Platform Environment"
