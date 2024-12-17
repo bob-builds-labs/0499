@@ -71,11 +71,11 @@
 
     - name: Add 0499 pull Credentials {{ awx.org }}
       credential:
-        name: "{{ awx.0499.git_credentials_name }}"
+        name: "{{ awx.lab0499.git_credentials_name }}"
         credential_type: Source Control
         organization: "{{ awx.org }}"
         inputs:
-          ssh_key_data: "{{ awx.0499.git_credentials_key }}"
+          ssh_key_data: "{{ awx.lab0499.git_credentials_key }}"
     - name: Add {{ awx.infra.label }} label to organization {{ awx.org }}
       label:
         name: "{{ awx.infra.label }}"
@@ -295,7 +295,7 @@
         scm_url: "{{ awx.inventory[0].scm_url }}"
         scm_branch: "{{ awx.inventory[0].scm_branch }}"
         scm_type: git
-        scm_credentials: "{{ awx.'0499'.git_credentials_name }}"
+        scm_credentials: "{{ awx.lab0499.git_credentials_name }}"
         state: present
         timeout: 120
         scm_update_on_launch: false
