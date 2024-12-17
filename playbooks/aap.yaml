@@ -63,19 +63,19 @@
 
     - name: Add ansible_ppdm pull Credentials {{ awx.org }}
       credential:
-        name: "{{ awx.ansible_ppdm.git_credential_name }}"
+        name: "{{ awx.ansible_ppdm.git_credentials_name }}"
         credential_type: Source Control
         organization: "{{ awx.org }}"
         inputs:
-          ssh_key_data: "{{ awx.ansible_ppdm.git_credential_key }}"
+          ssh_key_data: "{{ awx.ansible_ppdm.git_credentials_key }}"
 
     - name: Add 0499 pull Credentials {{ awx.org }}
       credential:
-        name: "{{ awx.lab0499.git_credential_name }}"
+        name: "{{ awx.lab0499.git_credentials_name }}"
         credential_type: Source Control
         organization: "{{ awx.org }}"
         inputs:
-          ssh_key_data: "{{ awx.lab0499.git_credential_key }}"
+          ssh_key_data: "{{ awx.lab0499.git_credentials_key }}"
     - name: Add {{ awx.infra.label }} label to organization {{ awx.org }}
       label:
         name: "{{ awx.infra.label }}"
@@ -278,14 +278,14 @@
         organization: "{{ awx.org }}"
         scm_url: "{{ ppdm.project.modules_url }}"
         scm_type: git
-        scm_credential: "{{ awx.ansible_ppdm.git_credential_name }}"
+        scm_credential: "{{ awx.ansible_ppdm.git_credentials_name }}"
         state: present
         timeout: 600
 
-    - name: Update Modules Project {{ ppdm.project.name }}
-      project_update:
-        project: "{{ ppdm.project.name }}"
-        timeout: 600
+    # - name: Update Modules Project {{ ppdm.project.name }}
+    #   project_update:
+    #     project: "{{ ppdm.project.name }}"
+    #     timeout: 600
 
     - name: Add Inventory Project {{ awx.inventory[0].project_name  }}
       project:
@@ -295,7 +295,7 @@
         scm_url: "{{ awx.inventory[0].scm_url }}"
         scm_branch: "{{ awx.inventory[0].scm_branch }}"
         scm_type: git
-        scm_credential: "{{ awx.lab0499.git_credential_name }}"
+        scm_credential: "{{ awx.lab0499.git_credentials_name }}"
         state: present
         timeout: 120
         scm_update_on_launch: false
