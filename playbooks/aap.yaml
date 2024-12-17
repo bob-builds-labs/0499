@@ -71,11 +71,11 @@
 
     - name: Add 0499 pull Credentials {{ awx.org }}
       credential:
-        name: "{{ awx.'0499'.git_credentials_name }}"
+        name: "{{ awx.0499.git_credentials_name }}"
         credential_type: Source Control
         organization: "{{ awx.org }}"
         inputs:
-          ssh_key_data: "{{ awx.'0499'.git_credentials_key }}"
+          ssh_key_data: "{{ awx.0499.git_credentials_key }}"
     - name: Add {{ awx.infra.label }} label to organization {{ awx.org }}
       label:
         name: "{{ awx.infra.label }}"
