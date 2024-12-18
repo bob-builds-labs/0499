@@ -67,9 +67,11 @@
         credential_type: Source Control
         organization: "{{ awx.org }}"
         state: present
-        update_secrets: false
+        update_secrets: true
         inputs:
-          ssh_key_data: "{{ lookup('file', '/home/admin/.ssh/openshift') }}"
+          username: "{{ awx.scm_username }}"
+          password: "{{ awx.scm_password }}"
+          # ssh_key_data: "{{ lookup('file', '/home/admin/.ssh/openshift') }}"
 
 
     - name: Add ansible_ppdm pull Credentials {{ awx.org }}
