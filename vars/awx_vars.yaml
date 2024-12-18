@@ -5,7 +5,7 @@ awx:
   git_credentials_name: ansible_git
   ansible_ppdm:
     git_credentials_name: ansible_ppdm_source
-  scm_user: bob-builds-labs
+  scm_username: bob-builds-labs
   scm_password: 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
   lab0499:
     git_credentials_name: 0499_source
