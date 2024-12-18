@@ -31,15 +31,19 @@
       register: result
       until: result.failed is defined and result.failed == false
       retries: 10
-      delay: 10        
+      delay: 10   
+
+    - debug:
+        msg: "{{ result }}"
+        verbosity: 0   
+                
     - name: Set the TRACKING_STATE
       settings:
         settings:
           PENDO_TRACKING_STATE: off
           INSIGHTS_TRACKING_STATE: false
-          
+           
 
-    - name: Set       
 
     # - name: Set Subscription
     #   settings:
