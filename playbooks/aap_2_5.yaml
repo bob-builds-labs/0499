@@ -239,7 +239,7 @@
         scm_url: "{{ ppdm.project.modules_url }}"
         scm_type: git
         state: present
-        timeout: 600
+        timeout: 1200
 
     - name: Update Modules Project {{ ppdm.project.name }}
       project_update:
@@ -305,6 +305,7 @@
         organization: "{{ awx.org }}"
         inputs:
           url: "https://galaxy.ansible.com"
+          token: "b90fa9e67cc2444dde92c9438d13f4ed71f86085"
 
     - name: Create Kubeconfig Credential Type
       credential_type:
