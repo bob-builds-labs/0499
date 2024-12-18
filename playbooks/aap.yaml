@@ -29,11 +29,11 @@
           PENDO_TRACKING_STATE: off
           INSIGHTS_TRACKING_STATE: false
 
-    - name: Set Subscription
-      settings:
-        settings:
-          SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-          SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+    # - name: Set Subscription
+    #   settings:
+    #     settings:
+    #       SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+    #       SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
 
     - name: Set the Custom Login Info
       settings:
@@ -282,9 +282,9 @@
         state: present
         timeout: 600
 
-    # - name: Update Modules Project {{ ppdm.project.name }}
-    #   project_update:
-    #     project: "{{ ppdm.project.name }}"
+    - name: Update Modules Project {{ ppdm.project.name }}
+      project_update:
+        project: "{{ ppdm.project.name }}"
     #     timeout: 600
 
     - name: Add Inventory Project {{ awx.inventory[0].project_name  }}
