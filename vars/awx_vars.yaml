@@ -6,7 +6,7 @@ awx:
   ansible_ppdm:
     git_credentials_name: ansible_ppdm_source
   scm_username: bob-builds-labs
-  scm_password: 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
+  scm_password: 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
   lab0499:
     git_credentials_name: 0499_source
   org: Dell Org
