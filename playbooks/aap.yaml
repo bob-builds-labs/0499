@@ -23,11 +23,23 @@
     - debug:
         msg: "{{ result }}"
         verbosity: 0
+
+    - name: Set the value of awx settings GALAXY_TASK_ENV
+      settings:
+        name: GALAXY_TASK_ENV
+        value: '{"GIT_SSH_COMMAND": "ssh -o StrictHostKeyChecking=no","ANSIBLE_FORCE_COLOR": "false", "ANSIBLE_GALAXY_SERVER_TIMEOUT": "1200"}'
+      register: result
+      until: result.failed is defined and result.failed == false
+      retries: 10
+      delay: 10        
     - name: Set the TRACKING_STATE
       settings:
         settings:
           PENDO_TRACKING_STATE: off
           INSIGHTS_TRACKING_STATE: false
+          
+
+    - name: Set       
 
     # - name: Set Subscription
     #   settings:
