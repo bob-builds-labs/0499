@@ -28,6 +28,7 @@
         organization: "{{ awx.org }}"
         inputs:
           url: "https://galaxy.ansible.com"
+          token: "b90fa9e67cc2444dde92c9438d13f4ed71f86085"
 
     - name: Add Galaxy Credentials to organization {{ awx.org }}
       organization:
@@ -298,14 +299,6 @@
           awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
           awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"
 
-    - name: Add Ansible Galaxy Credentials
-      credential:
-        name: Ansible Galaxy
-        credential_type: Ansible Galaxy/Automation Hub API Token
-        organization: "{{ awx.org }}"
-        inputs:
-          url: "https://galaxy.ansible.com"
-          token: "b90fa9e67cc2444dde92c9438d13f4ed71f86085"
 
     - name: Create Kubeconfig Credential Type
       credential_type:
