@@ -3,6 +3,10 @@ aap_password: "{{ lookup('env','AAP_PASSWORD') }}"
 aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
 awx:
   git_credentials_name: ansible_git
+  ansible_ppdm:
+    git_credentials_name: ansible_ppdm_source
+  lab0499:
+    git_credentials_name: 0499_source
   org: Dell Org
   description: Dell DPS Org
   custom_login_info: "Welcome to Dell PPDM Automation Platform Environment"
