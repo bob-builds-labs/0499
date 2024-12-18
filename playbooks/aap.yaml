@@ -61,21 +61,31 @@
         description: "{{ awx.description }}"
         state: present
 
+    - name: Add git pull Credentials {{ awx.org }}
+      credential:
+        name: "{{ awx.git_credentials_name }}"
+        credential_type: Source Control
+        organization: "{{ awx.org }}"
+        state: present
+        update_secrets: false
+        inputs:
+          ssh_key_data: "{{ lookup('file', '/home/admin/.ssh/openshift') }}"
+
+
     - name: Add ansible_ppdm pull Credentials {{ awx.org }}
       credential:
         name: "{{ awx.ansible_ppdm.git_credentials_name }}"
         credential_type: Source Control
         organization: "{{ awx.org }}"
-        inputs:
-          ssh_key_data: "{{ awx.ansible_ppdm.git_credentials_key }}"
+        state: absent
+
 
     - name: Add 0499 pull Credentials {{ awx.org }}
       credential:
         name: "{{ awx.lab0499.git_credentials_name }}"
         credential_type: Source Control
         organization: "{{ awx.org }}"
-        inputs:
-          ssh_key_data: "{{ awx.lab0499.git_credentials_key }}"
+        state: absent
     - name: Add {{ awx.infra.label }} label to organization {{ awx.org }}
       label:
         name: "{{ awx.infra.label }}"
@@ -278,7 +288,7 @@
         organization: "{{ awx.org }}"
         scm_url: "{{ ppdm.project.modules_url }}"
         scm_type: git
-        scm_credential: "{{ awx.ansible_ppdm.git_credentials_name }}"
+        scm_credential: "{{ awx.git_credentials_name }}"
         state: present
         timeout: 600
 
@@ -295,7 +305,7 @@
         scm_url: "{{ awx.inventory[0].scm_url }}"
         scm_branch: "{{ awx.inventory[0].scm_branch }}"
         scm_type: git
-        scm_credential: "{{ awx.lab0499.git_credentials_name }}"
+        scm_credential: "{{ awx.git_credentials_name }}"
         state: present
         timeout: 120
         scm_update_on_launch: false
