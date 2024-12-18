@@ -297,7 +297,7 @@
     - name: Update Modules Project {{ ppdm.project.name }}
       project_update:
         project: "{{ ppdm.project.name }}"
-    #     timeout: 600
+        timeout: 600
 
     - name: Add Inventory Project {{ awx.inventory[0].project_name  }}
       project:
