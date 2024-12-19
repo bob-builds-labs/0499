@@ -46,15 +46,22 @@
             - CN=AAP_SUPERUSER,CN=Users,DC=demo,DC=local
           AUTH_LDAP_ORGANIZATION_MAP:
             Dell Org:
-              users: CN=Domain Users,CN=Users,DC=demo,DC=local
-              admins: CN=Domain Admins,CN=Users,DC=demo,DC=local
+              users: CN=AAP_USERS,CN=Users,DC=demo,DC=local
+              admins: CN=AAP_ADMIN_USERS,CN=Users,DC=demo,DC=local
               remove_admins: false
           AUTH_LDAP_TEAM_MAP:
             PPDM Infra Team:
-              users: CN=Domain Users,CN=Users,DC=demo,DC=local
+              users: CN=AAP_INFRA_TEAM,CN=Users,DC=demo,DC=local
               remove: false
-              organization: Dell Org           
-
+              organization: Dell Org
+            Kubernetes Team:
+              users: CN=AAP_K8S_TEAM,CN=Users,DC=demo,DC=local
+              remove: false
+              organization: Dell Org                          
+            App Team:
+              users: CN=AAP_APP_TEAM,CN=Users,DC=demo,DC=local
+              remove: false
+              organization: Dell Org 
 
     # - name: Set Subscription
     #   settings:
