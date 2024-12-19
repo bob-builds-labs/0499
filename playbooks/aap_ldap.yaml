@@ -17,7 +17,7 @@
         settings:
           AUTH_LDAP_SERVER_URI: ldap://launchpad.demo.local:389
           AUTH_LDAP_BIND_DN: administrator@demo.local
-          AUTH_LDAP_BIND_PASSWORD: "$encrypted$"
+          AUTH_LDAP_BIND_PASSWORD: Password123!
           AUTH_LDAP_START_TLS: false
            
 
