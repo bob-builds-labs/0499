@@ -1,0 +1,31 @@
+---
+- name: AWX Organization Deployment Runbook
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ../vars/awx_vars.yaml
+    - ../vars/logo_var.yaml
+  vars:
+    awx_filename_class: tower.filename
+  collections:
+    - ansible.controller
+    - awx.awx
+  tasks:
+                
+    - name: Set the TRACKING_STATE
+      settings:
+        settings:
+          AUTH_LDAP_SERVER_URI: ldap://launchpad.demo.local:389
+          AUTH_LDAP_BIND_DN: administrator@demo.local
+          AUTH_LDAP_BIND_PASSWORD: "$encrypted$"
+          AUTH_LDAP_START_TLS: false
+           
+
+
+    # - name: Set Subscription
+    #   settings:
+    #     settings:
+    #       SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+    #       SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+
+ 
