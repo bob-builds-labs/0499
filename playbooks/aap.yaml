@@ -574,7 +574,7 @@
         name: "awx schedule"
         state: present
         unified_job_template: "{{ awx.infra.workflow_job_template }}"
-        rrule: "DTSTART:20191219T180551Z RRULE:FREQ=DAILY;INTERVAL=1"
+        rrule: "DTSTART:20191219T183051Z RRULE:FREQ=DAILY;INTERVAL=1"
 #  - name: Create Role Job Template Viewer
 #    role_definition:
 #      name: JobTemplate View
