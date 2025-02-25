@@ -1,0 +1,27 @@
+---
+- name: AWX Organization Deployment Runbook
+  hosts: localhost
+  connection: local
+  vars_files:
+    - ../vars/awx_vars.yaml
+    - ../vars/logo_var.yaml
+  vars:
+    awx_filename_class: tower.filename
+  collections:
+    - ansible.controller
+    - ansible.platform
+    - infra.aap_configuration
+#    - awx.awx
+  tasks:
+    - name: Create a new token using platform username/password
+      ansible.platform.token:
+        description: 'Creating token to test platform jobs'
+        scope: "write"
+        state: present
+        gateway_hostname: "{{ lookup('env', 'GATEWAY_HOST') }}"
+        gateway_username: "{{ lookup('env', 'GATEWAY_USERNAME' ) }}"
+        gateway_password: "{{ lookup('env', 'GATEWAY_PASSWORD' ) }}"
+        validate_certs: false
+    - name: Playbook to configure ansible controller post installation
+      roles:
+        - {role: infra.aap_configuration.controller_organizations}        

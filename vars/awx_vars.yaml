@@ -1,4 +1,14 @@
+aap_username: "{{ lookup('env','AAP_USERNAME') }}"
+aap_password: "{{ lookup('env','AAP_PASSWORD') }}"
+aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
 awx:
+  git_credentials_name: ansible_git
+  ansible_ppdm:
+    git_credentials_name: ansible_ppdm_source
+  scm_username: bob-builds-labs
+  scm_password: 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
+  lab0499:
+    git_credentials_name: 0499_source
   org: Dell Org
   description: Dell DPS Org
   custom_login_info: "Welcome to Dell PPDM Automation Platform Environment"
@@ -98,7 +108,7 @@ ppdm:
         name: 9 Update PPDM
         description: |
           This workflow will Upgrade PPDM using Packages from S3. The update must be available on the S3 Host ansible. (Prepare S3 using the Workflow 'deploy minio to ansible host')
-          The package mus be in the format dellemc-ppdm-upgrade-sw-{release}.{build}.pkg on Bucket dps-products,  with the prefix /powerprotect/{release}, e.g. s3://dps-products/powerprotect/19.17/dellemc-ppdm-upgrade-sw-19.17.0-18.pkg
+          The package mus be in the format dellemc-ppdm-upgrade-sw-{release}.{build}.pkg on Bucket dps-products,  with the prefix /powerprotect/{release}, e.g. s3://dps-products/powerprotect/19.18/dellemc-ppdm-upgrade-sw-19.18.0-14.pkg
   k8s:
     wjt:
       namespace:

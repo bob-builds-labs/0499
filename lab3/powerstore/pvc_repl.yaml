@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: dynamic-powerstore-pvc
+  name: replicated-powerstore-pvc
   namespace: powerstore
 spec:
   accessModes:
@@ -9,4 +9,4 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: powerstore-1
+  storageClassName: powerstore-replication

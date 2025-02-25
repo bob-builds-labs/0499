@@ -9,59 +9,18 @@
     awx_filename_class: tower.filename
   collections:
     - ansible.controller
-    - awx.awx
+    - ansible.platform
+    - infra.aap_configuration
+#    - awx.awx
   tasks:
-    - name: Set the value of awx settings ANSIBLE_JINJA2_NATIVE
-      settings:
-        name: AWX_TASK_ENV
-        value: '{"ANSIBLE_JINJA2_NATIVE": "True"}'
-      register: result
-      until: result.failed is defined and result.failed == false
-      retries: 10
-      delay: 10
-
-    - debug:
-        msg: "{{ result }}"
-        verbosity: 0
-
-    - name: Set the value of awx settings GALAXY_TASK_ENV
-      settings:
-        name: GALAXY_TASK_ENV
-        value: '{"GIT_SSH_COMMAND": "ssh -o StrictHostKeyChecking=no","ANSIBLE_FORCE_COLOR": "false", "ANSIBLE_GALAXY_SERVER_TIMEOUT": "1200"}'
-      register: result
-      until: result.failed is defined and result.failed == false
-      retries: 10
-      delay: 10   
-
-    - debug:
-        msg: "{{ result }}"
-        verbosity: 0   
-                
-    - name: Set the TRACKING_STATE
-      settings:
-        settings:
-          PENDO_TRACKING_STATE: off
-          INSIGHTS_TRACKING_STATE: false
-           
-
-
-    # - name: Set Subscription
-    #   settings:
-    #     settings:
-    #       SUBSCRIPTIONS_USERNAME: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-    #       SUBSCRIPTIONS_PASSWORD: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
-
-    - name: Set the Custom Login Info
-      settings:
-        settings:
-          CUSTOM_LOGIN_INFO: "{{ awx.custom_login_info }}"
-          CUSTOM_LOGO: "{{ custom_logo }}"
-
     - name: Create organization {{ awx.org }}
-      organization:
-        name: "{{ awx.org }}"
-        description: "{{ awx.description }}"
-        state: present
+      include_role:
+        name: infra.aap_configuration.controller_organizations
+      vars:  
+        aap_organization:
+          name: "{{ awx.org }}"
+          description: "{{ awx.description }}"
+          state: present
     - name: Add Ansible Galaxy Credentials
       credential:
         name: "{{ awx.galaxy_credentials_name }}"
@@ -69,6 +28,7 @@
         organization: "{{ awx.org }}"
         inputs:
           url: "https://galaxy.ansible.com"
+          token: "b90fa9e67cc2444dde92c9438d13f4ed71f86085"
 
     - name: Add Galaxy Credentials to organization {{ awx.org }}
       organization:
@@ -77,33 +37,6 @@
         description: "{{ awx.description }}"
         state: present
 
-    - name: Add git pull Credentials {{ awx.org }}
-      credential:
-        name: "{{ awx.git_credentials_name }}"
-        credential_type: Source Control
-        organization: "{{ awx.org }}"
-        state: present
-        update_secrets: true
-        inputs:
-          username: "{{ awx.scm_username }}"
-          password: "{{ awx.scm_password }}"
-          # ssh_key_data: "{{ lookup('file', '/home/admin/.ssh/openshift') }}"
-
-
-    - name: Add ansible_ppdm pull Credentials {{ awx.org }}
-      credential:
-        name: "{{ awx.ansible_ppdm.git_credentials_name }}"
-        credential_type: Source Control
-        organization: "{{ awx.org }}"
-        state: absent
-
-
-    - name: Add 0499 pull Credentials {{ awx.org }}
-      credential:
-        name: "{{ awx.lab0499.git_credentials_name }}"
-        credential_type: Source Control
-        organization: "{{ awx.org }}"
-        state: absent
     - name: Add {{ awx.infra.label }} label to organization {{ awx.org }}
       label:
         name: "{{ awx.infra.label }}"
@@ -306,9 +239,8 @@
         organization: "{{ awx.org }}"
         scm_url: "{{ ppdm.project.modules_url }}"
         scm_type: git
-        scm_credential: "{{ awx.git_credentials_name }}"
         state: present
-        timeout: 600
+        timeout: 1200
 
     - name: Update Modules Project {{ ppdm.project.name }}
       project_update:
@@ -323,7 +255,6 @@
         scm_url: "{{ awx.inventory[0].scm_url }}"
         scm_branch: "{{ awx.inventory[0].scm_branch }}"
         scm_type: git
-        scm_credential: "{{ awx.git_credentials_name }}"
         state: present
         timeout: 120
         scm_update_on_launch: false
@@ -368,13 +299,6 @@
           awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
           awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"
 
-    - name: Add Ansible Galaxy Credentials
-      credential:
-        name: Ansible Galaxy
-        credential_type: Ansible Galaxy/Automation Hub API Token
-        organization: "{{ awx.org }}"
-        inputs:
-          url: "https://galaxy.ansible.com"
 
     - name: Create Kubeconfig Credential Type
       credential_type:
@@ -574,7 +498,7 @@
         name: "awx schedule"
         state: present
         unified_job_template: "{{ awx.infra.workflow_job_template }}"
-        rrule: "DTSTART:20191219T183051Z RRULE:FREQ=DAILY;INTERVAL=1"
+        rrule: "DTSTART:20191219T230551Z RRULE:FREQ=DAILY;INTERVAL=1"
 #  - name: Create Role Job Template Viewer
 #    role_definition:
 #      name: JobTemplate View

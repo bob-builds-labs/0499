@@ -9,7 +9,7 @@ metadata:
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: dynamic-powerstore-pvc
+  name: replicated-powerstore-pvc
   namespace: powerstore-demo
 spec:
   accessModes:
@@ -17,7 +17,7 @@ spec:
   resources:
     requests:
       storage: 1Gi
-  storageClassName: powerstore-1
+  storageClassName: powerstore-replication
 ---  
 apiVersion: v1
 kind: ConfigMap
@@ -48,7 +48,7 @@ spec:
   volumes:
     - name: fciscsi
       persistentVolumeClaim:
-        claimName: dynamic-powerstore-pvc
+        claimName: replicated-powerstore-pvc
     - name: confmap
       configMap:
         name: demo
