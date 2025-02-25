@@ -240,12 +240,13 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
+                "19.19"
                 "19.18",
                 "19.17",
                 "19.16",
                 "19.15"
             ],
-            "default": "19.17",
+            "default": "19.19",
             "required": true,
             "variable": "release",
             "new_question": false,
