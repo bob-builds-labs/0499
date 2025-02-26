@@ -13,7 +13,7 @@
     - name: "Add {{ ppdm.infra.jt.deploy_ppdm }}"
       job_template:
         name: "{{ ppdm.infra.jt.deploy_ppdm }}"
-        description: Deploys a PPDM from OVA
+        description: Deploys a PPDM from OVA 
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
@@ -23,7 +23,7 @@
         labels:
           - "{{ ppdm.infra.label }}"
         credentials: []
-        ask_credential_on_launch: true
+        ask_credential_on_launch: false
         survey_enabled: true        
         survey_spec: |        
           {
@@ -119,12 +119,12 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "dellemc-ppdm-upgrade-sw-19.19.0-1-20250225.044745-1327.pkg",
+            "default": "dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova",
             "required": true,
             "variable": "package",
             "new_question": false,
-            "question_name": "Package Name",
-            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.19.0-14.pkg"
+            "question_name": "Name of the OVA Template to deploy",
+            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova"
             }
           ]
           }
