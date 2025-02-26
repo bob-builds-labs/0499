@@ -42,6 +42,10 @@ vsphere:
       username: admin@vsphere.local
       password: Password123!
       host: vcenter01.demo.local
+    - name: vault-vcenter
+      username: admin@vsphere.local
+      password: Password123!
+      host: vault-vcenter.demo.local      
 ppdd:
   credentials:
     - name: ddve-1
