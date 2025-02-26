@@ -4,27 +4,30 @@
   connection: local
   gather_facts: false
   vars:
-    ova: /home/admin/Downloads/
+    ova: "/home/admin/dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova"
+    ppdm_ip: 192.168.1.53
+    ppdm_gateway: 192.168.1.2
+    ppdm_dns: 192.168.1.2
+    ppdm_fqdn: ppdm-2.demo.local
+    ppdm_netmask: 255.255.255.0
   tasks:
-
-  
-
-- community.vmware.vmware_deploy_ovf:
-  #  hostname: '{{ vcenter_hostname }}'
-  #  username: '{{ vcenter_username }}'
-  #  password: '{{ vcenter_password }}'
-    datacenter: democenter
-    cluster: cluster
-    datastore: nfs-datastore
-    name: ppdm-3
-    networks: "{u'VM Network':u'VLAN0 prod vm network'}"
-    power_on: false
-    inject_ovf_env: true
-    properties: 
-      vami.ip0.brs: 192.168.1.53 
-      vami.gateway.brs: 192.168.1.2
-      vami.netmask0.brs: 255.255.255.0
-      vami.DNS.brs:  192.168.1.2
-      vami.fqdn.brs: ppdm-2.demo.local
-    ovf: "{{ ova }}"
-  delegate_to: localhost
+  - name: deploy PPDM OVA
+    community.vmware.vmware_deploy_ovf:
+    #  hostname: '{{ vcenter_hostname }}'
+    #  username: '{{ vcenter_username }}'
+    #  password: '{{ vcenter_password }}'
+      datacenter: democenter
+      cluster: cluster
+      datastore: nfs-datastore
+      name: ppdm-3
+      networks: "{u'VM Network':u'VLAN0 prod vm network'}"
+      power_on: false
+      inject_ovf_env: true
+      properties: 
+        vami.ip0.brs: "{{ ppdm_ip }}" 
+        vami.gateway.brs: "{{ ppdm_gateway }}"
+        vami.netmask0.brs: "{{ ppdm_netmask }}"
+        vami.DNS.brs:  "{{ ppdm_dns }}"
+        vami.fqdn.brs: "{{ ppdm_fqdn }}"
+      ovf: "{{ ova }}"
+    delegate_to: localhost
