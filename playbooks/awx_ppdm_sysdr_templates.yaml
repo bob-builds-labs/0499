@@ -1,0 +1,54 @@
+---
+- name: AWX Organization PPDM Deployment Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+  vars_files:
+    - ../vars/awx_vars.yaml
+
+  collections:
+    - ansible.controller
+    - awx.awx
+    - community.vmware
+  tasks:
+    - name: "Add {{ ppdm.infra.jt.reset_sysdr_boost }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.reset_sysdr_boost }}"
+        description: resets SysDR Password for Boost Unit
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdd.project.name }}"
+        playbook: "3.2-Playbook-set-user-password.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: 
+          - "{{ ppdm.credentials[0].name }}" 
+          - "{{ ppdd.credentials[0].name }}"
+
+        ask_credential_on_launch: true
+        survey_enabled: true 
+        extra_vars:
+          user: SyDR-'{{ "{{ " }}lookup('env','PPDM_FQDN').split('.')[0]{{ " }}" }}'"
+
+        survey_spec: |        
+          {
+          "description": "SysDR Reset Survey",
+          "name": "new Password",
+          "spec": [                                
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "Password123!",
+            "required": true,
+            "variable": "new_password",
+            "new_question": false,
+            "question_name": "new Password for His PPDM",
+            "question_description": "Enter the name of the new SysDR Password"
+            }
+          ]
+          }
+
