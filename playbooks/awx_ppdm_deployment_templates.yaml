@@ -1,0 +1,158 @@
+---
+- name: AWX Organization PPDM Deployment Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+  vars_files:
+    - ../vars/awx_vars.yaml
+
+  collections:
+    - ansible.controller
+    - awx.awx
+  tasks:
+    - name: "Add {{ ppdm.infra.jt.deploy_ppdm }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.deploy_ppdm }}"
+        description: Deploys a PPDM from OVA
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "1.0-playbook_deploy_ppdm_ova_from_s3.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
+        survey_enabled: true        
+        survey_spec: |        
+          {
+          "description": "PPDM Deployment Survey",
+          "name": "Deploy_PPDM",
+          "spec": [
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "19.19",
+                "19.18",
+                "19.17",
+                "19.16",
+                "19.15"
+            ],
+            "default": "19.19",
+            "required": true,
+            "variable": "release",
+            "new_question": false,
+            "question_name": "PPDM Release",
+            "question_description": "select the PPDM Release"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "ppdm-2.demo.local",
+            "required": true,
+            "variable": "ppdm_fqdn",
+            "new_question": false,
+            "question_name": "Enter PPDM fqdn",
+            "question_description": "Enter the FQDN of the PPDM do be deployed, e.g. ppdm-x.demo.local "
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "192.168.1.53",
+            "required": true,
+            "variable": "ppdm_ip",
+            "new_question": false,
+            "question_name": "Enter the IPv4 address of PPDM",
+            "question_description": "Enter the IPv4 address of the PPDM do be deployed, e.g. 192.168.1.53"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "192.168.1.2"
+            ],
+            "default": "192.168.1.2",
+            "required": true,
+            "variable": "ppdm_gateway",
+            "new_question": false,
+            "question_name": "PPDM Gateway",
+            "question_description": "select the PPDM IPv4 Gateway"
+            },
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "192.168.1.2"
+            ],
+            "default": "192.168.1.2",
+            "required": true,
+            "variable": "ppdm_dns",
+            "new_question": false,
+            "question_name": "PPDM DNS",
+            "question_description": "select the PPDM IPv4 DNS Server(s)"
+            },   
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "255.255.255.0"
+            ],
+            "default": "255.255.255.0",
+            "required": true,
+            "variable": "ppdm_netmask",
+            "new_question": false,
+            "question_name": "PPDM Netmask",
+            "question_description": "select the PPDM IPv4 netmask"
+            },                                
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "dellemc-ppdm-upgrade-sw-19.19.0-1-20250225.044745-1327.pkg",
+            "required": true,
+            "variable": "package",
+            "new_question": false,
+            "question_name": "Package Name",
+            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.19.0-14.pkg"
+            }
+          ]
+          }
+
+
+    - name: Give {{ ppdm.infra.user_1.username }} View  Job Template permissions
+      role:
+        role: read
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
+        job_templates:
+          - "{{ ppdm.infra.jt.upload_update }}"
+          - "{{ ppdm.infra.jt.execute_update }}"
+          - "{{ ppdm.infra.jt.precheck_update }}"
+
+    - name: Give {{ ppdm.infra.user_1.username }} Execute Job Template permissions
+      role:
+        role: execute
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
+        job_templates:
+          - "{{ ppdm.infra.jt.update_history }}"
+          - "{{ ppdm.infra.jt.delete_update }}"
+
+    - name: Give {{ ppdm.infra.user_1.username }} Use Credentials  permissions
+      role:
+        role: use
+        credentials: "{{ item.name }}"
+        user: "{{ ppdm.infra.user_1.username }}"
+        state: present
+      loop: "{{ ppdm.credentials }}"
