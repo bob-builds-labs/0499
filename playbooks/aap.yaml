@@ -31,19 +31,17 @@
       register: result
       until: result.failed is defined and result.failed == false
       retries: 10
-      delay: 10   
+      delay: 10
 
     - debug:
         msg: "{{ result }}"
-        verbosity: 0   
-                
+        verbosity: 0
+
     - name: Set the TRACKING_STATE
       settings:
         settings:
           PENDO_TRACKING_STATE: off
           INSIGHTS_TRACKING_STATE: false
-           
-
 
     # - name: Set Subscription
     #   settings:
@@ -89,14 +87,12 @@
           password: "{{ awx.scm_password }}"
           # ssh_key_data: "{{ lookup('file', '/home/admin/.ssh/openshift') }}"
 
-
     - name: Add ansible_ppdm pull Credentials {{ awx.org }}
       credential:
         name: "{{ awx.ansible_ppdm.git_credentials_name }}"
         credential_type: Source Control
         organization: "{{ awx.org }}"
         state: absent
-
 
     - name: Add 0499 pull Credentials {{ awx.org }}
       credential:
@@ -139,14 +135,14 @@
         state: present
         validate_certs: false
 
-#    - name: Add Subscription Credentials
-#      credential:
-#        name: "RedHat Subscription Credentials"
-#        credential_type: RedHat Subscription Credentials
-#        organization: "{{ awx.org }}"
-#        inputs:
-#          rh_username: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
-#          rh_password: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
+    #    - name: Add Subscription Credentials
+    #      credential:
+    #        name: "RedHat Subscription Credentials"
+    #        credential_type: RedHat Subscription Credentials
+    #        organization: "{{ awx.org }}"
+    #        inputs:
+    #          rh_username: "{{ lookup('env','SUBSCRIPTION_USERNAME') }}"
+    #          rh_password: "{{ lookup('env','SUBSCRIPTION_PASSWORD') }}"
 
     - name: Create PPDM Credential Type
       credential_type:
@@ -376,6 +372,17 @@
         inputs:
           url: "https://galaxy.ansible.com"
 
+    - name: Add vSphere Credentials
+      credential:
+        name: "{{ item.name }}"
+        credential_type: VMware vCenter
+        organization: "{{ awx.org }}"
+        inputs:
+          username: "{{ item.username }}"
+          password: "{{ item.password }}"
+          host: "{{ item.host }}"
+      loop: "{{ vsphere.credentials }}"
+
     - name: Create Kubeconfig Credential Type
       credential_type:
         name: kubeconfig
@@ -404,7 +411,7 @@
         playbook: "{{awx.playbook}}"
         credentials:
           - "AWX Admin Credentials"
-#          - "RedHat Subscription Credentials"
+          #          - "RedHat Subscription Credentials"
           - "openshift.demo.local"
         state: "present"
         labels:
