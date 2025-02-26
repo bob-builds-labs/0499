@@ -159,16 +159,6 @@
         awx_password: "{{ lookup('env','CONTROLLER_PASSWORD') }}"
         awx_host: "{{ lookup('env','CONTROLLER_HOST') }}"
 
-  - name: Add vSphere Credentials
-    credential:
-      name: "{{ item.name }}"
-      credential_type: VMware vCenter
-      organization: "{{ awx.org }}"
-      inputs:
-        username: "{{ item.username }}"
-        password: "{{ item.password }}"
-        host: "{{ item.host }}"
-    loop: "{{ vsphere.credentials }}"
   - name: Add Ansible Galaxy Credentials
     credential:
       name: Ansible Galaxy
