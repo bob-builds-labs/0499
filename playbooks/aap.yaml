@@ -311,6 +311,24 @@
         project: "{{ ppdm.project.name }}"
         timeout: 600
 
+
+    - name: Add {{ ppdd.project.name }} Project from {{ ppdd.project.modules_url }}
+      project:
+        name: "{{ ppdd.project.name }}"
+        description: "{{ ppdd.project.description  }}"
+        organization: "{{ awx.org }}"
+        scm_url: "{{ ppdd.project.modules_url }}"
+        scm_type: git
+        scm_credential: "{{ awx.git_credentials_name }}"
+        state: present
+        timeout: 600
+
+    - name: Update Modules Project {{ ppdd.project.name }}
+      project_update:
+        project: "{{ ppdd.project.name }}"
+        timeout: 600
+        
+
     - name: Add Inventory Project {{ awx.inventory[0].project_name  }}
       project:
         name: "{{ awx.inventory[0].project_name  }}"

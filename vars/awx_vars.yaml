@@ -47,6 +47,10 @@ vsphere:
       password: Password123!
       host: vault-vcenter.demo.local      
 ppdd:
+  project:
+    name: ansible_ppdd
+    description: Ansible PPDD Modules by Karsten Bott
+    modules_url: https://github.com/dell-examples/ansible_ppdd.git
   credentials:
     - name: ddve-1
       username: sysadmin
