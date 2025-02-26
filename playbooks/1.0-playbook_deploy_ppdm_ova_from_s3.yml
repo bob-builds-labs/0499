@@ -1,5 +1,5 @@
 # Deploy PPDM OVA from S3
-- name: Upload PPDM upgrade
+- name: Deploy PPDM OVA from S3
   hosts: localhost
   gather_facts: no
   connection: local
@@ -19,10 +19,10 @@
     ppdm_dns: 192.168.1.2
     ppdm_fqdn: ppdm-2.demo.local
     ppdm_netmask: 255.255.255.0
-    package: dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269
+    package: dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova
   tasks:
 
-  - name: Get Upgrade from S3
+  - name: Get OVA from S3
     amazon.aws.aws_s3:
       bucket: "{{ s3_bucket}}"
       object: "{{ s3_container }}/{{ release }}/{{ package }}"
