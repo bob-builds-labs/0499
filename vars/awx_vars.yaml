@@ -103,6 +103,7 @@ ppdm:
       approve_update: _9.3 Approval for Update
       update_history: _9.4 Update History
       delete_update: _9.9 Delete PPDM Update
+      deploy_ppdm: _1.0 Deploy PPDM from OVA
     wjt:
       update_ppdm:
         name: 9 Update PPDM
