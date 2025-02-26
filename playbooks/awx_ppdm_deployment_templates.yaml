@@ -9,6 +9,7 @@
   collections:
     - ansible.controller
     - awx.awx
+    - community.vmware
   tasks:
     - name: "Add {{ ppdm.infra.jt.deploy_ppdm }}"
       job_template:
@@ -23,7 +24,7 @@
         labels:
           - "{{ ppdm.infra.label }}"
         credentials: []
-        ask_credential_on_launch: false
+        ask_credential_on_launch: true
         survey_enabled: true        
         survey_spec: |        
           {
