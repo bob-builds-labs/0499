@@ -110,6 +110,7 @@ ppdm:
       email: infrauser@demo.local
     update_job_template: deploy ppdm update templates
     jt:
+      reset_sysdr_boost: _99.1 Reset Boost Password for SysDR 
       upload_update: _9.1 Upload PPDM Update from S3
       precheck_update: _9.2 Precheck Update
       execute_update: _9.3 Update PPDM
