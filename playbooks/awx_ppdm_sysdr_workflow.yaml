@@ -91,7 +91,7 @@
                 - name: "{{ ppdd.credentials[0].name }}"              
               ask_credential_on_launch: true
               survey_enabled: true   
-          - identifier: "{{ ppdm.infra.jsysdr_ppdm }}"
+          - identifier: "{{ ppdm.infra.jt.sysdr_ppdm }}"
             extra_data: []
             unified_job_template:
               name: "{{ ppdm.infra.jt.sysdr_ppdm }}"
