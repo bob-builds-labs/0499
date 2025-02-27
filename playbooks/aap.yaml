@@ -235,6 +235,7 @@
                 "PPDD_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
                 "PPDD_PASSWORD": '{{ "{{ " }}ppdd_password{{ " }}" }}',
                 "PPDD_USERNAME": '{{ "{{ " }}ppdd_username{{ " }}" }}',
+                "DDVE_PUBLIC_FQDN": '{{ "{{ " }}ppdd_fqdn{{ " }}" }}',
               },
           }
         state: present
@@ -311,7 +312,6 @@
         project: "{{ ppdm.project.name }}"
         timeout: 600
 
-
     - name: Add {{ ppdd.project.name }} Project from {{ ppdd.project.modules_url }}
       project:
         name: "{{ ppdd.project.name }}"
@@ -327,7 +327,6 @@
       project_update:
         project: "{{ ppdd.project.name }}"
         timeout: 600
-        
 
     - name: Add Inventory Project {{ awx.inventory[0].project_name  }}
       project:
