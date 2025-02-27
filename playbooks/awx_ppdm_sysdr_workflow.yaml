@@ -148,6 +148,25 @@
               extra_vars: {}
               ask_credential_on_launch: true
               survey_enabled: true 
+          - identifier: "{{ ppdm.infra.jt.sysdr_ppdm_approved }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.sysdr_ppdm_approved }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - name: "{{ ppdm.credentials[0].name }}" 
+                - name: "{{ ppdd.credentials[0].name }}" 
+              extra_vars: {}
+              ask_credential_on_launch: true
+              survey_enabled: true 
+                 
           - identifier: "{{ ppdm.infra.jt.approve_sysdr }}"
             all_parents_must_coverage: false
             extra_data: []
@@ -159,7 +178,8 @@
                   name: "{{ awx.org }}"
               type: workflow_approval
             related:
-              success_nodes: []
+              success_nodes: 
+                 - identifier: "{{ ppdm.infra.jt.sysdr_ppdm_approved }}"
               failure_nodes: []
               always_nodes: []                            
         survey_enabled: true        
