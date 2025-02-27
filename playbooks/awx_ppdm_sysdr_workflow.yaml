@@ -66,6 +66,44 @@
           ]
           }
 
+    - name: "Add {{ ppdm.infra.jt.sysdr_ppdm_approved }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.sysdr_ppdm_approved }}"
+        description: Runs PPDM SysDr
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "99.1-playbook_run_server_disaster_recovery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
+        survey_enabled: true 
+        extra_vars: 
+          auto_approve: true
+        survey_spec: |        
+          {
+          "description": "SysDR Reset Survey",
+          "name": "new Password",
+          "spec": [                                
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "Password123!",
+            "required": true,
+            "variable": "new_password",
+            "new_question": false,
+            "question_name": "new Password for His PPDM",
+            "question_description": "Enter the name of the new SysDR Password"
+            }
+          ]
+          }
+
+
     - name: Add PPDM ServerDisasterRecover Workflow(s)
       workflow_job_template:
         destroy_current_nodes: true
