@@ -1,0 +1,165 @@
+---
+- name: AWX Organization PPDM Sysdr Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+  vars_files:
+    - ../vars/awx_vars.yaml
+  collections:
+    - ansible.controller
+    - awx.awx
+    - community.vmware
+  tasks:
+
+
+
+    - name: Add PPDM ServerDisasterRecover Workflow(s)
+      workflow_job_template:
+        destroy_current_nodes: true
+        name: "{{ ppdm.infra.wjt.sysdr_ppdm.name }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        description: "{{ ppdm.infra.wjt.sysdr_ppdm.description }}"
+        workflow_nodes:
+          - identifier: "{{ ppdm.infra.jt.reset_sysdr_boost }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.reset_sysdr_boost }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - "{{ ppdm.credentials[0].name }}" 
+                - "{{ ppdd.credentials[0].name }}"              
+              ask_credential_on_launch: true
+              survey_enabled: true   
+
+        survey_enabled: true        
+        survey_spec: |        
+          {
+          "description": "PPDM Deployment Survey",
+          "name": "Deploy_PPDM",
+          "spec": [
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "19.19",
+                "19.18",
+                "19.17",
+                "19.16",
+                "19.15"
+            ],
+            "default": "19.19",
+            "required": true,
+            "variable": "release",
+            "new_question": false,
+            "question_name": "PPDM Release",
+            "question_description": "select the PPDM Release"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "ppdm-1.demo.local",
+            "required": true,
+            "variable": "ppdm_fqdn",
+            "new_question": false,
+            "question_name": "Enter PPDM fqdn",
+            "question_description": "Enter the FQDN of the PPDM do be deployed, e.g. ppdm-x.demo.local "
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "192.168.1.50",
+            "required": true,
+            "variable": "ppdm_ip",
+            "new_question": false,
+            "question_name": "Enter the IPv4 address of PPDM",
+            "question_description": "Enter the IPv4 address of the PPDM do be deployed, e.g. 192.168.1.53"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "192.168.1.2"
+            ],
+            "default": "192.168.1.2",
+            "required": true,
+            "variable": "ppdm_gateway",
+            "new_question": false,
+            "question_name": "PPDM Gateway",
+            "question_description": "select the PPDM IPv4 Gateway"
+            },
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "192.168.1.2"
+            ],
+            "default": "192.168.1.2",
+            "required": true,
+            "variable": "ppdm_dns",
+            "new_question": false,
+            "question_name": "PPDM DNS",
+            "question_description": "select the PPDM IPv4 DNS Server(s)"
+            },   
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "255.255.255.0"
+            ],
+            "default": "255.255.255.0",
+            "required": true,
+            "variable": "ppdm_netmask",
+            "new_question": false,
+            "question_name": "PPDM Netmask",
+            "question_description": "select the PPDM IPv4 netmask"
+            },
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "true",
+                "false"
+            ],
+            "default": "false",
+            "required": true,
+            "variable": "power_on",
+            "new_question": false,
+            "question_name": "PPower On VM",
+            "question_description": "should PPDM Powered on after Deployment ?"
+            },                                             
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova",
+            "required": true,
+            "variable": "package",
+            "new_question": false,
+            "question_name": "Name of the OVA Template to deploy",
+            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova"
+            }
+          ]
+          }
+        extra_vars:
+          user: SysDR_{{ "{{ " }}lookup('env','PPDM_FQDN').split('.')[0]{{ " }}" }}
+          new_password: "{{ lookup('community.general.random_string', length=16) }}"
+
+
