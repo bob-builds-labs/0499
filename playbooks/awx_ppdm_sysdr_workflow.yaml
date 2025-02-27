@@ -230,7 +230,7 @@
           ]
           }
         extra_vars:
-          user: "SysDR'{{ '{{' }}lookup('env','PPDM_FQDN').split('.')[0]{{ '}}' }}'"
-          new_password: "'{{ '{{' }}lookup('community.general.random_string', length=16){{ '}}' }}'"
+          user: "SysDR{{ '{{' }}lookup('env','PPDM_FQDN').split('.')[0]{{ '}}' }}"
+          new_password: "{{ '{{' }}lookup('community.general.random_string', length=16){{ '}}' }}"
 
 
