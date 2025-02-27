@@ -212,7 +212,7 @@
             "required": true,
             "variable": "power_on",
             "new_question": false,
-            "question_name": "PPower On VM",
+            "question_name": "Power On VM",
             "question_description": "should PPDM Powered on after Deployment ?"
             },
             {  
@@ -223,7 +223,7 @@
                 "SysDR_ppdm-1",
                 "SysDR_ppdm-2"
             ],
-            "default": "false",
+            "default": "SysDR_ppdm-1",
             "required": true,
             "variable": "user",
             "new_question": false,
