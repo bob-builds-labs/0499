@@ -387,7 +387,7 @@
             ],
             "default": "false",
             "required": true,
-            "variable": "power_on"",
+            "variable": "power_on",
             "new_question": false,
             "question_name": "PPower On VM",
             "question_description": "should PPDM Powered on after Deployment ?"
