@@ -10,7 +10,7 @@
     - ansible.controller
     - awx.awx
     - community.vmware
-    - community.general.random
+    - community.general
   tasks:
     - name: "Add {{ ppdm.infra.jt.reset_sysdr_boost }}"
       job_template:
