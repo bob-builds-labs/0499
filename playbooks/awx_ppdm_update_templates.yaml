@@ -272,6 +272,140 @@
       loop_control:
         index_var: ppdm_index
 
+    - name: "Add {{ ppdm.infra.jt.deploy_ppdm }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.deploy_ppdm }}"
+        description: Deploys a PPDM from OVA 
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "1.0-playbook_deploy_ppdm_ova_from_s3.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials:
+          - "{{ vsphere.credentials[0].name }}"
+        ask_credential_on_launch: true
+        survey_enabled: true        
+        survey_spec: |        
+          {
+          "description": "PPDM Deployment Survey",
+          "name": "Deploy_PPDM",
+          "spec": [
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "19.19",
+                "19.18",
+                "19.17",
+                "19.16",
+                "19.15"
+            ],
+            "default": "19.19",
+            "required": true,
+            "variable": "release",
+            "new_question": false,
+            "question_name": "PPDM Release",
+            "question_description": "select the PPDM Release"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "ppdm-1.demo.local",
+            "required": true,
+            "variable": "ppdm_fqdn",
+            "new_question": false,
+            "question_name": "Enter PPDM fqdn",
+            "question_description": "Enter the FQDN of the PPDM do be deployed, e.g. ppdm-x.demo.local "
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "192.168.1.50",
+            "required": true,
+            "variable": "ppdm_ip",
+            "new_question": false,
+            "question_name": "Enter the IPv4 address of PPDM",
+            "question_description": "Enter the IPv4 address of the PPDM do be deployed, e.g. 192.168.1.53"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "192.168.1.2"
+            ],
+            "default": "192.168.1.2",
+            "required": true,
+            "variable": "ppdm_gateway",
+            "new_question": false,
+            "question_name": "PPDM Gateway",
+            "question_description": "select the PPDM IPv4 Gateway"
+            },
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "192.168.1.2"
+            ],
+            "default": "192.168.1.2",
+            "required": true,
+            "variable": "ppdm_dns",
+            "new_question": false,
+            "question_name": "PPDM DNS",
+            "question_description": "select the PPDM IPv4 DNS Server(s)"
+            },   
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "255.255.255.0"
+            ],
+            "default": "255.255.255.0",
+            "required": true,
+            "variable": "ppdm_netmask",
+            "new_question": false,
+            "question_name": "PPDM Netmask",
+            "question_description": "select the PPDM IPv4 netmask"
+            },
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "true",
+                "false"
+            ],
+            "default": "false",
+            "required": true,
+            "variable": "power_on"",
+            "new_question": false,
+            "question_name": "PPower On VM",
+            "question_description": "should PPDM Powered on after Deployment ?"
+            },                                             
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova",
+            "required": true,
+            "variable": "package",
+            "new_question": false,
+            "question_name": "Name of the OVA Template to deploy",
+            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.19.0-1-20250225.044745-1269.ova"
+            }
+          ]
+          }
 
     - name: Give "{{ ppdm.infra.user_1.username }}" Execute WF Job Template permissions
       role:
@@ -284,7 +418,7 @@
       loop_control:
         index_var: ppdm_index
 
-    - name: Give {{ ppdm.infra.user_1.username }} View  Job Template permissions
+    - name: Give {{ ppdm.infra.user_1.username }} View Job Template permissions
       role:
         role: read
         user: "{{ ppdm.infra.user_1.username }}"
@@ -293,6 +427,7 @@
           - "{{ ppdm.infra.jt.upload_update }}"
           - "{{ ppdm.infra.jt.execute_update }}"
           - "{{ ppdm.infra.jt.precheck_update }}"
+          - "{{ ppdm.infra.jt.deploy_ppdm }}"
 
     - name: Give {{ ppdm.infra.user_1.username }} Execute Job Template permissions
       role:
