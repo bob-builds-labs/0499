@@ -24,11 +24,28 @@
         labels:
           - "{{ ppdm.infra.label }}"
         credentials: []
-
         ask_credential_on_launch: true
         survey_enabled: true 
-        extra_vars:
-          user: SysDR_{{ "{{ " }}lookup('env','PPDM_FQDN').split('.')[0]{{ " }}" }}
+        extra_vars: []
+       
+
+
+    - name: "Add {{ ppdm.infra.jt.sysdr_ppdm }}"
+      job_template:
+        name: "{{ ppdm.infra.jt.sysdr_ppdm }}"
+        description: Runs PPDM SysDr
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "99.1-playbook_run_server_disaster_recovery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.infra.label }}"
+        credentials: []
+        ask_credential_on_launch: true
+        survey_enabled: true 
+        extra_vars: []
         survey_spec: |        
           {
           "description": "SysDR Reset Survey",
@@ -49,8 +66,6 @@
           ]
           }
 
-
-
     - name: Add PPDM ServerDisasterRecover Workflow(s)
       workflow_job_template:
         destroy_current_nodes: true
@@ -67,7 +82,7 @@
                   name: "{{ awx.org }}"
               type: job_template
             related:
-              success_nodes: []
+              success_nodes: ["{{ ppdm.infra.jt.sysdr_ppdm }}"]
                ## - identifier: "{{ ppdm.infra.jt.precheck_update }}"
               failure_nodes: []
               always_nodes: []
@@ -76,7 +91,26 @@
                 - name: "{{ ppdd.credentials[0].name }}"              
               ask_credential_on_launch: true
               survey_enabled: true   
-
+          - identifier: "{{ ppdm.infra.jsysdr_ppdm }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.sysdr_ppdm }}"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes: []
+               ## - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+              failure_nodes: []
+              always_nodes: []
+              credentials:
+                - name: "{{ ppdm.credentials[0].name }}" 
+                - name: "{{ ppdd.credentials[0].name }}" 
+              extra_vars:
+                sysdr_password: "{{ new_password }}"               
+              ask_credential_on_launch: true
+              survey_enabled: true 
         survey_enabled: true        
         survey_spec: |        
           {
