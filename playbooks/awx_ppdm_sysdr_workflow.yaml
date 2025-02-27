@@ -232,7 +232,7 @@
             }, 
             {
             "max": 1024,
-            "min": 0,
+            "min": 9,
             "type": "text",
             "choices": "",
             "default": "Tagist123!",
