@@ -115,7 +115,22 @@
             "new_question": false,
             "question_name": "PPDM Netmask",
             "question_description": "select the PPDM IPv4 netmask"
-            },                                
+            },
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "true",
+                "false"
+            ],
+            "default": "false",
+            "required": true,
+            "variable": "power_on"",
+            "new_question": false,
+            "question_name": "PPower On VM",
+            "question_description": "should PPDM Powered on after Deployment ?"
+            },                                             
             {
             "max": 1024,
             "min": 0,
