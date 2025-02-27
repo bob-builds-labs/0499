@@ -214,7 +214,34 @@
             "new_question": false,
             "question_name": "PPower On VM",
             "question_description": "should PPDM Powered on after Deployment ?"
-            },                                             
+            },
+            {  
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "SysDR_ppdm-1",
+                "SysDR_ppdm-2"
+            ],
+            "default": "false",
+            "required": true,
+            "variable": "user",
+            "new_question": false,
+            "question_name": "SysDR User",
+            "question_description": "SysDR User for PPDM"
+            }, 
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "Password123!",
+            "required": true,
+            "variable": "new_password",
+            "new_question": false,
+            "question_name": "new Password for His PPDM",
+            "question_description": "Enter the name of the new SysDR Password"
+            },                                                          
             {
             "max": 1024,
             "min": 0,
@@ -229,8 +256,5 @@
             }
           ]
           }
-        extra_vars:
-          user: SysDR_{{  '{{' }} lookup('env','PPDM_FQDN').split('.')[0] {{ '}}' }}
-          new_password: "{{ '{{' }} lookup('community.general.random_string', length=16) {{ '}}' }}"
 
 
