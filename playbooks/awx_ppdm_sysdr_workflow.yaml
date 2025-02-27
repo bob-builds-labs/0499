@@ -26,7 +26,7 @@
         credentials: []
         ask_credential_on_launch: true
         survey_enabled: true 
-        extra_vars: []
+        extra_vars: {}
        
 
 
@@ -45,7 +45,7 @@
         credentials: []
         ask_credential_on_launch: true
         survey_enabled: true 
-        extra_vars: []
+        extra_vars: {}
         survey_spec: |        
           {
           "description": "SysDR Reset Survey",
