@@ -35,8 +35,8 @@
               failure_nodes: []
               always_nodes: []
               credentials:
-                name: "{{ ppdm.credentials[0].name }}" 
-                name: "{{ ppdd.credentials[0].name }}"              
+                - name: "{{ ppdm.credentials[0].name }}" 
+                - name: "{{ ppdd.credentials[0].name }}"              
               ask_credential_on_launch: true
               survey_enabled: true   
 
