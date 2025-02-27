@@ -119,6 +119,9 @@ ppdm:
       delete_update: _9.9 Delete PPDM Update
       deploy_ppdm: _1.0 Deploy PPDM from OVA
     wjt:
+      sysdr_ppdm:
+        name: 99 PPDM Sysdr Workflow
+        description: This Workflow will execute a PPDM´s SysDR
       update_ppdm:
         name: 9 Update PPDM
         description: |
