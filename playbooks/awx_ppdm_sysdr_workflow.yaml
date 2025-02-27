@@ -82,8 +82,8 @@
                   name: "{{ awx.org }}"
               type: job_template
             related:
-              success_nodes: ["{{ ppdm.infra.jt.sysdr_ppdm }}"]
-               ## - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+              success_nodes: 
+                - identifier: "{{ ppdm.infra.jt.sysdr_ppdm }}"
               failure_nodes: []
               always_nodes: []
               credentials:
