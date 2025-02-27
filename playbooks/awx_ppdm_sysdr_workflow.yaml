@@ -100,8 +100,8 @@
                   name: "{{ awx.org }}"
               type: job_template
             related:
-              success_nodes: []
-               ## - identifier: "{{ ppdm.infra.jt.precheck_update }}"
+              success_nodes:
+                - identifier: "{{ ppdm.infra.jt.approve_sysdr }}"
               failure_nodes: []
               always_nodes: []
               credentials:
@@ -110,6 +110,16 @@
               extra_vars: {}
               ask_credential_on_launch: true
               survey_enabled: true 
+          - identifier: "{{ ppdm.infra.jt.approve_sysdr }}"
+            all_parents_must_coverage: false
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.jt.approve_sysdr }}"
+              timeout: 900
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: workflow_approval              
         survey_enabled: true        
         survey_spec: |        
           {

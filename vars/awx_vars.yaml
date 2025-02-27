@@ -112,6 +112,7 @@ ppdm:
     jt:
       reset_sysdr_boost: _99.1 Reset Boost Password for SysDR 
       sysdr_ppdm: _99.2 Run Sysdr for PPDM
+      approve_sysdr: _99.3 Approve for Sysdr
       upload_update: _9.1 Upload PPDM Update from S3
       precheck_update: _9.2 Precheck Update
       execute_update: _9.3 Update PPDM
