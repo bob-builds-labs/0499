@@ -235,7 +235,7 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "Password123!",
+            "default": "Tagist123!",
             "required": true,
             "variable": "new_password",
             "new_question": false,
