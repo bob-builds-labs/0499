@@ -10,6 +10,7 @@
     - ansible.controller
     - awx.awx
     - community.vmware
+    - community.random.string
   tasks:
     - name: "Add {{ ppdm.infra.jt.reset_sysdr_boost }}"
       job_template:
@@ -26,12 +27,28 @@
         credentials: 
           - "{{ ppdm.credentials[0].name }}" 
           - "{{ ppdd.credentials[0].name }}"
+
         ask_credential_on_launch: true
         survey_enabled: true 
         extra_vars:
           user: SysDR_{{ "{{ " }}lookup('env','PPDM_FQDN').split('.')[0]{{ " }}" }}
-          new_password: "{{ lookup('community.general.random_string', length=16) }}"
-
-          
-
+        survey_spec: |        
+          {
+          "description": "SysDR Reset Survey",
+          "name": "new Password",
+          "spec": [                                
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "Password123!",
+            "required": true,
+            "variable": "new_password",
+            "new_question": false,
+            "question_name": "new Password for His PPDM",
+            "question_description": "Enter the name of the new SysDR Password"
+            }
+          ]
+          }
 
