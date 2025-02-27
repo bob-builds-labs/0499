@@ -159,8 +159,7 @@
                   name: "{{ awx.org }}"
               type: workflow_approval
             related:
-              success_nodes:
-                - identifier: "{{ ppdm.infra.jt.sysdr_ppdm_approved }}"
+              success_nodes: []
               failure_nodes: []
               always_nodes: []                            
         survey_enabled: true        
