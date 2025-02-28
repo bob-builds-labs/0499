@@ -572,7 +572,7 @@
               type: job_template
             related:
               success_nodes:
-                - identifier: "0_{{ ppdm.k8s.job_template }}"
+                - identifier: "1_{{ ppdm.k8s.job_template }}"
               failure_nodes: []
               always_nodes: []
               credentials: []
