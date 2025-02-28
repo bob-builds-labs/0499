@@ -605,7 +605,7 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
-          - identifier: "0_{{ ppdm.k8s.job_template }}"
+          - identifier: "1_{{ ppdm.k8s.job_template }}"
             extra_data: []
             unified_job_template:
               name: "{{ ppdm.k8s.job_template }}"
