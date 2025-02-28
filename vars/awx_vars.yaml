@@ -109,6 +109,7 @@ ppdm:
       password: Password123!
       email: infrauser@demo.local
     update_job_template: deploy ppdm update templates
+    sysdr_job_template: deploy ppdm sysdr templates
     jt:
       reset_sysdr_boost: _99.1 Reset Boost Password for SysDR 
       sysdr_ppdm: _99.2 Precheck Sysdr for PPDM
