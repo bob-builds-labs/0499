@@ -170,6 +170,8 @@
           - identifier: "{{ ppdm.infra.jt.approve_sysdr }}"
             all_parents_must_coverage: false
             extra_data: []
+            extra_vars:
+              auto_approve: true
             unified_job_template:
               name: "{{ ppdm.infra.jt.approve_sysdr }}"
               timeout: 900
