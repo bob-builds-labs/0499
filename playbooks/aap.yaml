@@ -479,6 +479,19 @@
         state: "present"
         labels:
           - "{{ awx.infra.label }}"
+    - name: Create PPDM Sysdr Job Templates
+      job_template:
+        name: "{{ ppdm.infra.sysdr_job_template }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ awx.inventory[0].project_name  }}"
+        playbook: "playbooks/awx_ppdm_update_templates.yaml"
+        credentials:
+          - "AWX Admin Credentials"
+        state: "present"
+        labels:
+          - "{{ awx.infra.label }}"          
 
     - name: Create PPDM K8S Job Templates
       job_template:
@@ -521,7 +534,7 @@
             extra_data: []
             unified_job_template:
               name: "{{ awx.infra.job_template }}"
-              description: "Automated AWX Infrustructure Update"
+              description: "Automated AWX Infrastructure Update"
               inventory:
                 organization:
                   name: "{{ awx.org }}"
