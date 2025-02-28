@@ -563,11 +563,25 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
-
           - identifier: "0_{{ ppdm.infra.update_job_template }}"
             extra_data: []
             unified_job_template:
               name: "{{ ppdm.infra.update_job_template }}"
+              description: "Automated Update of Update Job Templates"
+              inventory:
+                organization:
+                  name: "{{ awx.org }}"
+              type: job_template
+            related:
+              success_nodes:
+                - identifier: "1_{{ ppdm.infra.sysdr_job_template }}"
+              failure_nodes: []
+              always_nodes: []
+              credentials: []
+          - identifier: "1_{{ ppdm.infra.sysdr_job_template }}"
+            extra_data: []
+            unified_job_template:
+              name: "{{ ppdm.infra.sysdr_job_template }}"
               description: "Automated Update of Update Job Templates"
               inventory:
                 organization:
