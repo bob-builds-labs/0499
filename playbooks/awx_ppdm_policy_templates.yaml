@@ -1,0 +1,188 @@
+---
+- name: AWX Organiszation Assets Templates Runbook
+  hosts: localhost
+  connection: local
+  vars:
+  vars_files:
+    - ../vars/awx_vars.yaml
+  collections:
+    - ansible.controller
+    - awx.awx
+  tasks:
+ #   - name: Add {{ ppdm.assets.label }} label to organization {{ awx.org }}
+ #     label:
+ #       name: "{{ ppdm.assets.label }}"
+ #       organization: "{{ awx.org }}"
+ #   - name: Create team {{ ppdm.agents.team.name }}
+ #     team:
+ #       name: "{{ ppdm.agents.team.name }}"
+ #       description: "{{ ppdm.agents.team.description }}"
+ #       organization: "{{ awx.org }}"
+ #       state: present
+
+    - name: "Add {{ ppdm.policy.jt.patch_vmware_local_dd  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.patch_vmware_local_dd    }}"
+        description: Move VM Policy to use local DD
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.9_playbook_patch_vm_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          protection_policy_patch: 
+            name: vm image crash consistent
+            description: 'Chars consistent Policy writing to local DD'
+            purpose: CENTRALIZED
+            assetType: VMWARE_VIRTUAL_MACHINE
+            disabled: false
+            objectives:
+              - id: e389b1ae-4c01-cf7d-7241-468ced486b2b
+                type: BACKUP
+                operations:
+                  - id: 7b77f64b-8f8a-5e6d-5811-ee21831fb8f8
+                    backupLevel: SYNTHETIC_FULL
+                    schedule:
+                      recurrence:
+                        pattern:
+                          type: DAILY
+                      window:
+                        startTime: '2024-02-27T20:00:00.000Z'
+                        duration: PT8H
+                    triggerType: ON_SCHEDULE
+                target:
+                  storageTargetId: 733a9427-8b5c-4a8a-b07b-29f9b9bb7d2e
+                  preferredInterfaceId: ethV1
+                  storageContainerId: d1656af3-df78-4194-a7d9-2c44174f3652
+                retentions:
+                  - id: ce4a3173-aa0d-c7b3-b457-39276ae7e9b5
+                    time:
+                      - unitValue: 1
+                        unitType: MONTH
+                        type: RETENTION
+                    copySelector:
+                      operationId: 7b77f64b-8f8a-5e6d-5811-ee21831fb8f8
+                  - id: e73fda05-b00a-ec6e-7c7c-7db57eb840e1
+                    time:
+                      - unitValue: 1
+                        unitType: MONTH
+                        type: RETENTION
+                config:
+                  dataConsistency: CRASH_CONSISTENT
+                  forceFull: false
+                  backupMechanism: SDM
+                options:
+                  backupMode: FSS
+                  disableQuiescing: true
+                  excludeSwapFiles: false
+                  appConsistentProtection: false
+              - id: 658c1c62-0990-f11a-d1e4-574e5a5a5985
+                type: REPLICATION
+                operations:
+                  - id: 73e1836a-a3a4-1475-48da-af77676980ff
+                    backupLevel: SYNTHETIC_FULL
+                    triggerType: RUN_AFTER_UPSTREAM
+                    upstream:
+                      ids:
+                        - e389b1ae-4c01-cf7d-7241-468ced486b2b
+                target:
+                  storageTargetId: e00905fb-e7c0-4d6c-9ad3-4b0556b26212
+                  preferredInterfaceId: ethV1
+                  storageContainerId: 5ba86e1a-d80e-48e5-83e7-417045e1b1cc
+                retentions:
+                  - id: 30c9a4f6-c184-c6cb-dc69-2040df25c1cd
+                    time:
+                      - unitValue: 1
+                        unitType: MONTH
+                        type: RETENTION
+            id: 4d795f97-37be-491f-8c11-d2cf880e819e            
+        ask_variables_on_launch: false
+        ask_credential_on_launch: true
+    - name: "Add {{ ppdm.policy.jt.patch_vmware_remote_dd  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.patch_vmware_remote_dd   }}"
+        description: Move VM Policy to use remote DD
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.9_playbook_patch_vm_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          protection_policy_patch:
+            name: vm image crash consistent
+            description: ''
+            purpose: CENTRALIZED
+            assetType: VMWARE_VIRTUAL_MACHINE
+            disabled: false
+            objectives:
+              - id: e389b1ae-4c01-cf7d-7241-468ced486b2b
+                type: BACKUP
+                operations:
+                  - id: 7b77f64b-8f8a-5e6d-5811-ee21831fb8f8
+                    backupLevel: SYNTHETIC_FULL
+                    schedule:
+                      recurrence:
+                        pattern:
+                          type: DAILY
+                      window:
+                        startTime: '2024-02-27T20:00:00.000Z'
+                        duration: PT8H
+                    triggerType: ON_SCHEDULE
+                target:
+                  storageTargetId: ef913fdf-e341-47b1-88af-edeb50164c32
+                  preferredInterfaceId: ethV1
+                  storageContainerId: 5ba86e1a-d80e-48e5-83e7-417045e1b1cc
+                retentions:
+                  - id: ce4a3173-aa0d-c7b3-b457-39276ae7e9b5
+                    time:
+                      - unitValue: 1
+                        unitType: MONTH
+                        type: RETENTION
+                    copySelector:
+                      operationId: 7b77f64b-8f8a-5e6d-5811-ee21831fb8f8
+                  - id: e73fda05-b00a-ec6e-7c7c-7db57eb840e1
+                    time:
+                      - unitValue: 1
+                        unitType: MONTH
+                        type: RETENTION
+                config:
+                  dataConsistency: CRASH_CONSISTENT
+                  forceFull: false
+                  backupMechanism: SDM
+                options:
+                  backupMode: FSS
+                  disableQuiescing: true
+                  excludeSwapFiles: false
+                  appConsistentProtection: false
+              - id: 658c1c62-0990-f11a-d1e4-574e5a5a5985
+                type: REPLICATION
+                operations:
+                  - id: 73e1836a-a3a4-1475-48da-af77676980ff
+                    backupLevel: SYNTHETIC_FULL
+                    triggerType: RUN_AFTER_UPSTREAM
+                    upstream:
+                      ids:
+                        - e389b1ae-4c01-cf7d-7241-468ced486b2b
+                target:
+                  storageTargetId: e00905fb-e7c0-4d6c-9ad3-4b0556b26212
+                  preferredInterfaceId: ethV1
+                  storageContainerId: 5ba86e1a-d80e-48e5-83e7-417045e1b1cc
+                retentions:
+                  - id: 30c9a4f6-c184-c6cb-dc69-2040df25c1cd
+                    time:
+                      - unitValue: 1
+                        unitType: MONTH
+                        type: RETENTION
+            id: 4d795f97-37be-491f-8c11-d2cf880e819e          
+        ask_variables_on_launch: false
+        ask_credential_on_launch: true
