@@ -23,7 +23,7 @@
     - name: "Add {{ ppdm.policy.jt.patch_vmware_local_dd  }}"
       job_template:
         name: "{{ ppdm.policy.jt.patch_vmware_local_dd    }}"
-        description: Move VM Policy to use local DD
+        description: Production VM Policy to use local DD
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
@@ -106,7 +106,7 @@
     - name: "Add {{ ppdm.policy.jt.patch_vmware_remote_dd  }}"
       job_template:
         name: "{{ ppdm.policy.jt.patch_vmware_remote_dd   }}"
-        description: Move VM Policy to use remote DD
+        description: DR VM Policy to use remote DD
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
