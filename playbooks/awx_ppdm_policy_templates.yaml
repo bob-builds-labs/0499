@@ -37,7 +37,7 @@
         extra_vars:
           protection_policy_patch: 
             name: vm image crash consistent
-            description: 'Chars consistent Policy writing to local DD'
+            description: 'Crash consistent Policy writing to local DD'
             purpose: CENTRALIZED
             assetType: VMWARE_VIRTUAL_MACHINE
             disabled: false
@@ -120,7 +120,7 @@
         extra_vars:
           protection_policy_patch:
             name: vm image crash consistent
-            description: ''
+            description: 'Crash consitent Policy running on DR site'
             purpose: CENTRALIZED
             assetType: VMWARE_VIRTUAL_MACHINE
             disabled: false
