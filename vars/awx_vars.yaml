@@ -99,6 +99,10 @@ ppdm:
       deploy: 100.3 Copy and Deploy Agents from S3
       approve: 100.4 Create Whitelist Entry from Address Query
       uninstall: 100.9 Uninstall Windows Agent
+  policy:
+    jt:
+      patch_vmware_local_dd: 120.9 Patch VM Policy to use Local DD 
+      patch_vmware_remote_dd: 120.9 Patch VM Policy to use Remote DD       
   infra:
     team:
       name: PPDM Infra Team
