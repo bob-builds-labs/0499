@@ -8,11 +8,7 @@ parameters:
   # Allowed values: arrayID corresponding to array's globalID specified in secret.yaml
   # Optional: false
   # Default value: None
-<<<<<<< HEAD
-  arrayID: "unique"
-=======
   arrayID: "powerstore-2"
->>>>>>> 19.18
   # FsType: file system type for mounted volumes
   # Allowed values:
   #   ext3: ext3 filesystem type
