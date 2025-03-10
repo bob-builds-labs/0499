@@ -4,7 +4,7 @@
   connection: local
   gather_facts: false
   vars:
-    ova: "/home/admin/dellemc-ppdm-sw-19.19.0-5.ova"
+    ova: "/home/admin/dellemc-ppdm-sw-19.19.0-8.ova"
     ppdm_ip: 192.168.1.53
     ppdm_gateway: 192.168.1.2
     ppdm_dns: 192.168.1.2
