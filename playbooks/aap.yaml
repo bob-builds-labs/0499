@@ -486,7 +486,7 @@
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
         project: "{{ awx.inventory[0].project_name  }}"
-        playbook: "playbooks/awx_ppdm_update_templates.yaml"
+        playbook: "playbooks/awx_ppdm_sysdr_workflow.yaml"
         credentials:
           - "AWX Admin Credentials"
         state: "present"
