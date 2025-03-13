@@ -321,12 +321,12 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "dellemc-ppdm-sw-19.19.0-9.ova",
+            "default": "dellemc-ppdm-sw-19.19.0-11.ova",
             "required": true,
             "variable": "package",
             "new_question": false,
             "question_name": "Name of the OVA Template to deploy",
-            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.19.0-9.ova"
+            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.19.0-11.ova"
             }
           ]
           }
