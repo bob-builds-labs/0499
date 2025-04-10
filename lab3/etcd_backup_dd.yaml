@@ -6,7 +6,6 @@ metadata:
     openshift.io/description: Openshift DataDomain Backup Automation Tool
     openshift.io/display-name: Backup ETCD to DataDomain Automation
     openshift.io/node-selector: ''
-# spec: {}
 ---
 kind: ServiceAccount
 apiVersion: v1
