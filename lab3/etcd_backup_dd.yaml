@@ -4,7 +4,7 @@ metadata:
   name: ocp-etcd-backup
   annotations:
     openshift.io/description: Openshift DataDomain Backup Automation Tool
-    openshift.io/display-name: Backup ETCD to DataDomain Automation
+    openshift.io/display-name: Backup ETCD and Ignition Certificates to DataDomain Automation
     openshift.io/node-selector: ''
 spec: {}
 ---
