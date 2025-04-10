@@ -102,14 +102,12 @@ spec:
                   oc get -n openshift-machine-api secret master-user-data -o jsonpath='{.data.userData}'|base64 -d > /home/core/backup/master.ign.$(date -Iminute);
                   echo 'Extracting WorkerIgnition';                  
                   oc get -n openshift-machine-api secret worker-user-data -o jsonpath='{.data.userData}'|base64 -d > /home/core/backup/worker.ign.$(date -Iminute);
-                  oc get no -l node-role.kubernetes.io/master --no-headers -o
-                  name | grep `hostname` | head -n 1 | xargs -I {} -- oc debug
-                  {} -- bash -c 'chroot /host sudo -E
-                  /usr/local/bin/cluster-backup.sh /home/core/backup' ; echo
-                  'Moving Local Master Backups to target directory (from
-                  /home/core/backup to DataDomain)'; mv /home/core/backup/*
-                  /etcd-backup/; echo 'Deleting files older than 30 days' ; find
+                  oc get no -l node-role.kubernetes.io/master --no-headers -o name | grep `hostname` | head -n 1 | xargs -I {} -- oc debug {} -- bash -c 'chroot /host sudo -E /usr/local/bin/cluster-backup.sh /home/core/backup' ; 
+                  echo 'Moving Local Master Backups to target directory (from /home/core/backup to DataDomain)';
+                  mv /home/core/backup/* /etcd-backup/;
+                  echo 'Deleting files older than 30 days' ; find
                   /etcd-backup/ -type f  -mtime +30 -exec rm {} \;
+                  ls -lisaR /etcd-backup;
               securityContext:
                 privileged: true
                 runAsUser: 0
