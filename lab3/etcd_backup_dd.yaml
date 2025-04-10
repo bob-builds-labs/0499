@@ -2,9 +2,8 @@ kind: Namespace
 apiVersion: v1
 metadata:
   name: ocp-etcd-backup
-  annotations:
-    openshift.io/description: Openshift DataDomain Backup Automation Tool
-    openshift.io/display-name: Backup ETCD to DataDomain Automation
+  labels:
+    app: openshift-backup
 ---
 kind: ServiceAccount
 apiVersion: v1
@@ -32,6 +31,8 @@ kind: ClusterRoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
 metadata:
   name: openshift-backup
+  labels:
+    app: openshift-backup  
 subjects:
   - kind: ServiceAccount
     name: openshift-backup
