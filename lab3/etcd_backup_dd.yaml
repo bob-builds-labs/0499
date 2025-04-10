@@ -76,8 +76,6 @@ spec:
         metadata:
           creationTimestamp: null
         spec:
-          nodeSelector:
-            node-role.kubernetes.io/master: '' 
           restartPolicy: Never
           activeDeadlineSeconds: 200
           serviceAccountName: openshift-backup
