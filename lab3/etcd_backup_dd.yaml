@@ -97,6 +97,9 @@ spec:
                 - /bin/bash
                 - '-c'
                 - >-
+                  exho 'Extractging MasterIgnition';
+                  oc get -n openshift-machine-api secret master-user-data -o jsonpath='{.data.userData}'|base64 -d > master.ign.$(date -Iminute);
+                  oc get -n openshift-machine-api secret worker-user-data -o jsonpath='{.data.userData}'|base64 -d > worker.ign.$(date -Iminute);
                   oc get no -l node-role.kubernetes.io/master --no-headers -o
                   name | grep `hostname` | head -n 1 | xargs -I {} -- oc debug
                   {} -- bash -c 'chroot /host sudo -E
