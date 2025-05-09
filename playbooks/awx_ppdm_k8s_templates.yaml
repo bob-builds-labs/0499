@@ -341,6 +341,7 @@
         extra_vars:
           vcenter_address: vcenter01.demo.local
           use_fsagent: false
+          parallel_pvc_backup: false
     - name: Add {{ ppdm.k8s.jt.plc.create }} JT
       job_template:
         name: "{{ ppdm.k8s.jt.plc.create}}"
