@@ -3,6 +3,8 @@ kind: StorageClass
 metadata:
   name: "powerstore-2"
 provisioner: "csi-powerstore.dellemc.com"
+annotations:
+  storageclass.kubernetes.io/is-default-class: 'false'
 parameters:
   # arrayID: id of array to be used for volumes
   # Allowed values: arrayID corresponding to array's globalID specified in secret.yaml
