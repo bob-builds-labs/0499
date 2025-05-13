@@ -55,6 +55,6 @@ volumeBindingMode: Immediate
 # Optional: true
 allowedTopologies:
   - matchLabelExpressions:
-      - key: "csi-powerstore.dellemc.com/192.168.2.40-iscsi"
+      - key: "csi-powerstore.dellemc.com/192.168.1.40-iscsi"
         values:
           - "true"
