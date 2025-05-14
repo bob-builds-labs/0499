@@ -408,7 +408,7 @@
                   "choices": "",
                   "default": "default_policy_description",
                   "required": true,
-                  "variable": "decscription",
+                  "variable": "description",
                   "new_question": false,
                   "question_name": "Description",
                   "question_description": "Enter the description of the Kubernetes Policy to create"
