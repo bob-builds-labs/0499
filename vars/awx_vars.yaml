@@ -157,6 +157,11 @@ ppdm:
                 Allowed extra variables are:
                 ppdm_rule: defines the namespace Rule, e.g. Key/Value PPDM_POLICY=PPDM_GOLD for assetAttributeName: "userTags", or MYNAMESPACE for assetAttributeName: "name" begins with 
                 assetAttributeName: when not defined defaults to "userTags", otherwise use "name" 
+                full Example 1:
+                ppdm_rule: PPDM_POLICY=k8s_gold
+                full example 2:
+                ppdm_rule: HOL0499
+                assetAttributeName: name
     label: ppdm_k8s
     job_template: deploy ppdm k8s templates
     team: Kubernetes Team
