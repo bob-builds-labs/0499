@@ -148,8 +148,15 @@ ppdm:
           name: 130.2 Remove Namespace from Policy
           description: Unassigns a Namespace asset from a Protection Policy
       plc:
-        list: 130.4 Get details of Kubernetes Policy
-        create: 130.2 Create Kubernetes Protection Policy
+        list:
+          name: 130.4 Get details of Kubernetes Policy
+        create:
+          name: 130.2 Create Kubernetes Protection Policy
+          description: |-
+                Creates assigns a K8S  Protection Policy
+                Allowed extra variables are:
+                ppdm_rule: defines the namespace Rule, e.g. Key/Value PPDM_POLICY=PPDM_GOLD for assetAttributeName: "userTags", or MYNAMESPACE for assetAttributeName: "name" begins with 
+                assetAttributeName: when not defined defaults to "userTags", otherwise use "name" 
     label: ppdm_k8s
     job_template: deploy ppdm k8s templates
     team: Kubernetes Team

@@ -363,13 +363,14 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: Add {{ ppdm.k8s.wjt.plc.create }} WJT
+    - name: Add {{ ppdm.k8s.wjt.plc.create.name }} WJT
       workflow_job_template:
-        name: "{{ ppdm.k8s.wjt.plc.create }}"
+        name: "{{ ppdm.k8s.wjt.plc.create.name }}"
+        description: "{{ ppdm.k8s.wjt.plc.create.description }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
         workflow_nodes:
-          - identifier: "{{ ppdm.k8s.wjt.plc.create }}"
+          - identifier: "{{ ppdm.k8s.wjt.plc.create.name }}"
             extra_data:
             unified_job_template:
               name: "{{ ppdm.k8s.jt.plc.create }}"
@@ -623,7 +624,7 @@
           - "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
           - "{{ ppdm.k8s.wjt.namespace.add.name }}"
           - "{{ ppdm.k8s.wjt.namespace.remove.name }}"
-          - "{{ ppdm.k8s.wjt.plc.create }}"
+          - "{{ ppdm.k8s.wjt.plc.create.name }}"
         user: "{{ ppdm.k8s.user_1.username }}"
         state: present
 
