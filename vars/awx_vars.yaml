@@ -21,7 +21,7 @@ awx:
   inventory:
     - project_name: 0499
       scm_branch: 19.19
-      scm_url: https://github.com/bob-builds-labs/0499.git
+      scm_url: http://github.com/bob-builds-labs/0499.git
       scm_description: Base Inventory and Templates for 0499
       name: PPDM Inventory
       description: PPDM Inventory for AWX
@@ -50,7 +50,7 @@ ppdd:
   project:
     name: ansible_ppdd
     description: Ansible PPDD Modules by Karsten Bott
-    modules_url: https://github.com/dell-examples/ansible_ppdd.git
+    modules_url: http://github.com/dell-examples/ansible_ppdd.git
   credentials:
     - name: ddve-1
       username: sysadmin
@@ -65,7 +65,7 @@ ppdm:
   project:
     name: ansible_ppdm
     description: Ansible PPDM Modules by Karsten Bott
-    modules_url: https://github.com/dell-examples/ansible_ppdm.git
+    modules_url: http://github.com/dell-examples/ansible_ppdm.git
   credentials:
     - name: ppdm-1
       username: admin
