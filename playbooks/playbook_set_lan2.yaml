@@ -10,4 +10,5 @@
       ifname: ens224
       type: ethernet
       ip4: "{{ ip2 }}/24"
-      state: present  
+      state: present
+      method6: disabled 
