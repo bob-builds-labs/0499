@@ -33,9 +33,9 @@
       delay: 10
   
     - debug: 
-      msg: "{{ result }}"
-      verbosity: 1       
-        
+        msg: "{{ result }}"
+        verbosity: 1       
+          
 
     - name: Set the value of awx settings GALAXY_TASK_ENV
       settings:
