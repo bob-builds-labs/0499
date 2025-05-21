@@ -23,6 +23,19 @@
     - debug:
         msg: "{{ result }}"
         verbosity: 0
+    - name: Set CONTAINER Options
+      settings:
+        name: DEFAULT_CONTAINER_RUN_OPTIONS  
+        value: '["--network","slirp4netns:enable_ipv6=false","--log-level","debug"]'
+      register: result 
+      until: result.failed is defined and result.failed == false
+      retries: 10
+      delay: 10
+  
+    - debug: 
+      msg: "{{ result }}"
+      verbosity: 1       
+        
 
     - name: Set the value of awx settings GALAXY_TASK_ENV
       settings:
