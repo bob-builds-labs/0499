@@ -24,7 +24,7 @@ metadata:
   name: ocp4-auto-approve-csr
   namespace: openshift-csr-autoapprove
 spec:
-  schedule: '@hourly'
+  schedule: '*/5 * * * *'
   concurrencyPolicy: Allow
   suspend: false
   jobTemplate:
@@ -37,7 +37,7 @@ spec:
               name: ocp4-auto-approve-csr-script
           containers:
             - name: csr-autoprove
-              image: quay.io/openshift/origin-cli:4.7
+              image: quay.io/openshift/origin-cli:4.17
               volumeMounts:
                 - name: script
                   mountPath: /usr/autoprove-csr
