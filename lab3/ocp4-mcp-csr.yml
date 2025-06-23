@@ -12,7 +12,7 @@ spec:
     units:
     - name: csr-approve.service
       enabled: true
-      contents:
+      contents: |
         [Unit]
         Description=This script approves pending certificates
         [Service]
@@ -21,7 +21,7 @@ spec:
         WantedBy=multi-user.target
     - name: csr-approve.timer
       enabled: true
-      contents:
+      contents: |
         [Unit]
         Description=Run csr-approve.service every 5 minutes
         [Timer]
