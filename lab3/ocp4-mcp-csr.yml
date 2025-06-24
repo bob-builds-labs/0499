@@ -34,7 +34,7 @@ spec:
       - filesystem: root
         path: "/etc/scripts/csr-approve.sh"
         contents:
-          source: data:text/plain;charset=utf-8;base64,IyEvYmluL2Jhc2gKZXhwb3J0IEtVQkVDT05GSUc9L2V0Yy9rdWJlcm5ldGVzL3N0YXRpYy1wb2QtcmVzb3VyY2VzL2t1YmUtYXBpc2VydmVyLWNlcnRzL3NlY3JldHMvbm9kZS1rdWJlY29uZmlncy9sYi1pbnQua3ViZWNvbmZpZ3MvbGItaW50Lmt1YmVjb25maWcKb2MgZ2V0IGNzciB8IGdyZXAgUGVuZGluZyB8IGF3ayAne3ByaW50ICQxfScgfCB4YXJncyAtLW5vLXJ1bi1pZi1lbXB0eSBvYyBhZG0gY2VydGlmaWNhdGUgYXBwcm92ZSAyPiYxCg==
+          source: data:text/plain;charset=utf-8;base64,IyEvYmluL2Jhc2gKZXhwb3J0IEtVQkVDT05GSUc9L2V0Yy9rdWJlcm5ldGVzL3N0YXRpYy1wb2QtcmVzb3VyY2VzL2t1YmUtYXBpc2VydmVyLWNlcnRzL3NlY3JldHMvbm9kZS1rdWJlY29uZmlncy9sYi1pbnQua3ViZWNvbmZpZwpvYyBnZXQgY3NyIHwgZ3JlcCBQZW5kaW5nIHwgYXdrICd7cHJpbnQgJDF9JyB8IHhhcmdzIC0tbm8tcnVuLWlmLWVtcHR5IG9jIGFkbSBjZXJ0aWZpY2F0ZSBhcHByb3ZlIDI+JjE=
           verification: {}     
         mode: 0755
         overwrite: true
