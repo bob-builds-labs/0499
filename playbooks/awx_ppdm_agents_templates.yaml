@@ -117,7 +117,7 @@
       project: "{{ ppdm.project.name }}"
       playbook: "100.3_playbook_copy_and_deploy_windows_agent_s3.yaml"
       extra_vars: 
-        release: "{{ ppdm.release }}"
+        release: "{{ ppdm.release | string }}"
       ask_credential_on_launch: true
       ask_variables_on_launch: true
       ask_inventory_on_launch: true
@@ -157,7 +157,7 @@
       project: "{{ ppdm.project.name }}"
       playbook: "100.9_playbook-uninstall-windows_agent_s3.yaml"
       extra_vars: 
-        release: "{{ ppdm.release }}"
+        release: "{{ ppdm.release | string }}"
       ask_variables_on_launch: true
       ask_inventory_on_launch: true
       ask_limit_on_launch: true
