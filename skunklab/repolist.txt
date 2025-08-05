@@ -3,3 +3,4 @@ https://github.com/dell-examples/ansible_ppdd
 https://github.com/dell-examples/PPDM-pwsh
 https://github.com/bob-builds-labs/0499
 https://github.com/dell/terraforming-dps
+https://github.com/dell/powerprotect-data-manager
