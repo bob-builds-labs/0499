@@ -240,6 +240,7 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
+                "19.21",
                 "19.20",
                 "19.19",
                 "19.18",
@@ -247,7 +248,7 @@
                 "19.16",
                 "19.15"
             ],
-            "default": "19.20",
+            "default": "19.21",
             "required": true,
             "variable": "release",
             "new_question": false,
@@ -259,12 +260,12 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "dellemc-ppdm-upgrade-sw-19.20.0-18.pkg",
+            "default": "dellemc-ppdm-upgrade-sw-19.21.0-18.pkg",
             "required": true,
             "variable": "package",
             "new_question": false,
             "question_name": "Package Name",
-            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.20.0-18.pkg"
+            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.21.0-18.pkg"
             }                       
           ]
           }
@@ -299,13 +300,15 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
+                "19.21",
                 "19.20",
+                "19.19",
                 "19.18",
                 "19.17",
                 "19.16",
                 "19.15"
             ],
-            "default": "19.20",
+            "default": "19.21",
             "required": true,
             "variable": "release",
             "new_question": false,
@@ -398,12 +401,12 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "dellemc-ppdm-sw-19.20.0-18.ova",
+            "default": "dellemc-ppdm-sw-19.21.0-18.ova",
             "required": true,
             "variable": "package",
             "new_question": false,
             "question_name": "Name of the OVA Template to deploy",
-            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.20.0-18.ova"
+            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.21.0-18.ova"
             }
           ]
           }

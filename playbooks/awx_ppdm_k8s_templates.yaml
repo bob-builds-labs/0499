@@ -130,9 +130,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocs.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocs.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -205,9 +205,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocs.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocs.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -282,9 +282,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocs.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocs.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -335,7 +335,7 @@
           - "{{ ppdm.assets.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
-          - "openshift.demo.local"
+          - "ocs.demo.local"
         ask_credential_on_launch: true
         ask_variables_on_launch: true
         extra_vars:
@@ -465,9 +465,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocs.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocs.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -564,9 +564,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocs.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocs.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,

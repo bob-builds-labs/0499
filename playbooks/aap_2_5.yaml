@@ -312,7 +312,7 @@
 
     - name: Add Kubeconfig Credentials
       credential:
-        name: "openshift.demo.local"
+        name: "ocs.demo.local"
         credential_type: kubeconfig
         organization: "{{ awx.org }}"
         inputs:
@@ -329,7 +329,7 @@
         credentials:
           - "AWX Admin Credentials"
 #          - "RedHat Subscription Credentials"
-          - "openshift.demo.local"
+          - "ocs.demo.local"
         state: "present"
         labels:
           - "{{ awx.infra.label }}"
@@ -390,7 +390,7 @@
         playbook: "playbooks/awx_ppdm_k8s_templates.yaml"
         credentials:
           - "AWX Admin Credentials"
-          - "openshift.demo.local"
+          - "ocs.demo.local"
         state: "present"
         labels:
           - "{{ awx.infra.label }}"

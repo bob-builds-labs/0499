@@ -92,9 +92,9 @@
                                    "min": 0,
                                    "type": "multiplechoice",
                                    "choices": [
-                                        "api.openshift.demo.local"
+                                        "api.ocs.demo.local"
                                    ],
-                                   "default": "api.openshift.demo.local",
+                                   "default": "api.ocs.demo.local",
                                    "required": true,
                                    "variable": "k8s_name",
                                    "new_question": false,
@@ -230,9 +230,9 @@
                                    "min": 0,
                                    "type": "multiplechoice",
                                    "choices": [
-                                        "api.openshift.demo.local"
+                                        "api.ocs.demo.local"
                                    ],
-                                   "default": "api.openshift.demo.local",
+                                   "default": "api.ocs.demo.local",
                                    "required": true,
                                    "variable": "k8s_name",
                                    "new_question": false,

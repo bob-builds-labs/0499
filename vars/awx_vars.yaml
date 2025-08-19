@@ -20,7 +20,7 @@ awx:
     workflow_job_template: 0_Maintain AWX
   inventory:
     - project_name: 0499
-      scm_branch: 19.20.0
+      scm_branch: 19.21
       scm_url: http://github.com/bob-builds-labs/0499.git
       scm_description: Base Inventory and Templates for 0499
       name: PPDM Inventory
@@ -61,7 +61,7 @@ ppdd:
       password: Password123!
       fqdn: ddve-02.demo.local
 ppdm:
-  release: 19.20
+  release: 19.21
   project:
     name: ansible_ppdm
     description: Ansible PPDM Modules by Karsten Bott
