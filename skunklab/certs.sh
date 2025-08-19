@@ -1,10 +1,7 @@
 #!/bin/bash
 # certificates come first in the chain
-# patchg proxy for root ca
-<<<<<<< HEAD
-=======
+# patch proxy for root ca
 # *.apps and api
->>>>>>> 19.18
 oc create configmap custom-ca \
      --from-file=ca-bundle.crt=ca.pem \
      -n openshift-config
@@ -13,7 +10,7 @@ oc patch proxy/cluster --type=merge --patch='{"spec":{"trustedCA":{"name":"custo
 # patch api server
 
 oc create secret tls api-secret --cert=fullchain_api.pem --key=key_api.pem -n openshift-config --insecure-skip-tls-verify=true 
-oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.ocs1.home.labbuildr.com"], "servingCertificate": {"name": "api-secret"}}]}}}'
+oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.ocs.demo.local"], "servingCertificate": {"name": "api-secret"}}]}}}'
 
 # patch default ingress
 oc create secret tls router-certs-full --cert=fullchain.pem --key=key.pem -n openshift-ingress
