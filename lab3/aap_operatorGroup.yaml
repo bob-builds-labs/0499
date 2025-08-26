@@ -39,7 +39,7 @@ items:
     channel: stable-2.4-cluster-scoped
     installPlanApproval: Automatic
     name: ansible-automation-platform-operator
-    source: redhat-operators
+    source: redhat-operators-417
     sourceNamespace: openshift-marketplace
 kind: List
 metadata:
