@@ -18,6 +18,6 @@ oc patch ingresscontroller.operator default -n openshift-ingress-operator --type
 
 
 # updatre
-oc create secret tls api-secret --cert=fullchain_api.pem --key=key_api.pem -n openshift-config --insecure-skip-tls-verify=true  --dry-run=client -o yaml | oc replace --insecure-skip-tls-verify=true -f -
-oc create secret tls router-certs-full --cert=fullchain.pem --key=key.pem -n openshift-ingress --insecure-skip-tls-verify=true  --dry-run=client -o yaml | oc replace --insecure-skip-tls-verify=true -f -
-oc create configmap custom-ca --from-file=ca-bundle.crt=ca.pem -n openshift-config --insecure-skip-tls-verify=true  --dry-run=client -o yaml | oc replace --insecure-skip-tls-verify=true -f -
+oc create secret tls api-secret --cert=/home/admin/workspace/ocs/api.ocp.demo.local.pem --key=/home/admin/workspace/ocs/api.ocp.demo.local.key.pem -n openshift-config --insecure-skip-tls-verify=true  --dry-run=client -o yaml | oc replace --insecure-skip-tls-verify=true -f -
+oc create secret tls router-certs-full --cert=/home/admin/workspace/ocs/_.apps.ocp.demo.local.pem --key=/home/admin/workspace/ocs/_.apps.ocp.demo.local.key.pem  -n openshift-ingress --insecure-skip-tls-verify=true  --dry-run=client -o yaml | oc replace --insecure-skip-tls-verify=true -f -
+oc create configmap custom-ca --from-file=ca-bundle.crt=/home/admin/workspace/ocs/rootCA.pem -n openshift-config --insecure-skip-tls-verify=true  --dry-run=client -o yaml | oc replace --insecure-skip-tls-verify=true -f -
