@@ -9,11 +9,11 @@ oc patch proxy/cluster --type=merge --patch='{"spec":{"trustedCA":{"name":"custo
 
 # patch api server
 
-oc create secret tls api-secret --cert=/home/admin/workspace/ocs/api.ocs.demo.local.pem --key=/home/admin/workspace/ocs/api.ocs.demo.local.key.pem -n openshift-config --insecure-skip-tls-verify=true 
+oc create secret tls api-secret --cert=/home/admin/workspace/ocs/api.ocp.demo.local.pem --key=/home/admin/workspace/ocs/api.ocp.demo.local.key.pem -n openshift-config --insecure-skip-tls-verify=true 
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.ocs.demo.local"], "servingCertificate": {"name": "api-secret"}}]}}}'
 
 # patch default ingress
-oc create secret tls router-certs-full --cert=/home/admin/workspace/ocs/_.apps.ocs.demo.local.pem --key=/home/admin/workspace/ocs/_.apps.ocs.demo.local.key.pem -n openshift-ingress
+oc create secret tls router-certs-full --cert=/home/admin/workspace/ocs/_.apps.ocp.demo.local.pem --key=/home/admin/workspace/ocs/_.apps.ocp.demo.local.key.pem -n openshift-ingress
 oc patch ingresscontroller.operator default -n openshift-ingress-operator --type=merge --patch='{"spec": { "defaultCertificate": { "name": "router-certs-full" }}}'
 
 
