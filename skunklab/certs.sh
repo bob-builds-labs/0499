@@ -3,17 +3,17 @@
 # patch proxy for root ca
 # *.apps and api
 oc create configmap custom-ca \
-     --from-file=ca-bundle.crt=ca.pem \
+     --from-file=ca-bundle.crt=/home/admin/workspace/ocs/rootCA.pem \
      -n openshift-config
 oc patch proxy/cluster --type=merge --patch='{"spec":{"trustedCA":{"name":"custom-ca"}}}'
 
 # patch api server
 
-oc create secret tls api-secret --cert=fullchain_api.pem --key=key_api.pem -n openshift-config --insecure-skip-tls-verify=true 
+oc create secret tls api-secret --cert=/home/admin/workspace/ocs/api.ocs.demo.local.pem --key=/home/admin/workspace/ocs/api.ocs.demo.local.key.pem -n openshift-config --insecure-skip-tls-verify=true 
 oc patch apiserver cluster --type=merge -p '{"spec":{"servingCerts": {"namedCertificates": [{"names": ["api.ocs.demo.local"], "servingCertificate": {"name": "api-secret"}}]}}}'
 
 # patch default ingress
-oc create secret tls router-certs-full --cert=fullchain.pem --key=key.pem -n openshift-ingress
+oc create secret tls router-certs-full --cert=/home/admin/workspace/ocs/_.apps.ocs.demo.local.pem --key=/home/admin/workspace/ocs/_.apps.ocs.demo.local.key.pem -n openshift-ingress
 oc patch ingresscontroller.operator default -n openshift-ingress-operator --type=merge --patch='{"spec": { "defaultCertificate": { "name": "router-certs-full" }}}'
 
 
