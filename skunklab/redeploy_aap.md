@@ -38,7 +38,7 @@ This can take up to 15 Minutes and multiple CSR´s apprals for the Cluster to re
 oc get csr -o go-template='{{range .items}}{{if not .status}}{{.metadata.name}}{{"\n"}}{{end}}{{end}}' | xargs oc adm certificate approve
 ```
 
-Rember to run this multiple times, until you [Openshift Console](https://console-openshift-console.apps.ocs.demo.local) is working and
+Rember to run this multiple times, until you [Openshift Console](https://console-openshift-console.apps.ocp.demo.local) is working and
 
 ```bash
 oc get nodes
