@@ -13,6 +13,7 @@
   tasks:
     - name: "Add {{ ppdm.infra.jt.reset_sysdr_boost }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.reset_sysdr_boost }}"
         description: resets SysDR Password for Boost Unit
         job_type: "run"
@@ -32,6 +33,7 @@
 
     - name: "Add {{ ppdm.infra.jt.sysdr_ppdm }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.sysdr_ppdm }}"
         description: Runs PPDM SysDr
         job_type: "run"
@@ -68,6 +70,7 @@
 
     - name: "Add {{ ppdm.infra.jt.sysdr_ppdm_approved }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.sysdr_ppdm_approved }}"
         description: Runs PPDM SysDr
         job_type: "run"

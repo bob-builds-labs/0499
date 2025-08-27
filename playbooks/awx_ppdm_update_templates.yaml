@@ -44,6 +44,7 @@
 
     - name: "Add {{ ppdm.infra.jt.upload_update }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.upload_update }}"
         description: Uploads the PPDM Update .pkg file from S3 to PPDM
         job_type: "run"
@@ -59,6 +60,7 @@
 
     - name: "Add {{ ppdm.infra.jt.precheck_update }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.precheck_update }}"
         description: Runs the Update Precheck
         job_type: "run"
@@ -74,6 +76,7 @@
 
     - name: "Add Update {{ ppdm.infra.jt.execute_update }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.execute_update }}"
         description: Runs the Update
         job_type: "run"
@@ -89,6 +92,7 @@
 
     - name: "Add {{ ppdm.infra.jt.update_history }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.update_history }}"
         description: Runs the Update
         job_type: "run"
@@ -104,6 +108,7 @@
 
     - name: "Add {{ ppdm.infra.jt.delete_update }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.delete_update }}"
         description: Runs the Update
         job_type: "run"
@@ -119,6 +124,7 @@
 
     - name: "Add Update {{ ppdm.infra.jt.execute_update }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.execute_update }}"
         description: Runs the Update
         job_type: "run"
@@ -276,6 +282,7 @@
 
     - name: "Add {{ ppdm.infra.jt.deploy_ppdm }}"
       job_template:
+        execution_environment: bob-execution-environment
         name: "{{ ppdm.infra.jt.deploy_ppdm }}"
         description: Deploys a PPDM from OVA 
         job_type: "run"
