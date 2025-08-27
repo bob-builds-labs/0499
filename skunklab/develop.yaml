@@ -138,12 +138,12 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "dellemc-ppdm-upgrade-sw-19.21.0-10.pkg",
+            "default": "dellemc-ppdm-upgrade-sw-19.21.0-11.pkg",
             "required": true,
             "variable": "package",
             "new_question": false,
             "question_name": "Package Name",
-            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.21.0-10.pkg"
+            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.21.0-11.pkg"
             }                       
           ]
           }
