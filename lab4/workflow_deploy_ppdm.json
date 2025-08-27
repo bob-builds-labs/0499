@@ -3,7 +3,7 @@
           {
                "name": "1 - Deploy and Configure PPDM-1",
                "description": "",
-               "extra_vars": "---\nppdm_timeZone: 'Europe/Berlin'\nppdm_ntp_server: \n    - 192.168.1.2\novf: dellemc-ppdm-sw-19.17.0-10.ova\nip0: '192.168.1.50'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.17",
+               "extra_vars": "---\nppdm_timeZone: 'Europe/Berlin'\nppdm_ntp_server: \n    - 192.168.1.2\novf: dellemc-ppdm-sw-19.21.0-10.ova\nip0: '192.168.1.50'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.21",
                "organization": null,
                "survey_enabled": false,
                "allow_simultaneous": false,
@@ -96,12 +96,12 @@
                          },
                          {
                               "extra_data": {
-                                   "ovf": "dellemc-ppdm-sw-19.17.0-10.ova",
+                                   "ovf": "dellemc-ppdm-sw-19.21.0-10.ova",
                                    "ip0": "192.168.1.50",
                                    "gateway": "192.168.1.1",
                                    "netmask0": "255.255.255.0",
                                    "DNS": "192.168.1.2",
-                                   "release": 19.17
+                                   "release": 19.21
                               },
                               "inventory": null,
                               "scm_branch": null,
@@ -194,7 +194,7 @@
           {
                "name": "1 - Deploy and Configure PPDM-2",
                "description": "",
-               "extra_vars": "---\nppdm_timeZone: 'Europe/Berlin'\nppdm_ntp_server: \n    - 192.168.1.2\novf: dellemc-ppdm-sw-19.17.0-10.ova\nip0: '192.168.1.53'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.17",
+               "extra_vars": "---\nppdm_timeZone: 'Europe/Berlin'\nppdm_ntp_server: \n    - 192.168.1.2\novf: dellemc-ppdm-sw-19.21.0-10.ova\nip0: '192.168.1.53'\ngateway: '192.168.1.1'\nnetmask0: '255.255.255.0'\nDNS: '192.168.1.2'\nrelease: 19.21",
                "organization": null,
                "survey_enabled": false,
                "allow_simultaneous": false,
@@ -287,12 +287,12 @@
                          },
                          {
                               "extra_data": {
-                                   "ovf": "dellemc-ppdm-sw-19.17.0-10.ova",
+                                   "ovf": "dellemc-ppdm-sw-19.21.0-10.ova",
                                    "ip0": "192.168.1.53",
                                    "gateway": "192.168.1.1",
                                    "netmask0": "255.255.255.0",
                                    "DNS": "192.168.1.2",
-                                   "release": 19.17
+                                   "release": 19.21
                               },
                               "inventory": null,
                               "scm_branch": null,

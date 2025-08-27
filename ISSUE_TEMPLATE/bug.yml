@@ -27,11 +27,12 @@ body:
   - type: dropdown
     id: branch-0499
     attributes:
-      label: Brach Version
+      label: Branch Version
       description: What is the 0499 Branch.
       options:
-        - "19.18"
-        - "19.17"
+        - "19.19"
+        - "19.20.0"
+        - "19.21"
         - main
     validations:
       required: true          
@@ -43,6 +44,9 @@ body:
       options:
         - "2.5"
         - "3.0"
+        - "3.2"
+        - "3.2"
+        - "3.5"
         - Development
     validations:
       required: true
