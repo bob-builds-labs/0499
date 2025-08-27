@@ -107,6 +107,26 @@
         - "{{ ppdm.agents.label }}"
       limit: launchpad           
 
+  - name: "Add {{ ppdm.agents.jt.aag_local_user }}"
+    job_template:
+      name: "{{ ppdm.agents.jt.aag_local_user }}"
+      description: Ensuring local sql service user and login exists in the master DB when usig AAG Hosts
+      job_type: "run"
+      organization: "{{ awx.org }}"
+      inventory: "{{ awx.inventory[0].name }}"
+      project: "{{ ppdm.project.name }}"
+      playbook: "120.0_ensure_mssql_aag_local_user.yaml"
+      state: "present"
+      ask_inventory_on_launch: true
+      ask_variables_on_launch: true
+      ask_limit_on_launch: true
+      extra_vars:
+        enable_ssms: 1
+      labels:
+        - "{{ ppdm.agents.label }}"
+      limit: 'windows:&databasehosts'   
+
+
   - name: "Add {{ ppdm.agents.jt.deploy }}"
     job_template:
       name: "{{ ppdm.agents.jt.deploy }}"
