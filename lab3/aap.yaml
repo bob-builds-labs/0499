@@ -2,6 +2,7 @@ apiVersion: v1
 kind: Secret
 metadata:
   name: delldps-democenter-pull-secret
+  namespace: aap
 data:
   .dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJxdWF5LmlvIjogewogICAgICAiYXV0aCI6ICJaR1ZzYkdSd2N5dGtaVzF2WTJWdWRHVnlPa05TUjBNelREVTRURkZHTTFJd1VWVTNUREpDTmxGU1NVSlVTamxQV0VGRU4wRkhWamhQVmxnMVVWbFVNRmxQVUZFelNsaE9NRlZVTlVkTlJEVlZWMHM9IiwKICAgICAgImVtYWlsIjogIiIKICAgIH0KICB9Cn0=
 type: kubernetes.io/dockerconfigjson
