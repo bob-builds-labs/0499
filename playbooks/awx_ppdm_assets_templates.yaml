@@ -22,7 +22,6 @@
 
     - name: "Add {{ ppdm.assets.jt.adhoc_protection  }}"
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.assets.jt.adhoc_protection  }}"
         description: AdHoc protection of Assets
         job_type: "run"
@@ -42,7 +41,6 @@
 
     - name: "Add {{ ppdm.assets.jt.query  }}"
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.assets.jt.query  }}"
         description: Query for Assets
         job_type: "run"

@@ -320,7 +320,6 @@
 
     - name: Create AWX deployment Job Template
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ awx.infra.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -338,7 +337,6 @@
 
     - name: Create PPDM Agents Job Templates
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.agents.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -356,7 +354,6 @@
 
     - name: Create PPDM Assets Job Templates
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.assets.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -371,7 +368,6 @@
 
     - name: Create PPDM update Job Templates
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.infra.update_job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -386,7 +382,6 @@
 
     - name: Create PPDM K8S Job Templates
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -402,7 +397,6 @@
 
     - name: Create Minio Instance Job
       job_template:
-        execution_environment: "{{ awx.execution_environment }}"
         name: "deploy minio to ansible host"
         job_type: "run"
         organization: "{{ awx.org }}"

@@ -24,7 +24,7 @@ spec:
   ee_images:
     - name: "Default execution environment"
       image: "quay.io/delldps/bob-ee-default:latest"
-    - name: "Minimal execution environmen"
+    - name: "Minimal execution environment"
       image: "quay.io/delldps/bob-ee-default:latest"
     - name: "Demolab Execution Environment"
       image: "quay.io/delldps/bob-ee-default:latest"
