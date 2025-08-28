@@ -303,9 +303,10 @@
         validate_certs: false
     - name: Set EE controller instance
       execution_environment:
-        name: "Control Plane Execution Environment"
+        name: "{{ awx.execution_environment }}"
         image: quay.io/dell-dps/bob-ee-default:latest
-        id: 3
+        organization: "{{ awx.org }}"
+
      
     - name: Create team {{ ppdm.agents.team.name }}
       team:
@@ -438,7 +439,7 @@
 
     - name: Create AWX deployment Job Template
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ awx.infra.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -456,7 +457,7 @@
 
     - name: Create PPDM Agents Job Templates
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.agents.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -474,7 +475,7 @@
 
     - name: Create PPDM Assets Job Templates
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.assets.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -489,7 +490,7 @@
 
     - name: Create PPDM update Job Templates
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.infra.update_job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -503,7 +504,7 @@
           - "{{ awx.infra.label }}"
     - name: Create PPDM Sysdr Job Templates
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.infra.sysdr_job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -518,7 +519,7 @@
 
     - name: Create PPDM K8S Job Templates
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.job_template }}"
         job_type: "run"
         organization: "{{ awx.org }}"
@@ -534,7 +535,7 @@
 
     - name: Create Minio Instance Job
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "deploy minio to ansible host"
         job_type: "run"
         organization: "{{ awx.org }}"

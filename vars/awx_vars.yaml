@@ -2,6 +2,7 @@ aap_username: "{{ lookup('env','AAP_USERNAME') }}"
 aap_password: "{{ lookup('env','AAP_PASSWORD') }}"
 aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
 awx:
+  execution_environment: Demolab Execution Environment
   git_credentials_name: ansible_git
   ansible_ppdm:
     git_credentials_name: ansible_ppdm_source

@@ -45,7 +45,7 @@
 
     - name: "Add {{ ppdm.k8s.jt.plc.list }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.plc.list}}"
         description: Get K8S Policies
         job_type: "run"
@@ -65,7 +65,7 @@
 
     - name: "Add {{ ppdm.k8s.jt.plc.create }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.plc.create}}"
         description: Get K8S Policies
         job_type: "run"
@@ -86,7 +86,7 @@
 
     - name: "Add {{ ppdm.k8s.jt.namespace.adhoc_protection }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"
         description: AdHoc Backup K8S Namespace
         job_type: "run"
@@ -159,7 +159,7 @@
 
     - name: "Add {{ ppdm.k8s.jt.namespace.state }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.namespace.state }}"
         description: Query Namespaces by Protection State
         job_type: "run"
@@ -238,7 +238,7 @@
 
     - name: "Add {{ ppdm.k8s.jt.namespace.query  }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.namespace.query }}"
         description: Query a specific K8S Namespace
         job_type: "run"
@@ -328,7 +328,7 @@
 
     - name: "Add {{ ppdm.k8s.jt.add_ppdm_rbac  }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.add_ppdm_rbac  }}"
         description: Add / Update Kubernetes Cluster to PPDM with RBAC
         job_type: "run"
@@ -350,7 +350,7 @@
           parallel_pvc_backup: false
     - name: Add {{ ppdm.k8s.jt.plc.create }} JT
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.plc.create}}"
         description: Get K8S Policies
         job_type: "run"
@@ -425,7 +425,7 @@
           }
     - name: "Add {{ ppdm.k8s.jt.namespace.add.name  }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.namespace.add.name }}"
         description: Add PPDM Namespace to PPDM Policy
         job_type: "run"
@@ -525,7 +525,7 @@
 
     - name: "Add {{ ppdm.k8s.jt.namespace.remove.name  }}"
       job_template:
-        execution_environment: bob-execution-environment
+        execution_environment: "{{ awx.execution_environment }}"
         name: "{{ ppdm.k8s.jt.namespace.remove.name }}"
         description: "{{ ppdm.k8s.jt.namespace.remove.description }}"
         job_type: "run"
