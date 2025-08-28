@@ -301,11 +301,25 @@
           }
         state: present
         validate_certs: false
+
+      
+    - name: "create Quay.io Registry Credential"
+      credential:
+        name: "delldps+democenter"
+        credential_type: "Container Registry"
+        organization: "{{ awx.org }}"
+        inputs:
+          host: "https://quay.io"
+          username: "delldps+democenter"
+          password: "CRGC3L58LQF3R0QU7L2B6QRIBTJ9OXAD7AGV8OVX5QYT0YOPQ3JXN0UT5GMD5UWK"
+        state: present
+
     - name: Set EE controller instance
       execution_environment:
         name: "{{ awx.execution_environment }}"
         image: quay.io/dell-dps/bob-ee-default:latest
         organization: "{{ awx.org }}"
+        credential: "delldps+democenter"
 
      
     - name: Create team {{ ppdm.agents.team.name }}
