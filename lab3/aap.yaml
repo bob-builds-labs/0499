@@ -19,7 +19,8 @@ metadata:
   namespace: aap
 spec:
   control_plane_ee_image: "quay.io/delldps/bob-ee-default:latest"
-  image_pull_secrets: cp-pull-credentials
+  image_pull_secrets: 
+    - cp-pull-credentials
   postgres_keepalives_count: 5
   postgres_keepalives_idle: 5
   metrics_utility_cronjob_report_schedule: '@monthly'
