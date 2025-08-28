@@ -1,11 +1,10 @@
 apiVersion: v1
 kind: Secret
 metadata:
-  name: cp-pull-credentials
-  namespace: aap
-type: kubernetes.io/dockerconfigjson
+  name: delldps-democenter-pull-secret
 data:
-  .dockerconfigjson: eyJhdXRocyI6IHsiaHR0cHM6Ly9xdWF5LmlvIjogeyJhdXRoIjogIlpHVnNiR1J3Y3l0a1pXMXZZMlZ1ZEdWeU9rTlNSME16VERVNFRGRkdNMUl3VVZVM1RESkNObEZTU1VKVVNqbFBXRUZFTjBGSFZqaFBWbGcxVVZsVU1GbFBVRkV6U2xoT01GVlVOVWROUkRWVlYwcz0ifX19
+  .dockerconfigjson: ewogICJhdXRocyI6IHsKICAgICJxdWF5LmlvIjogewogICAgICAiYXV0aCI6ICJaR1ZzYkdSd2N5dGtaVzF2WTJWdWRHVnlPa05TUjBNelREVTRURkZHTTFJd1VWVTNUREpDTmxGU1NVSlVTamxQV0VGRU4wRkhWamhQVmxnMVVWbFVNRmxQVUZFelNsaE9NRlZVTlVkTlJEVlZWMHM9IiwKICAgICAgImVtYWlsIjogIiIKICAgIH0KICB9Cn0=
+type: kubernetes.io/dockerconfigjson
 ---
 apiVersion: automationcontroller.ansible.com/v1beta1
 kind: AutomationController
@@ -20,7 +19,7 @@ metadata:
 spec:
   control_plane_ee_image: "quay.io/delldps/bob-ee-default:latest"
   image_pull_secrets: 
-    - cp-pull-credentials
+    - delldps-democenter-pull-secret
   postgres_keepalives_count: 5
   postgres_keepalives_idle: 5
   metrics_utility_cronjob_report_schedule: '@monthly'
