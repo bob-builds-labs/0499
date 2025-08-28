@@ -1,3 +1,12 @@
+apiVersion: v1
+kind: Secret
+metadata:
+  name: cp-pull-credentials
+  namespace: aap
+type: kubernetes.io/dockerconfigjson
+data:
+  .dockerconfigjson: eyJhdXRocyI6IHsiaHR0cHM6Ly9xdWF5LmlvIjogeyJhdXRoIjogIlpHVnNiR1J3Y3l0a1pXMXZZMlZ1ZEdWeU9rTlNSME16VERVNFRGRkdNMUl3VVZVM1RESkNObEZTU1VKVVNqbFBXRUZFTjBGSFZqaFBWbGcxVVZsVU1GbFBVRkV6U2xoT01GVlVOVWROUkRWVlYwcz0ifX19
+---
 apiVersion: automationcontroller.ansible.com/v1beta1
 kind: AutomationController
 metadata:
@@ -10,6 +19,8 @@ metadata:
   namespace: aap
 spec:
   control_plane_ee_image: "quay.io/delldps/bob-ee-default:latest"
+  image_pull_secrets:
+    - name: cp-pull-credentials
   postgres_keepalives_count: 5
   postgres_keepalives_idle: 5
   metrics_utility_cronjob_report_schedule: '@monthly'
