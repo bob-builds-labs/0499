@@ -22,9 +22,9 @@ spec:
   image_pull_secrets: 
     - delldps-democenter-pull-secret
   ee_images:
-    - name: "Default EE"
+    - name: "Default execution environment"
       image: "quay.io/delldps/bob-ee-default:latest"
-    - name: "Minimal EE"
+    - name: "Minimal execution environmen"
       image: "quay.io/delldps/bob-ee-default:latest"
     - name: "Demolab Execution Environment"
       image: "quay.io/delldps/bob-ee-default:latest"
