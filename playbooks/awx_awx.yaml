@@ -22,7 +22,7 @@
       msg: "{{ result }}"
       verbosity: 1
 
-    - name: Set CONTAINER Options
+  - name: Set CONTAINER Options
     settings:
       name: DEFAULT_CONTAINER_RUN_OPTIONS  
       value: '["--network","slirp4netns:enable_ipv6=false","--log-level","debug"]'
@@ -31,7 +31,7 @@
     retries: 10
     delay: 10
   
-    - debug: 
+  - debug: 
       msg: "{{ result }}"
       verbosity: 1
   - name: Set the Custom Login Info

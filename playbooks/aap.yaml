@@ -306,10 +306,7 @@
         name: "Control Plane Execution Environment"
         image: quay.io/dell-dps/bob-ee-default:latest
         id: 3
-    - name: Set EE controller instance
-      execution_environment:
-        name: "bob-execution-environment"
-        image: quay.io/dell-dps/bob-ee-default:latest        
+     
     - name: Create team {{ ppdm.agents.team.name }}
       team:
         name: "{{ ppdm.agents.team.name }}"
