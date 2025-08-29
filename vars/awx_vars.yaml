@@ -107,13 +107,16 @@ ppdm:
       patch_vmware_remote_dd: 120.9 Patch VM Policy to use Remote DD
       sql:
         name: 120.1 Create SQL Policy
-        description: Create SQL Policy  
+        description: Create SQL Policy
+        label: sql  
       exchange:
         name: 120.1 Create Exchange Policy
         description: Create Exchange Policy
+        label: exchange
       fs:
         name: 120.1 Create Filesystem Policy
-        description: Create Filesystem Policy                               
+        description: Create Filesystem Policy
+        label: filesystem                               
   infra:
     team:
       name: PPDM Infra Team

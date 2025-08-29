@@ -61,6 +61,10 @@
       state: "present"
       labels:
         - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.fs.label }}"
+        - "{{ ppdm.policy.jt.exchange.label }}"
+        - "{{ ppdm.policy.jt.sql.label }}"
+
       credentials:
         - "{{ ppdm.credentials[0].name }}"  
   - name: "Add {{ ppdm.agents.jt.download }}"
@@ -74,7 +78,10 @@
       ask_credential_on_launch: true
       state: "present"
       labels:
-        - "{{ ppdm.agents.label }}"        
+        - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.fs.label }}"
+        - "{{ ppdm.policy.jt.exchange.label }}"
+        - "{{ ppdm.policy.jt.sql.label }}"                
       credentials:
         - "{{ ppdm.credentials[0].name }}" 
   - name: "Add {{ ppdm.agents.jt.set_dns}}"
@@ -89,6 +96,9 @@
       state: "present"
       labels:
         - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.fs.label }}"
+        - "{{ ppdm.policy.jt.exchange.label }}"
+        - "{{ ppdm.policy.jt.sql.label }}"        
       credentials:
         - "{{ ppdm.credentials[0].name }}"          
   - name: "Add {{ ppdm.agents.jt.clear_hosts }}"
@@ -105,6 +115,7 @@
       ask_limit_on_launch: true
       labels:
         - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.fs.label }}"       
       limit: launchpad           
 
   - name: "Add {{ ppdm.agents.jt.aag_local_user }}"
@@ -124,6 +135,7 @@
         enable_ssms: 1
       labels:
         - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.sql.label }}"        
       limit: 'windows:&databasehosts'   
 
 
@@ -145,6 +157,9 @@
       state: "present"
       labels:
         - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.fs.label }}"
+        - "{{ ppdm.policy.jt.exchange.label }}"
+        - "{{ ppdm.policy.jt.sql.label }}"        
       credentials:
         - "{{ ppdm.credentials[0].name }}"        
 
@@ -164,6 +179,9 @@
       state: "present"
       labels:
         - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.fs.label }}"
+        - "{{ ppdm.policy.jt.exchange.label }}"
+        - "{{ ppdm.policy.jt.sql.label }}"        
       credentials:
         - "{{ ppdm.credentials[0].name }}"
 
@@ -184,6 +202,9 @@
       state: "present"
       labels:
         - "{{ ppdm.agents.label }}"
+        - "{{ ppdm.policy.jt.fs.label }}"
+        - "{{ ppdm.policy.jt.exchange.label }}"
+        - "{{ ppdm.policy.jt.sql.label }}"        
       credentials:
         - "{{ ppdm.credentials[0].name }}"                   
 

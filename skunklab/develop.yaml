@@ -23,6 +23,8 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+
         credentials:
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
@@ -43,6 +45,8 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.exchange.fs.label }}"
+
         credentials:
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
@@ -63,6 +67,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
