@@ -51,7 +51,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
-          - "{{ ppdm.policy.exchange.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
 
         credentials:
           - "{{ ppdm.credentials[0].name }}"
