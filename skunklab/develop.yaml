@@ -25,6 +25,7 @@
           - "{{ ppdm.assets.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
         extra_vars:
           policy_name=: SQL_DEMO    
         ask_variables_on_launch: true
