@@ -31,9 +31,29 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.policy.jt.exchange.name  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.name   }}"
+        description: "{{ ppdm.policy.jt.exchange.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.1_playbook_add_exchange_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          policy_name=: Exchange_DEMO    
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
     - name: "Give {{ ppdm.agents.user_1.username }} permissions"
       role:
         user: "{{ ppdm.agents.user_1.username }}"    
         role: execute
         job_templates:
           - "{{ ppdm.policy.jt.sql.name }}"
+          - "{{ ppdm.policy.jt.exchange.name }}"
