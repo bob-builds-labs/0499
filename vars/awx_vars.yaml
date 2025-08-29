@@ -110,7 +110,10 @@ ppdm:
         description: Create SQL Policy  
       exchange:
         name: 120.1 Create Exchange Policy
-        description: Create Exchange Policy                  
+        description: Create Exchange Policy
+      fs:
+        name: 120.1 Create Filesystem Policy
+        description: Create Filesystem Policy                               
   infra:
     team:
       name: PPDM Infra Team
