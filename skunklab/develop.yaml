@@ -15,7 +15,7 @@
       label:
         name: "{{ item }}"
         organization: "{{ awx.org }}"
-      loop: "{{ labels_to_add }}"
+      loop: "{{ awx.labels_to_add }}"
 
     - name: "Add {{ ppdm.policy.jt.sql.name  }}"
       job_template:
