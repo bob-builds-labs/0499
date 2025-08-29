@@ -23,7 +23,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
-          - "{{ ppdm.policy.jt.sql.name.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -40,4 +40,5 @@
         job_templates:
           - "{{ ppdm.policy.jt.sql.name }}"
           - "{{ ppdm.policy.jt.exchange.name }}"
-          - "{{ ppdm.policy.jt.fs.name }}"          
+          - "{{ ppdm.policy.jt.fs.name }}"
+          - "{{ ppdm.assets.jt.sql.query.name  }}"          
