@@ -11,10 +11,10 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Add {{ ppdm.assets.jt.sql.query.name  }}"
+    - name: "Add {{ ppdm.assets.jt.sql.query.name }}"
       job_template:
-        name: "{{ ppdm.assets.jt.sql.query.name  }}"
-        description: "{{ ppdm.assets.jt.sql.query.description  }}"
+        name: "{{ ppdm.assets.jt.sql.query.name }}"
+        description: "{{ ppdm.assets.jt.sql.query.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
@@ -31,7 +31,105 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.assets.jt.exchange.query.name }}"
+      job_template:
+        name: "{{ ppdm.assets.jt.exchange.query.name }}"
+        description: "{{ ppdm.assets.jt.exchange.query.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: type eq "MICROSOFT_EXCHANGE_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.assets.jt.fs.query.name }}"
+      job_template:
+        name: "{{ ppdm.assets.jt.fs.query.name }}"
+        description: "{{ ppdm.assets.jt.fs.query.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: type eq "FILE_SYSTEM" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.agents.jt.fs.whitelist.name }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.fs.whitelist.name }}"
+        description: "{{ ppdm.agents.jt.fs.whitelist.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          host_list: launchpad.demo.local
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.agents.jt.sql.whitelist.name }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.sql.whitelist.name }}"
+        description: "{{ ppdm.agents.jt.sql.whitelist.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          host_list: SQL02.demo.local,SQL01.demo.local
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.agents.jt.exchange.whitelist.name }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.exchange.whitelist.name }}"
+        description: "{{ ppdm.agents.jt.exchange.whitelist.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          host_list: exchange1.demo.local,exchange2.demo.local
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
     - name: "Give {{ ppdm.agents.user_1.username }} permissions"
       role:
@@ -41,4 +139,9 @@
           - "{{ ppdm.policy.jt.sql.name }}"
           - "{{ ppdm.policy.jt.exchange.name }}"
           - "{{ ppdm.policy.jt.fs.name }}"
-          - "{{ ppdm.assets.jt.sql.query.name  }}"          
+          - "{{ ppdm.assets.jt.sql.query.name }}"
+          - "{{ ppdm.assets.jt.exchange.query.name }}" 
+          - "{{ ppdm.assets.jt.fs.query.name }}"
+          - "{{ ppdm.agents.jt.exchange.whitelist.name }}"
+          - "{{ ppdm.agents.jt.sql.whitelist.name }}"
+          - "{{ ppdm.agents.jt.fs.whitelist.name }}"                   

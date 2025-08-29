@@ -85,13 +85,27 @@ ppdm:
     job_template: deploy ppdm assets templates
     label: ppdm_assets
     jt:
+      exchange:
+        query:
+          name: 120.2 Query unprotected Exchange Assets
+          description: This will query unprotected Exchange Assets
+        assign:
+          name: 120.3 Assign unprotected Exchange Assets to Policy
+          description: This will Assign unprotected Exchange Assets to Exchange Policy      
       sql:
         query:
           name: 120.2 Query unprotected SQL Assets
           description: This will query unprotected SQL Assets
         assign:
           name: 120.3 Assign unprotected SQL Assets to Policy
-          description: This will Assign unprotected SQL Assets to SQL Policy      
+          description: This will Assign unprotected SQL Assets to SQL Policy          
+      fs:     
+        query:
+          name: 120.2 Query unprotected Filesystem Assets
+          description: This will query unprotected Filesystem Assets
+        assign:
+          name: 120.3 Assign unprotected Filesystem Assets to Policy
+          description: This will Assign unprotected Filesystem Assets to Filesystem Policy      
       query: 30.0 Query Assets
       adhoc_protection: 130.0 AdHoc Asset Protection
   agents:
@@ -113,6 +127,18 @@ ppdm:
       approve: 100.4 Create Whitelist Entry from Address Query
       uninstall: 100.9 Uninstall Windows Agent
       aag_local_user: 100.2 Set AAG Local user in DB
+      sql:
+        approve: 
+          name: 100.4 Create SQL Whitelist Entry from Address Query
+          description: Approve SQL Agents
+      exchange:
+        approve: 
+          name: 100.4 Create Exchange Whitelist Entry from Address Query
+          description: Approve Exchange Agents
+      fs:
+        approve: 
+          name: 100.4 Create Filesystem Whitelist Entry from Address Query
+          description: Approve Filesystem Agents                    
   policy:
     jt:
       patch_vmware_local_dd: 120.9 Patch VM Policy to use Local DD 
