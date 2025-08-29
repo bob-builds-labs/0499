@@ -27,7 +27,7 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          policy_name=: SQL_DEMO
+          policy_name: SQL_DEMO
           asset_filter: type eq "MICROSOFT_SQL_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"    
         ask_variables_on_launch: true
         ask_credential_on_launch: true
@@ -48,7 +48,7 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          policy_name=: Exchange_DEMO
+          policy_name: Exchange_DEMO
           asset_filter: type eq "MICROSOFT_EXCHANGE_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows" 
         ask_variables_on_launch: true
         ask_credential_on_launch: true
@@ -69,7 +69,7 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          policy_name=: Filesystem_DEMO
+          policy_name: Filesystem_DEMO
           asset_filter: type eq "FILE_SYSTEM" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"  
         ask_variables_on_launch: true
         ask_credential_on_launch: true

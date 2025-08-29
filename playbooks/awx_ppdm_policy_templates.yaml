@@ -205,7 +205,7 @@
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
         extra_vars:
-          policy_name=: SQL_DEMO
+          policy_name: SQL_DEMO
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
@@ -227,7 +227,7 @@
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
         extra_vars:
-          policy_name=: Exchange_DEMO
+          policy_name: Exchange_DEMO
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
@@ -248,7 +248,7 @@
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
         extra_vars:
-          policy_name=: Filesystem_DEMO
+          policy_name: Filesystem_DEMO
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
