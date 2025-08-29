@@ -57,3 +57,71 @@
           asset_filter: protectionStatus eq "{{  "{{ " }}protection_state{{ " }}" }}" and type eq "KUBERNETES" and subtype eq "K8S_NAMESPACE" and details.k8s.inventorySourceName eq "{{ "{{ " }}k8s_name{{ " }}" }}"
         ask_variables_on_launch: true
         ask_credential_on_launch: true
+    - name: "Add {{ ppdm.assets.jt.sql.query.name }}"
+      job_template:
+        name: "{{ ppdm.assets.jt.sql.query.name }}"
+        description: "{{ ppdm.assets.jt.sql.query.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: type eq "MICROSOFT_SQL_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.assets.jt.exchange.query.name }}"
+      job_template:
+        name: "{{ ppdm.assets.jt.exchange.query.name }}"
+        description: "{{ ppdm.assets.jt.exchange.query.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: type eq "MICROSOFT_EXCHANGE_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.assets.jt.fs.query.name }}"
+      job_template:
+        name: "{{ ppdm.assets.jt.fs.query.name }}"
+        description: "{{ ppdm.assets.jt.fs.query.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "30.0-playbook_get_assets.yml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          asset_filter: type eq "FILE_SYSTEM" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Give {{ ppdm.agents.user_1.username }} permissions"
+      role:
+        user: "{{ ppdm.agents.user_1.username }}"    
+        role: execute
+        job_templates:
+          - "{{ ppdm.agents.jt.exchange.approve.name }}"
+          - "{{ ppdm.agents.jt.sql.approve.name }}"
+          - "{{ ppdm.agents.jt.fs.approve.name }}"                   

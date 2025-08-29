@@ -9,16 +9,16 @@
     - ansible.controller
     - awx.awx
   tasks:
- #   - name: Add {{ ppdm.assets.label }} label to organization {{ awx.org }}
- #     label:
- #       name: "{{ ppdm.assets.label }}"
- #       organization: "{{ awx.org }}"
- #   - name: Create team {{ ppdm.agents.team.name }}
- #     team:
- #       name: "{{ ppdm.agents.team.name }}"
- #       description: "{{ ppdm.agents.team.description }}"
- #       organization: "{{ awx.org }}"
- #       state: present
+    #   - name: Add {{ ppdm.assets.label }} label to organization {{ awx.org }}
+    #     label:
+    #       name: "{{ ppdm.assets.label }}"
+    #       organization: "{{ awx.org }}"
+    #   - name: Create team {{ ppdm.agents.team.name }}
+    #     team:
+    #       name: "{{ ppdm.agents.team.name }}"
+    #       description: "{{ ppdm.agents.team.description }}"
+    #       organization: "{{ awx.org }}"
+    #       state: present
 
     - name: "Add {{ ppdm.policy.jt.patch_vmware_local_dd  }}"
       job_template:
@@ -35,9 +35,9 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          protection_policy_patch: 
+          protection_policy_patch:
             name: vm image crash consistent
-            description: 'Crash consistent Policy writing to local DD'
+            description: "Crash consistent Policy writing to local DD"
             purpose: CENTRALIZED
             assetType: VMWARE_VIRTUAL_MACHINE
             disabled: false
@@ -52,7 +52,7 @@
                         pattern:
                           type: DAILY
                       window:
-                        startTime: '2024-02-27T20:00:00.000Z'
+                        startTime: "2024-02-27T20:00:00.000Z"
                         duration: PT8H
                     triggerType: ON_SCHEDULE
                 target:
@@ -100,7 +100,7 @@
                       - unitValue: 1
                         unitType: MONTH
                         type: RETENTION
-            id: 4d795f97-37be-491f-8c11-d2cf880e819e            
+            id: 4d795f97-37be-491f-8c11-d2cf880e819e
         ask_variables_on_launch: false
         ask_credential_on_launch: true
     - name: "Add {{ ppdm.policy.jt.patch_vmware_remote_dd  }}"
@@ -120,7 +120,7 @@
         extra_vars:
           protection_policy_patch:
             name: vm image crash consistent
-            description: 'Crash consitent Policy running on DR site'
+            description: "Crash consitent Policy running on DR site"
             purpose: CENTRALIZED
             assetType: VMWARE_VIRTUAL_MACHINE
             disabled: false
@@ -135,7 +135,7 @@
                         pattern:
                           type: DAILY
                       window:
-                        startTime: '2024-02-27T20:00:00.000Z'
+                        startTime: "2024-02-27T20:00:00.000Z"
                         duration: PT8H
                     triggerType: ON_SCHEDULE
                 target:
@@ -183,15 +183,9 @@
                       - unitValue: 1
                         unitType: MONTH
                         type: RETENTION
-            id: 4d795f97-37be-491f-8c11-d2cf880e819e          
+            id: 4d795f97-37be-491f-8c11-d2cf880e819e
         ask_variables_on_launch: false
         ask_credential_on_launch: true
-
-    - name: Add labels to organization {{ awx.org }}
-      label:
-        name: "{{ item }}"
-        organization: "{{ awx.org }}"
-      loop: "{{ awx.labels_to_add }}"
 
     - name: "Add {{ ppdm.policy.jt.sql.name  }}"
       job_template:
@@ -211,7 +205,7 @@
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
         extra_vars:
-          policy_name=: SQL_DEMO    
+          policy_name=: SQL_DEMO
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
@@ -233,7 +227,7 @@
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
         extra_vars:
-          policy_name=: Exchange_DEMO    
+          policy_name=: Exchange_DEMO
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
@@ -254,6 +248,15 @@
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
         extra_vars:
-          policy_name=: Filesystem_DEMO    
+          policy_name=: Filesystem_DEMO
         ask_variables_on_launch: true
         ask_credential_on_launch: true
+
+    - name: "Give {{ ppdm.agents.user_1.username }} permissions"
+      role:
+        user: "{{ ppdm.agents.user_1.username }}"
+        role: execute
+        job_templates:
+          - "{{ ppdm.policy.jt.sql.name }}"
+          - "{{ ppdm.policy.jt.exchange.name }}"
+          - "{{ ppdm.policy.jt.fs.name }}"
