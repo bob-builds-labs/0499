@@ -118,21 +118,15 @@
         name: "{{ awx.infra.label }}"
         organization: "{{ awx.org }}"
 
-    - name: Add {{ ppdm.policy.exchange.label }} label to organization {{ awx.org }}
-      label:
-        name: "{{ ppdm.policy.exchange.label }}"
-        organization: "{{ awx.org }}"
-
-    - name: Add {{ ppdm.policy.sql.label }} label to organization {{ awx.org }}
-      label:
-        name: "{{ ppdm.policy.sql.label }}"
-        organization: "{{ awx.org }}"
-
-    - name: Add {{ ppdm.policy.fs.label }} label to organization {{ awx.org }}
-      label:
-        name: "{{ ppdm.policy.fs.label }}"
-        organization: "{{ awx.org }}"
-
+    - name: "Give {{ ppdm.agents.user_1.username }} permissions"
+      role:
+        user: "{{ ppdm.agents.user_1.username }}"    
+        role: execute
+        job_templates:
+          - "{{ ppdm.policy.jt.sql.name }}"
+          - "{{ ppdm.policy.jt.exchange.name }}"
+          - "{{ ppdm.policy.jt.fs.name }}"
+                    
     - name: Create RH Subscription Credential Type
       credential_type:
         name: RedHat Subscription Credentials

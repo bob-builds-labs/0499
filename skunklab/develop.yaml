@@ -82,8 +82,6 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-
-
     - name: "Give {{ ppdm.agents.user_1.username }} permissions"
       role:
         user: "{{ ppdm.agents.user_1.username }}"    
