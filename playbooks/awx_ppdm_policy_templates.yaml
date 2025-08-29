@@ -317,6 +317,69 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.policy.jt.sql.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.start.name }}"
+        description: "{{ ppdm.policy.jt.sql.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+          policy_type: MICROSOFT_SQL_DATABASE 
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.exchange.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.start.name }}"
+        description: "{{ ppdm.policy.jt.exchange.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+          policy_type: MICROSOFT_EXCHANGE_DATABASE
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.fs.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.start.name }}"
+        description: "{{ ppdm.policy.jt.fs.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+          policy_type: FILE_SYSTEM
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
     - name: "Give {{ ppdm.agents.user_1.username }} permissions"
       role:
         user: "{{ ppdm.agents.user_1.username }}"
@@ -328,3 +391,6 @@
           - "{{ ppdm.policy.jt.sql.asset.add.name }}"
           - "{{ ppdm.policy.jt.fs.asset.add.name }}"
           - "{{ ppdm.policy.jt.exchange.asset.add.name }}"
+          - "{{ ppdm.policy.jt.exchange.start.name }}"
+          - "{{ ppdm.policy.jt.sql.start.name }}"
+          - "{{ ppdm.policy.jt.fs.start.name }}"
