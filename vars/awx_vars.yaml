@@ -104,7 +104,10 @@ ppdm:
   policy:
     jt:
       patch_vmware_local_dd: 120.9 Patch VM Policy to use Local DD 
-      patch_vmware_remote_dd: 120.9 Patch VM Policy to use Remote DD       
+      patch_vmware_remote_dd: 120.9 Patch VM Policy to use Remote DD
+    sql:
+      name: 120.1 Create SQL Policy
+      description: Create SQL Policy         
   infra:
     team:
       name: PPDM Infra Team
