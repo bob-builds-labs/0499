@@ -71,10 +71,10 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: "Add {{ ppdm.agents.jt.fs.whitelist.name }}"
+    - name: "Add {{ ppdm.agents.jt.fs.approve.name }}"
       job_template:
-        name: "{{ ppdm.agents.jt.fs.whitelist.name }}"
-        description: "{{ ppdm.agents.jt.fs.whitelist.description }}"
+        name: "{{ ppdm.agents.jt.fs.approve.name }}"
+        description: "{{ ppdm.agents.jt.fs.approve.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
@@ -91,10 +91,10 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: "Add {{ ppdm.agents.jt.sql.whitelist.name }}"
+    - name: "Add {{ ppdm.agents.jt.sql.approve.name }}"
       job_template:
-        name: "{{ ppdm.agents.jt.sql.whitelist.name }}"
-        description: "{{ ppdm.agents.jt.sql.whitelist.description }}"
+        name: "{{ ppdm.agents.jt.sql.approve.name }}"
+        description: "{{ ppdm.agents.jt.sql.approve.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
@@ -111,10 +111,10 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
-    - name: "Add {{ ppdm.agents.jt.exchange.whitelist.name }}"
+    - name: "Add {{ ppdm.agents.jt.exchange.approve.name }}"
       job_template:
-        name: "{{ ppdm.agents.jt.exchange.whitelist.name }}"
-        description: "{{ ppdm.agents.jt.exchange.whitelist.description }}"
+        name: "{{ ppdm.agents.jt.exchange.approve.name }}"
+        description: "{{ ppdm.agents.jt.exchange.approve.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
@@ -142,6 +142,6 @@
           - "{{ ppdm.assets.jt.sql.query.name }}"
           - "{{ ppdm.assets.jt.exchange.query.name }}" 
           - "{{ ppdm.assets.jt.fs.query.name }}"
-          - "{{ ppdm.agents.jt.exchange.whitelist.name }}"
-          - "{{ ppdm.agents.jt.sql.whitelist.name }}"
-          - "{{ ppdm.agents.jt.fs.whitelist.name }}"                   
+          - "{{ ppdm.agents.jt.exchange.approve.name }}"
+          - "{{ ppdm.agents.jt.sql.approve.name }}"
+          - "{{ ppdm.agents.jt.fs.approve.name }}"                   
