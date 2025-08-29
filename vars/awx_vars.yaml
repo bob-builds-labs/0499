@@ -85,6 +85,13 @@ ppdm:
     job_template: deploy ppdm assets templates
     label: ppdm_assets
     jt:
+      sql:
+        query:
+          name: 120.2 Query unprotected SQL Assets
+          description: This will query unprotected SQL Assets
+        assign:
+          name: 120.3 Assign unprotected SQL Assets to Policy
+          description: This will Assign unprotected SQL Assets to SQL Policy      
       query: 30.0 Query Assets
       adhoc_protection: 130.0 AdHoc Asset Protection
   agents:
