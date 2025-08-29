@@ -324,6 +324,15 @@
           - "{{ ppdd.credentials[0].name }}"
         extra_vars:
           policy_name: Filesystem_DEMO
+          debugEnabled: False
+          indexingEnabled: True
+          systemStateRecoveryOnly: True
+          ignoreMissingSystemStateFiles: True
+          excludeNonCriticalDynamicDisks: True
+          ignoreThirdPartyServices: True
+          anomalyDetectionEnabled: True
+          skipUnprotectableState: True
+
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
