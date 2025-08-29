@@ -1,11 +1,11 @@
 aap_username: "{{ lookup('env','AAP_USERNAME') }}"
 aap_password: "{{ lookup('env','AAP_PASSWORD') }}"
 aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
+labels_to_add:
+  - "{{ ppdm.policy.exchange.label }}"
+  - "{{ ppdm.policy.sql.label }}"
+  - "{{ ppdm.policy.fs.label }}"
 awx:
-  labels_to_add:
-    - "{{ ppdm.policy.exchange.label }}"
-    - "{{ ppdm.policy.sql.label }}"
-    - "{{ ppdm.policy.fs.label }}"
   execution_environment: Demolab Execution Environment
   git_credentials_name: ansible_git
   ansible_ppdm:

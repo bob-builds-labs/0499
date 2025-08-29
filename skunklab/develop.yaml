@@ -11,14 +11,11 @@
   vars:
     filename: tower.filename
   tasks:
-
-
     - name: Add labels to organization {{ awx.org }}
       label:
         name: "{{ item }}"
         organization: "{{ awx.org }}"
-      loop: "{{ awx.labels_to_add }}"
-
+      loop: "{{ labels_to_add }}"
 
     - name: "Add {{ ppdm.policy.jt.sql.name  }}"
       job_template:
