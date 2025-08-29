@@ -147,6 +147,9 @@ ppdm:
         name: 120.1 Create SQL Policy
         description: Create SQL Policy
         label: sql 
+        start:
+          description:  Start SQL Policy     
+          name: 120.3 Start SQL Policy            
         asset:
           add:
             description:  Add SQL Assets to SQL Policy     
@@ -155,6 +158,9 @@ ppdm:
         name: 120.1 Create Exchange Policy
         description: Create Exchange Policy
         label: exchange
+        start:
+          description:  Start Exchange Policy     
+          name: 120.3 Start Exchange Policy            
         asset:
           add:
             description:  Add Exchange Assets to Exchange Policy  
@@ -163,6 +169,9 @@ ppdm:
         name: 120.1 Create Filesystem Policy
         description: Create Filesystem Policy
         label: filesystem  
+        start:
+          description:  Start FS Policy     
+          name: 120.3 Start FS Policy            
         asset:
           add:
             description: Add Filesystem Assets to Filesystem Policy      

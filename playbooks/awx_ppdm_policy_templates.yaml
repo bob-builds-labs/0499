@@ -252,6 +252,71 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
+
+
+    - name: "Add {{ ppdm.policy.jt.sql.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.sql.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+          asset_filter: type eq "MICROSOFT_SQL_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"    
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.exchange.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.exchange.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+          asset_filter: type eq "MICROSOFT_EXCHANGE_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows" 
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.fs.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.fs.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+          asset_filter: type eq "FILE_SYSTEM" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"  
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
     - name: "Give {{ ppdm.agents.user_1.username }} permissions"
       role:
         user: "{{ ppdm.agents.user_1.username }}"
@@ -260,3 +325,6 @@
           - "{{ ppdm.policy.jt.sql.name }}"
           - "{{ ppdm.policy.jt.exchange.name }}"
           - "{{ ppdm.policy.jt.fs.name }}"
+          - "{{ ppdm.policy.jt.sql.asset.add.name }}"
+          - "{{ ppdm.policy.jt.fs.asset.add.name }}"
+          - "{{ ppdm.policy.jt.exchange.asset.add.name }}"
