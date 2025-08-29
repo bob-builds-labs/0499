@@ -3,288 +3,478 @@
   hosts: localhost
   connection: local
   vars:
-  vars_files: 
+  vars_files:
     - ../vars/awx_vars.yaml
 
   collections:
     - ansible.controller
     - awx.awx
   tasks:
- 
-  - name: Add {{ ppdm.agents.label }} label to organization {{ awx.org }}
-    label:
-      name: "{{ ppdm.agents.label }}"
-      organization: "{{ awx.org }}"    
-  - name: Create team {{ ppdm.agents.team.name }}
-    team:
-      name: "{{ ppdm.agents.team.name }}"
-      description: "{{ ppdm.agents.team.description }}"
-      organization: "{{ awx.org }}"
-      state: present
-    register: result   
+    - name: Add {{ ppdm.agents.label }} label to organization {{ awx.org }}
+      label:
+        name: "{{ ppdm.agents.label }}"
+        organization: "{{ awx.org }}"
+    - name: Create team {{ ppdm.agents.team.name }}
+      team:
+        name: "{{ ppdm.agents.team.name }}"
+        description: "{{ ppdm.agents.team.description }}"
+        organization: "{{ awx.org }}"
+        state: present
+      register: result
 
-  - name: Lookup {{ ppdm.agents.team.name }}  
-    set_fact:
-      team: "{{ lookup('ansible.controller.controller_api', 'teams', query_params={ 'name': ppdm.agents.team.name  }) }}"
+    - name: Lookup {{ ppdm.agents.team.name }}
+      set_fact:
+        team: "{{ lookup('ansible.controller.controller_api', 'teams', query_params={ 'name': ppdm.agents.team.name  }) }}"
 
+    - name: Add user to organization {{ awx.org }}
+      user:
+        username: "{{ ppdm.agents.user_1.username }}"
+        password: "{{ ppdm.agents.user_1.password }}"
+        email: "{{ ppdm.agents.user_1.email }}"
+        organization: "{{ awx.org }}"
+        state: present
+        update_secrets: true
 
-  - name: Add user to organization {{ awx.org }}
-    user:
-      username: "{{ ppdm.agents.user_1.username }}"
-      password: "{{ ppdm.agents.user_1.password }}"
-      email: "{{ ppdm.agents.user_1.email }}"
-      organization: "{{ awx.org }}"
-      state: present
-      update_secrets: true
+    - name: Give {{ ppdm.agents.user_1.username }} permissions
+      role:
+        role: member
+        #      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
+        teams:
+          - "{{ team.id }}"
+        user: "{{ ppdm.agents.user_1.username }}"
+        state: present
 
+    - name: "Add {{ ppdm.agents.jt.list }} Job Template"
+      job_template:
+        name: "{{ ppdm.agents.jt.list }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.0_list_agents.yml"
+        ask_credential_on_launch: true
+        state: "present"
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
 
-  - name: Give {{ ppdm.agents.user_1.username }} permissions
-    role:
-      role: member
-#      object_ansible_id: "{{ team.summary_fields.resource.ansible_id | int }}"
-      teams: 
-        - "{{ team.id }}"
-      user: "{{ ppdm.agents.user_1.username }}"
-      state: present
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+    - name: "Add {{ ppdm.agents.jt.download }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.download }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.1_download_agents_s3.yml"
+        ask_credential_on_launch: true
+        state: "present"
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+    - name: "Add {{ ppdm.agents.jt.set_dns}}"
+      job_template:
+        name: "{{ ppdm.agents.jt.set_dns}}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.2_set_dns_for_agents.yaml"
+        ask_credential_on_launch: true
+        state: "present"
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+    - name: "Add {{ ppdm.agents.jt.clear_hosts }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.clear_hosts }}"
+        description: Delete wrong localhost entries
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
+        state: "present"
+        ask_inventory_on_launch: true
+        ask_limit_on_launch: true
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        limit: launchpad
 
+    - name: "Add {{ ppdm.agents.jt.aag_local_user }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.aag_local_user }}"
+        description: Ensuring local sql service user and login exists in the master DB when usig AAG Hosts
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.0_ensure_mssql_aag_local_user.yaml"
+        state: "present"
+        ask_inventory_on_launch: true
+        ask_variables_on_launch: true
+        ask_limit_on_launch: true
+        extra_vars:
+          enable_ssms: 1
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        limit: "windows:&databasehosts"
 
+    - name: "Add {{ ppdm.agents.jt.deploy }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.deploy }}"
+        description: Copy and deploy PPDM Agents from S3 Storage
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.3_playbook_copy_and_deploy_windows_agent_s3.yaml"
+        extra_vars:
+          release: "{{ ppdm.release }}"
+        ask_credential_on_launch: true
+        ask_variables_on_launch: true
+        ask_inventory_on_launch: true
+        ask_limit_on_launch: true
+        state: "present"
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
 
-  - name: "Add {{ ppdm.agents.jt.list }} Job Template"
-    job_template:
-      name: "{{ ppdm.agents.jt.list }}"
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.0_list_agents.yml"
-      ask_credential_on_launch: true
-      state: "present"
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"
-        - "{{ ppdm.policy.jt.exchange.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"
+    - name: "Add {{ ppdm.agents.jt.approve }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.approve }}"
+        description: Approve Agents via Whitelist
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
+        extra_vars:
+          host_list: launchpad.demo.local
+        ask_credential_on_launch: true
+        ask_variables_on_launch: true
+        state: "present"
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
 
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"  
-  - name: "Add {{ ppdm.agents.jt.download }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.download }}"
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.1_download_agents_s3.yml"
-      ask_credential_on_launch: true
-      state: "present"
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"
-        - "{{ ppdm.policy.jt.exchange.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"                
-      credentials:
-        - "{{ ppdm.credentials[0].name }}" 
-  - name: "Add {{ ppdm.agents.jt.set_dns}}"
-    job_template:
-      name: "{{ ppdm.agents.jt.set_dns}}"
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.2_set_dns_for_agents.yaml"
-      ask_credential_on_launch: true
-      state: "present"
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"
-        - "{{ ppdm.policy.jt.exchange.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"        
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"          
-  - name: "Add {{ ppdm.agents.jt.clear_hosts }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.clear_hosts }}"
-      description: Delete wrong localhost entries
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.3_playbook_clear_hosts_windows_agent.yaml"
-      state: "present"
-      ask_inventory_on_launch: true
-      ask_limit_on_launch: true
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"       
-      limit: launchpad           
+    - name: "Add {{ ppdm.agents.jt.uninstall }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.uninstall }}"
+        description: Remove Windows Agent
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.9_playbook-uninstall-windows_agent_s3.yaml"
+        extra_vars:
+          release: "{{ ppdm.release }}"
+        ask_variables_on_launch: true
+        ask_inventory_on_launch: true
+        ask_limit_on_launch: true
+        state: "present"
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
 
-  - name: "Add {{ ppdm.agents.jt.aag_local_user }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.aag_local_user }}"
-      description: Ensuring local sql service user and login exists in the master DB when usig AAG Hosts
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "120.0_ensure_mssql_aag_local_user.yaml"
-      state: "present"
-      ask_inventory_on_launch: true
-      ask_variables_on_launch: true
-      ask_limit_on_launch: true
-      extra_vars:
-        enable_ssms: 1
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"        
-      limit: 'windows:&databasehosts'   
+    - name: "Add {{ ppdm.agents.jt.fs.approve.name }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.fs.approve.name }}"
+        description: "{{ ppdm.agents.jt.fs.approve.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          host_list: launchpad.demo.local
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.agents.jt.sql.approve.name }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.sql.approve.name }}"
+        description: "{{ ppdm.agents.jt.sql.approve.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          host_list: SQL02.demo.local,SQL01.demo.local
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
-  - name: "Add {{ ppdm.agents.jt.deploy }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.deploy }}"
-      description: Copy and deploy PPDM Agents from S3 Storage
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.3_playbook_copy_and_deploy_windows_agent_s3.yaml"
-      extra_vars: 
-        release: "{{ ppdm.release }}"
-      ask_credential_on_launch: true
-      ask_variables_on_launch: true
-      ask_inventory_on_launch: true
-      ask_limit_on_launch: true
-      state: "present"
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"
-        - "{{ ppdm.policy.jt.exchange.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"        
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"        
+    - name: "Add {{ ppdm.agents.jt.exchange.approve.name }}"
+      job_template:
+        name: "{{ ppdm.agents.jt.exchange.approve.name }}"
+        description: "{{ ppdm.agents.jt.exchange.approve.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          host_list: exchange1.demo.local,exchange2.demo.local
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
-  - name: "Add {{ ppdm.agents.jt.approve }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.approve }}"
-      description: Approve Agents via Whitelist
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
-      extra_vars: 
-        host_list: launchpad.demo.local
-      ask_credential_on_launch: true
-      ask_variables_on_launch: true
-      state: "present"
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"
-        - "{{ ppdm.policy.jt.exchange.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"        
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"
+    - name: "Add {{ ppdm.policy.jt.sql.name  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.name   }}"
+        description: "{{ ppdm.policy.jt.sql.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.1_playbook_add_mssql_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
 
-  - name: "Add {{ ppdm.agents.jt.uninstall }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.uninstall }}"
-      description: Remove Windows Agent
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.9_playbook-uninstall-windows_agent_s3.yaml"
-      extra_vars: 
-        release: "{{ ppdm.release }}"
-      ask_variables_on_launch: true
-      ask_inventory_on_launch: true
-      ask_limit_on_launch: true
-      state: "present"
-      labels:
-        - "{{ ppdm.agents.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"
-        - "{{ ppdm.policy.jt.exchange.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"        
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"                   
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
-  - name: "Add {{ ppdm.agents.jt.fs.approve.name }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.fs.approve.name }}"
-      description: "{{ ppdm.agents.jt.fs.approve.description }}"
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
-      state: "present"
-      labels:
-        - "{{ ppdm.assets.label }}"
-        - "{{ ppdm.policy.jt.fs.label }}"
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"
-      extra_vars:
-        host_list: launchpad.demo.local
-      ask_variables_on_launch: true
-      ask_credential_on_launch: true
+    - name: "Add {{ ppdm.policy.jt.exchange.name  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.name   }}"
+        description: "{{ ppdm.policy.jt.exchange.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.1_playbook_add_exchange_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
 
-  - name: "Add {{ ppdm.agents.jt.sql.approve.name }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.sql.approve.name }}"
-      description: "{{ ppdm.agents.jt.sql.approve.description }}"
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
-      state: "present"
-      labels:
-        - "{{ ppdm.assets.label }}"
-        - "{{ ppdm.policy.jt.sql.label }}"
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"
-      extra_vars:
-        host_list: SQL02.demo.local,SQL01.demo.local
-      ask_variables_on_launch: true
-      ask_credential_on_launch: true
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
-  - name: "Add {{ ppdm.agents.jt.exchange.approve.name }}"
-    job_template:
-      name: "{{ ppdm.agents.jt.exchange.approve.name }}"
-      description: "{{ ppdm.agents.jt.exchange.approve.description }}"
-      job_type: "run"
-      organization: "{{ awx.org }}"
-      inventory: "{{ awx.inventory[0].name }}"
-      project: "{{ ppdm.project.name }}"
-      playbook: "100.4_create_whitelistentry_from_addressquery.yaml"
-      state: "present"
-      labels:
-        - "{{ ppdm.assets.label }}"
-        - "{{ ppdm.policy.jt.exchange.label }}"
-      credentials:
-        - "{{ ppdm.credentials[0].name }}"
-      extra_vars:
-        host_list: exchange1.demo.local,exchange2.demo.local
-      ask_variables_on_launch: true
-      ask_credential_on_launch: true
+    - name: "Add {{ ppdm.policy.jt.fs.name  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.name   }}"
+        description: "{{ ppdm.policy.jt.fs.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.1_playbook_add_fs_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
-               
+    - name: "Add {{ ppdm.policy.jt.sql.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.sql.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+          asset_filter: type eq "MICROSOFT_SQL_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
-  - name: "Give {{ ppdm.agents.user_1.username }} permissions"
-    role:
-      user: "{{ ppdm.agents.user_1.username }}"    
-      role: execute
-      job_templates:
-        - "{{ ppdm.agents.jt.list }}"
-        - "{{ ppdm.agents.jt.download }}"
-        - "{{ ppdm.agents.jt.approve }}"
-        - "{{ ppdm.agents.jt.set_dns }}"
-        - "{{ ppdm.agents.jt.clear_hosts }}"
-        - "{{ ppdm.agents.jt.deploy }}"
-        - "{{ ppdm.agents.jt.uninstall }}" 
-        - "{{ ppdm.agents.jt.exchange.approve.name }}"
-        - "{{ ppdm.agents.jt.sql.approve.name }}"
-        - "{{ ppdm.agents.jt.fs.approve.name }}"                 
-      state: present
+    - name: "Add {{ ppdm.policy.jt.exchange.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.exchange.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+          asset_filter: type eq "MICROSOFT_EXCHANGE_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.policy.jt.fs.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.fs.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+          asset_filter: type eq "FILE_SYSTEM" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
 
+    - name: "Add {{ ppdm.policy.jt.sql.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.start.name }}"
+        description: "{{ ppdm.policy.jt.sql.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+          policy_type: MICROSOFT_SQL_DATABASE
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.exchange.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.start.name }}"
+        description: "{{ ppdm.policy.jt.exchange.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+          policy_type: MICROSOFT_EXCHANGE_DATABASE
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.fs.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.start.name }}"
+        description: "{{ ppdm.policy.jt.fs.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+          policy_type: FILE_SYSTEM
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Give {{ ppdm.agents.user_1.username }} permissions"
+      role:
+        user: "{{ ppdm.agents.user_1.username }}"
+        role: execute
+        job_templates:
+          - "{{ ppdm.agents.jt.list }}"
+          - "{{ ppdm.agents.jt.download }}"
+          - "{{ ppdm.agents.jt.approve }}"
+          - "{{ ppdm.agents.jt.set_dns }}"
+          - "{{ ppdm.agents.jt.clear_hosts }}"
+          - "{{ ppdm.agents.jt.deploy }}"
+          - "{{ ppdm.agents.jt.uninstall }}"
+          - "{{ ppdm.agents.jt.exchange.approve.name }}"
+          - "{{ ppdm.agents.jt.sql.approve.name }}"
+          - "{{ ppdm.agents.jt.fs.approve.name }}"
+          - "{{ ppdm.policy.jt.sql.name }}"
+          - "{{ ppdm.policy.jt.exchange.name }}"
+          - "{{ ppdm.policy.jt.fs.name }}"
+          - "{{ ppdm.policy.jt.sql.asset.add.name }}"
+          - "{{ ppdm.policy.jt.fs.asset.add.name }}"
+          - "{{ ppdm.policy.jt.exchange.asset.add.name }}"
+          - "{{ ppdm.policy.jt.exchange.start.name }}"
+          - "{{ ppdm.policy.jt.sql.start.name }}"
+          - "{{ ppdm.policy.jt.fs.start.name }}"
+        state: present

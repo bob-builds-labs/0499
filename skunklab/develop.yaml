@@ -70,6 +70,6 @@
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
           policy_name: Filesystem_DEMO
-          apolicy_type: FILE_SYSTEM
+          policy_type: FILE_SYSTEM
         ask_variables_on_launch: true
         ask_credential_on_launch: true
