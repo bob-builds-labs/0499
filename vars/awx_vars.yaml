@@ -142,7 +142,7 @@ ppdm:
       registration_status:
         name: 100.5 Get Agent Status
         description: Retrieve the Agent Status
-      update:
+      update_agent:
         name: 100.7 Update PPDM Agents
         description: Application Agent Update module
   policy:

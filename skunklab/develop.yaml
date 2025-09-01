@@ -61,10 +61,10 @@
             ]
           }
 
-    - name: "Add {{ ppdm.agents.jt.update.name }} Job Template"
+    - name: "Add {{ ppdm.agents.jt.update_agent.name }} Job Template"
       job_template:
-        name: "{{ ppdm.agents.jt.update.name }}"
-        description: "{{ ppdm.agents.jt.update.description }}"
+        name: "{{ ppdm.agents.jt.update_agent.name }}"
+        description: "{{ ppdm.agents.jt.update_agent.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
