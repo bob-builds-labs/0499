@@ -11,65 +11,26 @@
   vars:
     filename: tower.filename
   tasks:
-    - name: "Add {{ ppdm.policy.jt.sql.start.name }}"
+    - name: "Add {{ ppdm.agents.jt.registration_status.name }} Job Template"
       job_template:
-        name: "{{ ppdm.policy.jt.sql.start.name }}"
-        description: "{{ ppdm.policy.jt.sql.start.description  }}"
+        name: "{{ ppdm.agents.jt.registration_status.name }}"
+        description: "{{ ppdm.agents.jt.registration_status.description }}"
         job_type: "run"
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
         project: "{{ ppdm.project.name }}"
-        playbook: "120.3_playbook_start_policy_v3.yaml"
+        playbook: "100.5_get_agent_registration_status.yaml"
+        ask_credential_on_launch: true
+        ask_inventory_on_launch: true
+        ask_variables_on_launch: true
+        extra_vars:
+          filter: updateState eq "AVAILABLE" 
         state: "present"
         labels:
-          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
           - "{{ ppdm.policy.jt.sql.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
-        extra_vars:
-          policy_name: SQL_DEMO
-          policy_type: MICROSOFT_SQL_DATABASE 
-        ask_variables_on_launch: true
-        ask_credential_on_launch: true
 
-    - name: "Add {{ ppdm.policy.jt.exchange.start.name }}"
-      job_template:
-        name: "{{ ppdm.policy.jt.exchange.start.name }}"
-        description: "{{ ppdm.policy.jt.exchange.start.description  }}"
-        job_type: "run"
-        organization: "{{ awx.org }}"
-        inventory: "{{ awx.inventory[0].name }}"
-        project: "{{ ppdm.project.name }}"
-        playbook: "120.3_playbook_start_policy_v3.yaml"
-        state: "present"
-        labels:
-          - "{{ ppdm.assets.label }}"
-          - "{{ ppdm.policy.jt.exchange.label }}"
-        credentials:
-          - "{{ ppdm.credentials[0].name }}"
-        extra_vars:
-          policy_name: Exchange_DEMO
-          policy_type: MICROSOFT_EXCHANGE_DATABASE
-        ask_variables_on_launch: true
-        ask_credential_on_launch: true
-
-    - name: "Add {{ ppdm.policy.jt.fs.start.name }}"
-      job_template:
-        name: "{{ ppdm.policy.jt.fs.start.name }}"
-        description: "{{ ppdm.policy.jt.fs.start.description  }}"
-        job_type: "run"
-        organization: "{{ awx.org }}"
-        inventory: "{{ awx.inventory[0].name }}"
-        project: "{{ ppdm.project.name }}"
-        playbook: "120.3_playbook_start_policy_v3.yaml"
-        state: "present"
-        labels:
-          - "{{ ppdm.assets.label }}"
-          - "{{ ppdm.policy.jt.fs.label }}"
-        credentials:
-          - "{{ ppdm.credentials[0].name }}"
-        extra_vars:
-          policy_name: Filesystem_DEMO
-          policy_type: FILE_SYSTEM
-        ask_variables_on_launch: true
-        ask_credential_on_launch: true
