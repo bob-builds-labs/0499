@@ -51,7 +51,7 @@ vsphere:
     - name: vault-vcenter
       username: admin@vsphere.local
       password: Password123!
-      host: vault-vcenter.demo.local      
+      host: vault-vcenter.demo.local
 ppdd:
   project:
     name: ansible_ppdd
@@ -91,21 +91,21 @@ ppdm:
           description: This will query unprotected Exchange Assets
         assign:
           name: 120.3 Assign unprotected Exchange Assets to Policy
-          description: This will Assign unprotected Exchange Assets to Exchange Policy      
+          description: This will Assign unprotected Exchange Assets to Exchange Policy
       sql:
         query:
           name: 120.2 Query unprotected SQL Assets
           description: This will query unprotected SQL Assets
         assign:
           name: 120.3 Assign unprotected SQL Assets to Policy
-          description: This will Assign unprotected SQL Assets to SQL Policy          
-      fs:     
+          description: This will Assign unprotected SQL Assets to SQL Policy
+      fs:
         query:
           name: 120.2 Query unprotected Filesystem Assets
           description: This will query unprotected Filesystem Assets
         assign:
           name: 120.3 Assign unprotected Filesystem Assets to Policy
-          description: This will Assign unprotected Filesystem Assets to Filesystem Policy      
+          description: This will Assign unprotected Filesystem Assets to Filesystem Policy
       query: 30.0 Query Assets
       adhoc_protection: 130.0 AdHoc Asset Protection
   agents:
@@ -128,60 +128,60 @@ ppdm:
       uninstall: 100.9 Uninstall Windows Agent
       aag_local_user: 100.2 Set AAG Local user in DB
       sql:
-        approve: 
+        approve:
           name: 100.4 Create SQL Whitelist Entry from Address Query
           description: Approve SQL Agents
       exchange:
-        approve: 
+        approve:
           name: 100.4 Create Exchange Whitelist Entry from Address Query
           description: Approve Exchange Agents
       fs:
-        approve: 
+        approve:
           name: 100.4 Create Filesystem Whitelist Entry from Address Query
           description: Approve Filesystem Agents
       registration_status:
         name: 100.5 Get Agent Status
-        description: Retrieve the Agent Status 
+        description: Retrieve the Agent Status
       update:
         name: 100.7 Update PPDM Agents
-        description: Application Agent Update module                              
+        description: Application Agent Update module
   policy:
     jt:
-      patch_vmware_local_dd: 120.9 Patch VM Policy to use Local DD 
+      patch_vmware_local_dd: 120.9 Patch VM Policy to use Local DD
       patch_vmware_remote_dd: 120.9 Patch VM Policy to use Remote DD
       sql:
         name: 120.1 Create SQL Policy
         description: Create SQL Policy
-        label: sql 
+        label: sql
         start:
-          description:  Start SQL Policy     
-          name: 120.3 Start SQL Policy            
+          description: Start SQL Policy
+          name: 120.3 Start SQL Policy
         asset:
           add:
-            description:  Add SQL Assets to SQL Policy     
-            name: 120.2 Add SQL Assets to SQL Policy          
+            description: Add SQL Assets to SQL Policy
+            name: 120.2 Add SQL Assets to SQL Policy
       exchange:
         name: 120.1 Create Exchange Policy
         description: Create Exchange Policy
         label: exchange
         start:
-          description:  Start Exchange Policy     
-          name: 120.3 Start Exchange Policy            
+          description: Start Exchange Policy
+          name: 120.3 Start Exchange Policy
         asset:
           add:
-            description:  Add Exchange Assets to Exchange Policy  
-            name: 120.2 Add Exchange Assets to Exchange Policy     
+            description: Add Exchange Assets to Exchange Policy
+            name: 120.2 Add Exchange Assets to Exchange Policy
       fs:
         name: 120.1 Create Filesystem Policy
         description: Create Filesystem Policy
-        label: filesystem  
+        label: filesystem
         start:
-          description:  Start FS Policy     
-          name: 120.3 Start FS Policy            
+          description: Start FS Policy
+          name: 120.3 Start FS Policy
         asset:
           add:
-            description: Add Filesystem Assets to Filesystem Policy      
-            name: 120.2 Add Filesystem Assets to Filesystem Policy                                          
+            description: Add Filesystem Assets to Filesystem Policy
+            name: 120.2 Add Filesystem Assets to Filesystem Policy
   infra:
     team:
       name: PPDM Infra Team
@@ -194,7 +194,7 @@ ppdm:
     update_job_template: deploy ppdm update templates
     sysdr_job_template: deploy ppdm sysdr templates
     jt:
-      reset_sysdr_boost: _99.1 Reset Boost Password for SysDR 
+      reset_sysdr_boost: _99.1 Reset Boost Password for SysDR
       sysdr_ppdm: _99.2 Precheck Sysdr for PPDM
       approve_sysdr: _99.3 Approve for Sysdr
       sysdr_ppdm_approved: _99.4 Run Sysdr for PPDM
@@ -232,15 +232,15 @@ ppdm:
         create:
           name: 130.2 Create Kubernetes Protection Policy
           description: |-
-                Creates assigns a K8S  Protection Policy
-                Allowed extra variables are:
-                ppdm_rule: defines the namespace Rule, e.g. Key/Value PPDM_POLICY=PPDM_GOLD for assetAttributeName: "userTags", or MYNAMESPACE for assetAttributeName: "name" begins with 
-                assetAttributeName: when not defined defaults to "userTags", otherwise use "name" 
-                full Example 1:
-                ppdm_rule: PPDM_POLICY=k8s_gold
-                full example 2:
-                ppdm_rule: hol-0499-
-                assetAttributeName: name
+            Creates assigns a K8S  Protection Policy
+            Allowed extra variables are:
+            ppdm_rule: defines the namespace Rule, e.g. Key/Value PPDM_POLICY=PPDM_GOLD for assetAttributeName: "userTags", or MYNAMESPACE for assetAttributeName: "name" begins with 
+            assetAttributeName: when not defined defaults to "userTags", otherwise use "name" 
+            full Example 1:
+            ppdm_rule: PPDM_POLICY=k8s_gold
+            full example 2:
+            ppdm_rule: hol-0499-
+            assetAttributeName: name
     label: ppdm_k8s
     job_template: deploy ppdm k8s templates
     team: Kubernetes Team
@@ -255,7 +255,7 @@ ppdm:
         query: 130.3 Query K8S Assets By Name
         state: 130.3 Query Namespaces by Protection State
         adhoc_protection: 130.5 AdHoc Protect K8S Asset
-        add: 
+        add:
           name: 130.2 Add Namespace to Policy
           description: Assigns a Namespace asset to a Protection Policy
         remove:
@@ -263,4 +263,4 @@ ppdm:
           description: Unassigns a Namespace asset from a Protection Policy
       plc:
         list: 130.4 Get all Kubernetes Policies
-        create: 130.2 Create Kubernetes Protection Policy  
+        create: 130.2 Create Kubernetes Protection Policy
