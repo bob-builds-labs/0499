@@ -73,8 +73,6 @@
         ask_credential_on_launch: true
         ask_inventory_on_launch: true
         ask_variables_on_launch: false
-        extra_vars:
-#          myfilter: updateState eq '"{{  "{{ " }}agent_state{{ " }}" }}"'
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
@@ -83,30 +81,3 @@
           - "{{ ppdm.policy.jt.sql.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
-#        survey_enabled: true
-#        survey_spec: |        
-#          {
-#            "description": "Agent Status Survey",
-#            "name": "Query Agent Update State",
-#            "spec": [
-#              {
- #               "max": 1024,
- #               "min": 0,
- #               "type": "multiplechoice",
-#                "choices": [
- ##                 "AVAILABLE",
- #                 "SCHEDULED",
- #                 "IN_PROGRESS",
-  ##                "UP_TO_DATE",
-  #                "NOT_SUPPORTED",
-  #                ""
-  #              ],
-  #              "default": "",
-   ##             "required": true,
-   #             "variable": "agent_state",
-   #             "new_question": false,
-   #             "question_name": "Agent Update Status",
-   #             "question_description": ""
-   #           }
-   #         ]
-    #      }
