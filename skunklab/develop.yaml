@@ -22,9 +22,9 @@
         playbook: "100.5_get_agent_registration_status.yaml"
         ask_credential_on_launch: true
         ask_inventory_on_launch: true
-        ask_variables_on_launch: true
+        ask_variables_on_launch: false
         extra_vars:
-          filter: updateState eq "AVAILABLE" 
+          filter: updateState eq \"{{ agent_status }}\" 
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
@@ -34,3 +34,28 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
 
+  	    survey_enabled: true
+        survey_spec: |        
+          {
+          "description": "Agent Status Survey",
+          "name": "QQuery Agent Status",
+          "spec": [
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "AVAILABLE,
+                "SCHEDULED",
+                "IN_PROGRESS",
+                "UP_TO_DATE",
+                "NOT_SUPPORTED",
+                ""
+            ],
+            "default": "",
+            "required": true,
+            "variable": "agent_status",
+            "new_question": false,
+            "question_name": "Agent Status",
+            "question_description": ""
+            },
