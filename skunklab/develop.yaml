@@ -53,7 +53,7 @@
                 ],
                 "default": "",
                 "required": true,
-                "variable": "agent_status",
+                "variable": "agent_state",
                 "new_question": false,
                 "question_name": "Agent Status",
                 "question_description": ""
