@@ -113,8 +113,8 @@
             ]
           },
           {
-            "description": "Agent Update Survey",
-            "name": "Set Agent Type Update",
+            "description": "Agent Perecheck",
+            "name": "Precheck",
             "spec": [
               {
                 "max": 1024,
@@ -128,7 +128,7 @@
                 "required": true,
                 "variable": "precheck",
                 "new_question": false,
-                "question_name": "Agent System Type",
+                "question_name": "run precheck only ?",
                 "question_description": ""
               }
             ]
