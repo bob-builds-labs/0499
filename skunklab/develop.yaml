@@ -75,6 +75,8 @@
         ask_variables_on_launch: false
         extra_vars:
           myfilter: updateState eq "AVAILABLE" and applications.name eq "{{  "{{ " }}agent_type{{ " }}" }}"
+          precheckOnly: '{{ "{{ " }}precheck | bool{{ " }}" }}'
+
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
@@ -109,4 +111,25 @@
                 "question_description": ""
               }
             ]
-          }
+          },
+          {
+            "description": "Agent Update Survey",
+            "name": "Set Agent Type Update",
+            "spec": [
+              {
+                "max": 1024,
+                "min": 0,
+                "type": "multiplechoice",
+                "choices": [
+                  "true",
+                  "false"
+                          ],
+                "default": "",
+                "required": true,
+                "variable": "precheck",
+                "new_question": false,
+                "question_name": "Agent System Type",
+                "question_description": ""
+              }
+            ]
+          }          
