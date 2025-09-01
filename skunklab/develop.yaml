@@ -37,7 +37,7 @@
         survey_spec: |        
           {
             "description": "Agent Status Survey",
-            "name": "Query Agent Status",
+            "name": "Query Agent Update Status",
             "spec": [
               {
                 "max": 1024,
@@ -55,7 +55,7 @@
                 "required": true,
                 "variable": "agent_state",
                 "new_question": false,
-                "question_name": "Agent Status",
+                "question_name": "Agent Update Status",
                 "question_description": ""
               }
             ]
