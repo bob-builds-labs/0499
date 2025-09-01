@@ -25,6 +25,7 @@
         ask_variables_on_launch: false
         extra_vars:
           myfilter: updateState eq '"{{  "{{ " }}agent_state{{ " }}" }}"'
+          detailed: true
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
@@ -52,7 +53,7 @@
                   ""
                 ],
                 "default": "",
-                "required": true,
+                "required": false,
                 "variable": "agent_state",
                 "new_question": false,
                 "question_name": "Agent Update Status",
