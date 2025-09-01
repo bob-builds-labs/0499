@@ -74,7 +74,7 @@
         ask_inventory_on_launch: true
         ask_variables_on_launch: false
         extra_vars:
-          myfilter: updateState eq "AVAILABLE" and applications.type eq "{{  "{{ " }}agent_type{{ " }}" }}"
+          myfilter: updateState eq "AVAILABLE" and applications.name eq "{{  "{{ " }}agent_type{{ " }}" }}"
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
@@ -94,13 +94,12 @@
                 "min": 0,
                 "type": "multiplechoice",
                 "choices": [
-                    "MSSQL",
-                    "ORACLE",
-                    "FS",
-                    "SAP_HANA_DATABASE_SYSTEM",
-                    "STORAGEGROUP",
-                    "MICROSOFT_EXCHANGE_DATABASE_SYSTEM",
-                    "GENERIC_APPLICATION_SYSTEM"
+                  "Microsoft Application SQL Agent",
+                  "Microsoft Application Exchange Agent",
+                  "File System Agent",
+                  "Oracle RMAN Agent",
+                  "SAP HANA Agent",
+                  "Generic Agent"
                           ],
                 "default": "",
                 "required": true,
