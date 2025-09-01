@@ -100,7 +100,7 @@
                     "SAP_HANA_DATABASE_SYSTEM",
                     "STORAGEGROUP",
                     "MICROSOFT_EXCHANGE_DATABASE_SYSTEM",
-                    "GENERIC_APPLICATION_SYSTEM",
+                    "GENERIC_APPLICATION_SYSTEM"
                           ],
                 "default": "",
                 "required": true,
