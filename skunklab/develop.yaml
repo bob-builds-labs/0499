@@ -109,13 +109,7 @@
                 "new_question": false,
                 "question_name": "Agent System Type",
                 "question_description": ""
-              }
-            ]
-          },
-          {
-            "description": "Agent Perecheck",
-            "name": "Precheck",
-            "spec": [
+              },
               {
                 "max": 1024,
                 "min": 0,
