@@ -49,8 +49,7 @@
                   "SCHEDULED",
                   "IN_PROGRESS",
                   "UP_TO_DATE",
-                  "NOT_SUPPORTED",
-                  ""
+                  "NOT_SUPPORTED"
                 ],
                 "default": "",
                 "required": false,
