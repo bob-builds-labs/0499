@@ -24,7 +24,7 @@
         ask_inventory_on_launch: true
         ask_variables_on_launch: false
         extra_vars:
-          myfilter: "updateState eq \"{{ agent_status }}\"" 
+          myfilter: updateState eq '"{{  "{{ " }}agent_state{{ " }}" }}"'
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
