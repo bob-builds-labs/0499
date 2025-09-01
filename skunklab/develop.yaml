@@ -74,7 +74,7 @@
         ask_inventory_on_launch: true
         ask_variables_on_launch: false
         extra_vars:
-          myfilter: updateState eq "AVAILABLE" and agent.applications.Type eq '"{{  "{{ " }}agent_type{{ " }}" }}"'
+          myfilter: updateState eq "AVAILABLE" and agent.applications.type eq '"{{  "{{ " }}agent_type{{ " }}" }}"'
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
