@@ -141,7 +141,10 @@ ppdm:
           description: Approve Filesystem Agents
       registration_status:
           name: 100.5 Get Agent Status
-          description: Retrieve the Agent Status                        
+          description: Retrieve the Agent Status 
+      update:
+          name: 100.7 Update PPDM Agents
+          description: Application Agent Update module                              
   policy:
     jt:
       patch_vmware_local_dd: 120.9 Patch VM Policy to use Local DD 
