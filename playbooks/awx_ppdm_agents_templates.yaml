@@ -462,6 +462,7 @@
         ask_variables_on_launch: true
         ask_credential_on_launch: true
 
+
     - name: "Add {{ ppdm.agents.jt.registration_status.name }} Job Template"
       job_template:
         name: "{{ ppdm.agents.jt.registration_status.name }}"
@@ -475,7 +476,8 @@
         ask_inventory_on_launch: true
         ask_variables_on_launch: false
         extra_vars:
-          myfilter: updateState eq '"{{  "{{ " }}agent_state{{ " }}" }}"'
+          myfilter: updateState eq "{{  "{{ " }}agent_state{{ " }}" }}"
+          detailed: true
         state: "present"
         labels:
           - "{{ ppdm.agents.label }}"
@@ -499,11 +501,10 @@
                   "SCHEDULED",
                   "IN_PROGRESS",
                   "UP_TO_DATE",
-                  "NOT_SUPPORTED",
-                  ""
+                  "NOT_SUPPORTED"
                 ],
                 "default": "",
-                "required": true,
+                "required": false,
                 "variable": "agent_state",
                 "new_question": false,
                 "question_name": "Agent Update Status",
@@ -511,6 +512,74 @@
               }
             ]
           }
+
+    - name: "Add {{ ppdm.agents.jt.update_agent.name }} Job Template"
+      job_template:
+        name: "{{ ppdm.agents.jt.update_agent.name }}"
+        description: "{{ ppdm.agents.jt.update_agent.description }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "100.7_update_agents.yaml"
+        ask_credential_on_launch: true
+        ask_inventory_on_launch: true
+        ask_variables_on_launch: false
+        extra_vars:
+          myfilter: updateState eq "AVAILABLE" and applications.name eq "{{  "{{ " }}agent_type{{ " }}" }}"
+          precheckOnly: '{{ "{{ " }}precheck | bool{{ " }}" }}'
+
+        state: "present"
+        labels:
+          - "{{ ppdm.agents.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        survey_enabled: true
+        survey_spec: |        
+          {
+            "description": "Agent Update Survey",
+            "name": "Set Agent Type Update",
+            "spec": [
+              {
+                "max": 1024,
+                "min": 0,
+                "type": "multiplechoice",
+                "choices": [
+                  "Microsoft Application SQL Agent",
+                  "Microsoft Application Exchange Agent",
+                  "File System Agent",
+                  "Oracle RMAN Agent",
+                  "SAP HANA Agent",
+                  "Generic Agent"
+                          ],
+                "default": "",
+                "required": true,
+                "variable": "agent_type",
+                "new_question": false,
+                "question_name": "Agent System Type",
+                "question_description": ""
+              },
+              {
+                "max": 1024,
+                "min": 0,
+                "type": "multiplechoice",
+                "choices": [
+                  "true",
+                  "false"
+                          ],
+                "default": "",
+                "required": true,
+                "variable": "precheck",
+                "new_question": false,
+                "question_name": "run precheck only ?",
+                "question_description": ""
+              }
+            ]
+          }          
+
 
     - name: "Give {{ ppdm.agents.user_1.username }} permissions"
       role:
@@ -536,4 +605,6 @@
           - "{{ ppdm.policy.jt.exchange.start.name }}"
           - "{{ ppdm.policy.jt.sql.start.name }}"
           - "{{ ppdm.policy.jt.fs.start.name }}"
+          - "{{ ppdm.agents.jt.update_agent.name }}"
+          - "{{ ppdm.agents.jt.registration_status.name }}"
         state: present
