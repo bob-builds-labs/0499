@@ -124,15 +124,6 @@
         organization: "{{ awx.org }}"
       loop: "{{ awx.labels_to_add }}"
 
-
-    - name: "Give {{ ppdm.agents.user_1.username }} permissions"
-      role:
-        user: "{{ ppdm.agents.user_1.username }}"    
-        role: execute
-        job_templates:
-          - "{{ ppdm.policy.jt.sql.name }}"
-          - "{{ ppdm.policy.jt.exchange.name }}"
-          - "{{ ppdm.policy.jt.fs.name }}"
                     
     - name: Create RH Subscription Credential Type
       credential_type:
