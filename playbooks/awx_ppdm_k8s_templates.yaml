@@ -338,10 +338,6 @@
           - "ocp.demo.local"
         ask_credential_on_launch: true
         ask_variables_on_launch: true
-        extra_vars:
-          vcenter_address: vcenter01.demo.local
-          use_fsagent: false
-          parallel_pvc_backup: false
     - name: Add {{ ppdm.k8s.jt.plc.create }} JT
       job_template:
         name: "{{ ppdm.k8s.jt.plc.create}}"
