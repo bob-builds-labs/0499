@@ -5,7 +5,7 @@ aap_hostname: "{{ lookup('env','AAP_HOSTNAME') }}"
 awx:
   labels_to_add:
     - "{{ ppdm.policy.jt.exchange.label }}"
-#    - "{{ ppdm.policy.jt.sql.label }}"
+    - "{{ ppdm.policy.jt.sql.label }}"
 #    - "{{ ppdm.policy.jt.fs.label }}"
 #    - "{{ ppdm.assets.label }}"
 #    - "{{ ppdm.agents.label }}"
