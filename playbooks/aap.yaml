@@ -118,6 +118,13 @@
         name: "{{ awx.infra.label }}"
         organization: "{{ awx.org }}"
 
+    - name: Add labels to organization {{ awx.org }}
+      label:
+        name: "{{ item }}"
+        organization: "{{ awx.org }}"
+      loop: "{{ awx.labels_to_add }}"
+
+
     - name: "Give {{ ppdm.agents.user_1.username }} permissions"
       role:
         user: "{{ ppdm.agents.user_1.username }}"    
