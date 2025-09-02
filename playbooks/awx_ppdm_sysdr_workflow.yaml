@@ -110,6 +110,8 @@
         name: "{{ ppdm.infra.wjt.sysdr_ppdm.name }}"
         inventory: "{{ awx.inventory[0].name }}"
         description: "{{ ppdm.infra.wjt.sysdr_ppdm.description }}"
+        labels:
+          - "{{ ppdm.infra.label }}"
         workflow_nodes:
           - identifier: "{{ ppdm.infra.jt.reset_sysdr_boost }}"
             extra_data: []

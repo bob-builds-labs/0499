@@ -138,6 +138,8 @@
         name: "{{ ppdm.infra.wjt.update_ppdm.name }}-{{ ppdm_index + 1 }}"
         inventory: "{{ awx.inventory[0].name }}"
         description: "{{ ppdm.infra.wjt.update_ppdm.description }}"
+        labels:
+          - "{{ ppdm.infra.label }}"
         workflow_nodes:
           - identifier: "{{ ppdm.infra.jt.upload_update }}"
             extra_data: []

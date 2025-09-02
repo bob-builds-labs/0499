@@ -9,7 +9,6 @@ awx:
     - "{{ ppdm.policy.jt.fs.label }}"
     - "{{ ppdm.assets.label }}"
     - "{{ ppdm.agents.label }}"
-#    - "{{ awx.infra.label }}"
   execution_environment: Demolab Execution Environment
   git_credentials_name: ansible_git
   ansible_ppdm:
