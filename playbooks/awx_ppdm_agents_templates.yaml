@@ -606,5 +606,5 @@
           - "{{ ppdm.policy.jt.sql.start.name }}"
           - "{{ ppdm.policy.jt.fs.start.name }}"
           - "{{ ppdm.agents.jt.update_agent.name }}"
-          - "{{ ppdm.agents.jt.registration_status.name }}"
+          - "{{ ppdm.agents.jt.registration_status.name }}"          
         state: present
