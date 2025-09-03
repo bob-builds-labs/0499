@@ -339,7 +339,7 @@
             "variable": "ppdm_ip",
             "new_question": false,
             "question_name": "Enter the IPv4 address of PPDM",
-            "question_description": "Enter the IPv4 address of the PPDM do be deployed, e.g. 192.168.1.53"
+            "question_description": "ppdm-1 is 192.168.1.50, ppdm-2 is 192.168.1.53 vault-ppdm is 192.168.1.69"
             },
             {
             "max": 1024,
@@ -410,6 +410,18 @@
             "question_name": "Name of the OVA Template to deploy",
             "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.21.0-11.ova"
             }
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "text",
+            "choices": "",
+            "default": "democenter",
+            "required": true,
+            "variable": "datacenter",
+            "new_question": false,
+            "question_name": "Name of the Datacenter to deploy to",
+            "question_description": "Enter democenter or vault to deploy to"
+            }  
           ]
           }
 
