@@ -413,15 +413,51 @@
             {
             "max": 1024,
             "min": 0,
-            "type": "text",
-            "choices": "",
+            "type": "multiplechoice",
+            "choices": [
+                "democenter",
+                "vault"
+            ],
             "default": "democenter",
             "required": true,
             "variable": "datacenter",
             "new_question": false,
             "question_name": "Name of the Datacenter to deploy to",
             "question_description": "Enter democenter or vault to deploy to"
-            }  
+            },
+            {
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "-- Please Select --",
+                "cluster",
+            ],
+            "default": "-- Please Select --",
+            "required": false,
+            "variable": "cluster",
+            "new_question": false,
+            "question_name": "Name of the Cluster  to deploy to if ESXI Hist not selected",
+            "question_description": "Select Cluster  vault to deploy to"
+            },              
+            {
+            "max": 1024,
+            "min": 0,
+            "choices": [
+                "-- Please Select --",
+                "esxi01.demo.local",
+                "esxi02.demo.local",
+                "vault-esxi.demo.local"
+            ],
+            "default": "-- Please Select --",
+            "required": false,
+            "required": true,
+            "variable": "esxi_hostname",
+            "new_question": false,
+            "question_name": "Name of the ESXI Hosts to deploy to if cluster not selected",
+            "question_description": "Select ESXI Hosts to deploy to"
+            }
           ]
           }
 
