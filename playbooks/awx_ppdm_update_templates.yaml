@@ -426,7 +426,6 @@
             "question_description": "Enter democenter or vault to deploy to"
             },
             {
-            {
             "max": 1024,
             "min": 0,
             "type": "multiplechoice",
@@ -444,6 +443,7 @@
             {
             "max": 1024,
             "min": 0,
+            "type": "multiplechoice",
             "choices": [
                 "-- Please Select --",
                 "esxi01.demo.local",
