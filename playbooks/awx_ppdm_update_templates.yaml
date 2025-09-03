@@ -431,7 +431,7 @@
             "type": "multiplechoice",
             "choices": [
                 "-- Please Select --",
-                "cluster",
+                "cluster"
             ],
             "default": "-- Please Select --",
             "required": false,
@@ -451,7 +451,6 @@
                 "vault-esxi.demo.local"
             ],
             "default": "-- Please Select --",
-            "required": false,
             "required": true,
             "variable": "esxi_hostname",
             "new_question": false,
