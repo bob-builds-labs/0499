@@ -463,7 +463,7 @@
             "type": "multiplechoice",
             "choices": [
                 "{u'VM Network':u'VLAN0 prod vm network'}",
-                "{u'VM Network':u'VLAN0 prod vm network'}"
+                "{u'VM Network':u'VM Network'}"
             ],
             "default": "{u'VM Network':u'VLAN0 prod vm network'}",
             "required": true,
