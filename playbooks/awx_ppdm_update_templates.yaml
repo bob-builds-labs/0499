@@ -462,14 +462,14 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "\"{u'VM Network':u'VLAN0 prod vm network'}\"",
-                "\"{u'VM Network':u'VLAN0 prod vm network'}\""
+                "{u'VM Network':u'VLAN0 prod vm network'}",
+                "{u'VM Network':u'VLAN0 prod vm network'}"
             ],
-            "default": "\"{u'VM Network':u'VLAN0 prod vm network'}\"",
+            "default": "{u'VM Network':u'VLAN0 prod vm network'}",
             "required": true,
             "variable": "networks",
             "new_question": false,
-            "question_name": "Name of the Network tzo connect"
+            "question_name": "Name of the Network to connect",
             "question_description": "Select Network"
             }
           ]
