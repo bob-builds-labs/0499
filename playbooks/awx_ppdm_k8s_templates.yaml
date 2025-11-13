@@ -434,7 +434,7 @@
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
         project: "{{ ppdm.project.name }}"
-        playbook: "120.2_playbook_add_assets_to_policy.yaml"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
