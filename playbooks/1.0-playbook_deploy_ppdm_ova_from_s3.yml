@@ -12,14 +12,14 @@
     access_key: minioadmin
     secret_key: Password123!
     s3_container: powerprotect
-    release: 19.22
+    release: 20.1
     local_directory: /tmp
     ppdm_ip: 192.168.1.53
     ppdm_gateway: 192.168.1.2
     ppdm_dns: 192.168.1.2
     ppdm_fqdn: ppdm-2.demo.local
     ppdm_netmask: 255.255.255.0
-    package: dellemc-ppdm-sw-19.22.0-16.ova
+    package: dellemc-ppdm-sw-20.1.0-16.ova
     power_on: false
   tasks:
 
