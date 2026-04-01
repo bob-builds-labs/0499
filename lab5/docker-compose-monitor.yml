@@ -4,6 +4,7 @@ services:
   ppdm-monitor:
     image: quay.io/delldps/ppdm-cli:20.1.0.0-amd64
     container_name: ppdm-monitor
+    pull_policy: always
     ports:
       - "8080:8080"
     environment:
