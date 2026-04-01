@@ -2,7 +2,7 @@ version: '3.8'
 
 services:
   ppdm-monitor:
-    image: quay.io/delldps/ppdm-cli:latest
+    image: quay.io/delldps/ppdm-cli:20.1.0.0-amd64
     container_name: ppdm-monitor
     ports:
       - "8080:8080"
