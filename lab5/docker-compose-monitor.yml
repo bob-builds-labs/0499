@@ -1,0 +1,30 @@
+version: '3.8'
+
+services:
+  ppdm-monitor:
+    image: quay.io/delldps/ppdm-cli:latest
+    container_name: ppdm-monitor
+    ports:
+      - "8080:8080"
+    environment:
+      # PPDM Connection Settings
+      - PPDM_SERVER=${PPDM_SERVER}
+      - PPDM_USERNAME=${PPDM_USERNAME}
+      - PPDM_PASSWORD=${PPDM_PASSWORD}
+      - PPDM_PORT=${PPDM_PORT:-443}
+      - PPDM_INSECURE=${PPDM_INSECURE:-false}
+      
+    command: ["web-monitor", "--port", "8080"]
+    
+    restart: unless-stopped
+    
+    healthcheck:
+      test: ["CMD", "./ppdm-cli", "version"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 40s
+
+networks:
+  default:
+    name: ppdm-monitor-network
