@@ -15,7 +15,7 @@ services:
       - PPDM_PORT=${PPDM_PORT:-443}
       - PPDM_INSECURE=${PPDM_INSECURE:-false}
       
-    command: ["web-monitor", "--port", "8080"]
+    command: ["ppdm-cli", "web-monitor", "--port", "8080"]
     
     restart: unless-stopped
     
