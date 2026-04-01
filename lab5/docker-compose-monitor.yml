@@ -13,7 +13,7 @@ services:
       - PPDM_USERNAME=${PPDM_USERNAME}
       - PPDM_PASSWORD=${PPDM_PASSWORD}
       - PPDM_PORT=${PPDM_PORT:-443}
-      - PPDM_INSECURE=${PPDM_INSECURE:-false}
+      - PPDM_INSECURE_SKIP_VERIFY=${PPDM_INSECURE_SKIP_VERIFY:-true}
       
     command: ["ppdm-cli", "web-monitor", "--port", "8080"]
     
