@@ -31,7 +31,7 @@ ppdm-cli protection-policies create nativeedge-virtual-machine --name "NativeEdg
 
 ```bash
 DD_SYSTEM_ID=d1656af3-df78-4194-a7d9-2c44174f3652
-protection-policies create nutanix-virtual-machine --name "Nutanix-Test-Policy" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
+ppdm-cli protection-policies create nutanix-virtual-machine --name "Nutanix-Test-Policy" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
 ```
 
 ```bash
