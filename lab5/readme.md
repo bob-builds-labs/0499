@@ -51,7 +51,8 @@ ppdm-cli protection-policies create nutanix-virtual-machine --name "Test" --sche
 ppdm-cli protection-policies create nas-share --name "Test" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
 ppdm-cli protection-policies create microsoft-sql-database --name "Test" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
 ppdm-cli protection-policies create oracle-database --name "Test" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
- 
+```
+```bash 
 # Asset type enablement (new):
-ppdm-cli asset-management enable-assetsource --type MICROSOFT_EXCHANGE_DATABASE --dry-run
+ppdm-cli asset-management enable-assetsource --type MICROSOFT_EXCHANGE_DATABASE
 ```
