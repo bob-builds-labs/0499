@@ -42,7 +42,7 @@ ppdm-cli protection-policies create hyperv-virtual-machine --name "HyperV-Test-P
 ```bash
 ppdm-cli asset-management enable-assetsource --type HYPERV_VIRTUAL_MACHINE
 
-DD_SYSTEM_ID=(ppdm-cli storage-systems list --type DATA_DOMAIN_SYSTEM --filter 'name lk "ddve-01%"' --output json-raw | jq -r '.content[].id')
+DD_SYSTEM_ID=$(ppdm-cli storage-systems list --type DATA_DOMAIN_SYSTEM --filter 'name lk "ddve-01%"' --output json-raw | jq -r '.content[].id')
 ppdm-cli protection-policies create vmware-virtual-machine --name "Test_vmware-virtual-machine" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
 ppdm-cli protection-policies create nativeedge-virtual-machine --name "Test_nativeedge-virtual-machine" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
 ppdm-cli protection-policies create file-system --name "Test_nativeedge-virtual-machine" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
