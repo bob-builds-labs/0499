@@ -27,3 +27,18 @@ podman run -it --rm --pull=always  -v /home/admin/data01:/data01 \
 DD_SYSTEM_ID=d1656af3-df78-4194-a7d9-2c44174f3652
 ppdm-cli protection-policies create nativeedge-virtual-machine --name "NativeEdge-Test-Policy" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
 ```
+
+
+```bash
+DD_SYSTEM_ID=d1656af3-df78-4194-a7d9-2c44174f3652
+protection-policies create nutanix-virtual-machine --name "Nutanix-Test-Policy" --schedule DAILY --retention 7 --dd-system-id ${DD_SYSTEM_ID}
+```
+
+```bash
+DD_SYSTEM_ID=d1656af3-df78-4194-a7d9-2c44174f3652
+ppdm-cli protection-policies create hyperv-virtual-machine --name "HyperV-Test-Policy" --schedule DAILY --retention 7 --dd-system-id --dd-system-id ${DD_SYSTEM_ID}
+```
+
+```bash
+
+```
