@@ -30,7 +30,7 @@ awx:
     workflow_job_template: 0_Maintain AWX
   inventory:
     - project_name: 0499
-      scm_branch: 20.1
+      scm_branch: 20.1.0.1
       scm_url: http://github.com/bob-builds-labs/0499.git
       scm_description: Base Inventory and Templates for 0499
       name: PPDM Inventory
@@ -44,7 +44,7 @@ minio_user: minio-user
 datapath: /home/minio
 ansible_become_password: Password123!
 download_url: https://dl.minio.io/server/minio/release/linux-amd64/minio.deb
-minio_admin: minioadmin
+minio_admin: bob
 minio_password: Password123!
 vsphere:
   credentials:
