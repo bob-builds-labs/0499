@@ -40,8 +40,12 @@ services:
       # Health & Metrics
       KC_HEALTH_ENABLED: "true"
       KC_METRICS_ENABLED: "true"
+      KC_HOSTNAME: https://ansible.demo.local:8443
+      KC_HTTPS_CERTIFICATE_FILE: /opt/keycloak/certs/cert.pem
+      KC_HTTPS_CERTIFICATE_KEY_FILE: /opt/keycloak/certs/key.pem 
     ports:
       - "8180:8080"
+      - "8443:8443"
     depends_on:
       postgres:
         condition: service_healthy
