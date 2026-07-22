@@ -7,7 +7,7 @@ metadata:
   labels:
     app: ddve
 spec:
-  running: false
+  runStrategy: false
   template:
     metadata:
       labels:
