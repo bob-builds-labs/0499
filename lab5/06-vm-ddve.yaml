@@ -6,6 +6,10 @@ metadata:
   namespace: ddve
   labels:
     app: ddve
+  annotations:
+    kubevirt.io/network-interface-mtu: "1500"   # ← force full MTU advertisement
+
+
 spec:
   runStrategy: Manual
   template:
