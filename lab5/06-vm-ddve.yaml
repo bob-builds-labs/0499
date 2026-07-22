@@ -1,0 +1,92 @@
+# 06-vm-ddve.yaml
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: ddve
+  namespace: ddve
+  labels:
+    app: ddve
+spec:
+  running: false
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: ddve
+    spec:
+      domain:
+        # ── CPU (no overcommit) ──────────────────────────────
+        cpu:
+          cores: 2
+          sockets: 1
+          threads: 1
+        resources:
+          requests:
+            memory: 8Gi
+          limits:
+            memory: 8Gi        # requests == limits — overcommit not supported by Dell
+        memory:
+          hugepages:
+            pageSize: 2Mi      # recommended for DDVE dedup/compression workloads
+
+        # ── Machine type ────────────────────────────────────
+        machine:
+          type: pc-q35-rhel9.4.0   # adjust to your OCP version; q35 required for SCSI
+
+        # ── Firmware (UEFI) ─────────────────────────────────
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: false
+
+        # ── Devices ─────────────────────────────────────────
+        devices:
+          disks:
+            - name: rootdisk       # SCSI 0:0 — boot disk
+              bootOrder: 1
+              disk:
+                bus: scsi
+            - name: nvramdisk      # SCSI 0:1 — vNVRAM
+              disk:
+                bus: scsi
+            - name: datadisk1      # SCSI 0:2
+              disk:
+                bus: scsi
+#            - name: datadisk2      # SCSI 0:3
+#              disk:
+#                bus: scsi
+#            - name: datadisk3      # SCSI 0:4
+#              disk:
+#                bus: scsi
+#            - name: datadisk4      # SCSI 0:5
+#              disk:
+#                bus: scsi
+          # ── Single NIC — default pod network (masquerade) ──
+          interfaces:
+            - name: default
+              masquerade: {}       # in-cluster only; NAT is sufficient for pod-to-pod traffic
+
+      # ── Networks ──────────────────────────────────────────
+      networks:
+        - name: default
+          pod: {}                  # OCP pod network — no Multus required
+
+      # ── Volumes ───────────────────────────────────────────
+      volumes:
+        - name: rootdisk
+          persistentVolumeClaim:
+            claimName: ddve-rootdisk
+        - name: nvramdisk
+          persistentVolumeClaim:
+            claimName: ddve-nvram
+        - name: datadisk1
+          persistentVolumeClaim:
+            claimName: ddve-data-1
+#        - name: datadisk2
+#          persistentVolumeClaim:
+#            claimName: ddve-data-2
+#        - name: datadisk3
+#          persistentVolumeClaim:
+#            claimName: ddve-data-3
+#        - name: datadisk4
+#          persistentVolumeClaim:
+#            claimName: ddve-data-4
