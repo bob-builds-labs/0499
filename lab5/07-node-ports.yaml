@@ -27,7 +27,7 @@ spec:
     - name: ddmgmt-gui
       port: 3009
       targetPort: 3009
-      nodePort: 33009
+      nodePort: 30009
       protocol: TCP
     - name: ssh
       port: 22
