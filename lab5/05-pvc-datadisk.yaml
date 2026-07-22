@@ -1,0 +1,14 @@
+# 05-pvc-datadisks.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ddve-data-1    # repeat for ddve-data-2, ddve-data-3, ddve-data-4
+  namespace: ddve
+spec:
+  accessModes:
+    - ReadWriteOnce    # RWO — single writer, no concurrent mount possible
+  volumeMode: Block    # Block mandatory — Filesystem mode corrupts DDVE internal structures
+  storageClassName: ocs-storagecluster-ceph-rbd-virtualization
+  resources:
+    requests:
+      storage: 100Gi    # 2 TiB ceiling per disk — do not exceed
