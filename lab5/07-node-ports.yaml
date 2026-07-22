@@ -1,0 +1,36 @@
+# 07-service-ddve.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  name: ddve
+  namespace: ddve
+spec:
+  selector:
+    kubevirt.io/domain: ddve
+  type: NodePort
+  ports:
+    - name: ddboost
+      port: 2052
+      targetPort: 2052
+      nodePort: 32052
+      protocol: TCP
+    - name: nfs
+      port: 2049
+      targetPort: 2049
+      nodePort: 32049
+      protocol: TCP
+    - name: ddmgmt-https
+      port: 443
+      targetPort: 443
+      nodePort: 30443
+      protocol: TCP
+    - name: ddmgmt-gui
+      port: 3009
+      targetPort: 3009
+      nodePort: 33009
+      protocol: TCP
+    - name: ssh
+      port: 22
+      targetPort: 22
+      nodePort: 30022
+      protocol: TCP
