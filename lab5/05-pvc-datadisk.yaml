@@ -11,4 +11,4 @@ spec:
   storageClassName: ocs-storagecluster-ceph-rbd-virtualization
   resources:
     requests:
-      storage: 100Gi    # 2 TiB ceiling per disk — do not exceed
+      storage: 250Gi    # 2 TiB ceiling per disk — do not exceed
