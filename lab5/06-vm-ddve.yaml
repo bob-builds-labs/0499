@@ -24,9 +24,9 @@ spec:
             memory: 8Gi
           limits:
             memory: 8Gi        # requests == limits — overcommit not supported by Dell
-        memory:
-          hugepages:
-            pageSize: 2Mi      # recommended for DDVE dedup/compression workloads
+#        memory:
+#          hugepages:
+#            pageSize: 2Mi      # recommended for DDVE dedup/compression workloads
 
         # ── Machine type ────────────────────────────────────
         machine:
