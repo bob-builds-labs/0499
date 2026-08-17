@@ -66,13 +66,21 @@ spec:
 #                bus: scsi
           # ── Single NIC — default pod network (masquerade) ──
           interfaces:
-            - name: default
-              masquerade: {}       # in-cluster only; NAT is sufficient for pod-to-pod traffic
+            # Default OpenShift pod network
+#            - name: default
+#              masquerade: {}
 
-      # ── Networks ──────────────────────────────────────────
+            # External CUDN/localnet network; DHCP is provided externally
+            - name: ddve-out
+              bridge: {}
+
       networks:
         - name: default
-          pod: {}                  # OCP pod network — no Multus required
+          pod: {}
+        - name: ddve-out
+          multus:
+            networkName: kubevirt-network-out
+
 
       # ── Volumes ───────────────────────────────────────────
       volumes:
