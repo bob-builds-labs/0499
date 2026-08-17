@@ -1,6 +1,6 @@
 
 oc apply -f 00-namespace.yaml
-export VERSION=kvm-8.8.0.0-1241079
+export VERSION=8.8.0.0-1241079
 export DISK=/data01/artifacts/ddve-kvm-${VERSION}/ddve-${VERSION}.qcow2
 
 
