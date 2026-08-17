@@ -28,7 +28,7 @@ spec:
             memory: 8Gi
           limits:
             memory: 8Gi        # requests == limits — overcommit not supported by Dell
-#        memory:
+        memory:
 #          hugepages:
 #            pageSize: 2Mi      # recommended for DDVE dedup/compression workloads
 
@@ -67,8 +67,8 @@ spec:
           # ── Single NIC — default pod network (masquerade) ──
           interfaces:
             # Default OpenShift pod network
-#            - name: default
-#              masquerade: {}
+            - name: default
+#             masquerade: {}
 
             # External CUDN/localnet network; DHCP is provided externally
             - name: ddve-out
