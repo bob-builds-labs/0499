@@ -1,11 +1,11 @@
 apiVersion: k8s.ovn.org/v1
 kind: ClusterUserDefinedNetwork
 metadata:
-  name: ddve-kubevirt-network
+  name: kubevirt-network-out
 spec:
-  namespaceSelector:
-    matchLabels:
-      kubernetes.io/metadata.name: kubevirt
+namespaceSelector:
+  matchLabels:
+    kubevirt-network-out: "true"
   network:
     topology: Localnet
     localnet:
