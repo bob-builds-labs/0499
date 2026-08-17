@@ -68,7 +68,7 @@ spec:
           interfaces:
             # Default OpenShift pod network
             - name: default
-#             masquerade: {}
+              masquerade: {}
 
             # External CUDN/localnet network; DHCP is provided externally
             - name: ddve-out
