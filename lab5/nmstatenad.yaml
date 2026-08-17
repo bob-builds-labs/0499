@@ -11,10 +11,6 @@ spec:
     localnet:
       role: Secondary
       physicalNetworkName: physnet-kubevirt
-      vlan:
-        mode: Access
-        access:
-          id: 0
       mtu: 1500
       ipam:
         mode: Disabled
