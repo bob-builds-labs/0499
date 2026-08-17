@@ -8,6 +8,6 @@ virtctl image-upload dv ddve-rootdisk \
   --namespace ddve --size=350Gi \
   --image-path=${DISK} \
   --storage-class=ocs-storagecluster-ceph-rbd-virtualization \
-  --volume-mode=Block --access-mode=ReadWriteOnce --wait-secs=600
+  --volume-mode=block --access-mode=ReadWriteOnce --wait-secs=600
 
 oc get datavolume ddve-rootdisk -n ddve -w
