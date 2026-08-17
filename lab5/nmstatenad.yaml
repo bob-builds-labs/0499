@@ -3,9 +3,9 @@ kind: ClusterUserDefinedNetwork
 metadata:
   name: ddve-kubevirt-network
 spec:
-#  namespaceSelector:
-#    matchLabels:
-#      kubernetes.io/metadata.name: kubevirt
+  namespaceSelector:
+    matchLabels:
+      kubernetes.io/metadata.name: kubevirt
   network:
     topology: Localnet
     localnet:
