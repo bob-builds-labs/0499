@@ -1,0 +1,28 @@
+# nncp-br-ddve.yaml
+# NMState operator required — creates OVS bridge + registers physnet-ddve mapping
+apiVersion: nmstate.io/v1
+kind: NodeNetworkConfigurationPolicy
+metadata:
+  name: br-kubevirt-policy
+spec:
+  nodeSelector:
+    node-role.kubernetes.io/worker: ""
+  desiredState:
+    interfaces:
+      - name: br-kubevirt
+        type: ovs-bridge          # OVS required — not Linux bridge
+        state: up
+        bridge:
+          options:
+            stp: false
+          port:
+            - name: ens224        # dedicated NIC — adjust to match hardware
+    ovn:
+      bridge-mappings:
+        - localnet: physnet-kubevirt  # links NNCP → CUDN physicalNetworkName
+          bridge: br-kubevirt
+          state: present
+#oc apply -f nncp-br-ddve.yaml
+
+# Wait for all worker nodes to apply:
+#oc get nnce -w    # NodeNetworkConfigurationEnactments — all should show Available
