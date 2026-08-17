@@ -3,9 +3,9 @@ kind: ClusterUserDefinedNetwork
 metadata:
   name: kubevirt-network-out
 spec:
-namespaceSelector:
-  matchLabels:
-    kubevirt-network-out: "true"
+  namespaceSelector:
+    matchLabels:
+      kubevirt-network-out: "true"
   network:
     topology: Localnet
     localnet:
