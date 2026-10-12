@@ -1,0 +1,15 @@
+{{- range $index := until (int .Values.storage.datadisks.count) }}
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ddve-data-{{ add $index 1 }}
+  namespace: {{ $.Values.namespace.name }}
+spec:
+  accessModes:
+    - ReadWriteOnce  # RWO — single writer, no concurrent mount possible
+  volumeMode: Block  # Block mandatory — Filesystem mode corrupts DDVE internal structures
+  storageClassName: {{ $.Values.storage.storageClass }}
+  resources:
+    requests:
+      storage: {{ $.Values.storage.datadisks.size }}  # 2 TiB ceiling per disk — do not exceed
+{{- end }}

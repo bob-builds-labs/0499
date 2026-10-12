@@ -1,0 +1,24 @@
+# High capacity configuration example
+# 8 data disks (2Ti each), 2 networks, 96TB license tier
+
+namespace:
+  name: ddve
+  create: true
+
+licenseTier: 96TB
+
+storage:
+  storageClass: ocs-storagecluster-ceph-rbd-virtualization
+  datadisks:
+    count: 8
+    size: 2Ti
+  rootDisk:
+    bootSource:
+      name: ddve-8.8.0.0-1241079
+      namespace: openshift-virtualization-os-images
+
+networking:
+  mtu: 1500
+  multusNetworks:
+    - kubevirt-network-out
+    - kubevirt-network-storage

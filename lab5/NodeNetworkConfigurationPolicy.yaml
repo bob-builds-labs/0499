@@ -26,3 +26,4 @@ spec:
 
 # Wait for all worker nodes to apply:
 #oc get nnce -w    # NodeNetworkConfigurationEnactments — all should show Available
+

@@ -1,0 +1,18 @@
+DDVE VirtualMachine has been deployed!
+
+Namespace: {{ .Values.namespace.name }}
+License Tier: {{ .Values.licenseTier }}
+Data Disks: {{ .Values.storage.datadisks.count }} x {{ .Values.storage.datadisks.size }}
+Networks: {{ .Values.networking.multusNetworks }}
+
+To start the VM, run:
+  virtctl start ddve -n {{ .Values.namespace.name }}
+
+To connect to the VM console, run:
+  virtctl console ddve -n {{ .Values.namespace.name }}
+
+To view the VM status, run:
+  oc get vm ddve -n {{ .Values.namespace.name }}
+  oc get vmi ddve -n {{ .Values.namespace.name }}
+
+For more information, see the README.md file.

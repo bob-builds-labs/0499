@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ddve-nvram
+  namespace: {{ .Values.namespace.name }}
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block  # MUST be Block — never Filesystem
+  storageClassName: {{ .Values.storage.storageClass }}
+  resources:
+    requests:
+      storage: {{ .Values.storage.nvram.size }}

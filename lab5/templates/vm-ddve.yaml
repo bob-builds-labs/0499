@@ -1,0 +1,114 @@
+{{- /* License tier resource mapping */ -}}
+{{- $cpuCores := 2 -}}
+{{- $memory := "8Gi" -}}
+{{- if eq .Values.licenseTier "8TB" -}}
+{{- $cpuCores = 2 -}}
+{{- $memory = "8Gi" -}}
+{{- else if eq .Values.licenseTier "16TB" -}}
+{{- $cpuCores = 4 -}}
+{{- $memory = "16Gi" -}}
+{{- else if eq .Values.licenseTier "32TB" -}}
+{{- $cpuCores = 4 -}}
+{{- $memory = "24Gi" -}}
+{{- else if eq .Values.licenseTier "48TB" -}}
+{{- $cpuCores = 4 -}}
+{{- $memory = "36Gi" -}}
+{{- else if eq .Values.licenseTier "64TB" -}}
+{{- $cpuCores = 8 -}}
+{{- $memory = "48Gi" -}}
+{{- else if eq .Values.licenseTier "96TB" -}}
+{{- $cpuCores = 8 -}}
+{{- $memory = "64Gi" -}}
+{{- end -}}
+
+apiVersion: kubevirt.io/v1
+kind: VirtualMachine
+metadata:
+  name: ddve
+  namespace: {{ .Values.namespace.name }}
+  labels:
+    app: ddve
+  annotations:
+    kubevirt.io/network-interface-mtu: "{{ .Values.networking.mtu }}"
+
+spec:
+  runStrategy: Manual
+  template:
+    metadata:
+      labels:
+        kubevirt.io/domain: ddve
+    spec:
+      domain:
+        # ── CPU (no overcommit) ──────────────────────────────
+        cpu:
+          cores: {{ $cpuCores }}
+          sockets: 1
+          threads: 1
+        resources:
+          requests:
+            memory: {{ $memory }}
+          limits:
+            memory: {{ $memory }}  # requests == limits — overcommit not supported by Dell
+
+        # ── Machine type ────────────────────────────────────
+        machine:
+          type: {{ .Values.vm.machineType }}  # q35 required for SCSI
+
+        # ── Firmware (UEFI) ─────────────────────────────────
+        firmware:
+          bootloader:
+            efi:
+              secureBoot: {{ .Values.vm.secureBoot }}
+
+        # ── Devices ─────────────────────────────────────────
+        devices:
+          disks:
+            # Root disk from image gallery
+            - name: rootdisk
+              bootOrder: 1
+              disk:
+                bus: scsi
+            # NVRAM disk
+            - name: nvramdisk
+              disk:
+                bus: scsi
+            # Data disks
+            {{- range $index := until (int .Values.storage.datadisks.count) }}
+            - name: datadisk{{ add $index 1 }}
+              disk:
+                bus: scsi
+            {{- end }}
+
+          # ── NICs - Bridge interfaces for Multus networks ──
+          interfaces:
+            {{- range .Values.networking.multusNetworks }}
+            - name: {{ . }}
+              bridge: {}
+            {{- end }}
+
+      networks:
+        {{- range .Values.networking.multusNetworks }}
+        - name: {{ . }}
+          multus:
+            networkName: {{ . }}
+        {{- end }}
+
+      # ── Volumes ───────────────────────────────────────────
+      volumes:
+        # Root disk from image gallery boot source
+        - name: rootdisk
+          bootSourceVolume:
+            sourceRef:
+              kind: DataSource
+              name: {{ .Values.storage.rootDisk.bootSource.name }}
+              namespace: {{ .Values.storage.rootDisk.bootSource.namespace }}
+        # NVRAM disk
+        - name: nvramdisk
+          persistentVolumeClaim:
+            claimName: ddve-nvram
+        # Data disks
+        {{- range $index := until (int .Values.storage.datadisks.count) }}
+        - name: datadisk{{ add $index 1 }}
+          persistentVolumeClaim:
+            claimName: ddve-data-{{ add $index 1 }}
+        {{- end }}

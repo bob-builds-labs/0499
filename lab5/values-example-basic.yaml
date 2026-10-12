@@ -1,0 +1,23 @@
+# Basic configuration example
+# 1 data disk (250Gi), 1 network, 8TB license tier
+
+namespace:
+  name: ddve
+  create: true
+
+licenseTier: 8TB
+
+storage:
+  storageClass: ocs-storagecluster-ceph-rbd-virtualization
+  datadisks:
+    count: 1
+    size: 250Gi
+  rootDisk:
+    bootSource:
+      name: ddve-8.8.0.0-1241079
+      namespace: openshift-virtualization-os-images
+
+networking:
+  mtu: 1500
+  multusNetworks:
+    - kubevirt-network-out

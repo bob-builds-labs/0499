@@ -11,3 +11,13 @@ virtctl image-upload dv ddve-rootdisk \
   --volume-mode=block --access-mode=ReadWriteOnce --wait-secs=600
 
 oc get datavolume ddve-rootdisk -n ddve -w
+
+
+
+virtctl image-upload dv ddve-${VERSION} \
+  --namespace=openshift-virtualization-os-images \
+  --image-path=${DISK} \
+  --storage-class=ocs-storagecluster-ceph-rbd-virtualization \
+  --volume-mode=block \
+  --access-mode=ReadWriteOnce \
+  --wait-secs=600
