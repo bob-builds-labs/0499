@@ -63,7 +63,7 @@ spec:
         # ── Devices ─────────────────────────────────────────
         devices:
           disks:
-            # Root disk from image gallery
+            # Root disk from DataVolume (clones from DataSource in image gallery)
             - name: rootdisk
               bootOrder: 1
               disk:

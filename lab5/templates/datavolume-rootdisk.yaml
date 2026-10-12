@@ -4,10 +4,10 @@ metadata:
   name: ddve-rootdisk
   namespace: {{ .Values.namespace.name }}
 spec:
-  source:
-    dataSource:
-      name: {{ .Values.storage.rootDisk.dataSource.name }}
-      namespace: {{ .Values.storage.rootDisk.dataSource.namespace }}
+  sourceRef:
+    kind: DataSource
+    name: {{ .Values.storage.rootDisk.dataSource.name }}
+    namespace: {{ .Values.storage.rootDisk.dataSource.namespace }}
   pvc:
     storageClassName: {{ .Values.storage.storageClass }}
     volumeMode: Block
