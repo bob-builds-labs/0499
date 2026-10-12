@@ -3,3 +3,4 @@
 test_priv.yaml
 **/postgres-data
 **/certs
+*:Zone.Identifier
