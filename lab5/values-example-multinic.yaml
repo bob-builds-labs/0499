@@ -13,9 +13,10 @@ storage:
     count: 4
     size: 500Gi
   rootDisk:
-    bootSource:
-      name: ddve-8.8.0.0-1241079
+    dataSource:
+      name: ddve-8.9.0.0-1263812
       namespace: openshift-virtualization-os-images
+    size: 350Gi
 
 networking:
   mtu: 1500

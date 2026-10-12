@@ -95,13 +95,10 @@ spec:
 
       # ── Volumes ───────────────────────────────────────────
       volumes:
-        # Root disk from image gallery boot source
+        # Root disk from DataVolume (clones from DataSource in image gallery)
         - name: rootdisk
-          bootSourceVolume:
-            sourceRef:
-              kind: DataSource
-              name: {{ .Values.storage.rootDisk.bootSource.name }}
-              namespace: {{ .Values.storage.rootDisk.bootSource.namespace }}
+          dataVolume:
+            name: ddve-rootdisk
         # NVRAM disk
         - name: nvramdisk
           persistentVolumeClaim:

@@ -6,29 +6,77 @@ Helm chart for deploying Dell DataDomain Virtual Edition (DDVE) on OpenShift Vir
 
 - OpenShift 4.x with OpenShift Virtualization installed
 - KubeVirt operator installed
+- CDI (Containerized Data Importer) installed (for DataVolumes)
 - Multus CNI installed (for network attachment definitions)
 - A storage class that supports block mode (e.g., OCS Ceph RBD virtualization)
 - Multus networks pre-created in the cluster
-- DDVE root disk image uploaded to OpenShift Virtualization image gallery
+- DDVE root disk image uploaded to OpenShift Virtualization image gallery with DataSource created
 
 ## Root Disk Upload
 
-Before installing the chart, you must upload the DDVE root disk image to the OpenShift Virtualization image gallery:
+Before installing the chart, you must upload the DDVE root disk image to the OpenShift Virtualization image gallery and create a DataSource. Choose one of the following methods:
+
+### Method 1: Upload via OpenShift Virtualization UI (Recommended)
+
+1. Open the OpenShift Web Console
+2. Navigate to **Compute → Boot sources**
+3. Click **Add boot source**
+4. Upload the DDVE image file (e.g., `ddve-8.9.0.0-1263812.qcow2`)
+5. Set the size to 350Gi
+6. Select the storage class (e.g., `ocs-storagecluster-ceph-rbd-virtualization`)
+7. Set volume mode to **Block**
+8. Click **Create**
+
+This automatically creates both the DataVolume and DataSource in the `openshift-virtualization-os-images` namespace.
+
+### Method 2: Upload via virtctl + Manual DataSource Creation
+
+**Step 1: Upload the image with virtctl**
 
 ```bash
-export VERSION=8.8.0.0-1241079
+export VERSION=8.9.0.0-1263812
 export DISK=/data01/artifacts/ddve-kvm-${VERSION}/ddve-${VERSION}.qcow2
 
 virtctl image-upload dv ddve-${VERSION} \
   --namespace=openshift-virtualization-os-images \
   --image-path=${DISK} \
+  --size=350Gi \
   --storage-class=ocs-storagecluster-ceph-rbd-virtualization \
   --volume-mode=block \
   --access-mode=ReadWriteOnce \
   --wait-secs=600
 ```
 
-Update the `storage.rootDisk.bootSource.name` in `values.yaml` to match the uploaded image name.
+**Step 2: Create a DataSource**
+
+Create a file named `datasource-ddve.yaml`:
+
+```yaml
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataSource
+metadata:
+  name: ddve-8.9.0.0-1263812
+  namespace: openshift-virtualization-os-images
+spec:
+  source:
+    pvc:
+      name: ddve-8.9.0.0-1263812
+      namespace: openshift-virtualization-os-images
+```
+
+Apply it:
+
+```bash
+oc apply -f datasource-ddve.yaml
+```
+
+**Step 3: Verify the DataSource**
+
+```bash
+oc get datasource -n openshift-virtualization-os-images
+```
+
+Update the `storage.rootDisk.dataSource.name` in `values.yaml` to match the DataSource name (e.g., `ddve-8.9.0.0-1263812`).
 
 ## Installation
 
@@ -88,9 +136,10 @@ storage:
     count: 1  # 1-8 disks
     size: 250Gi  # 250Gi-2Ti per disk
   rootDisk:
-    bootSource:
-      name: ddve-8.8.0.0-1241079
+    dataSource:
+      name: ddve-8.9.0.0-1263812
       namespace: openshift-virtualization-os-images
+    size: 350Gi
 ```
 
 **Important:**
@@ -164,6 +213,11 @@ storage:
   datadisks:
     count: 1
     size: 250Gi
+  rootDisk:
+    dataSource:
+      name: ddve-8.9.0.0-1263812
+      namespace: openshift-virtualization-os-images
+    size: 350Gi
 networking:
   multusNetworks:
     - kubevirt-network-out
@@ -177,6 +231,11 @@ storage:
   datadisks:
     count: 8
     size: 2Ti
+  rootDisk:
+    dataSource:
+      name: ddve-8.9.0.0-1263812
+      namespace: openshift-virtualization-os-images
+    size: 350Gi
 networking:
   multusNetworks:
     - kubevirt-network-out
@@ -224,6 +283,20 @@ oc get pvc -n ddve
 oc describe pvc ddve-data-1 -n ddve
 ```
 
+Check DataVolume status:
+
+```bash
+oc get datavolume -n ddve
+oc describe datavolume ddve-rootdisk -n ddve
+```
+
+Verify the DataSource exists in the image gallery:
+
+```bash
+oc get datasource -n openshift-virtualization-os-images
+oc describe datasource ddve-8.9.0.0-1263812 -n openshift-virtualization-os-images
+```
+
 Verify the storage class supports block mode:
 
 ```bash
@@ -232,7 +305,7 @@ oc get storageclass
 
 ## Limitations
 
-- Root disk must be uploaded to OpenShift Virtualization image gallery before installation
+- Root disk must be uploaded to OpenShift Virtualization image gallery and a DataSource must be created before installation
 - Multus networks must pre-exist in the cluster
 - Data disks must use block mode (filesystem mode corrupts DDVE structures)
 - CPU overcommit is not supported by Dell (requests == limits)

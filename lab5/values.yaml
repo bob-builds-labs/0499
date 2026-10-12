@@ -23,9 +23,10 @@ storage:
 
   # Root disk from OpenShift Virtualization image gallery
   rootDisk:
-    bootSource:
-      name: ddve-8.8.0.0-1241079  # Name in the image gallery
-      namespace: openshift-virtualization-os-images  # Namespace containing the boot source
+    dataSource:
+      name: ddve-8.9.0.0-1263812  # DataSource name in the image gallery namespace
+      namespace: openshift-virtualization-os-images  # Namespace containing the DataSource
+    size: 350Gi  # Size of the root disk DataVolume
 
 # Networking - Multus networks (must pre-exist)
 networking:
