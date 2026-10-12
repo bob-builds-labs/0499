@@ -24,7 +24,7 @@
 apiVersion: kubevirt.io/v1
 kind: VirtualMachine
 metadata:
-  name: ddve
+  name: {{ .Values.vm.name }}
   namespace: {{ .Values.namespace.name }}
   labels:
     app: ddve
@@ -36,7 +36,7 @@ spec:
   template:
     metadata:
       labels:
-        kubevirt.io/domain: ddve
+        kubevirt.io/domain: {{ .Values.vm.name }}
     spec:
       domain:
         # ── CPU (no overcommit) ──────────────────────────────
@@ -98,14 +98,14 @@ spec:
         # Root disk from DataVolume (clones from DataSource in image gallery)
         - name: rootdisk
           dataVolume:
-            name: ddve-rootdisk
+            name: {{ .Values.vm.name }}-rootdisk
         # NVRAM disk
         - name: nvramdisk
           persistentVolumeClaim:
-            claimName: ddve-nvram
+            claimName: {{ .Values.vm.name }}-nvram
         # Data disks
         {{- range $index := until (int .Values.storage.datadisks.count) }}
         - name: datadisk{{ add $index 1 }}
           persistentVolumeClaim:
-            claimName: ddve-data-{{ add $index 1 }}
+            claimName: {{ .Values.vm.name }}-data-{{ add $index 1 }}
         {{- end }}

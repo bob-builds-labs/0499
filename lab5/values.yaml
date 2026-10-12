@@ -38,7 +38,8 @@ networking:
     - kubevirt-network-out  # Required - at least one network
     # - another-network     # Optional - up to 8 total
 
-# VM settings (fixed - cannot be changed)
+# VM settings
 vm:
+  name: ddve  # VM name - configurable per deployment
   machineType: pc-q35-rhel9.4.0  # Fixed - q35 required for SCSI
   secureBoot: false  # Fixed

@@ -2,7 +2,7 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: ddve-data-{{ add $index 1 }}
+  name: {{ $.Values.vm.name }}-data-{{ add $index 1 }}
   namespace: {{ $.Values.namespace.name }}
 spec:
   accessModes:

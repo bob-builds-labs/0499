@@ -180,11 +180,20 @@ namespace:
 
 If using an existing namespace, ensure it has the proper labels for CUDN network access.
 
-**Note:** VM settings (machineType and secureBoot) are fixed and cannot be changed.
+### VM Configuration
+
+Configure the VM name in `values.yaml`:
+
+```yaml
+vm:
+  name: ddve  # VM name - configurable per deployment
+```
+
+**Note:** The VM name is configurable per deployment, allowing you to deploy multiple DDVE instances with different names in the same namespace. Other VM settings (machineType and secureBoot) are fixed and cannot be changed.
 
 ## Starting the VM
 
-After installation, start the VM:
+After installation, start the VM (replace `ddve` with your configured VM name):
 
 ```bash
 virtctl start ddve -n ddve
@@ -208,6 +217,8 @@ oc get vmi ddve -n ddve
 ### Basic Configuration (1 data disk, 1 network)
 
 ```yaml
+vm:
+  name: ddve
 licenseTier: 8TB
 storage:
   datadisks:
@@ -226,6 +237,8 @@ networking:
 ### High Capacity Configuration (8 data disks, multiple networks)
 
 ```yaml
+vm:
+  name: ddve
 licenseTier: 96TB
 storage:
   datadisks:
@@ -243,11 +256,23 @@ networking:
     - kubevirt-network-backup
 ```
 
+### Multiple VMs in Same Namespace
+
+To deploy multiple DDVE instances in the same namespace, use different VM names:
+
+```bash
+# First instance
+helm install ddve-prod . -n ddve -f values-example-basic.yaml --set vm.name=ddve-prod
+
+# Second instance
+helm install ddve-dr . -n ddve -f values-example-multinic.yaml --set vm.name=ddve-dr
+```
+
 ## Troubleshooting
 
 ### VM won't start
 
-Check the VM instance status:
+Check the VM instance status (replace `ddve` with your VM name):
 
 ```bash
 oc get vmi ddve -n ddve
@@ -276,14 +301,14 @@ oc get network-attachment-definition -A
 
 ### Storage issues
 
-Check PVC status:
+Check PVC status (data disks use the VM name prefix):
 
 ```bash
 oc get pvc -n ddve
 oc describe pvc ddve-data-1 -n ddve
 ```
 
-Check DataVolume status:
+Check DataVolume status (replace `ddve` with your VM name):
 
 ```bash
 oc get datavolume -n ddve

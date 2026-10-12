@@ -1,7 +1,7 @@
 apiVersion: cdi.kubevirt.io/v1beta1
 kind: DataVolume
 metadata:
-  name: ddve-rootdisk
+  name: {{ .Values.vm.name }}-rootdisk
   namespace: {{ .Values.namespace.name }}
 spec:
   sourceRef:

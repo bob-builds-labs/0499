@@ -5,6 +5,9 @@ namespace:
   name: ddve
   create: true
 
+vm:
+  name: ddve
+
 licenseTier: 32TB
 
 storage:
