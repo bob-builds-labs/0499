@@ -9,16 +9,16 @@
     - ansible.controller
     - awx.awx
   tasks:
- #   - name: Add {{ ppdm.assets.label }} label to organization {{ awx.org }}
- #     label:
- #       name: "{{ ppdm.assets.label }}"
- #       organization: "{{ awx.org }}"
- #   - name: Create team {{ ppdm.agents.team.name }}
- #     team:
- #       name: "{{ ppdm.agents.team.name }}"
- #       description: "{{ ppdm.agents.team.description }}"
- #       organization: "{{ awx.org }}"
- #       state: present
+    #   - name: Add {{ ppdm.assets.label }} label to organization {{ awx.org }}
+    #     label:
+    #       name: "{{ ppdm.assets.label }}"
+    #       organization: "{{ awx.org }}"
+    #   - name: Create team {{ ppdm.agents.team.name }}
+    #     team:
+    #       name: "{{ ppdm.agents.team.name }}"
+    #       description: "{{ ppdm.agents.team.description }}"
+    #       organization: "{{ awx.org }}"
+    #       state: present
 
     - name: "Add {{ ppdm.policy.jt.patch_vmware_local_dd  }}"
       job_template:
@@ -35,9 +35,9 @@
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
-          protection_policy_patch: 
+          protection_policy_patch:
             name: vm image crash consistent
-            description: 'Crash consistent Policy writing to local DD'
+            description: "Crash consistent Policy writing to local DD"
             purpose: CENTRALIZED
             assetType: VMWARE_VIRTUAL_MACHINE
             disabled: false
@@ -52,7 +52,7 @@
                         pattern:
                           type: DAILY
                       window:
-                        startTime: '2024-02-27T20:00:00.000Z'
+                        startTime: "2024-02-27T20:00:00.000Z"
                         duration: PT8H
                     triggerType: ON_SCHEDULE
                 target:
@@ -100,7 +100,7 @@
                       - unitValue: 1
                         unitType: MONTH
                         type: RETENTION
-            id: 4d795f97-37be-491f-8c11-d2cf880e819e            
+            id: 4d795f97-37be-491f-8c11-d2cf880e819e
         ask_variables_on_launch: false
         ask_credential_on_launch: true
     - name: "Add {{ ppdm.policy.jt.patch_vmware_remote_dd  }}"
@@ -120,7 +120,7 @@
         extra_vars:
           protection_policy_patch:
             name: vm image crash consistent
-            description: 'Crash consitent Policy running on DR site'
+            description: "Crash consitent Policy running on DR site"
             purpose: CENTRALIZED
             assetType: VMWARE_VIRTUAL_MACHINE
             disabled: false
@@ -135,7 +135,7 @@
                         pattern:
                           type: DAILY
                       window:
-                        startTime: '2024-02-27T20:00:00.000Z'
+                        startTime: "2024-02-27T20:00:00.000Z"
                         duration: PT8H
                     triggerType: ON_SCHEDULE
                 target:
@@ -183,6 +183,214 @@
                       - unitValue: 1
                         unitType: MONTH
                         type: RETENTION
-            id: 4d795f97-37be-491f-8c11-d2cf880e819e          
+            id: 4d795f97-37be-491f-8c11-d2cf880e819e
         ask_variables_on_launch: false
         ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.sql.name  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.name   }}"
+        description: "{{ ppdm.policy.jt.sql.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.1_playbook_add_mssql_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.exchange.name  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.name   }}"
+        description: "{{ ppdm.policy.jt.exchange.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.1_playbook_add_exchange_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.fs.name  }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.name   }}"
+        description: "{{ ppdm.policy.jt.fs.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.1_playbook_add_fs_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+          - "{{ ppdd.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+
+
+    - name: "Add {{ ppdm.policy.jt.sql.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.sql.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+          asset_filter: type eq "MICROSOFT_SQL_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"    
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.exchange.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.exchange.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+          asset_filter: type eq "MICROSOFT_EXCHANGE_DATABASE" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows" 
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.fs.asset.add.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.asset.add.name }}"
+        description: "{{ ppdm.policy.jt.fs.asset.add.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+          asset_filter: type eq "FILE_SYSTEM" and protectionStatus eq "UNPROTECTED" and operatingSystem.name eq "Windows"  
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.sql.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.sql.start.name }}"
+        description: "{{ ppdm.policy.jt.sql.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.sql.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: SQL_DEMO
+          policy_type: MICROSOFT_SQL_DATABASE 
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.exchange.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.exchange.start.name }}"
+        description: "{{ ppdm.policy.jt.exchange.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.exchange.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Exchange_DEMO
+          policy_type: MICROSOFT_EXCHANGE_DATABASE
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Add {{ ppdm.policy.jt.fs.start.name }}"
+      job_template:
+        name: "{{ ppdm.policy.jt.fs.start.name }}"
+        description: "{{ ppdm.policy.jt.fs.start.description  }}"
+        job_type: "run"
+        organization: "{{ awx.org }}"
+        inventory: "{{ awx.inventory[0].name }}"
+        project: "{{ ppdm.project.name }}"
+        playbook: "120.3_playbook_start_policy_v3.yaml"
+        state: "present"
+        labels:
+          - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.policy.jt.fs.label }}"
+        credentials:
+          - "{{ ppdm.credentials[0].name }}"
+        extra_vars:
+          policy_name: Filesystem_DEMO
+          policy_type: FILE_SYSTEM
+        ask_variables_on_launch: true
+        ask_credential_on_launch: true
+
+    - name: "Give {{ ppdm.agents.user_1.username }} permissions"
+      role:
+        user: "{{ ppdm.agents.user_1.username }}"
+        role: execute
+        job_templates:
+          - "{{ ppdm.policy.jt.sql.name }}"
+          - "{{ ppdm.policy.jt.exchange.name }}"
+          - "{{ ppdm.policy.jt.fs.name }}"
+          - "{{ ppdm.policy.jt.sql.asset.add.name }}"
+          - "{{ ppdm.policy.jt.fs.asset.add.name }}"
+          - "{{ ppdm.policy.jt.exchange.asset.add.name }}"
+          - "{{ ppdm.policy.jt.exchange.start.name }}"
+          - "{{ ppdm.policy.jt.sql.start.name }}"
+          - "{{ ppdm.policy.jt.fs.start.name }}"

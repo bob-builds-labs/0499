@@ -118,6 +118,13 @@
         name: "{{ awx.infra.label }}"
         organization: "{{ awx.org }}"
 
+    - name: Add labels to organization {{ awx.org }}
+      label:
+        name: "{{ item }}"
+        organization: "{{ awx.org }}"
+      loop: "{{ awx.labels_to_add }}"
+
+                    
     - name: Create RH Subscription Credential Type
       credential_type:
         name: RedHat Subscription Credentials
@@ -302,6 +309,8 @@
         state: present
         validate_certs: false
 
+    
+     
     - name: Create team {{ ppdm.agents.team.name }}
       team:
         name: "{{ ppdm.agents.team.name }}"
@@ -425,7 +434,7 @@
 
     - name: Add Kubeconfig Credentials
       credential:
-        name: "openshift.demo.local"
+        name: "ocp.demo.local"
         credential_type: kubeconfig
         organization: "{{ awx.org }}"
         inputs:
@@ -442,7 +451,7 @@
         credentials:
           - "AWX Admin Credentials"
           #          - "RedHat Subscription Credentials"
-          - "openshift.demo.local"
+          - "ocp.demo.local"
         state: "present"
         labels:
           - "{{ awx.infra.label }}"
@@ -516,7 +525,7 @@
         playbook: "playbooks/awx_ppdm_k8s_templates.yaml"
         credentials:
           - "AWX Admin Credentials"
-          - "openshift.demo.local"
+          - "ocp.demo.local"
         state: "present"
         labels:
           - "{{ awx.infra.label }}"

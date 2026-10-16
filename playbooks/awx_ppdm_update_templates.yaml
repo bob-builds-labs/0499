@@ -138,6 +138,8 @@
         name: "{{ ppdm.infra.wjt.update_ppdm.name }}-{{ ppdm_index + 1 }}"
         inventory: "{{ awx.inventory[0].name }}"
         description: "{{ ppdm.infra.wjt.update_ppdm.description }}"
+        labels:
+          - "{{ ppdm.infra.label }}"
         workflow_nodes:
           - identifier: "{{ ppdm.infra.jt.upload_update }}"
             extra_data: []
@@ -240,13 +242,17 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
+                "20.1"
+                "19.22",
+                "19.21",
+                "19.20",
                 "19.19",
                 "19.18",
                 "19.17",
                 "19.16",
                 "19.15"
             ],
-            "default": "19.19",
+            "default": "20.1",
             "required": true,
             "variable": "release",
             "new_question": false,
@@ -258,12 +264,12 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "dellemc-ppdm-upgrade-sw-19.19.0-15.pkg",
+            "default": "dellemc-ppdm-upgrade-sw-20.1.0-16.pkg",
             "required": true,
             "variable": "package",
             "new_question": false,
             "question_name": "Package Name",
-            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-19.19.0-15.pkg"
+            "question_description": "Enter the name of the package, e.g. dellemc-ppdm-upgrade-sw-20.1.0-16.pkg"
             }                       
           ]
           }
@@ -298,13 +304,17 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
+                "20.1",
+                "19.22",
+                "19.21",
+                "19.20",
                 "19.19",
                 "19.18",
                 "19.17",
                 "19.16",
                 "19.15"
             ],
-            "default": "19.19",
+            "default": "20.1",
             "required": true,
             "variable": "release",
             "new_question": false,
@@ -333,7 +343,7 @@
             "variable": "ppdm_ip",
             "new_question": false,
             "question_name": "Enter the IPv4 address of PPDM",
-            "question_description": "Enter the IPv4 address of the PPDM do be deployed, e.g. 192.168.1.53"
+            "question_description": "ppdm-1 is 192.168.1.50, ppdm-2 is 192.168.1.53 vault-ppdm is 192.168.1.69"
             },
             {
             "max": 1024,
@@ -397,12 +407,74 @@
             "min": 0,
             "type": "text",
             "choices": "",
-            "default": "dellemc-ppdm-sw-19.19.0-15.ova",
+            "default": "dellemc-ppdm-sw-20.1.0-16.ova",
             "required": true,
             "variable": "package",
             "new_question": false,
             "question_name": "Name of the OVA Template to deploy",
-            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-19.19.0-15.ova"
+            "question_description": "Enter the name of the OVA File, e.g. dellemc-ppdm-sw-20.1.0-16.ova"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "democenter",
+                "vault"
+            ],
+            "default": "democenter",
+            "required": true,
+            "variable": "datacenter",
+            "new_question": false,
+            "question_name": "Name of the Datacenter to deploy to",
+            "question_description": "Enter democenter or vault to deploy to"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "-- Please Select --",
+                "cluster"
+            ],
+            "default": "-- Please Select --",
+            "required": false,
+            "variable": "cluster",
+            "new_question": false,
+            "question_name": "Name of the Cluster  to deploy to if ESXI Hist not selected",
+            "question_description": "Select Cluster  vault to deploy to"
+            },              
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "-- Please Select --",
+                "esxi01.demo.local",
+                "esxi02.demo.local",
+                "vault-esxi.demo.local"
+            ],
+            "default": "-- Please Select --",
+            "required": true,
+            "variable": "esxi_hostname",
+            "new_question": false,
+            "question_name": "Name of the ESXI Hosts to deploy to if cluster not selected",
+            "question_description": "Select ESXI Hosts to deploy to"
+            },
+            {
+            "max": 1024,
+            "min": 0,
+            "type": "multiplechoice",
+            "choices": [
+                "{u'VM Network':u'VLAN0 prod vm network'}",
+                "{u'VM Network':u'VM Network'}"
+            ],
+            "default": "{u'VM Network':u'VLAN0 prod vm network'}",
+            "required": true,
+            "variable": "networks",
+            "new_question": false,
+            "question_name": "Name of the Network to connect",
+            "question_description": "Select Network"
             }
           ]
           }

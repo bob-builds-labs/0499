@@ -1,0 +1,14 @@
+# 04-pvc-nvram.yaml
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: ddve-nvram
+  namespace: ddve
+spec:
+  accessModes:
+    - ReadWriteOnce
+  volumeMode: Block          # MUST be Block — never Filesystem
+  storageClassName: ocs-storagecluster-ceph-rbd-virtualization
+  resources:
+    requests:
+      storage: 10Gi

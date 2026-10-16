@@ -1,0 +1,45 @@
+# Namespace configuration
+namespace:
+  name: ddve
+  create: true  # Set to false to use an existing namespace
+
+# License Tier (predefined CPU/memory configurations)
+# Options: 8TB, 16TB, 32TB, 48TB, 64TB, 96TB
+licenseTier: 8TB
+
+# Storage configuration
+storage:
+  # Storage class for all PVCs
+  storageClass: ocs-storagecluster-ceph-rbd-virtualization
+
+  # NVRAM disk (required, block mode, fixed size)
+  nvram:
+    size: 10Gi  # Fixed size - cannot be changed
+
+  # Data disks (1-8 disks, 250Gi-2Ti each)
+  datadisks:
+    count: 1
+    size: 250Gi  # Range: 250Gi-2Ti
+
+  # Root disk from OpenShift Virtualization image gallery
+  rootDisk:
+    dataSource:
+      name: ddve-8.9.0.0-1263812  # DataSource name in the image gallery namespace
+      namespace: openshift-virtualization-os-images  # Namespace containing the DataSource
+    size: 350Gi  # Size of the root disk DataVolume
+
+# Networking - Multus networks (must pre-exist)
+networking:
+  mtu: 1500
+  # List of multus network names (1-8 networks required)
+  # The chart will automatically create bridge interfaces for each network
+  # and add namespace labels/annotations for CUDN access
+  multusNetworks:
+    - kubevirt-network-out  # Required - at least one network
+    # - another-network     # Optional - up to 8 total
+
+# VM settings
+vm:
+  name: ddve  # VM name - configurable per deployment
+  machineType: pc-q35-rhel9.4.0  # Fixed - q35 required for SCSI
+  secureBoot: false  # Fixed

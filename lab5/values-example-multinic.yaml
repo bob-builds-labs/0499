@@ -1,0 +1,29 @@
+# Multi-network configuration example
+# 4 data disks (500Gi each), 3 networks, 32TB license tier
+
+namespace:
+  name: ddve
+  create: true
+
+vm:
+  name: ddve
+
+licenseTier: 32TB
+
+storage:
+  storageClass: ocs-storagecluster-ceph-rbd-virtualization
+  datadisks:
+    count: 4
+    size: 500Gi
+  rootDisk:
+    dataSource:
+      name: ddve-8.9.0.0-1263812
+      namespace: openshift-virtualization-os-images
+    size: 350Gi
+
+networking:
+  mtu: 1500
+  multusNetworks:
+    - kubevirt-network-out
+    - kubevirt-network-internal
+    - kubevirt-network-backup

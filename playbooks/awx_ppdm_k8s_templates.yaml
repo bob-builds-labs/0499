@@ -10,10 +10,6 @@
     - ansible.controller
     - awx.awx
   tasks:
-    - name: Add {{ ppdm.k8s.label }} label to organization {{ awx.org }}
-      label:
-        name: "{{ ppdm.k8s.label }}"
-        organization: "{{ awx.org }}"
     - name: Create team {{ ppdm.k8s.team }}
       team:
         name: "{{ ppdm.k8s.team }}"
@@ -55,6 +51,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -74,6 +71,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -94,6 +92,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -106,6 +105,8 @@
         name: "{{ ppdm.k8s.wjt.namespace.adhoc_protection }}"
         inventory: "{{ awx.inventory[0].name }}"
         destroy_current_nodes: true
+        labels:
+         - "{{ ppdm.k8s.label }}"
         workflow_nodes:
           - identifier: "{{ ppdm.k8s.jt.namespace.adhoc_protection }}"
             unified_job_template:
@@ -130,9 +131,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocp.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocp.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -166,6 +167,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -194,6 +196,8 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
+        labels:
+          - "{{ ppdm.k8s.label }}"      
         survey_enabled: true
         survey_spec: |
           {
@@ -205,9 +209,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocp.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocp.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -244,6 +248,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -271,6 +276,8 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
+        labels:
+          - "{{ ppdm.k8s.label }}"      
         survey_enabled: true
         survey_spec: |
           {
@@ -282,9 +289,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocp.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocp.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -333,15 +340,15 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
-          - "openshift.demo.local"
+          - "ocp.demo.local"
         ask_credential_on_launch: true
         ask_variables_on_launch: true
         extra_vars:
-          vcenter_address: vcenter01.demo.local
-          use_fsagent: false
-          parallel_pvc_backup: false
+          rbac_source: https://raw.githubusercontent.com/bottkars/ppdm-rbac/20.1/
+
     - name: Add {{ ppdm.k8s.jt.plc.create }} JT
       job_template:
         name: "{{ ppdm.k8s.jt.plc.create}}"
@@ -354,6 +361,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
           - "{{ ppdd.credentials[0].name }}"
@@ -384,6 +392,8 @@
               always_nodes: []
               credentials: []
         ask_variables_on_launch: true
+        labels:
+         - "{{ ppdm.k8s.label }}"
         survey_enabled: true
         survey_spec: |
           {
@@ -424,10 +434,11 @@
         organization: "{{ awx.org }}"
         inventory: "{{ awx.inventory[0].name }}"
         project: "{{ ppdm.project.name }}"
-        playbook: "120.2_playbook_add_assets_to_policy.yaml"
+        playbook: "120.2_playbook_add_assets_to_policy_v3.yaml"
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -454,6 +465,8 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
+        labels: 
+          - "{{ ppdm.k8s.label }}"      
         survey_enabled: true
         survey_spec: |        
           {
@@ -465,9 +478,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocp.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocp.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,
@@ -527,6 +540,7 @@
         state: "present"
         labels:
           - "{{ ppdm.assets.label }}"
+          - "{{ ppdm.k8s.label }}"
         credentials:
           - "{{ ppdm.credentials[0].name }}"
         extra_vars:
@@ -553,6 +567,8 @@
               failure_nodes: []
               always_nodes: []
               credentials: []
+        labels: 
+          - "{{ ppdm.k8s.label }}"      
         survey_enabled: true
         survey_spec: |        
           {
@@ -564,9 +580,9 @@
             "min": 0,
             "type": "multiplechoice",
             "choices": [
-                "api.openshift.demo.local"
+                "api.ocp.demo.local"
             ],
-            "default": "api.openshift.demo.local",
+            "default": "api.ocp.demo.local",
             "required": true,
             "variable": "k8s_name",
             "new_question": false,

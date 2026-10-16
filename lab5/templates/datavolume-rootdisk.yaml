@@ -1,0 +1,18 @@
+apiVersion: cdi.kubevirt.io/v1beta1
+kind: DataVolume
+metadata:
+  name: {{ .Values.vm.name }}-rootdisk
+  namespace: {{ .Values.namespace.name }}
+spec:
+  sourceRef:
+    kind: DataSource
+    name: {{ .Values.storage.rootDisk.dataSource.name }}
+    namespace: {{ .Values.storage.rootDisk.dataSource.namespace }}
+  pvc:
+    storageClassName: {{ .Values.storage.storageClass }}
+    volumeMode: Block
+    accessModes:
+      - ReadWriteOnce
+    resources:
+      requests:
+        storage: {{ .Values.storage.rootDisk.size }}
