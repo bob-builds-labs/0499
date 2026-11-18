@@ -340,6 +340,10 @@ write_files:
 runcmd:
   # Execute post-install script
   - /home/rocky/post-install.sh > /var/log/post-install.log 2>&1
+  # Resize LVM partition to use all available disk space
+  - pvresize /dev/sda4
+  - lvextend -l +100%FREE /dev/rocky/root
+  - xfs_growfs /dev/rocky/root
 
 # Final message
 final_message: |
