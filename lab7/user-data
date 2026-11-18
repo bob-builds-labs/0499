@@ -1,0 +1,357 @@
+#cloud-config
+# This file contains all cloud-init configuration
+# Including user and embedded scripts for PPDM proxy setup
+# Network configuration is in network-config file
+
+# Enable password authentication for SSH
+ssh_pwauth: true
+
+# Create users - rocky explicitly, admin as additional
+users:
+  - name: rocky
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    groups: users,wheel
+    lock_passwd: false
+    ssh_authorized_keys:
+      - ${SSH_PUBLIC_KEY}
+  - name: admin
+    sudo: ALL=(ALL) NOPASSWD:ALL
+    shell: /bin/bash
+    groups: users,wheel
+    lock_passwd: false
+
+# Set password for rocky and admin users
+chpasswd:
+  list: |
+    rocky:${CIPASSWORD}
+    admin:${CIPASSWORD}
+  expire: false
+
+# Set hostname (FQDN)
+hostname: ${VMNAME}.${DOMAIN}
+manage_etc_hosts: true
+
+# Update package cache and install base packages
+package_update: true
+package_upgrade: true
+packages:
+  - socat
+  - logrotate
+  - tar
+  - curl
+  - firewalld
+  - bind-utils
+  - iputils
+  - libxcrypt-compat
+
+# Write scripts
+write_files:
+  - path: /home/rocky/post-install.sh
+    owner: rocky:rocky
+    permissions: '0755'
+    defer: true
+    content: |
+      #!/bin/bash
+      # Post-install script for PPDM proxy setup
+      # This script is automatically executed by cloud-init
+      # Admin user is created by cloud-init, this script only installs prerequisites
+
+      set -e
+
+      echo "PPDM Proxy Post-Install Setup"
+      echo "=============================="
+      echo ""
+
+      # 1. Prerequisites
+      echo "[1/8] Installing prerequisites..."
+      dnf install -y socat logrotate tar
+
+      # 2. Base OS packages
+      echo "[2/8] Installing base OS packages..."
+      dnf install -y curl firewalld bind-utils iputils
+      systemctl enable --now firewalld
+
+      # 3. Fix libcrypt dependency
+      echo "[3/8] Installing libxcrypt-compat..."
+      dnf install -y libxcrypt-compat
+
+      # 4. Install Erlang and RabbitMQ
+      echo "[4/8] Installing Erlang and RabbitMQ..."
+      rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc'
+      rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key'
+      rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key'
+
+      tee /etc/yum.repos.d/rabbitmq.repo >/dev/null <<'EOF'
+      ##
+      ## Zero dependency Erlang RPM
+      ##
+
+      [modern-erlang]
+      name=modern-erlang-el9
+      baseurl=https://yum1.rabbitmq.com/erlang/el/9/$basearch
+              https://yum2.rabbitmq.com/erlang/el/9/$basearch
+      repo_gpgcheck=1
+      enabled=1
+      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
+      gpgcheck=1
+      sslverify=1
+      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+      metadata_expire=300
+      pkg_gpgcheck=1
+      autorefresh=1
+      type=rpm-md
+
+      [modern-erlang-noarch]
+      name=modern-erlang-el9-noarch
+      baseurl=https://yum1.rabbitmq.com/erlang/el/9/noarch
+              https://yum2.rabbitmq.com/erlang/el/9/noarch
+      repo_gpgcheck=1
+      enabled=1
+      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
+             https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
+      gpgcheck=1
+      sslverify=1
+      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+      metadata_expire=300
+      pkg_gpgcheck=1
+      autorefresh=1
+      type=rpm-md
+
+      ##
+      ## RabbitMQ Server
+      ##
+
+      [rabbitmq-el9]
+      name=rabbitmq-el9
+      baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/$basearch
+              https://yum1.rabbitmq.com/rabbitmq/el/9/$basearch
+      repo_gpgcheck=1
+      enabled=1
+      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
+             https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
+      gpgcheck=1
+      sslverify=1
+      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+      metadata_expire=300
+      pkg_gpgcheck=1
+      autorefresh=1
+      type=rpm-md
+
+      [rabbitmq-el9-noarch]
+      name=rabbitmq-el9-noarch
+      baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/noarch
+      repo_gpgcheck=1
+      enabled=1
+      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
+             https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
+      gpgcheck=1
+      sslverify=1
+      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+      metadata_expire=300
+      pkg_gpgcheck=1
+      autorefresh=1
+      type=rpm-md
+      EOF
+
+      dnf clean all
+      dnf makecache -y
+      dnf install -y erlang rabbitmq-server
+
+      # 5. Configure kernel parameters
+      echo "[5/8] Configuring kernel parameters..."
+      echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
+      echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
+      echo 'net.ipv4.conf.default.forwarding=1' >> /etc/sysctl.conf
+      sysctl -p
+
+      # 6. Configure firewall
+      echo "[6/8] Configuring firewall..."
+      firewall-cmd --permanent --add-port=9090/tcp
+      firewall-cmd --permanent --add-port=7000/tcp
+      firewall-cmd --permanent --add-port=8443/tcp
+      firewall-cmd --permanent --add-service=ssh
+      firewall-cmd --reload
+
+      # 7. SSH hardening
+      echo "[7/8] Hardening SSH configuration..."
+      cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak.$(date +%Y%m%d%H%M%S)
+
+      for setting in "PermitRootLogin no" "ChallengeResponseAuthentication no" "AllowAgentForwarding no"; do
+        key=$(awk '{print $1}' <<< "$setting")
+        if grep -qiE "^[[:space:]]*#?[[:space:]]*${key}\b" /etc/ssh/sshd_config; then
+          sed -i -E "s|^[[:space:]]*#?[[:space:]]*${key}\b.*|${setting}|I" /etc/ssh/sshd_config
+        else
+          echo "$setting" >> /etc/ssh/sshd_config
+        fi
+      done
+
+      sshd -t && systemctl restart sshd
+
+      # 8. Download PPDM package
+      echo "[8/8] Downloading PPDM package..."
+      PPDM_METHOD="${PPDM_PACKAGE_METHOD}"
+      PPDM_FILE="${PPDM_PACKAGE_FILE}"
+
+      # Extract filename from path if not explicitly set
+      if [ -z "$PPDM_FILE" ]; then
+        case "$PPDM_METHOD" in
+          http)
+            PPDM_FILE=$(basename "${PPDM_PACKAGE_URL}")
+            ;;
+          nfs)
+            PPDM_FILE="${PPDM_PACKAGE_NFS_FILE}"
+            ;;
+          scp)
+            PPDM_FILE=$(basename "${PPDM_PACKAGE_SCP_PATH}")
+            ;;
+          local)
+            PPDM_FILE=$(basename "${PPDM_PACKAGE_LOCAL_PATH}")
+            ;;
+        esac
+      fi
+
+      case "$PPDM_METHOD" in
+        http)
+          echo "Downloading from HTTP/HTTPS..."
+          if curl -o /home/admin/${PPDM_FILE} ${PPDM_PACKAGE_URL}; then
+            tar xzfv /home/admin/${PPDM_FILE} -C /home/admin/
+            chown -R admin:admin /home/admin/emc-vProxy-SPP
+            echo "PPDM package downloaded and extracted successfully."
+          else
+            echo "Warning: Failed to download PPDM package from HTTP."
+            echo "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
+          fi
+          ;;
+        nfs)
+          echo "Downloading from NFS..."
+          if dnf install -y nfs-utils && \
+             mkdir -p /mnt/ppdm && \
+             mount ${PPDM_PACKAGE_NFS_SERVER}:${PPDM_PACKAGE_NFS_EXPORT} /mnt/ppdm && \
+             cp /mnt/ppdm/${PPDM_PACKAGE_NFS_FILEPATH}/${PPDM_FILE} /home/admin/${PPDM_FILE} && \
+             umount /mnt/ppdm && \
+             rmdir /mnt/ppdm; then
+            tar xzfv /home/admin/${PPDM_FILE} -C /home/admin/
+            chown -R admin:admin /home/admin/emc-vProxy-SPP
+            echo "PPDM package downloaded and extracted successfully."
+          else
+            echo "Warning: Failed to download PPDM package from NFS."
+            echo "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
+          fi
+          ;;
+        scp)
+          echo "Downloading via SCP..."
+          if dnf install -y openssh-clients && \
+             mkdir -p /home/admin/.ssh && \
+             echo "${PPDM_PACKAGE_SSH_KEY}" > /home/admin/.ssh/ppdm_key && \
+             chmod 600 /home/admin/.ssh/ppdm_key && \
+             scp -i /home/admin/.ssh/ppdm_key -o StrictHostKeyChecking=no \
+               ${PPDM_PACKAGE_SCP_USER}@${PPDM_PACKAGE_SCP_SERVER}:${PPDM_PACKAGE_SCP_PATH} \
+               /home/admin/${PPDM_FILE} && \
+             rm /home/admin/.ssh/ppdm_key; then
+            tar xzfv /home/admin/${PPDM_FILE} -C /home/admin/
+            chown -R admin:admin /home/admin/emc-vProxy-SPP
+            echo "PPDM package downloaded and extracted successfully."
+          else
+            echo "Warning: Failed to download PPDM package via SCP."
+            echo "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
+          fi
+          ;;
+        local)
+          echo "Local method selected: Manual upload required."
+          echo "Please manually upload the PPDM package to /home/admin/ and extract it:"
+          echo "  scp ${PPDM_FILE} admin@<VM-IP>:/home/admin/"
+          echo "  ssh admin@<VM-IP>"
+          echo "  tar xzfv ${PPDM_FILE}"
+          echo ""
+          echo "After uploading and extracting, run: /home/admin/setup-ppdm.sh"
+          ;;
+        *)
+          echo "Error: Unknown download method: $PPDM_METHOD"
+          echo "Supported methods: http, nfs, scp, local"
+          ;;
+      esac
+
+      echo ""
+      echo "Post-install setup complete!"
+
+  - path: /home/admin/setup-ppdm.sh
+    owner: admin:admin
+    permissions: '0755'
+    defer: true
+    content: |
+      #!/bin/bash
+      # Manual PPDM proxy setup script
+      # Run this after the VM boots to complete the PPDM proxy installation
+
+      echo "PPDM Proxy Setup"
+      echo "================="
+      echo ""
+
+      # Check if PPDM package exists
+      if [ ! -d "/home/admin/emc-vProxy-SPP" ]; then
+        echo "Error: PPDM package not found in /home/admin/emc-vProxy-SPP"
+        echo "Please download the package to /home/admin/ and extract it:"
+        echo "  tar xzfv <package-file> -C /home/admin/"
+        exit 1
+      fi
+
+      # Check if PPDM password is set in config
+      if [ -n "${PPDM_PASSWORD}" ]; then
+        PPDM_PASSWORD="${PPDM_PASSWORD}"
+        echo "Using PPDM password from configuration"
+      else
+        # Prompt for PPDM password
+        read -s -p "Enter PPDM password: " PPDM_PASSWORD
+        echo ""
+        read -s -p "Confirm PPDM password: " PPDM_PASSWORD_CONFIRM
+        echo ""
+
+        if [ "$PPDM_PASSWORD" != "$PPDM_PASSWORD_CONFIRM" ]; then
+          echo "Error: Passwords do not match"
+          exit 1
+        fi
+      fi
+
+      # Save password to file
+      echo "$PPDM_PASSWORD" > /home/admin/.ppdm_pass
+      chmod 600 /home/admin/.ppdm_pass
+
+      # Auto-detect the host's local (management) IP address
+      PROXY_MGMT_IP=$(hostname -I | awk '{print $1}')
+      echo "Detected proxy management IP: ${PROXY_MGMT_IP}"
+      echo "Using Proxmox inventory source: ${PROXMOX_IP}"
+
+      # Run the installer
+      cd /home/admin/emc-vProxy-SPP
+      ./installSPP.sh \
+        --path=/home/admin/emc-vProxy-SPP/pkg/ \
+        --supported-protection-types=Proxmox \
+        --proxy-mgmt-ip=${PROXY_MGMT_IP} \
+        --proxy-password=Password123! \
+        --ppdm-password-file=/home/admin/.ppdm_pass \
+        --is-multivlan-enabled=no \
+        --proxmox-inventory-source=${PROXMOX_IP}
+
+      echo ""
+      echo "Installation complete!"
+
+# Run commands after boot
+runcmd:
+  # Execute post-install script
+  - /home/rocky/post-install.sh > /var/log/post-install.log 2>&1
+
+# Final message
+final_message: |
+  Rocky Linux 9 with PPDM proxy prerequisites is now installed.
+
+  The post-install script has been executed automatically.
+  All prerequisites (Erlang, RabbitMQ, firewall, SSH hardening) are configured.
+
+  IMPORTANT: Complete the PPDM proxy installation by running:
+    /home/admin/setup-ppdm.sh
+
+  This script will prompt for the PPDM password (unless set in config.sh).
+
+  Check the post-install log for details:
+    cat /var/log/post-install.log

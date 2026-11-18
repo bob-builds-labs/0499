@@ -1,0 +1,14 @@
+version: 2
+ethernets:
+  eth0:
+    dhcp4: false
+    dhcp6: false
+    addresses:
+      - ${STATIC_IP}/24
+    routes:
+      - to: 0.0.0.0/0
+        via: ${GATEWAY}
+    nameservers:
+      addresses:
+        - ${DNS_SERVER1}
+        - ${DNS_SERVER2}
