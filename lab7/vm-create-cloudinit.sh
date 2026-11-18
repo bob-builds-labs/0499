@@ -65,7 +65,8 @@ sed -e "s|\${VMID}|${VMID}|g" \
 
 # Generate network-config with variables substituted
 NETWORK_CONFIG_GENERATED="${CLOUD_INIT_DIR}/network-config-generated"
-sed -e "s|\${STATIC_IP}|${STATIC_IP}|g" \
+sed -e "s|\${USE_DHCP}|${USE_DHCP}|g" \
+    -e "s|\${STATIC_IP}|${STATIC_IP}|g" \
     -e "s|\${GATEWAY}|${GATEWAY}|g" \
     -e "s|\${DNS_SERVER1}|${DNS_SERVER1}|g" \
     -e "s|\${DNS_SERVER2}|${DNS_SERVER2}|g" \
