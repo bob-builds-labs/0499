@@ -9,13 +9,20 @@ fi
 
 # Load configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/config.sh"
 
-# Validate configuration
-if [ ! -f "${CLOUD_INIT_DIR}/config.sh" ]; then
-    echo "Error: Configuration file not found in ${CLOUD_INIT_DIR}"
+# Accept config file argument or use default
+CONFIG_FILE="${1:-${SCRIPT_DIR}/config.sh}"
+
+# Validate and source configuration
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Error: Configuration file not found: $CONFIG_FILE"
     exit 1
 fi
+
+source "$CONFIG_FILE"
+
+# Set CLOUD_INIT_DIR to script directory if not set
+CLOUD_INIT_DIR="${CLOUD_INIT_DIR:-${SCRIPT_DIR}}"
 
 if [ ! -f "${CLOUD_INIT_DIR}/user-data" ] || [ ! -f "${CLOUD_INIT_DIR}/meta-data" ]; then
     echo "Error: Cloud-init files not found in ${CLOUD_INIT_DIR}"

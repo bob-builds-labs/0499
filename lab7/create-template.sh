@@ -4,13 +4,17 @@
 
 # Load configuration
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
-source "${SCRIPT_DIR}/config.sh"
 
-# Validate configuration
-if [ ! -f "${CLOUD_INIT_DIR}/config.sh" ]; then
-    echo "Error: Configuration file not found in ${CLOUD_INIT_DIR}"
+# Accept config file argument or use default
+CONFIG_FILE="${1:-${SCRIPT_DIR}/config.sh}"
+
+# Validate and source configuration
+if [ ! -f "$CONFIG_FILE" ]; then
+    echo "Error: Configuration file not found: $CONFIG_FILE"
     exit 1
 fi
+
+source "$CONFIG_FILE"
 
 echo "Creating Rocky Linux template VM..."
 echo "Template VMID: ${TEMPLATE_VMID}"
@@ -31,23 +35,30 @@ fi
 if [ ! -f "${STORAGE_PATH}/${CLOUD_IMAGE_PATH}" ]; then
     echo "Cloud image ${CLOUD_IMAGE_PATH} not found in ${CLOUD_IMAGE_STORAGE} storage."
     echo ""
-    echo "Listing available files in ${CLOUD_IMAGE_STORAGE} storage:"
-    ls -la ${STORAGE_PATH}/
-    echo ""
     echo "Searching for Rocky Linux qcow2 files..."
     ROCKY_IMAGE=$(ls ${STORAGE_PATH}/import/Rocky-9-GenericCloud-LVM*.qcow2 2>/dev/null | head -1)
-    
+
     if [ -n "$ROCKY_IMAGE" ]; then
         echo "Found: $ROCKY_IMAGE"
         echo "Using this image instead."
         CLOUD_IMAGE_PATH="${ROCKY_IMAGE#${STORAGE_PATH}/}"
     else
-        echo "Error: No Rocky Linux cloud image found in ${CLOUD_IMAGE_STORAGE}/import storage."
+        echo "No Rocky Linux cloud image found locally."
+        echo "Downloading from Rocky Linux official mirror..."
+        echo "URL: ${ROCKY_IMAGE_URL}"
         echo ""
-        echo "Please upload the Rocky Linux cloud image first:"
-        echo "  scp Rocky-9-GenericCloud-LVM.latest.qcow2 root@$(hostname):${STORAGE_PATH}/import/"
-        echo ""
-        exit 1
+
+        mkdir -p "${STORAGE_PATH}/import"
+        if curl -L -o "${STORAGE_PATH}/${CLOUD_IMAGE_PATH}" "${ROCKY_IMAGE_URL}"; then
+            echo "Download complete: ${STORAGE_PATH}/${CLOUD_IMAGE_PATH}"
+        else
+            echo "Error: Failed to download Rocky Linux image."
+            echo ""
+            echo "Please download manually and place in ${STORAGE_PATH}/import/:"
+            echo "  curl -L -o ${STORAGE_PATH}/${CLOUD_IMAGE_PATH} ${ROCKY_IMAGE_URL}"
+            echo ""
+            exit 1
+        fi
     fi
 fi
 
