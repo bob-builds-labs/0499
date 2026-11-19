@@ -79,7 +79,7 @@ qm create ${TEMPLATE_VMID} \
 
 # Import cloud image as OS disk
 echo "Importing disk from ${STORAGE_PATH}/${CLOUD_IMAGE_PATH}..."
-IMPORT_OUTPUT=$(qm importdisk ${TEMPLATE_VMID} ${STORAGE_PATH}/${CLOUD_IMAGE_PATH} ${STORAGE} 2>&1)
+IMPORT_OUTPUT=$(qm importdisk ${TEMPLATE_VMID} ${STORAGE_PATH}/${CLOUD_IMAGE_PATH} ${STORAGE} --format ${DISK_FORMAT} 2>&1)
 echo "$IMPORT_OUTPUT"
 
 # Extract the disk name from import output
