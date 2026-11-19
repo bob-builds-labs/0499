@@ -103,7 +103,11 @@ echo "Storage: ${STORAGE}"
 echo "Memory: ${MEMORY} MB"
 echo "Cores: ${CORES}"
 echo "OS Disk: ${OS_DISK_SIZE} GB"
-echo "Static IP: ${STATIC_IP}"
+if [ "${USE_DHCP}" = "true" ]; then
+    echo "Network: DHCP"
+else
+    echo "Static IP: ${STATIC_IP}"
+fi
 echo "Template VMID: ${TEMPLATE_VMID}"
 echo ""
 
