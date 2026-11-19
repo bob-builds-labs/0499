@@ -59,114 +59,126 @@ write_files:
 
       set -e
 
-      echo "PPDM Proxy Post-Install Setup"
-      echo "=============================="
-      echo ""
+      LOG_FILE="${LOG_FILE:-/var/log/ppdm-proxy-install.log}"
+
+      log() {
+        echo "[$(date '+%Y-%m-%d %H:%M:%S')] $*" | tee -a $LOG_FILE
+      }
+
+      log "PPDM Proxy Post-Install Setup"
+      log "=============================="
+      log ""
 
       # 1. Prerequisites
-      echo "[1/8] Installing prerequisites..."
+      log "[1/8] Installing prerequisites..."
       dnf install -y socat logrotate tar
 
       # 2. Base OS packages
-      echo "[2/8] Installing base OS packages..."
+      log "[2/8] Installing base OS packages..."
       dnf install -y curl firewalld bind-utils iputils
       systemctl enable --now firewalld
 
       # 3. Fix libcrypt dependency
-      echo "[3/8] Installing libxcrypt-compat..."
+      log "[3/8] Installing libxcrypt-compat..."
       dnf install -y libxcrypt-compat
 
       # 4. Install Erlang and RabbitMQ
-      echo "[4/8] Installing Erlang and RabbitMQ..."
-      rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc'
-      rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key'
-      rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key'
+      log "[4/8] Installing Erlang and RabbitMQ..."
 
-      tee /etc/yum.repos.d/rabbitmq.repo >/dev/null <<'EOF'
-      ##
-      ## Zero dependency Erlang RPM
-      ##
+      # Check if already installed
+      if rpm -q erlang rabbitmq-server &>/dev/null; then
+        log "Erlang and RabbitMQ already installed. Skipping installation."
+      else
+        rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc'
+        rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key'
+        rpm --import 'https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key'
 
-      [modern-erlang]
-      name=modern-erlang-el9
-      baseurl=https://yum1.rabbitmq.com/erlang/el/9/$basearch
-              https://yum2.rabbitmq.com/erlang/el/9/$basearch
-      repo_gpgcheck=1
-      enabled=1
-      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
-      gpgcheck=1
-      sslverify=1
-      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-      metadata_expire=300
-      pkg_gpgcheck=1
-      autorefresh=1
-      type=rpm-md
+        tee /etc/yum.repos.d/rabbitmq.repo >/dev/null <<'EOF'
+        ##
+        ## Zero dependency Erlang RPM
+        ##
 
-      [modern-erlang-noarch]
-      name=modern-erlang-el9-noarch
-      baseurl=https://yum1.rabbitmq.com/erlang/el/9/noarch
-              https://yum2.rabbitmq.com/erlang/el/9/noarch
-      repo_gpgcheck=1
-      enabled=1
-      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
-             https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
-      gpgcheck=1
-      sslverify=1
-      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-      metadata_expire=300
-      pkg_gpgcheck=1
-      autorefresh=1
-      type=rpm-md
+        [modern-erlang]
+        name=modern-erlang-el9
+        baseurl=https://yum1.rabbitmq.com/erlang/el/9/$basearch
+                https://yum2.rabbitmq.com/erlang/el/9/$basearch
+        repo_gpgcheck=1
+        enabled=1
+        gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
+        gpgcheck=1
+        sslverify=1
+        sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+        metadata_expire=300
+        pkg_gpgcheck=1
+        autorefresh=1
+        type=rpm-md
 
-      ##
-      ## RabbitMQ Server
-      ##
+        [modern-erlang-noarch]
+        name=modern-erlang-el9-noarch
+        baseurl=https://yum1.rabbitmq.com/erlang/el/9/noarch
+                https://yum2.rabbitmq.com/erlang/el/9/noarch
+        repo_gpgcheck=1
+        enabled=1
+        gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-erlang.E495BB49CC4BBE5B.key
+               https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
+        gpgcheck=1
+        sslverify=1
+        sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+        metadata_expire=300
+        pkg_gpgcheck=1
+        autorefresh=1
+        type=rpm-md
 
-      [rabbitmq-el9]
-      name=rabbitmq-el9
-      baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/$basearch
-              https://yum1.rabbitmq.com/rabbitmq/el/9/$basearch
-      repo_gpgcheck=1
-      enabled=1
-      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
-             https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
-      gpgcheck=1
-      sslverify=1
-      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-      metadata_expire=300
-      pkg_gpgcheck=1
-      autorefresh=1
-      type=rpm-md
+        ##
+        ## RabbitMQ Server
+        ##
 
-      [rabbitmq-el9-noarch]
-      name=rabbitmq-el9-noarch
-      baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/noarch
-      repo_gpgcheck=1
-      enabled=1
-      gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
-             https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
-      gpgcheck=1
-      sslverify=1
-      sslcacert=/etc/pki/tls/certs/ca-bundle.crt
-      metadata_expire=300
-      pkg_gpgcheck=1
-      autorefresh=1
-      type=rpm-md
-      EOF
+        [rabbitmq-el9]
+        name=rabbitmq-el9
+        baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/$basearch
+                https://yum1.rabbitmq.com/rabbitmq/el/9/$basearch
+        repo_gpgcheck=1
+        enabled=1
+        gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
+               https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
+        gpgcheck=1
+        sslverify=1
+        sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+        metadata_expire=300
+        pkg_gpgcheck=1
+        autorefresh=1
+        type=rpm-md
 
-      dnf clean all
-      dnf makecache -y
-      dnf install -y erlang rabbitmq-server
+        [rabbitmq-el9-noarch]
+        name=rabbitmq-el9-noarch
+        baseurl=https://yum2.rabbitmq.com/rabbitmq/el/9/noarch
+        repo_gpgcheck=1
+        enabled=1
+        gpgkey=https://github.com/rabbitmq/signing-keys/releases/download/3.0/cloudsmith.rabbitmq-server.9F4587F226208342.key
+               https://github.com/rabbitmq/signing-keys/releases/download/3.0/rabbitmq-release-signing-key.asc
+        gpgcheck=1
+        sslverify=1
+        sslcacert=/etc/pki/tls/certs/ca-bundle.crt
+        metadata_expire=300
+        pkg_gpgcheck=1
+        autorefresh=1
+        type=rpm-md
+        EOF
+
+        dnf clean all
+        dnf makecache -y
+        dnf install -y erlang rabbitmq-server
+      fi
 
       # 5. Configure kernel parameters
-      echo "[5/8] Configuring kernel parameters..."
+      log "[5/8] Configuring kernel parameters..."
       echo 'vm.max_map_count=262144' >> /etc/sysctl.conf
       echo 'net.ipv4.ip_forward=1' >> /etc/sysctl.conf
       echo 'net.ipv4.conf.default.forwarding=1' >> /etc/sysctl.conf
       sysctl -p
 
       # 6. Configure firewall
-      echo "[6/8] Configuring firewall..."
+      log "[6/8] Configuring firewall..."
       firewall-cmd --permanent --add-port=9090/tcp
       firewall-cmd --permanent --add-port=7000/tcp
       firewall-cmd --permanent --add-port=8443/tcp
@@ -174,7 +186,7 @@ write_files:
       firewall-cmd --reload
 
       # 7. SSH hardening
-      echo "[7/8] Hardening SSH configuration..."
+      log "[7/8] Hardening SSH configuration..."
       cp /etc/ssh/sshd_config /etc/ssh/sshd_config.bak.$(date +%Y%m%d%H%M%S)
 
       for setting in "PermitRootLogin no" "ChallengeResponseAuthentication no" "AllowAgentForwarding no"; do
@@ -189,7 +201,7 @@ write_files:
       sshd -t && systemctl restart sshd
 
       # 8. Download PPDM package
-      echo "[8/8] Downloading PPDM package..."
+      log "[8/8] Downloading PPDM package..."
       PPDM_METHOD="${PPDM_PACKAGE_METHOD}"
       PPDM_FILE="${PPDM_PACKAGE_FILE}"
 
@@ -213,18 +225,18 @@ write_files:
 
       case "$PPDM_METHOD" in
         http)
-          echo "Downloading from HTTP/HTTPS..."
+          log "Downloading from HTTP/HTTPS..."
           if curl -o /home/admin/${PPDM_FILE} ${PPDM_PACKAGE_URL}; then
             tar xzfv /home/admin/${PPDM_FILE} -C /home/admin/
             chown -R admin:admin /home/admin/emc-vProxy-SPP
-            echo "PPDM package downloaded and extracted successfully."
+            log "PPDM package downloaded and extracted successfully."
           else
-            echo "Warning: Failed to download PPDM package from HTTP."
-            echo "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
+            log "Warning: Failed to download PPDM package from HTTP."
+            log "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
           fi
           ;;
         nfs)
-          echo "Downloading from NFS..."
+          log "Downloading from NFS..."
           if dnf install -y nfs-utils && \
              mkdir -p /mnt/ppdm && \
              mount ${PPDM_PACKAGE_NFS_SERVER}:${PPDM_PACKAGE_NFS_EXPORT} /mnt/ppdm && \
@@ -233,14 +245,14 @@ write_files:
              rmdir /mnt/ppdm; then
             tar xzfv /home/admin/${PPDM_FILE} -C /home/admin/
             chown -R admin:admin /home/admin/emc-vProxy-SPP
-            echo "PPDM package downloaded and extracted successfully."
+            log "PPDM package downloaded and extracted successfully."
           else
-            echo "Warning: Failed to download PPDM package from NFS."
-            echo "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
+            log "Warning: Failed to download PPDM package from NFS."
+            log "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
           fi
           ;;
         scp)
-          echo "Downloading via SCP..."
+          log "Downloading via SCP..."
           if dnf install -y openssh-clients && \
              mkdir -p /home/admin/.ssh && \
              echo "${PPDM_PACKAGE_SSH_KEY}" > /home/admin/.ssh/ppdm_key && \
@@ -251,29 +263,29 @@ write_files:
              rm /home/admin/.ssh/ppdm_key; then
             tar xzfv /home/admin/${PPDM_FILE} -C /home/admin/
             chown -R admin:admin /home/admin/emc-vProxy-SPP
-            echo "PPDM package downloaded and extracted successfully."
+            log "PPDM package downloaded and extracted successfully."
           else
-            echo "Warning: Failed to download PPDM package via SCP."
-            echo "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
+            log "Warning: Failed to download PPDM package via SCP."
+            log "You can manually download the package to /home/admin/ and run setup-ppdm.sh"
           fi
           ;;
         local)
-          echo "Local method selected: Manual upload required."
-          echo "Please manually upload the PPDM package to /home/admin/ and extract it:"
-          echo "  scp ${PPDM_FILE} admin@<VM-IP>:/home/admin/"
-          echo "  ssh admin@<VM-IP>"
-          echo "  tar xzfv ${PPDM_FILE}"
-          echo ""
-          echo "After uploading and extracting, run: /home/admin/setup-ppdm.sh"
+          log "Local method selected: Manual upload required."
+          log "Please manually upload the PPDM package to /home/admin/ and extract it:"
+          log "  scp ${PPDM_FILE} admin@<VM-IP>:/home/admin/"
+          log "  ssh admin@<VM-IP>"
+          log "  tar xzfv ${PPDM_FILE}"
+          log ""
+          log "After uploading and extracting, run: /home/admin/setup-ppdm.sh"
           ;;
         *)
-          echo "Error: Unknown download method: $PPDM_METHOD"
-          echo "Supported methods: http, nfs, scp, local"
+          log "Error: Unknown download method: $PPDM_METHOD"
+          log "Supported methods: http, nfs, scp, local"
           ;;
       esac
 
-      echo ""
-      echo "Post-install setup complete!"
+      log ""
+      log "Post-install setup complete!"
 
   - path: /home/admin/setup-ppdm.sh
     owner: admin:admin

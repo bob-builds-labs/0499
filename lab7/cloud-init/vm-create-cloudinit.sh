@@ -54,6 +54,7 @@ sed -e "s|\${STATIC_IP}|${STATIC_IP}|g" \
     -e "s|\${PPDM_PACKAGE_LOCAL_PATH}|${PPDM_PACKAGE_LOCAL_PATH}|g" \
     -e "s|\${PROXMOX_IP}|${PROXMOX_IP}|g" \
     -e "s|\${PPDM_PASSWORD}|${PPDM_PASSWORD}|g" \
+    -e "s|\${LOG_FILE}|${LOG_FILE}|g" \
     "${CLOUD_INIT_DIR}/user-data" > "${USER_DATA_GENERATED}"
 
 # Generate meta-data with variables substituted
@@ -167,10 +168,21 @@ echo "- Install all prerequisites (Erlang, RabbitMQ, etc.)"
 echo "- Configure firewall, SSH hardening, and kernel parameters"
 echo "- Download PPDM package"
 echo ""
+if [ "${USE_DHCP}" = "true" ]; then
+    echo "Network: DHCP (IP will be assigned automatically)"
+else
+    echo "Static IP: ${STATIC_IP}"
+fi
+echo ""
 echo "Next steps:"
 echo "1. Wait for the VM to boot and cloud-init to complete (approximately 3-5 minutes)"
-echo "2. SSH into the VM: ssh rocky@${STATIC_IP} or ssh admin@${STATIC_IP}"
-echo "3. Run the PPDM installer setup script:"
+if [ "${USE_DHCP}" = "true" ]; then
+    echo "2. Check the VM console or DHCP server for the assigned IP"
+    echo "3. SSH into the VM: ssh rocky@<ASSIGNED_IP> or ssh admin@<ASSIGNED_IP>"
+else
+    echo "2. SSH into the VM: ssh rocky@${STATIC_IP} or ssh admin@${STATIC_IP}"
+fi
+echo "4. Run the PPDM installer setup script:"
 echo "   /home/admin/setup-ppdm.sh"
 echo ""
 echo "To monitor the VM console:"
@@ -178,3 +190,6 @@ echo "  qm terminal ${VMID}"
 echo ""
 echo "To check VM status:"
 echo "  qm status ${VMID}"
+echo ""
+echo "To check the installation log:"
+echo "  ssh rocky@<IP> 'sudo cat ${LOG_FILE}'"
