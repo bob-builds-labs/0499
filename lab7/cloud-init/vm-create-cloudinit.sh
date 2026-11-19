@@ -72,6 +72,15 @@ sed -e "s|\${USE_DHCP}|${USE_DHCP}|g" \
     -e "s|\${DNS_SERVER2}|${DNS_SERVER2}|g" \
     "${CLOUD_INIT_DIR}/network-config" > "${NETWORK_CONFIG_GENERATED}"
 
+# If using DHCP, remove static IP configuration
+if [ "${USE_DHCP}" = "true" ]; then
+    sed -i '/addresses:/d' "${NETWORK_CONFIG_GENERATED}"
+    sed -i '/routes:/d' "${NETWORK_CONFIG_GENERATED}"
+    sed -i '/nameservers:/d' "${NETWORK_CONFIG_GENERATED}"
+    sed -i '/  - to:/d' "${NETWORK_CONFIG_GENERATED}"
+    sed -i '/    via:/d' "${NETWORK_CONFIG_GENERATED}"
+fi
+
 # Generate cloud-init ISO
 echo "Generating cloud-init ISO..."
 ISO_DIR=$(mktemp -d)
